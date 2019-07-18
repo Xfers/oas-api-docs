@@ -1,0 +1,21 @@
+:Singapore:
+  :paths:
+    - "/pet*"
+    - "/store*"
+  :tags:
+    - "pet"
+    - "store"
+:Indonesia:
+  :paths:
+    - "/pet"
+  :tags:
+    - "pet"
+# :Singapore_and_Indonesia:
+#   :paths:
+#     - "/pet"
+#     - "/store/inventory"
+#     - "/user"
+#   :tags:
+#     - "pet"
+#     - "store"
+#     - "user"

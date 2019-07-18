@@ -1,0 +1,15 @@
+:Singapore:
+  :paths:
+    - "/pet/findByTags"
+    - "/store/inventory"
+    - "/store/order"
+    - "/pet/findByStatus"
+  :tags:
+    - "pet"
+    - "store"
+:Indonesia:
+  :paths:
+    - "/pet"
+    - "/pet/findByStatus"
+  :tags:
+    - "pet"
