@@ -61,12 +61,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" >
         <CountrySwitch
           updateDefinitionJSON = {this.updateDefinitionJSON}
           country = {this.state.country}
         />
-        <h1>{this.state.country}</h1>
+        <div id = "country-header">
+          {this.state.country}
+        </div>
         <div id="api-data" />
       </div>
     );

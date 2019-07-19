@@ -1,5 +1,5 @@
 .App {
-  display: flex;
+  display: block;
   flex-direction: row;
   height: 100vh;
 }
@@ -34,6 +34,14 @@
 .side-bar-body {
   padding-left: 10px;
 }*/
+
+.country-header {
+  align-items: center;
+}
+
+.country-switch {
+  display: block;
+}
 
 #api-data {
   width: 90vw;
