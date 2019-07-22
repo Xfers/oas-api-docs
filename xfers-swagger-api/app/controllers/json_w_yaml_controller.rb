@@ -6,6 +6,10 @@ class JsonWYamlController < JsonController
     @curr_oas = curr_oas
   end
 
+  def deep_copy(hash)
+    Marshal.load(Marshal.dump(hash))
+  end
+
   def generate_file_curr_json(name)
     path = File.expand_path("../oas-doc-portal/src/oas_spec") + "/" + name.to_s + ".json"
     file = File.open(path, "w")
@@ -18,7 +22,7 @@ class JsonWYamlController < JsonController
   end
 
   def generate_doc(name)
-    generate_curr_paths(@yml[name.to_sym]).process_for_tag(name).generate_file_curr_json(name)
+    generate_curr_paths(@yml[name.to_sym]).process_for_tag(name).process_for_params(name).generate_file_curr_json(name)
   end
 
   def generate_all
@@ -40,27 +44,33 @@ class JsonWYamlController < JsonController
   end
 
   def process_for_params(name)
-    paths_json = Hash[@curr_oas["paths"]]
+    paths_json = deep_copy(@curr_oas["paths"])
     paths_json.each { |endpoint,outer_value|
       outer_value.each { |method, inner_value|
-        next if inner_value["parameters"] == nil
-        inner_value["parameters"].each { |curr_param|
-          #byebug if curr_param["name"] == "rw" && name = "Singapore"
-          next if curr_param["description"] == nil
-          curr_words = curr_param["description"].split(" ")
-          next if curr_words[0] != "ONLY"
-          next if curr_words[1].include?(name.to_s)
-
-          inner_value["parameters"].delete(curr_param)
-          puts("deleted " + curr_param["name"].to_s + " for " + name.to_s)
-        }
+        if inner_value["parameters"] != nil
+          inner_value["parameters"] = inner_value["parameters"].select { |curr_param|
+            if curr_param["description"] != nil
+              curr_words = curr_param["description"].split(" ")
+              if curr_words.length > 2 && curr_words[0] == "ONLY" && !curr_words[1].include?(name.to_s)
+                puts(curr_param["name"].to_s + " deleted from " + name.to_s)
+                false
+              else
+                true
+              end
+            else
+              true
+            end
+          }
+        end
         inner_value.delete("parameters") if inner_value["parameters"].empty?
       }
     }
-    curr_oas = Hash[@curr_oas]
+     puts("Finished filtering parameters for " + name.to_s)
+    curr_oas = deep_copy(@curr_oas)
     curr_oas["paths"] = paths_json
     JsonWYamlController.new(@yml, @master_oas_wo_paths_json, @populate_nested_hash, curr_oas)
   end
+
 
   def get_names
     @yml.keys

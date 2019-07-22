@@ -585,17 +585,6 @@
               "type": "string",
               "example": "Pelajar/Mahasiswa"
             }
-          },
-          {
-            "name": "callback_url",
-            "in": "body",
-            "description": "ONLY Singapore, URL to receive callback notifications on account verification changes.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Pelajar/Mahasiswa"
-            }
           }
         ],
         "responses": {

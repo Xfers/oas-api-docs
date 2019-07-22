@@ -10,6 +10,7 @@
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
     "react-switch": "^5.0.1",
+    "select": "^1.1.2",
     "swagger-ui": "^3.23.1"
   },
   "scripts": {

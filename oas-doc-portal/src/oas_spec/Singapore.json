@@ -506,83 +506,6 @@
             }
           },
           {
-            "name": "rt",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RT according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "001"
-            }
-          },
-          {
-            "name": "rw",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "005"
-            }
-          },
-          {
-            "name": "administrative_village",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Meruya Utara"
-            }
-          },
-          {
-            "name": "state",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Jawa Barat"
-            }
-          },
-          {
-            "name": "district",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s district address. In KTP, it is called Kecamatan.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Kembangan"
-            }
-          },
-          {
-            "name": "religion",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s religion according to his/her KTP. Possible Values: 'Islam’, 'Katholik’, 'Kristen Protestan’, 'Hindu’, 'Budha’, 'Kong Hu Cu’, or 'Aliran Kepercayaan.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Kembangan"
-            }
-          },
-          {
-            "name": "occupation",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s occupation according to his/her KTP.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Pelajar/Mahasiswa"
-            }
-          },
-          {
             "name": "callback_url",
             "in": "body",
             "description": "ONLY Singapore, URL to receive callback notifications on account verification changes.",
@@ -891,17 +814,6 @@
             }
           },
           {
-            "name": "idempotency_id",
-            "in": "body",
-            "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia.",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Order_1234"
-            }
-          },
-          {
             "name": "express",
             "in": "body",
             "description": " Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false",
@@ -957,17 +869,6 @@
             "schema": {
               "type": "string",
               "example": "120000.0"
-            }
-          },
-          {
-            "name": "idempotency_id",
-            "in": "body",
-            "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia.",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Order_1234"
             }
           },
           {
