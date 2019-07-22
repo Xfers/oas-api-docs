@@ -24,4 +24,4 @@ Flow(https://www.lucidchart.com/invitations/accept/a4e6c44e-9b06-4ffb-a75b-3bc50
 Features
 1. Can generate any amount of specific documentation quickly by changing `xfers-swagger-api/config/oas.yml`
 2. Can define specific parameters to client by typing `ONLY <clientname>` in the description field of parameters.
-  - For example if you type `ONLY Singapore...` in the description field of the parameter, `Indonesia.json` will not contain the end point.
+  - For example if you type `ONLY Singapore...` in the description field of the parameter, `Indonesia.json` will not contain the parameter.
