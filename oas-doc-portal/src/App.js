@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css'
 import SwaggerUI from 'swagger-ui';
-import CountrySwitch from "./CountrySwitch.js"
 import '../node_modules/swagger-ui/dist/swagger-ui.css'
-import Switch from "react-switch";
+import CountrySelect from "./CountrySelect.js";
+import Select from 'react-select';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ class App extends Component {
   }
 
   updateDefinitionJSON(country){
-    console.log(country)
     if (country === "Singapore") {
       this.setState({
         definitionJSON: this.state.sgOasDoc,
@@ -62,13 +61,26 @@ class App extends Component {
   render() {
     return (
       <div className="App" >
-        <CountrySwitch
-          updateDefinitionJSON = {this.updateDefinitionJSON}
-          country = {this.state.country}
-        />
-        <div id = "country-header">
-          {this.state.country}
-        </div>
+        <div style={{
+          display: 'block',
+          textAlign: 'center'
+        }} >
+          <CountrySelect
+            country = {this.state.country}
+            updateDefinitionJSON = {this.updateDefinitionJSON}
+            style={{
+              width: 200,
+              float: 'left'
+            }}
+          />
+
+          <title
+          style = {{
+            display: "inline",
+            fontSize: 56,
+          }}
+          >API documentation for {this.state.country}</title>
+          </div>
         <div id="api-data" />
       </div>
     );
