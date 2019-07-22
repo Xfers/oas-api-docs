@@ -1,15 +1,36 @@
 :Singapore:
   :paths:
-    - "/pet*"
-    - "/store*"
+    - "/authorize*"
+    - "/user"
+    - "/user/activities"
+    - "/user/transfer_info"
+    - "/user/bank_account*"
+    - "/charges"
+    - "/payouts*"
+    - "/banks"
   :tags:
-    - "pet"
-    - "store"
+    - "Registration"
+    - "User Account"
+    - "Charge"
+    - "Payout"
+    - "Bank Account"
+    - "Withdraw"
 :Indonesia:
   :paths:
-    - "/pet"
+    - "/authorize*"
+    - "/user*"
+    - "/charges"
+    - "/payouts*"
+    - "/banks"
+    - "/loans*"
   :tags:
-    - "pet"
+    - "Registration"
+    - "User Account"
+    - "Charge"
+    - "Payout"
+    - "Bank Account"
+    - "Withdraw"
+    - "Channeling"
 # :Singapore_and_Indonesia:
 #   :paths:
 #     - "/pet"

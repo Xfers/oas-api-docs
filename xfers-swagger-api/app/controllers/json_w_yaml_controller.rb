@@ -7,18 +7,18 @@ class JsonWYamlController < JsonController
   end
 
   def generate_file_curr_json(name)
-    path = "/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec" + "/" + name.to_s + ".json"
+    path = File.expand_path("../oas-doc-portal/src/oas_spec") + "/" + name.to_s + ".json"
     file = File.open(path, "w")
     file.puts(JSON.pretty_generate(@curr_oas))
     file.close
-    path = "/Users/tandeningklement/Desktop/Parser/xfers-swagger-api/template_oas" + "/" + name.to_s + ".json"
+    path = File.expand_path("template_oas") + "/" + name.to_s + ".json"
     file = File.open(path, "w")
     file.puts(JSON.pretty_generate(@curr_oas))
     file.close
   end
 
   def generate_doc(name)
-    generate_curr_paths(@yml[name.to_sym]).process_for_tag(name).process_for_params(name).generate_file_curr_json(name)
+    generate_curr_paths(@yml[name.to_sym]).process_for_tag(name).generate_file_curr_json(name)
   end
 
   def generate_all
@@ -45,12 +45,14 @@ class JsonWYamlController < JsonController
       outer_value.each { |method, inner_value|
         next if inner_value["parameters"] == nil
         inner_value["parameters"].each { |curr_param|
+          #byebug if curr_param["name"] == "rw" && name = "Singapore"
           next if curr_param["description"] == nil
           curr_words = curr_param["description"].split(" ")
           next if curr_words[0] != "ONLY"
-          next if curr_words == name
+          next if curr_words[1].include?(name.to_s)
 
           inner_value["parameters"].delete(curr_param)
+          puts("deleted " + curr_param["name"].to_s + " for " + name.to_s)
         }
         inner_value.delete("parameters") if inner_value["parameters"].empty?
       }
@@ -78,7 +80,6 @@ class JsonWYamlController < JsonController
   def generate_curr_paths(curr_name_yaml) #return new obj
     paths_to_gen_arr = curr_name_yaml[:paths]
     curr_obj = self
-    byebug
     paths_to_gen_arr.each { |curr_path|
 
       if !curr_path.include?("*")

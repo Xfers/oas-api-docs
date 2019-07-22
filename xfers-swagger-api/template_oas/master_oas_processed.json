@@ -1,609 +1,244 @@
 {
-  "pet": {
-    "findByStatus": {
-      "/pet/findByStatus": {
-        "get": {
+  "authorize": {
+    "signup_login": {
+      "/authorize/signup_login": {
+        "post": {
           "tags": [
-            "pet"
+            "Registration"
           ],
-          "summary": "Finds Pets by status",
-          "description": "Multiple status values can be provided with comma separated strings",
-          "operationId": "findPetsByStatus",
+          "summary": "Sign Up Account/Trigger OTP",
+          "description": "This API is used to start user registration by inputting phone number. After this API is called, an OTP SMS will be sent to that number. You can re-trigger this API again to re-send OTP to the same phone number after 1 minute. This OTP will expire in 10 minutes.",
           "parameters": [
             {
-              "name": "status",
-              "in": "query",
-              "description": "ONLY Indonesia Status values that need to be considered for filter",
+              "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
+            },
+            {
+              "$ref": "content_type_application/application/json"
+            },
+            {
+              "name": "phone_no",
+              "in": "body",
+              "description": "User mobile no. It should follow International format.",
               "required": true,
               "explode": true,
               "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "available",
-                    "pending",
-                    "sold"
-                  ],
-                  "default": "available"
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Pet"
-                    }
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Pet"
-                    }
-                  }
-                }
+                "type": "string",
+                "example": "+6287785725657"
               }
             },
-            "400": {
-              "description": "Invalid status value"
-            }
-          },
-          "security": [
             {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    "findByTags": {
-      "/pet/findByTags": {
-        "get": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Finds Pets by tags",
-          "description": "Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.",
-          "operationId": "findPetsByTags",
-          "parameters": [
-            {
-              "name": "tags",
-              "in": "query",
-              "description": "Tags to filter by",
+              "name": "signature",
+              "in": "body",
+              "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
               "required": true,
               "explode": true,
               "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+                "type": "string",
+                "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
               }
             }
           ],
           "responses": {
             "200": {
-              "description": "successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Pet"
-                    }
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/Pet"
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Invalid tag value"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ],
-          "deprecated": true
-        }
-      }
-    },
-    "{petId}": {
-      "uploadImage": {
-        "/pet/{petId}/uploadImage": {
-          "post": {
-            "tags": [
-              "pet"
-            ],
-            "summary": "uploads an image",
-            "operationId": "uploadFile",
-            "parameters": [
-              {
-                "name": "petId",
-                "in": "path",
-                "description": "ID of pet to update",
-                "required": true,
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "successful operation",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/ApiResponse"
-                    }
-                  }
-                }
-              }
-            },
-            "security": [
-              {
-                "petstore_auth": [
-                  "write:pets",
-                  "read:pets"
-                ]
-              }
-            ],
-            "requestBody": {
-              "content": {
-                "application/octet-stream": {
-                  "schema": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
+              "description": "Successful"
             }
           }
         }
-      },
-      "/pet/{petId}": {
-        "get": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Find pet by ID",
-          "description": "Returns a single pet",
-          "operationId": "getPetById",
-          "parameters": [
-            {
-              "name": "petId",
-              "in": "path",
-              "description": "ID of pet to return",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Pet not found"
-            }
-          },
-          "security": [
-            {
-              "api_key": [
-
-              ]
-            }
-          ]
-        },
+      }
+    },
+    "private_wallet": {
+      "/authorize/private_wallet": {
         "post": {
           "tags": [
-            "pet"
+            "Registration"
           ],
-          "summary": "Updates a pet in the store with form data",
-          "operationId": "updatePetWithForm",
+          "summary": "Register Account",
+          "description": "This API is used to start private ledger registration by inputting phone number.\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called X-XFERS-APP-API-KEY. You will need X-XFERS-APP-SECRET-KEY to generate signature in the request body.\nPlease make use of Pre-request Script to test this API in postman",
           "parameters": [
             {
-              "name": "petId",
-              "in": "path",
-              "description": "ID of pet that needs to be updated",
+              "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
+            },
+            {
+              "$ref": "content_type_application/application/json"
+            },
+            {
+              "name": "phone_no",
+              "in": "body",
+              "description": "User mobile no. It should follow International format.",
               "required": true,
+              "explode": true,
               "schema": {
-                "type": "integer",
-                "format": "int64"
+                "type": "string",
+                "example": "+6287785725657"
+              }
+            },
+            {
+              "name": "signature",
+              "in": "body",
+              "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
               }
             }
           ],
           "responses": {
-            "405": {
-              "description": "Invalid input"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/x-www-form-urlencoded": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "Updated name of the pet",
-                      "type": "string"
-                    },
-                    "status": {
-                      "description": "Updated status of the pet",
-                      "type": "string"
-                    }
-                  }
-                }
-              }
+            "200": {
+              "description": "Successful"
             }
           }
-        },
-        "delete": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Deletes a pet",
-          "operationId": "deletePet",
-          "parameters": [
-            {
-              "name": "api_key",
-              "in": "header",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "petId",
-              "in": "path",
-              "description": "Pet id to delete",
-              "required": true,
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Pet not found"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
         }
       }
     },
-    "/pet": {
-      "post": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Add a new pet to the store",
-        "operationId": "addPet",
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Pet"
-        }
-      },
-      "put": {
-        "tags": [
-          "pet"
-        ],
-        "summary": "Update an existing pet",
-        "operationId": "updatePet",
-        "responses": {
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Pet not found"
-          },
-          "405": {
-            "description": "Validation exception"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Pet"
-        }
-      }
-    }
-  },
-  "store": {
-    "inventory": {
-      "/store/inventory": {
+    "get_token": {
+      "/authorize/get_token": {
         "get": {
           "tags": [
-            "store"
+            "Registration"
           ],
-          "summary": "Returns pet inventories by status",
-          "description": "Returns a map of status codes to quantities",
-          "operationId": "getInventory",
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                }
+          "summary": "Get User API Token / Submit OTP",
+          "description": "After user receives the OTP SMS, merchant's app should capture the OTP and pass it to Xfers via this API.\nThis API will finish the registration and returns user_api_token. user_api_token is used to control the user's account.\nYou should save the user_api_token for future usage. (to be put in the X-XFERS-USER-API-KEY in headers of other APIs)\n\nIt will also return a is_fully_verified if they already have an Xfers account and have completed our KYC process.\n\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called X-XFERS-APP-API-KEY. You will need X-XFERS-APP-SECRET-KEY to generate signature in the request body.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
+            },
+            {
+              "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
+            },
+            {
+              "name": "otp",
+              "in": "query",
+              "description": "User mobile no. It should follow International format.",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "541231"
+              }
+            },
+            {
+              "name": "phone_no",
+              "in": "query",
+              "description": "User mobile no. It should follow International format.",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "+6287785725657"
+              }
+            },
+            {
+              "name": "signature",
+              "in": "query",
+              "description": "SHA1-hex of (phone_no + OTP + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "71b72cb775fa0e52d815279c74964f5be18a88b8"
               }
             }
-          },
-          "security": [
-            {
-              "api_key": [
-
-              ]
+          ],
+          "responses": {
+            "200": {
+              "description": "success"
             }
-          ]
+          }
         }
       }
     },
-    "order": {
-      "{orderId}": {
-        "/store/order/{orderId}": {
-          "get": {
-            "tags": [
-              "store"
-            ],
-            "summary": "Find purchase order by ID",
-            "description": "For valid response try integer IDs with value >= 1 and <= 10.\\ \\ Other values will generated exceptions",
-            "operationId": "getOrderById",
-            "parameters": [
-              {
-                "name": "orderId",
-                "in": "path",
-                "description": "ID of pet that needs to be fetched",
-                "required": true,
-                "schema": {
-                  "type": "integer",
-                  "format": "int64",
-                  "minimum": 1,
-                  "maximum": 10
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "successful operation",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/Order"
-                    }
-                  },
-                  "application/xml": {
-                    "schema": {
-                      "$ref": "#/components/schemas/Order"
-                    }
-                  }
-                }
-              },
-              "400": {
-                "description": "Invalid ID supplied"
-              },
-              "404": {
-                "description": "Order not found"
-              }
-            }
-          },
-          "delete": {
-            "tags": [
-              "store"
-            ],
-            "summary": "Delete purchase order by ID",
-            "description": "For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors",
-            "operationId": "deleteOrder",
-            "parameters": [
-              {
-                "name": "orderId",
-                "in": "path",
-                "description": "ID of the order that needs to be deleted",
-                "required": true,
-                "schema": {
-                  "type": "integer",
-                  "format": "int64",
-                  "minimum": 1
-                }
-              }
-            ],
-            "responses": {
-              "400": {
-                "description": "Invalid ID supplied"
-              },
-              "404": {
-                "description": "Order not found"
-              }
-            }
-          }
-        }
-      },
-      "/store/order": {
-        "post": {
+    "get_mock_otp": {
+      "/authorize/get_mock_otp": {
+        "get": {
           "tags": [
-            "store"
+            "Testing"
           ],
-          "summary": "Place an order for a pet",
-          "operationId": "placeOrder",
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Order"
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Order"
-                  }
-                }
-              }
+          "summary": "Get Mock OTP",
+          "description": "Get a mock OTP. This is only usable in sandbox environment",
+          "parameters": [
+            {
+              "$ref": "#/components/parameter/user-api-token"
             },
-            "400": {
-              "description": "Invalid Order"
+            {
+              "name": "phone_no",
+              "in": "query",
+              "description": "Phone Number. For international number, you can use ’%2B’ to replace the plus(’+’) sign. (i.e. use %2B6287785725657 instead of +6287785725657)",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "175"
+              }
             }
-          },
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            },
-            "description": "order placed for purchasing the pet",
-            "required": true
-          }
+          ]
         }
       }
     }
   },
   "user": {
-    "createWithArray": {
-      "/user/createWithArray": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Creates list of users with given input array",
-          "operationId": "createUsersWithArrayInput",
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          },
-          "requestBody": {
-            "$ref": "#/components/requestBodies/UserArray"
-          }
-        }
-      }
-    },
-    "createWithList": {
-      "/user/createWithList": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Creates list of users with given input array",
-          "operationId": "createUsersWithListInput",
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          },
-          "requestBody": {
-            "$ref": "#/components/requestBodies/UserArray"
-          }
-        }
-      }
-    },
-    "login": {
-      "/user/login": {
+    "activities": {
+      "/user/activities": {
         "get": {
           "tags": [
-            "user"
+            "User Account"
           ],
-          "summary": "Logs user into the system",
-          "operationId": "loginUser",
+          "summary": "Get Transaction History",
+          "description": "This API displays a user’s transaction history.\nThis API displays a user’s transaction history.\nI.e. user’s transactions with other merchants will not be displayed.",
           "parameters": [
             {
-              "name": "username",
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            },
+            {
+              "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
+            },
+            {
+              "name": "limit",
               "in": "query",
-              "description": "The user name for login",
-              "required": true,
+              "description": "Max number of results to return per page.",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "integer"
+              }
+            },
+            {
+              "name": "start_date",
+              "in": "query",
+              "description": "Earliest date to query",
+              "required": false,
+              "explode": true,
               "schema": {
                 "type": "string"
               }
             },
             {
-              "name": "password",
+              "name": "end_date",
               "in": "query",
-              "description": "The password for login in clear text",
-              "required": true,
+              "description": "Latest date to query",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "offset",
+              "in": "query",
+              "description": "Offset results for pagination purposes.",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "in": "query",
+              "description": " Only show transactions of that status. Only “completed”, “refunded”, “expired”, “cancelled”, “pending”, “accepted”, “on_hold” allowed. You can add additional types by separating with a comma. Note that putting “completed” will also return transactions with “paid” - you can take them to be the same.",
+              "required": false,
+              "explode": true,
               "schema": {
                 "type": "string"
               }
@@ -611,193 +246,1382 @@
           ],
           "responses": {
             "200": {
-              "description": "successful operation",
-              "headers": {
-                "X-Rate-Limit": {
-                  "description": "calls per hour allowed by the user",
-                  "schema": {
-                    "type": "integer",
-                    "format": "int32"
-                  }
+              "description": "Successful signup"
+            }
+          }
+        }
+      }
+    },
+    "transfer_info": {
+      "/user/transfer_info": {
+        "get": {
+          "tags": [
+            "User Account"
+          ],
+          "summary": "Get Transfer Info / Get Virtual Account Number",
+          "description": "API to get bank account number to be shown to user.\nPlease consult with us to get topup instruction template text to be shown.\nThe common usage of this API is to parse the transfer_info_array given by us and parse it and use the VA numbers of the bank you want.\nFor Virtual Account solution:\nThis API is to get the Virtual Account Number to be displayed to the user\nFor non Virtual Account solution:\nThis API will show the bank account number to do top up.\nPlease consult with us as this solution will require user to use some other identifier to detect the deposit.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            }
+          ]
+        }
+      }
+    },
+    "bank_account": {
+      "{bank_account_id}": {
+        "withdraw": {
+          "/user/bank_account/{bank_account_id}/withdraw": {
+            "post": {
+              "tags": [
+                "Withdraw"
+              ],
+              "summary": "Create Withdrawal",
+              "description": "Withdrawal Time varies upon country. For Indonesia, withdrawal time is instantenous. For Singapore, withdrawal time depends on whether it is an express withdrawal.\nWithdrawal on Behalf\nIf you wish to withdraw to a bank account not belonging to you, add in user_api_token in the params.\nBehind the scenes, Xfers does a payout of funds from your Xfers account to that user’s Xfers account, followed by a withdrawal. This is required for compliance purposes as we cannot directly withdraw funds to a bank account not belonging to you.",
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/user-api-token"
                 },
-                "X-Expires-After": {
-                  "description": "date in UTC when token expires",
+                {
+                  "$ref": "#/components/parameters/content_type_application/application/x-www-form-urlencoded"
+                },
+                {
+                  "name": "banck_account_id",
+                  "in": "path",
+                  "description": "The ID of the bank account. You can retrieve this from in the response of Create Bank Account and List Bank Account API",
+                  "required": true,
+                  "explode": true,
                   "schema": {
                     "type": "string",
-                    "format": "date-time"
+                    "example": "175"
                   }
+                },
+                {
+                  "name": "amount",
+                  "in": "body",
+                  "description": "Transaction Amount",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "120000.0"
+                  }
+                },
+                {
+                  "name": "idempotency_id",
+                  "in": "body",
+                  "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia.",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "Order_1234"
+                  }
+                },
+                {
+                  "name": "express",
+                  "in": "body",
+                  "description": " Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false",
+                  "required": false,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "true"
+                  }
+                },
+                {
+                  "name": "user_api_token",
+                  "in": "body",
+                  "description": "  Use this param if you want to withdraw to another user’s bank account instead of your own.",
+                  "required": false,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "true"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "/user/bank_account/{bank_account_id}": {
+          "put": {
+            "tags": [
+              "Bank Account"
+            ],
+            "summary": "Update Bank Account",
+            "description": "This request allows you to update an existing bank account record.",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "$ref": "#/components/parameters/content_type_application/application/x-www-form-urlencoded"
+              },
+              {
+                "name": "banck_account_id",
+                "in": "path",
+                "description": "The ID of the bank account. You can retrieve this from in the response of Create Bank Account and List Bank Account API",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string",
+                  "example": "175"
                 }
               },
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "type": "string"
-                  }
+              {
+                "name": "account_no",
+                "in": "body",
+                "description": "bank account no",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string",
+                  "example": 393123432.0
+                }
+              },
+              {
+                "name": "bank",
+                "in": "body",
+                "description": "Bank abbreviation. #use the above description",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": 150000
+                }
+              },
+              {
+                "name": "account_holder_name",
+                "in": "body",
+                "description": "Name of bank account holder name. put PROD_ONLY in Indo Sandbox",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string",
+                  "example": "PROD ONLY"
                 }
               }
-            },
-            "400": {
-              "description": "Invalid username/password supplied"
-            }
-          }
-        }
-      }
-    },
-    "logout": {
-      "/user/logout": {
-        "get": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Logs out current logged in user session",
-          "operationId": "logoutUser",
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          }
-        }
-      }
-    },
-    "{username}": {
-      "/user/{username}": {
-        "get": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Get user by user name",
-          "operationId": "getUserByName",
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "The name that needs to be fetched. Use user1 for testing.",
-              "required": true,
-              "schema": {
-                "type": "string"
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
               }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Invalid username supplied"
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Updated user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "updateUser",
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "name that need to be updated",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid user supplied"
-            },
-            "404": {
-              "description": "User not found"
             }
           },
-          "requestBody": {
-            "content": {
-              "application/json": {
+          "delte": {
+            "tags": [
+              "Bank Account"
+            ],
+            "summary": "Delete Bank Account",
+            "description": "This request allows you to delete an existing bank account record.",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "name": "banck_account_id",
+                "in": "path",
+                "description": "The ID of the bank account. You can retrieve this from in the response of Create Bank Account and List Bank Account API",
+                "required": true,
+                "explode": true,
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "string",
+                  "example": "175"
                 }
               }
-            },
-            "description": "Updated user object",
-            "required": true
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
           }
-        },
-        "delete": {
+        }
+      },
+      "withdrawal_requests": {
+        "{withdrawal_request_id}": {
+          "/user/bank_account/withdrawal_requests/{withdrawal_request_id}": {
+            "get": {
+              "tags": [
+                "Withdraw"
+              ],
+              "summary": "Get Withdrawal",
+              "description": "This API will be used to get the current status of withdrawal request.\nIt is useful if you want to check with Xfers again about the status of your withdrawal request in case there is something wrong with the callback of the withdrawal request status.",
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/user-api-token"
+                },
+                {
+                  "name": "withdrawal_request_id",
+                  "in": "path",
+                  "description": "The ID of the withdrawal you want to get information of. You can retrieve this information from the ",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "175"
+                  }
+                },
+                {
+                  "name": "amount",
+                  "in": "body",
+                  "description": "Transaction Amount",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "120000.0"
+                  }
+                },
+                {
+                  "name": "idempotency_id",
+                  "in": "body",
+                  "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia.",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "Order_1234"
+                  }
+                },
+                {
+                  "name": "express",
+                  "in": "body",
+                  "description": " Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false",
+                  "required": false,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "true"
+                  }
+                },
+                {
+                  "name": "user_api_token",
+                  "in": "body",
+                  "description": "  Use this param if you want to withdraw to another user’s bank account instead of your own.",
+                  "required": false,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "true"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "withdraawal_request": {
+        "mock_result": {
+          "/user/bank_account/withdraawal_request/mock_result": {
+            "get": {
+              "tags": [
+                "Testing"
+              ],
+              "summary": "Mock Withdrawal Result",
+              "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
+              "parameters": [
+                {
+                  "$ref": "#/components/parameter/user-api-token"
+                },
+                {
+                  "$ref": "#/components/parameter/content_type_application/x-www-form-urlencoded"
+                },
+                {
+                  "name": "idempotency_id",
+                  "in": "body",
+                  "description": "Idempotency ID you use to create your withdrawal request",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "Order_1234"
+                  }
+                },
+                {
+                  "name": "status",
+                  "in": "body",
+                  "description": "'completed' or 'failed'",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "completed"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "/user/bank_account": {
+        "post": {
           "tags": [
-            "user"
+            "Bank Account"
           ],
-          "summary": "Delete user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "deleteUser",
+          "summary": "Add Bank Account",
+          "description": "This API will be used to attach a new bank account to a user.\nYou will be able to withdraw user's balance to this bank account.\nIn Indonesia Production, This API will return the detected_name as provided from the bank.\nThe account_holder_name you provided and detected_name needs to be similar (doesn't need to be 100% match).",
           "parameters": [
             {
-              "name": "username",
-              "in": "path",
-              "description": "The name that needs to be deleted",
+              "$ref": "#/components/parameters/user-api-token"
+            },
+            {
+              "$ref": "#/components/parameters/content_type_application/application/json"
+            },
+            {
+              "name": "account_no",
+              "in": "body",
+              "description": "Bank account no",
               "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "1680366060"
+              }
+            },
+            {
+              "name": "bank",
+              "in": "body",
+              "description": "Bank abbreviation. Use Get Bank and Abbreviation Mapping to find out what bank abbreviation to enter.",
+              "required": true,
+              "explode": true,
               "schema": {
                 "type": "string"
               }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid username supplied"
             },
-            "404": {
-              "description": "User not found"
+            {
+              "name": "account_holder_name",
+              "in": "body",
+              "description": "Name of bank account holder name. put PROD_ONLY in Indo Sandbox",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "PROD ONLY"
+              }
             }
+          ]
+        },
+        "get": {
+          "tags": [
+            "Bank Account"
+          ],
+          "summary": "List Bank Account",
+          "description": "This will list all bank accounts belonging to the user.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/user-api-token"
+            }
+          ]
+        }
+      }
+    },
+    "sobatku_virtual_accounts": {
+      "close": {
+        "/user/sobatku_virtual_accounts/close": {
+          "post": {
+            "tags": [
+              "Channeling"
+            ],
+            "summary": "Close Xfers-Sobatku Account",
+            "description": "To close a Xfers-Sobatku Account.\nThe account needs to fulfill the following conditions:\nFully Verified\nContain no balance\nDoes not have any pending contracts (transaction)\nPlease note:\nClosing a user’s Xfers-Sobatku account will lower the account limit for this user to a Guest Account Limit of IDR 2.000.000,00\nHowever, user will still be a verified user\nTo reopen the user’s account, please contact support at http://bit.ly/xferssupport",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              }
+            ]
           }
+        }
+      },
+      "/user/sobatku_virtual_accounts": {
+        "post": {
+          "tags": [
+            "Channeling"
+          ],
+          "summary": "Get Xfers-Sobatku Account status",
+          "description": "To close a Xfers-Sobatku Account.\nThe account needs to fulfill the following conditions:\nFully Verified\nContain no balance\nDoes not have any pending contracts (transaction)\nPlease note:\nClosing a user’s Xfers-Sobatku account will lower the account limit for this user to a Guest Account Limit of IDR 2.000.000,00\nHowever, user will still be a verified user\nTo reopen the user’s account, please contact support at http://bit.ly/xferssupport",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/user-api-token"
+            }
+          ]
         }
       }
     },
     "/user": {
+      "put": {
+        "tags": [
+          "Registration"
+        ],
+        "summary": "Submit KYC Data",
+        "description": "To provide KYC data in order to change user from unverified status into fully verified status.\n\nThe image/document provided us must be hosted in an URL then pass the URL to Xfers via this API.\nMake sure data type for your image is jpeg / png.\nMaximum size of the image/ document is 10 MB.\n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
+          },
+          {
+            "$ref": ">- #/components/parameters/content_type_application/x-www-form-urlencoded"
+          },
+          {
+            "name": "id_front_url",
+            "in": "body",
+            "description": "URL storing the front image of user identity card",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "selfie_2id_url",
+            "in": "body",
+            "description": "URL storing the selfie of user holding their id card",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mother_maiden_name",
+            "in": "body",
+            "description": "Name of Mother",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Marry"
+            }
+          },
+          {
+            "name": "first_name",
+            "in": "body",
+            "description": "Account holder firstname",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Tian Wei"
+            }
+          },
+          {
+            "name": "last_name",
+            "in": "body",
+            "description": "Account holder lastname",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Liu"
+            }
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "description": "User email",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "example@example.com"
+            }
+          },
+          {
+            "name": "date_of_birth",
+            "in": "body",
+            "description": "Date of birth for account holder in yyyy-mm-dd",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "1990-01-01"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "body",
+            "description": "Gender. Possible values: male / female",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "male"
+            }
+          },
+          {
+            "name": "address_line_1",
+            "in": "query",
+            "description": "Address line 1",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Lorem Ipsum Road"
+            }
+          },
+          {
+            "name": "address_line_2",
+            "in": "body",
+            "description": "Address line 2",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "#01-01"
+            }
+          },
+          {
+            "name": "postal_code",
+            "in": "body",
+            "description": "Address postal code",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "123456"
+            }
+          },
+          {
+            "name": "identity_no",
+            "in": "body",
+            "description": "Account holder national identity number or, KTP number of Indonesian.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "s12345678g"
+            }
+          },
+          {
+            "name": "country",
+            "in": "body",
+            "description": "Account holder nationality. SG or ID.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "SG"
+            }
+          },
+          {
+            "name": "city",
+            "in": "body",
+            "description": "City of account holder",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Singapore"
+            }
+          },
+          {
+            "name": "annual_income",
+            "in": "body",
+            "description": "Annual income of user in the local currency (SGD/IDR)",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "60000"
+            }
+          },
+          {
+            "name": "id_back_url",
+            "in": "body",
+            "description": "URL storing the back of the user id card",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "proof_of_address_url",
+            "in": "body",
+            "description": "URL storing the back of the user id card",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "support_document_1_url",
+            "in": "body",
+            "description": "URL storing support docuement 1 url",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "support_document_2_url",
+            "in": "body",
+            "description": "URL storing support docuement 2 url",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "support_document_3_url",
+            "in": "body",
+            "description": "URL storing support docuement 3 url",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "support_document_4_url",
+            "in": "body",
+            "description": "URL storing support docuement 4 url",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "support_document_5_url",
+            "in": "body",
+            "description": "URL storing support docuement 5 url",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "meta_data",
+            "in": "body",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "blood_type",
+            "in": "body",
+            "description": " Account holder’s blood type, without rhesus. Possible values: ‘A’, ‘B’, 'AB’, or 'O’.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "A"
+            }
+          },
+          {
+            "name": "rt",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s RT according to his/her KTP. Leading zero is optional.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "001"
+            }
+          },
+          {
+            "name": "rw",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "005"
+            }
+          },
+          {
+            "name": "administrative_village",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Meruya Utara"
+            }
+          },
+          {
+            "name": "state",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Jawa Barat"
+            }
+          },
+          {
+            "name": "district",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s district address. In KTP, it is called Kecamatan.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Kembangan"
+            }
+          },
+          {
+            "name": "religion",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s religion according to his/her KTP. Possible Values: 'Islam’, 'Katholik’, 'Kristen Protestan’, 'Hindu’, 'Budha’, 'Kong Hu Cu’, or 'Aliran Kepercayaan.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Kembangan"
+            }
+          },
+          {
+            "name": "occupation",
+            "in": "body",
+            "description": "ONLY Indonesia, Account holder’s occupation according to his/her KTP.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Pelajar/Mahasiswa"
+            }
+          },
+          {
+            "name": "callback_url",
+            "in": "body",
+            "description": "ONLY Singapore, URL to receive callback notifications on account verification changes.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Pelajar/Mahasiswa"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User Account"
+        ],
+        "summary": "Get Account Balance/User Info",
+        "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account. \nYou can also use this API to check various data of the user such as first_name, last_name.\nDescription of some notable response.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+          }
+        ]
+      }
+    }
+  },
+  "charges": {
+    "{id}": {
+      "/charges/{id}": {
+        "get": {
+          "tags": [
+            "Charge"
+          ],
+          "summary": "Get Charge",
+          "description": "Retrieves the details of a charge that has previously been created.\nSupply the ID that was returned from your previous request, and Xfers will return the corresponding charge information.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            },
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Charge ID that could be retrieved from the response in Create Charge endpoint",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "contract_7abf6bb130d44c02862982ff6022875d"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
+        }
+      }
+    },
+    "{id},refunds": {
+      "/charges/{id},refunds": {
+        "post": {
+          "tags": [
+            "Charge"
+          ],
+          "summary": "Refund Charge",
+          "description": "This API will refund a charge.\nBoth funds and fees in this transaction will be refunded to the user's Xfers account.\nPlease use the merchant’s API key for this endpoint",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            },
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Charge ID that could be retrieved from the response in Create Charge endpoint",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "contract_7abf6bb130d44c02862982ff6022875d"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
+        }
+      }
+    },
+    "/charges": {
       "post": {
         "tags": [
-          "user"
+          "Charge"
         ],
-        "summary": "Create user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
-        "responses": {
-          "default": {
-            "description": "successful operation"
+        "summary": "Create Charge",
+        "description": "The following API will allow you to move money from user's account to merchant's account.\nIn header X-XFERS-USER-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+          },
+          {
+            "$ref": "#/components/parameters/content_type_application/application/json"
+          },
+          {
+            "name": "amount",
+            "in": "body",
+            "description": "Transaction Amount",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "float",
+              "example": 10000
+            }
+          },
+          {
+            "name": "user_api_token",
+            "in": "body",
+            "description": "Buyer’s api token obtain via get_user_token API.",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order_id",
+            "in": "body",
+            "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Order_docs_12345"
+            }
+          },
+          {
+            "name": "description",
+            "in": "body",
+            "description": "Description of transaction for display purposes",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Testing for Documentation"
+            }
+          },
+          {
+            "name": "notify_url",
+            "in": "body",
+            "description": "URL to receive callback notifications on charge success/failure. Parameter is still supported but it is going through deprecation. Please set notify_url on dashboard instead.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Testing for Documentation"
+            }
+          },
+          {
+            "name": "meta_data",
+            "in": "body",
+            "description": " A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          }
+        }
+      }
+    }
+  },
+  "payouts": {
+    "{id}": {
+      "/payouts/{id}": {
+        "get": {
+          "tags": [
+            "Payout"
+          ],
+          "summary": "Get Payout",
+          "description": "Retrieves the details of a payout that has previously been created.\nSupply the unique payout ID that was returned from your previous request, and Xfers will return the corresponding payout information.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
+        }
+      }
+    },
+    "/payouts": {
+      "post": {
+        "tags": [
+          "Payout"
+        ],
+        "summary": "Create Payout",
+        "description": "The following API will allow you to move money from merchant's account to user's account.\nIn header X-XFERS-USER-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).\nAlternatively, You can also make a peer to peer transfer using this API by putting the sender's token in X-XFERS-USER-API-KEY in the header and putting the receiver's token in user_api_token in the body",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+          },
+          {
+            "$ref": "#/components/parameters/content_type_application/application/json"
+          },
+          {
+            "name": "user_api_token",
+            "in": "body",
+            "description": "Buyer’s api token obtain via get_user_token API.",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "body",
+            "description": "Transaction Amount",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "float",
+              "example": 150000
+            }
+          },
+          {
+            "name": "invocie_id",
+            "in": "body",
+            "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Order_1234"
+            }
+          },
+          {
+            "name": "description",
+            "in": "body",
+            "description": "Description of transaction for display purposes",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "Order_1234"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          }
+        }
+      }
+    }
+  },
+  "loans": {
+    "{id}": {
+      "disbursement_reports": {
+        "/loans/{id}/disbursement_reports": {
+          "post": {
+            "tags": [
+              "Channeling"
+            ],
+            "summary": "Create Disbursement Report",
+            "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "$ref": "#/components/content_type_application/x-www-form-urlencoded"
+              },
+              {
+                "name": "id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
+          }
+        }
+      },
+      "repayments": {
+        "/loans/{id}/repayments": {
+          "post": {
+            "tags": [
+              "Channeling"
+            ],
+            "summary": "Create Repayment",
+            "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "$ref": "#/components/content_type_application/application/json"
+              },
+              {
+                "name": "id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              {
+                "name": "amount",
+                "in": "body",
+                "description": "Amount of repayment.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": "1000.50"
+                }
+              },
+              {
+                "name": "collection_fee",
+                "in": "body",
+                "description": "Collection fee",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": "10.50"
+                }
+              },
+              {
+                "name": "idempotency_id",
+                "in": "body",
+                "description": "idempotency id to indicate your transaction",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": "order_123"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
               }
             }
           },
-          "description": "Created user object",
-          "required": true
+          "get": {
+            "tags": [
+              "Channeling"
+            ],
+            "summary": "List Repayment",
+            "description": "Get the Details of a repayment given a loan id",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "name": "id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
+          }
         }
+      },
+      "/loans/{id}": {
+        "get": {
+          "tags": [
+            "Channeling"
+          ],
+          "summary": "Get Loan Details",
+          "description": "Get the Detail of a Loan Request Given The id of a its loan.\nAvailable Status:\ncreated -> after customer just created the loan to us\nloan_request_processing -> after we called sampoerna loan API and no callback yet\nloan_request_approved -> after we just received sampoerna callback and it is approved\nloan_request_rejected -> after we just received sampoerna callback and it is rejected\nwithdrawal_on_behalf_processing -> after they call our WOB API, WOB still in pending state\nwithdrawal_on_behalf_completed -> after they call our WOB API, WOB still in completed state\nwithdrawal_on_behalf_failed -> after they call our WOB API, WOB in bank_rejected, they need to retry or this is final state\ndisbursement_report_processing -> after customer call our disbursement report API\ndisbursement_report_completed -> after we just call sampoerna disbursement API and completed\ndisbursement_report_failed-> after we just call sampoerna disbursement API and failed",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            },
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Loan ID. You can find this from the response when you create loan.",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
+        }
+      }
+    },
+    "{loan_id}": {
+      "repayments": {
+        "{loan_repayment_id}": {
+          "/loans/{loan_id}/repayments/{loan_repayment_id}": {
+            "GET": {
+              "tags": [
+                "Channeling"
+              ],
+              "summary": "Get Repayment",
+              "description": "Get the Detail of a repayment given its id",
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/user-api-token"
+                },
+                {
+                  "name": "loan_id",
+                  "in": "path",
+                  "description": "Loan ID. You can find this from the response when you create loan.",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "loan_repayment_id",
+                  "in": "path",
+                  "description": "Loan ID. You can find this from the response when you create loan.",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Successful"
+                }
+              }
+            }
+          }
+        }
+      },
+      "disbursements": {
+        "{id}": {
+          "/loans/{loan_id}/disbursements/{id}": {
+            "get": {
+              "tags": [
+                "Channeling"
+              ],
+              "summary": "Get Loan Disbursement",
+              "description": "This API is used to get the current status of the loan disbursement (in the form of a withdrawal contract), in case the callback of the disbursement status is unclear.",
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/user-api-token"
+                },
+                {
+                  "name": "loan_id",
+                  "in": "path",
+                  "description": "Loan ID. You can find this from the response when you create loan.",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "/loans/{loan_id}/disbursements": {
+          "post": {
+            "tags": [
+              "Channeling"
+            ],
+            "summary": "Create Loan Disbursement",
+            "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
+              },
+              {
+                "name": "loan_id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              {
+                "name": "bank_account_id",
+                "in": "body",
+                "description": "User bank_account_id.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              },
+              {
+                "name": "amount",
+                "in": "body",
+                "description": "User bank_account_id.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": 120000
+                }
+              },
+              {
+                "name": "idempotency_id",
+                "in": "body",
+                "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": 120000
+                }
+              },
+              {
+                "name": "user_api_token",
+                "in": "body",
+                "description": "Your user_api_token which can be retrieved from the get token api endpoint. Use this param if you want to withdraw to another user’s bank account instead of your own.",
+                "required": false,
+                "explode": true,
+                "schema": {
+                  "type": "float",
+                  "example": 120000
+                }
+              }
+            ]
+          },
+          "get": {
+            "tags": [
+              "Channeling"
+            ],
+            "summary": "List Loan Disbursement",
+            "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
+              },
+              {
+                "name": "loan_id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "/loans": {
+      "post": {
+        "tags": [
+          "Channeling"
+        ],
+        "summary": "Create Loan",
+        "description": "Creating a Loan. We will pass this loan asynchronously and give callback after complete.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/user-api-token"
+          }
+        ]
+      }
+    }
+  },
+  "banks": {
+    "/banks": {
+      "get": {
+        "tags": [
+          "Bank Account"
+        ],
+        "summary": "Get Bank and Abbreviation Mapping",
+        "description": "This will provide you with a list of banks we support. Usually used for Add Bank Account API",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+          }
+        ]
       }
     }
   }

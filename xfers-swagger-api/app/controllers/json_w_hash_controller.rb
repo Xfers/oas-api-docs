@@ -56,8 +56,8 @@ class JsonWHashController < JsonController
   end
 
   def populate_nested_hash
-    return "build nested hash first before populating" if get_nested_hash.empty?
-    return "json file must be the value of the key 'path'" if @json.has_key?("paths")
+    raise StandardError, "build nested hash first before populating" if get_nested_hash.empty?
+    raise StandardError, "json file must be the value of the key 'path'" if @json.has_key?("paths")
     curr_obj = self
     @json.each {|key,value|
       split_key = key.split("/")
@@ -65,6 +65,7 @@ class JsonWHashController < JsonController
       travel_nested_hash(split_key,curr_obj.get_nested_hash).merge!({key=>value})
       curr_obj = JsonWHashController.new(@json, curr_obj.get_nested_hash)
     }
+    puts("Finished pre processing")
     curr_obj
   end
 

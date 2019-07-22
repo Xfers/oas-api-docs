@@ -9,7 +9,7 @@ class GenerateController < ApplicationController
   end
 
   def write_file (name, json_file)
-    path = "/Users/tandeningklement/Desktop/Parser/xfers-swagger-api/template_oas" + "/" + name +".json"
+    path = File.expand_path("template_oas") + "/" + name +".json"
     file = File.open(path, "w")
     file.puts(json_file)
     file.close
@@ -31,7 +31,7 @@ class GenerateController < ApplicationController
     yaml_path = File.expand_path("config") + "/oas.yml"
     yml = YAML.load(File.read(yaml_path))
     JsonWYamlController.new(yml, master_oas_wo_paths_json, populate_nested_hash).generate_all
-
+    puts("OAS docs generated")
   end
 
 end
