@@ -1,4 +1,5 @@
 This repo is for Xfers' API documentation.
+Beta site for API documentation(https://klementtan.github.io/dynamic-api-doc/)
 
 Problem
 
