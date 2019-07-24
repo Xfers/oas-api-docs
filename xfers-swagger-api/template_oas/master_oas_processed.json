@@ -6,41 +6,118 @@
           "tags": [
             "Registration"
           ],
+          "operationId": "signUpLogin",
           "summary": "Sign Up Account/Trigger OTP",
-          "description": "This API is used to start user registration by inputting phone number. After this API is called, an OTP SMS will be sent to that number. You can re-trigger this API again to re-send OTP to the same phone number after 1 minute. This OTP will expire in 10 minutes.",
+          "description": "This API is used to start user registration by inputting phone number.\nAfter this API is called, an OTP SMS will be sent to that number.\n\nYou can re-trigger this API again to re-send OTP to the same phone number after 1 minute.\n\nThis OTP will expire in 10 minutes.\nThe SMS format will be:\n```\n[XFERS] Your OTP is 123456. This is to set up payments for `merchant_name` . If this is not done by you, please report to http://bit.ly/XfersSupport\n```\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called `X-XFERS-APP-API-KEY`.\nYou will need `X-XFERS-APP-SECRET-KEY`  to generate signature in the request body.\n",
+          "security": [
+            {
+              "X-XFERS-APP-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
-            },
-            {
-              "$ref": "content_type_application/application/json"
-            },
-            {
-              "name": "phone_no",
-              "in": "body",
-              "description": "User mobile no. It should follow International format.",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "+6287785725657"
-              }
-            },
-            {
-              "name": "signature",
-              "in": "body",
-              "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
-              }
             }
           ],
+          "requestBody": {
+            "description": "Request Body. Click on Schema for information on the parameters.",
+            "required": true,
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "properties": {
+                    "phone_no": {
+                      "description": "User mobile no. It should follow International format.",
+                      "type": "string",
+                      "example": "+6287785725657"
+                    },
+                    "signature": {
+                      "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+                      "type": "string",
+                      "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                    }
+                  },
+                  "required": [
+                    "phone_no",
+                    "signature"
+                  ]
+                },
+                "examples": {
+                  "Singapore": {
+                    "summary": "Singapore",
+                    "value": {
+                      "phone_no": "+6592387816",
+                      "signature": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                    }
+                  },
+                  "Indonesia": {
+                    "summary": "Indonesia",
+                    "value": {
+                      "phone_no": "+6287785725657",
+                      "signature": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
-              "description": "Successful"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "msg": "success"
+                    }
+                  }
+                }
+              }
+            },
+            "4XX": {
+              "description": "List of possible errors",
+              "content": {
+                "application/json": {
+                  "examples": {
+                    "Missing Api Key": {
+                      "summary": "Missing API KEY in header",
+                      "value": {
+                        "error": "Missing API KEY in header"
+                      }
+                    },
+                    "Invalid Api Key": {
+                      "summary": "Invalid API KEY",
+                      "value": {
+                        "error": "Invalid API KEY"
+                      }
+                    },
+                    "Invalid signature": {
+                      "summary": "Invalid api_key/signature",
+                      "value": {
+                        "error": "Invalid api_key/signature"
+                      }
+                    },
+                    "Invalid phone no provided.": {
+                      "summary": "Invalid phone no provided",
+                      "value": {
+                        "error": "Invalid phone no provided.",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    },
+                    "Must be a valid Singapore mobile number": {
+                      "summary": "Must be a valid Singapore mobile number.",
+                      "value": {
+                        "error": "Must be a valid Singapore mobile number.",
+                        "error_code": "XFE101",
+                        "error_handling": "Follow instructions in the response."
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -49,44 +126,111 @@
     "private_wallet": {
       "/authorize/private_wallet": {
         "post": {
+          "operationId": "privateWallte",
           "tags": [
             "Registration"
           ],
           "summary": "Register Account",
-          "description": "This API is used to start private ledger registration by inputting phone number.\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called X-XFERS-APP-API-KEY. You will need X-XFERS-APP-SECRET-KEY to generate signature in the request body.\nPlease make use of Pre-request Script to test this API in postman",
+          "description": "This API is used to start private ledger registration by inputting phone number.\n\n This API uses a pair of public key and secret key.\n\nThe header of this API uses public key called `X-XFERS-APP-API-KEY`. You will need `X-XFERS-APP-SECRET-KEY` to generate signature in the request body.\n\nPlease make use of Pre-request Script to test this API in postman",
+          "security": [
+            {
+              "X-XFERS-APP-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
-            },
-            {
-              "$ref": "content_type_application/application/json"
-            },
-            {
-              "name": "phone_no",
-              "in": "body",
-              "description": "User mobile no. It should follow International format.",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "+6287785725657"
-              }
-            },
-            {
-              "name": "signature",
-              "in": "body",
-              "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
-              }
             }
           ],
+          "requestBody": {
+            "description": "Request Body. Click on Schema for information on the parameters.",
+            "required": true,
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "properties": {
+                    "phone_no": {
+                      "description": "User mobile no. It should follow International format.",
+                      "type": "string",
+                      "example": "+6287785725657"
+                    },
+                    "signature": {
+                      "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+                      "type": "string",
+                      "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                    }
+                  },
+                  "required": [
+                    "phone_no",
+                    "signature"
+                  ]
+                },
+                "examples": {
+                  "Singapore": {
+                    "summary": "Singapore",
+                    "value": {
+                      "phone_no": "+6592387816",
+                      "signature": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                    }
+                  },
+                  "Indonesia": {
+                    "summary": "Indonesia",
+                    "value": {
+                      "phone_no": "+6287785725657",
+                      "signature": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "responses": {
             "200": {
-              "description": "Successful"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "msg": "success"
+                  }
+                }
+              }
+            },
+            "4XX": {
+              "description": "List of possible errors",
+              "content": {
+                "application/json": {
+                  "examples": {
+                    "Missing Api Key": {
+                      "summary": "Missing API KEY in header",
+                      "value": {
+                        "error": "Missing API KEY in header"
+                      }
+                    },
+                    "Invalid Api Key": {
+                      "summary": "Invalid API KEY",
+                      "value": {
+                        "error": "Invalid API KEY"
+                      }
+                    },
+                    "Invalid signature": {
+                      "summary": "Invalid api_key/signature",
+                      "value": {
+                        "error": "Invalid api_key/signature"
+                      }
+                    },
+                    "Invalid phone no provided": {
+                      "summary": "Invalid phone no provided",
+                      "value": {
+                        "error": "Invalid phone no provided.",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -98,14 +242,19 @@
           "tags": [
             "Registration"
           ],
+          "operationId": "getToken",
           "summary": "Get User API Token / Submit OTP",
-          "description": "After user receives the OTP SMS, merchant's app should capture the OTP and pass it to Xfers via this API.\nThis API will finish the registration and returns user_api_token. user_api_token is used to control the user's account.\nYou should save the user_api_token for future usage. (to be put in the X-XFERS-USER-API-KEY in headers of other APIs)\n\nIt will also return a is_fully_verified if they already have an Xfers account and have completed our KYC process.\n\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called X-XFERS-APP-API-KEY. You will need X-XFERS-APP-SECRET-KEY to generate signature in the request body.",
+          "description": "After user receives the OTP SMS, merchant's app should capture the OTP and pass it to Xfers via this API.\nThis API will finish the registration and returns user_api_token. user_api_token is used to control the user's account.\nYou should save the user_api_token for future usage. (to be put in the `X-XFERS-USER-API-KEY` in headers of other APIs)\n\nIt will also return a is_fully_verified if they already have an Xfers account and have completed our KYC process.\n\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called `X-XFERS-APP-API-KEY`. You will need `X-XFERS-APP-SECRET-KEY` to generate signature in the request body.",
+          "security": [
+            {
+              "X-XFERS-APP-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
-            },
-            {
-              "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
             },
             {
               "name": "otp",
@@ -143,7 +292,63 @@
           ],
           "responses": {
             "200": {
-              "description": "success"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "msg": "success",
+                      "id": "user_csn7v5lyn4a6",
+                      "user_api_token": "A-Bm4vmjmGyhRaMEoxqBGeoXCEQwJYksrTXc6-ypsyk",
+                      "currency": "idr",
+                      "is_fully_verified": true
+                    }
+                  }
+                }
+              }
+            },
+            "4XX": {
+              "description": "List of possible errors",
+              "content": {
+                "application/json": {
+                  "examples": {
+                    "Missing Api Key": {
+                      "summary": "Missing API KEY in header",
+                      "value": {
+                        "error": "Missing API KEY in header"
+                      }
+                    },
+                    "Invalid Api Key": {
+                      "summary": "Invalid API KEY",
+                      "value": {
+                        "error": "Invalid API KEY"
+                      }
+                    },
+                    "Invalid signature": {
+                      "summary": "Invalid api_key/signature",
+                      "value": {
+                        "error": "Invalid api_key/signature"
+                      }
+                    },
+                    "Invalid OTP provided": {
+                      "summary": "Invalid OTP provided",
+                      "value": {
+                        "error": "Invalid OTP provided.",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    },
+                    "Invalid contact no.": {
+                      "summary": "Invalid contact no",
+                      "value": {
+                        "error": "Invalid contact no.",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -157,9 +362,16 @@
           ],
           "summary": "Get Mock OTP",
           "description": "Get a mock OTP. This is only usable in sandbox environment",
+          "security": [
+            {
+              "user-api-token": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
-              "$ref": "#/components/parameter/user-api-token"
+              "$ref": "#/components/parameters/user-api-token"
             },
             {
               "name": "phone_no",
@@ -168,11 +380,24 @@
               "required": true,
               "explode": true,
               "schema": {
-                "type": "string",
-                "example": "175"
+                "type": "string"
               }
             }
-          ]
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "msg": "success"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -185,13 +410,17 @@
             "User Account"
           ],
           "summary": "Get Transaction History",
-          "description": "This API displays a user’s transaction history.\nThis API displays a user’s transaction history.\nI.e. user’s transactions with other merchants will not be displayed.",
+          "description": "This API displays a user’s transaction history. \n\n\nThis API displays a user’s transaction history.\n\nI.e. user’s transactions with other merchants will not be displayed.",
+          "security": [
+            {
+              "X-XFERS-USER-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
-            },
-            {
-              "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
             },
             {
               "name": "limit",
@@ -200,7 +429,8 @@
               "required": false,
               "explode": true,
               "schema": {
-                "type": "integer"
+                "type": "integer",
+                "default": "60"
               }
             },
             {
@@ -210,7 +440,8 @@
               "required": false,
               "explode": true,
               "schema": {
-                "type": "string"
+                "type": "string",
+                "default": "1 month ago"
               }
             },
             {
@@ -220,7 +451,8 @@
               "required": false,
               "explode": true,
               "schema": {
-                "type": "string"
+                "type": "string",
+                "default": "Now"
               }
             },
             {
@@ -230,13 +462,24 @@
               "required": false,
               "explode": true,
               "schema": {
+                "type": "string",
+                "default": 0
+              }
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "description": "Will only show transactions of that type. Only “Credit Card”, “Charge”, “Payout”, “Deposit”, “Withdrawal” allowed. You can add additional types by separating with a comma.",
+              "required": false,
+              "explode": true,
+              "schema": {
                 "type": "string"
               }
             },
             {
               "name": "status",
               "in": "query",
-              "description": " Only show transactions of that status. Only “completed”, “refunded”, “expired”, “cancelled”, “pending”, “accepted”, “on_hold” allowed. You can add additional types by separating with a comma. Note that putting “completed” will also return transactions with “paid” - you can take them to be the same.",
+              "description": "Will only show transactions of that status. Only “completed”, “refunded”, “expired”, “cancelled”, “pending”, “accepted”, “on_hold” allowed. You can add additional types by separating with a comma. Note that putting “completed” will also return transactions with “paid” - you can take them to be the same.",
               "required": false,
               "explode": true,
               "schema": {
@@ -246,7 +489,254 @@
           ],
           "responses": {
             "200": {
-              "description": "Successful signup"
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "activities": [
+                        {
+                          "fee": 0,
+                          "created_at": "2019-04-02T17:50:41+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_6453bc8bdd8641c8abf26c9fefefacd3",
+                          "amount": 100000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "4pssAgcRvz5Px08o0LVicI18Ej8TKMGAVtBGchCF9r0"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2019-04-02T17:49:36+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_0deed17f4c7440b7bb6a205daf060ee8",
+                          "amount": 100000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "73EBb7URAkcfcMteuZyXPusczumab78IwT2MuCiVaVw"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2019-04-02T17:48:52+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_40fdc298f5f14784ab139a5ad916ee9d",
+                          "amount": 1000000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "DiMU_TDoUFZGCaqOZfLEv1EbPqn_BkNSrfTlopHZl_0"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2019-04-02T17:47:36+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_446ea0427fe746cc81b9f136c5514759",
+                          "amount": 100000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "fgCl2fVcKh-2ZW_5lleZVVLtlqiMhlljAG-bS_3yJPg"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2019-04-02T17:44:41+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_fd5117460c164784af661f1af726e4f1",
+                          "amount": 100000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "RBOrTYTGDahomRv4o4_mjYIlk3kfUcx3YR0_5hmb4nc"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2019-04-02T17:44:18+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_e485bbeab296474390b941d3f40b6018",
+                          "amount": 1000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "DnB4s09v-SdRXWOw9v5ZqILm6NyoXzw9RR1VM7YKWZA"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2019-02-13T14:18:04+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_c327044b18744d2893f5e1d05d2d1fbb",
+                          "amount": 100000,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "5YaskT_YcqBV73LWPIfU56IQfALVAErOZCmf-e6lCT8"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2018-10-05T18:19:15+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_0252ff1bf4944859a1b0b8b908255f4e",
+                          "amount": 100,
+                          "status": "processing",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "FfNMyaL7lS_SQ3Y4q_HlT55TkTATclIGsy446V9oay8"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2018-10-05T18:18:04+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "contract_9ec9e9aae7da4df7aefd03071c3cd1a1",
+                          "amount": 100000,
+                          "status": "processing",
+                          "type": "Deposit",
+                          "metadata": {
+                            "origin_name": "System -TM-",
+                            "destination_name": "Karina",
+                            "description": ""
+                          },
+                          "external_id": "8t944mmbHZUDI4Ws04fPJ79xbshKLX6COlUgC2r7UTI"
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2018-12-14T17:49:12+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "77234e141a42492c95c04df62a6c539a",
+                          "invoice_id": "QUpveF_hqwloCmMuP3yGNKIoY3d_iKsGVKuhTetQQPc",
+                          "amount": 100000,
+                          "status": "completed",
+                          "type": "Payout",
+                          "metadata": {
+                            "origin_name": "admin+faspay_va",
+                            "destination_name": "Karina",
+                            "description": "paid via faspay_virtual_account"
+                          }
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2018-12-14T17:47:20+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "796bde9bbec04369908db99ba4e68751",
+                          "invoice_id": "C-hW0wugMoFI2iU4Y3eyTtk9iphoNL-DbQzKKKCwnt8",
+                          "amount": 12334,
+                          "status": "completed",
+                          "type": "Payout",
+                          "metadata": {
+                            "origin_name": "admin+faspay_va",
+                            "destination_name": "Karina",
+                            "description": "paid via faspay_virtual_account"
+                          }
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2018-12-14T17:46:31+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "d6d91a8d7c0a4d0ebfc77f33bbd7bf1e",
+                          "invoice_id": "Qmbxr8Q5Qkyrcp2Sp6xQU7GJYj1GobAt_fYKD0JVZOM",
+                          "amount": 10000,
+                          "status": "completed",
+                          "type": "Payout",
+                          "metadata": {
+                            "origin_name": "admin+faspay_va",
+                            "destination_name": "Karina",
+                            "description": "paid via faspay_virtual_account"
+                          }
+                        },
+                        {
+                          "fee": 0,
+                          "created_at": "2018-08-16T11:11:49+07:00",
+                          "wallet_name": "General Wallet",
+                          "id": "83efbcbc76c5497f803ea82769ea2457",
+                          "invoice_id": "ZNKwSb9Ajhs5dg0EKgGDwVYhBvZeSulTtnfzZIuh5_0",
+                          "amount": 100000000000,
+                          "status": "completed",
+                          "type": "Payout",
+                          "metadata": {
+                            "origin_name": "admin+faspay_va",
+                            "destination_name": "Karina",
+                            "description": "paid via faspay_virtual_account"
+                          }
+                        }
+                      ],
+                      "activities_returned": 13,
+                      "limit": 50,
+                      "offset": 0,
+                      "start_date": "2018-07-04T11:49:58+08:00 ",
+                      "end_date": "2019-10-30T11:49:58+08:00"
+                    }
+                  }
+                }
+              }
+            },
+            "4XX": {
+              "description": "List of possible errors",
+              "content": {
+                "application/json": {
+                  "examples": {
+                    "Missing Api Key": {
+                      "summary": "Missing API KEY in header",
+                      "value": {
+                        "error": "Missing API KEY in header"
+                      }
+                    },
+                    "Invalid Api Key": {
+                      "summary": "Invalid API KEY",
+                      "value": {
+                        "error": "Invalid API KEY"
+                      }
+                    },
+                    "Parameter 'types': Only 'Credit Card', 'Charge', 'Payout', 'Deposit', 'Withdrawal' allowed.": {
+                      "summary": "Parameter 'types': Only 'Credit Card', 'Charge', 'Payout', 'Deposit', 'Withdrawal' allowed.",
+                      "value": {
+                        "error": "Parameter 'types': Only 'Credit Card', 'Charge', 'Payout', 'Deposit', 'Withdrawal' allowed.",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    },
+                    "Parameter 'status': Only 'completed', 'refunded', 'expired', 'cancelled', 'pending', 'accepted', 'on_hold' allowed.": {
+                      "summary": "Parameter 'status': Only 'completed', 'refunded', 'expired', 'cancelled', 'pending', 'accepted', 'on_hold' allowed.",
+                      "value": {
+                        "error": "Parameter 'status': Only 'completed', 'refunded', 'expired', 'cancelled', 'pending', 'accepted', 'on_hold' allowed.",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -260,11 +750,66 @@
           ],
           "summary": "Get Transfer Info / Get Virtual Account Number",
           "description": "API to get bank account number to be shown to user.\nPlease consult with us to get topup instruction template text to be shown.\nThe common usage of this API is to parse the transfer_info_array given by us and parse it and use the VA numbers of the bank you want.\nFor Virtual Account solution:\nThis API is to get the Virtual Account Number to be displayed to the user\nFor non Virtual Account solution:\nThis API will show the bank account number to do top up.\nPlease consult with us as this solution will require user to use some other identifier to detect the deposit.",
+          "security": [
+            {
+              "user-api-token": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
-              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+              "$ref": "#/components/parameters/user-api-token"
             }
-          ]
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "bank_name_full": "Bank Permata",
+                      "bank_abbrev": "PERMATA",
+                      "bank_name_abbreviation": "PERMATA",
+                      "bank_account_no": "8773162088567819",
+                      "bank_payee_name": "PT Xfers Indonesia Teknologi",
+                      "bank_code": "013",
+                      "branch_code": "",
+                      "branch_area": "",
+                      "unique_id": "87785725657",
+                      "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png",
+                      "transfer_info_array": [
+                        {
+                          "bank_name_full": "Bank Permata",
+                          "bank_abbrev": "PERMATA",
+                          "bank_name_abbreviation": "PERMATA",
+                          "bank_account_no": "8773162088567819",
+                          "bank_code": "013",
+                          "branch_code": "",
+                          "branch_area": "",
+                          "unique_id": "87785725657",
+                          "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png"
+                        },
+                        {
+                          "bank_name_full": "Bank Mandiri",
+                          "bank_abbrev": "MANDIRI",
+                          "bank_name_abbreviation": "MANDIRI",
+                          "bank_account_no": "8830812088567819",
+                          "bank_code": 8.0,
+                          "branch_code": "",
+                          "branch_area": "",
+                          "unique_id": "87785725657",
+                          "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-mandiri-3c9030412a3deb3c41589344a9a7bf74a52ef8dd278834d400b917f35e1b3bf9.png"
+                        }
+                      ],
+                      "wallet_name": "Xfers"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -278,15 +823,19 @@
               ],
               "summary": "Create Withdrawal",
               "description": "Withdrawal Time varies upon country. For Indonesia, withdrawal time is instantenous. For Singapore, withdrawal time depends on whether it is an express withdrawal.\nWithdrawal on Behalf\nIf you wish to withdraw to a bank account not belonging to you, add in user_api_token in the params.\nBehind the scenes, Xfers does a payout of funds from your Xfers account to that user’s Xfers account, followed by a withdrawal. This is required for compliance purposes as we cannot directly withdraw funds to a bank account not belonging to you.",
+              "security": [
+                {
+                  "user-api-token": [
+
+                  ]
+                }
+              ],
               "parameters": [
                 {
                   "$ref": "#/components/parameters/user-api-token"
                 },
                 {
-                  "$ref": "#/components/parameters/content_type_application/application/x-www-form-urlencoded"
-                },
-                {
-                  "name": "banck_account_id",
+                  "name": "bank_account_id",
                   "in": "path",
                   "description": "The ID of the bank account. You can retrieve this from in the response of Create Bank Account and List Bank Account API",
                   "required": true,
@@ -295,52 +844,55 @@
                     "type": "string",
                     "example": "175"
                   }
-                },
-                {
-                  "name": "amount",
-                  "in": "body",
-                  "description": "Transaction Amount",
-                  "required": true,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "120000.0"
-                  }
-                },
-                {
-                  "name": "idempotency_id",
-                  "in": "body",
-                  "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia.",
-                  "required": true,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "Order_1234"
-                  }
-                },
-                {
-                  "name": "express",
-                  "in": "body",
-                  "description": " Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false",
-                  "required": false,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "true"
-                  }
-                },
-                {
-                  "name": "user_api_token",
-                  "in": "body",
-                  "description": "  Use this param if you want to withdraw to another user’s bank account instead of your own.",
-                  "required": false,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "true"
+                }
+              ],
+              "requestBody": {
+                "description": "Request Body. Click on Schema for information on the parameters.",
+                "required": true,
+                "content": {
+                  "application/x-www-form-urlencoded": {
+                    "schema": {
+                      "required": [
+                        "amount",
+                        "idempotency_id"
+                      ],
+                      "properties": {
+                        "amount": {
+                          "type": "string",
+                          "description": "Transaction Amount"
+                        },
+                        "idempotency_id": {
+                          "type": "string",
+                          "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia"
+                        },
+                        "express": {
+                          "type": "boolean",
+                          "default": false,
+                          "description": "Only Singapore. Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
+                        },
+                        "user_api_token": {
+                          "type": "string",
+                          "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
+                        }
+                      }
+                    },
+                    "examples": {
+                      "Request Body Example": {
+                        "summary": "Request Body Example",
+                        "value": {
+                          "amount": "1200000",
+                          "idempotency_id": "Order_1234"
+                        }
+                      }
+                    }
                   }
                 }
-              ]
+              },
+              "responses": {
+                "200": {
+                  "description": "Successful"
+                }
+              }
             }
           }
         },
@@ -351,15 +903,19 @@
             ],
             "summary": "Update Bank Account",
             "description": "This request allows you to update an existing bank account record.",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
             "parameters": [
               {
                 "$ref": "#/components/parameters/user-api-token"
               },
               {
-                "$ref": "#/components/parameters/content_type_application/application/x-www-form-urlencoded"
-              },
-              {
-                "name": "banck_account_id",
+                "name": "bank_account_id",
                 "in": "path",
                 "description": "The ID of the bank account. You can retrieve this from in the response of Create Bank Account and List Bank Account API",
                 "required": true,
@@ -368,59 +924,72 @@
                   "type": "string",
                   "example": "175"
                 }
-              },
-              {
-                "name": "account_no",
-                "in": "body",
-                "description": "bank account no",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string",
-                  "example": 393123432.0
-                }
-              },
-              {
-                "name": "bank",
-                "in": "body",
-                "description": "Bank abbreviation. #use the above description",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": 150000
-                }
-              },
-              {
-                "name": "account_holder_name",
-                "in": "body",
-                "description": "Name of bank account holder name. put PROD_ONLY in Indo Sandbox",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string",
-                  "example": "PROD ONLY"
-                }
               }
             ],
+            "requestBody": {
+              "description": "Request Body. Click on Schema for information on the parameters.",
+              "required": true,
+              "content": {
+                "application/x-www-form-urlencoded": {
+                  "schema": {
+                    "required": [
+                      "account_no",
+                      "bank",
+                      "account_holder_name"
+                    ],
+                    "properties": {
+                      "account_no": {
+                        "type": "string",
+                        "description": "bank account no"
+                      },
+                      "bank": {
+                        "type": "string",
+                        "description": "Bank abbreviation. You can get the list of bank account abbreviation from the Get Bank and Abbreviation Mapping API."
+                      },
+                      "account_holder_name": {
+                        "type": "string",
+                        "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Request Body Example": {
+                      "summary": "Request Body Example",
+                      "value": {
+                        "account_no": 393123432.0,
+                        "bank": "DBS",
+                        "account_holder_name": "Tian Wei"
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "responses": {
               "200": {
                 "description": "Successful"
               }
             }
           },
-          "delte": {
+          "delete": {
             "tags": [
               "Bank Account"
             ],
             "summary": "Delete Bank Account",
             "description": "This request allows you to delete an existing bank account record.",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
             "parameters": [
               {
                 "$ref": "#/components/parameters/user-api-token"
               },
               {
-                "name": "banck_account_id",
+                "name": "bank_account_id",
                 "in": "path",
                 "description": "The ID of the bank account. You can retrieve this from in the response of Create Bank Account and List Bank Account API",
                 "required": true,
@@ -448,6 +1017,13 @@
               ],
               "summary": "Get Withdrawal",
               "description": "This API will be used to get the current status of withdrawal request.\nIt is useful if you want to check with Xfers again about the status of your withdrawal request in case there is something wrong with the callback of the withdrawal request status.",
+              "security": [
+                {
+                  "user-api-token": [
+
+                  ]
+                }
+              ],
               "parameters": [
                 {
                   "$ref": "#/components/parameters/user-api-token"
@@ -462,52 +1038,39 @@
                     "type": "string",
                     "example": "175"
                   }
-                },
-                {
-                  "name": "amount",
-                  "in": "body",
-                  "description": "Transaction Amount",
-                  "required": true,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "120000.0"
-                  }
-                },
-                {
-                  "name": "idempotency_id",
-                  "in": "body",
-                  "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia.",
-                  "required": true,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "Order_1234"
-                  }
-                },
-                {
-                  "name": "express",
-                  "in": "body",
-                  "description": " Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false",
-                  "required": false,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "true"
-                  }
-                },
-                {
-                  "name": "user_api_token",
-                  "in": "body",
-                  "description": "  Use this param if you want to withdraw to another user’s bank account instead of your own.",
-                  "required": false,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "true"
-                  }
                 }
-              ]
+              ],
+              "responses": {
+                "200": {
+                  "description": "Successful"
+                }
+              }
+            }
+          }
+        },
+        "/user/bank_account/withdrawal_requests": {
+          "get": {
+            "tags": [
+              "Withdraw"
+            ],
+            "summary": "List Withdrawal Requests",
+            "description": "This API will be used to get a list of the last 10 withdrawal requests.",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
             }
           }
         }
@@ -515,42 +1078,58 @@
       "withdraawal_request": {
         "mock_result": {
           "/user/bank_account/withdraawal_request/mock_result": {
-            "get": {
+            "put": {
               "tags": [
                 "Testing"
               ],
               "summary": "Mock Withdrawal Result",
               "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
+              "security": [
+                {
+                  "user-api-token": [
+
+                  ]
+                }
+              ],
               "parameters": [
                 {
-                  "$ref": "#/components/parameter/user-api-token"
-                },
-                {
-                  "$ref": "#/components/parameter/content_type_application/x-www-form-urlencoded"
-                },
-                {
-                  "name": "idempotency_id",
-                  "in": "body",
-                  "description": "Idempotency ID you use to create your withdrawal request",
-                  "required": true,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "Order_1234"
-                  }
-                },
-                {
-                  "name": "status",
-                  "in": "body",
-                  "description": "'completed' or 'failed'",
-                  "required": true,
-                  "explode": true,
-                  "schema": {
-                    "type": "string",
-                    "example": "completed"
+                  "$ref": "#/components/parameters/user-api-token"
+                }
+              ],
+              "requestBody": {
+                "description": "Request Body. Click on Schema for information on the parameters.",
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "properties": {
+                        "idempotency_id": {
+                          "type": "string",
+                          "description": "Idempotency ID you use to create your withdrawal request"
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "'completed' or 'failed'"
+                        }
+                      }
+                    },
+                    "examples": {
+                      "Request Body Example": {
+                        "summary": "Request Body Example",
+                        "value": {
+                          "idempotency_id": "Order_1234",
+                          "status": "completed"
+                        }
+                      }
+                    }
                   }
                 }
-              ]
+              },
+              "responses": {
+                "200": {
+                  "description": "Successful"
+                }
+              }
             }
           }
         }
@@ -562,46 +1141,62 @@
           ],
           "summary": "Add Bank Account",
           "description": "This API will be used to attach a new bank account to a user.\nYou will be able to withdraw user's balance to this bank account.\nIn Indonesia Production, This API will return the detected_name as provided from the bank.\nThe account_holder_name you provided and detected_name needs to be similar (doesn't need to be 100% match).",
+          "security": [
+            {
+              "user-api-token": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/user-api-token"
-            },
-            {
-              "$ref": "#/components/parameters/content_type_application/application/json"
-            },
-            {
-              "name": "account_no",
-              "in": "body",
-              "description": "Bank account no",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "1680366060"
-              }
-            },
-            {
-              "name": "bank",
-              "in": "body",
-              "description": "Bank abbreviation. Use Get Bank and Abbreviation Mapping to find out what bank abbreviation to enter.",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "account_holder_name",
-              "in": "body",
-              "description": "Name of bank account holder name. put PROD_ONLY in Indo Sandbox",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "PROD ONLY"
+            }
+          ],
+          "requestBody": {
+            "description": "Request Body. Click on Schema for information on the parameters.",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "account_no",
+                    "bank",
+                    "account_holder_name"
+                  ],
+                  "properties": {
+                    "account_no": {
+                      "type": "string",
+                      "description": "bank account no"
+                    },
+                    "bank": {
+                      "type": "string",
+                      "description": "Bank abbreviation. You can get the list of bank account abbreviation from the Get Bank and Abbreviation Mapping API."
+                    },
+                    "account_holder_name": {
+                      "type": "string",
+                      "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                    }
+                  }
+                },
+                "examples": {
+                  "Request Body Example": {
+                    "summary": "Request Body Example",
+                    "value": {
+                      "account_no": 393123432.0,
+                      "bank": "DBS",
+                      "account_holder_name": "Tian Wei"
+                    }
+                  }
+                }
               }
             }
-          ]
+          },
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
         },
         "get": {
           "tags": [
@@ -609,11 +1204,23 @@
           ],
           "summary": "List Bank Account",
           "description": "This will list all bank accounts belonging to the user.",
+          "security": [
+            {
+              "user-api-token": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/user-api-token"
             }
-          ]
+          ],
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
         }
       }
     },
@@ -622,30 +1229,54 @@
         "/user/sobatku_virtual_accounts/close": {
           "post": {
             "tags": [
-              "Channeling"
+              "Sobatku Account"
             ],
             "summary": "Close Xfers-Sobatku Account",
             "description": "To close a Xfers-Sobatku Account.\nThe account needs to fulfill the following conditions:\nFully Verified\nContain no balance\nDoes not have any pending contracts (transaction)\nPlease note:\nClosing a user’s Xfers-Sobatku account will lower the account limit for this user to a Guest Account Limit of IDR 2.000.000,00\nHowever, user will still be a verified user\nTo reopen the user’s account, please contact support at http://bit.ly/xferssupport",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
             "parameters": [
               {
                 "$ref": "#/components/parameters/user-api-token"
               }
-            ]
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
           }
         }
       },
       "/user/sobatku_virtual_accounts": {
         "post": {
           "tags": [
-            "Channeling"
+            "Sobatku Account"
           ],
           "summary": "Get Xfers-Sobatku Account status",
           "description": "To close a Xfers-Sobatku Account.\nThe account needs to fulfill the following conditions:\nFully Verified\nContain no balance\nDoes not have any pending contracts (transaction)\nPlease note:\nClosing a user’s Xfers-Sobatku account will lower the account limit for this user to a Guest Account Limit of IDR 2.000.000,00\nHowever, user will still be a verified user\nTo reopen the user’s account, please contact support at http://bit.ly/xferssupport",
+          "security": [
+            {
+              "user-api-token": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/user-api-token"
             }
-          ]
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
         }
       }
     },
@@ -655,359 +1286,436 @@
           "Registration"
         ],
         "summary": "Submit KYC Data",
-        "description": "To provide KYC data in order to change user from unverified status into fully verified status.\n\nThe image/document provided us must be hosted in an URL then pass the URL to Xfers via this API.\nMake sure data type for your image is jpeg / png.\nMaximum size of the image/ document is 10 MB.\n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.",
-        "parameters": [
+        "description": "To provide KYC data in order to change user from unverified status into fully verified status.  \n\nThe image/document provided us must be hosted in an URL then pass the URL to Xfers via this API.  \nMake sure data type for your image is jpeg / png.  \nMaximum size of the image/ document is 10 MB.  \n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.  \n\n#### KYC Verification Notification\nWe highly recommend you to use callback_url in this API to be notified when verification will finish.\n\nIf you put a notify_url in KYC data submission, we will send you the callback with the following parameter when the verification is `successful` or `rejected`. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed. In Indonesia, fully verified user will be backed by a savings account.  \nThus, there are required parameters which are mother_maiden_name, id_front_url, selfie_2id_url.  \nAdditional data will speed up the KYC process.",
+        "security": [
           {
-            "$ref": "#/components/parameters/X-XFERS-APP-API-KEY"
-          },
-          {
-            "$ref": ">- #/components/parameters/content_type_application/x-www-form-urlencoded"
-          },
-          {
-            "name": "id_front_url",
-            "in": "body",
-            "description": "URL storing the front image of user identity card",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "selfie_2id_url",
-            "in": "body",
-            "description": "URL storing the selfie of user holding their id card",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "mother_maiden_name",
-            "in": "body",
-            "description": "Name of Mother",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Marry"
-            }
-          },
-          {
-            "name": "first_name",
-            "in": "body",
-            "description": "Account holder firstname",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Tian Wei"
-            }
-          },
-          {
-            "name": "last_name",
-            "in": "body",
-            "description": "Account holder lastname",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Liu"
-            }
-          },
-          {
-            "name": "email",
-            "in": "body",
-            "description": "User email",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "example@example.com"
-            }
-          },
-          {
-            "name": "date_of_birth",
-            "in": "body",
-            "description": "Date of birth for account holder in yyyy-mm-dd",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "1990-01-01"
-            }
-          },
-          {
-            "name": "gender",
-            "in": "body",
-            "description": "Gender. Possible values: male / female",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "male"
-            }
-          },
-          {
-            "name": "address_line_1",
-            "in": "query",
-            "description": "Address line 1",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Lorem Ipsum Road"
-            }
-          },
-          {
-            "name": "address_line_2",
-            "in": "body",
-            "description": "Address line 2",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "#01-01"
-            }
-          },
-          {
-            "name": "postal_code",
-            "in": "body",
-            "description": "Address postal code",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "123456"
-            }
-          },
-          {
-            "name": "identity_no",
-            "in": "body",
-            "description": "Account holder national identity number or, KTP number of Indonesian.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "s12345678g"
-            }
-          },
-          {
-            "name": "country",
-            "in": "body",
-            "description": "Account holder nationality. SG or ID.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "SG"
-            }
-          },
-          {
-            "name": "city",
-            "in": "body",
-            "description": "City of account holder",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Singapore"
-            }
-          },
-          {
-            "name": "annual_income",
-            "in": "body",
-            "description": "Annual income of user in the local currency (SGD/IDR)",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "60000"
-            }
-          },
-          {
-            "name": "id_back_url",
-            "in": "body",
-            "description": "URL storing the back of the user id card",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "proof_of_address_url",
-            "in": "body",
-            "description": "URL storing the back of the user id card",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "support_document_1_url",
-            "in": "body",
-            "description": "URL storing support docuement 1 url",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "support_document_2_url",
-            "in": "body",
-            "description": "URL storing support docuement 2 url",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "support_document_3_url",
-            "in": "body",
-            "description": "URL storing support docuement 3 url",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "support_document_4_url",
-            "in": "body",
-            "description": "URL storing support docuement 4 url",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "support_document_5_url",
-            "in": "body",
-            "description": "URL storing support docuement 5 url",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "meta_data",
-            "in": "body",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "blood_type",
-            "in": "body",
-            "description": " Account holder’s blood type, without rhesus. Possible values: ‘A’, ‘B’, 'AB’, or 'O’.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "A"
-            }
-          },
-          {
-            "name": "rt",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RT according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "001"
-            }
-          },
-          {
-            "name": "rw",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "005"
-            }
-          },
-          {
-            "name": "administrative_village",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Meruya Utara"
-            }
-          },
-          {
-            "name": "state",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s RW according to his/her KTP. Leading zero is optional.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Jawa Barat"
-            }
-          },
-          {
-            "name": "district",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s district address. In KTP, it is called Kecamatan.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Kembangan"
-            }
-          },
-          {
-            "name": "religion",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s religion according to his/her KTP. Possible Values: 'Islam’, 'Katholik’, 'Kristen Protestan’, 'Hindu’, 'Budha’, 'Kong Hu Cu’, or 'Aliran Kepercayaan.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Kembangan"
-            }
-          },
-          {
-            "name": "occupation",
-            "in": "body",
-            "description": "ONLY Indonesia, Account holder’s occupation according to his/her KTP.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Pelajar/Mahasiswa"
-            }
-          },
-          {
-            "name": "callback_url",
-            "in": "body",
-            "description": "ONLY Singapore, URL to receive callback notifications on account verification changes.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Pelajar/Mahasiswa"
-            }
+            "user-api-token": [
+
+            ]
           }
         ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/user-api-token"
+          }
+        ],
+        "requestBody": {
+          "description": "Request Body. Click on Schema for information on the parameters.",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "id_front_url",
+                  "selfie_2id_url",
+                  "mother_maiden_name"
+                ],
+                "properties": {
+                  "id_front_url": {
+                    "type": "string",
+                    "description": "Required for Indo, Optional for SG. URL storing the front image of user identity card"
+                  },
+                  "selfie_2id_url": {
+                    "type": "string",
+                    "description": "Required for Indo, Optional for SG. URL storing the selfie of user holding their id card"
+                  },
+                  "mother_maiden_name": {
+                    "type": "string",
+                    "description": "Required for Indo, Optional for SG. Name of Mother"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "Account holder firstname"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "Account holder lastname"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User email"
+                  },
+                  "date_of_birth": {
+                    "type": "string",
+                    "description": " Date of birth for account holder in yyyy-mm-dd"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "description": "Gender. Possible values: male / female"
+                  },
+                  "address_line_1": {
+                    "type": "string",
+                    "description": "Address line 1"
+                  },
+                  "address_line_2": {
+                    "type": "string",
+                    "description": "Address line 2"
+                  },
+                  "nationality": {
+                    "type": "string",
+                    "description": "Account holder nationality"
+                  },
+                  "postal_code": {
+                    "type": "string",
+                    "description": "Address postal code"
+                  },
+                  "identity_no": {
+                    "type": "string",
+                    "description": "Account holder national identity number or, KTP number of Indonesian."
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "Account holder country of residence."
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "Account holder city of residence."
+                  },
+                  "annual_income": {
+                    "type": "integer",
+                    "description": "Annual income of user in the local currency (SGD/IDR)"
+                  },
+                  "id_back_url": {
+                    "type": "string",
+                    "description": "URL storing the back of the user id card"
+                  },
+                  "proof_of_address_url": {
+                    "type": "string",
+                    "description": "URL storing the proof of address"
+                  },
+                  "support_document_1_url": {
+                    "type": "string",
+                    "description": "URL storing support docuement 1 url"
+                  },
+                  "support_document_2_url": {
+                    "type": "string",
+                    "description": "URL storing support docuement 2 url"
+                  },
+                  "support_document_3_url": {
+                    "type": "string",
+                    "description": "URL storing support docuement 3 url"
+                  },
+                  "support_document_4_url": {
+                    "type": "string",
+                    "description": "URL storing support docuement 4 url"
+                  },
+                  "support_document_5_url": {
+                    "type": "string",
+                    "description": "URL storing support docuement 5 url"
+                  },
+                  "meta_data": {
+                    "type": "string",
+                    "description": "Addtional data like Jumio info dump."
+                  },
+                  "place_of_birth": {
+                    "type": "string",
+                    "description": "Account holder’s birth place."
+                  },
+                  "blood_type": {
+                    "type": "string",
+                    "description": " Account holder’s blood type, without rhesus. Possible values: ‘A’, ‘B’, 'AB’, or 'O’"
+                  },
+                  "rt": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s RT according to his/her KTP. Leading zero is optional."
+                  },
+                  "rw": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s RW according to his/her KTP. Leading zero is optional."
+                  },
+                  "administrative_village": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s administrative_village address. In KTP, it is called Kelurahan or Desa."
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "Account holder’s state of residence. In KTP, it is called Provinsi."
+                  },
+                  "district": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s district address. In KTP, it is called Kecamatan."
+                  },
+                  "religion": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s religion according to his/her KTP. Possible Values: 'Islam’, 'Katholik’, 'Kristen Protestan’, 'Hindu’, 'Budha’, 'Kong Hu Cu’, or 'Aliran Kepercayaan’"
+                  },
+                  "marital_status": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s marital status according to his/her KTP. Possible Values: 'Belum Kawin’, 'Kawin’, 'Janda’, or 'Duda’"
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "description": "Only Indonesia. Account holder’s occupation according to his/her KTP."
+                  },
+                  "callback_url": {
+                    "deprecated": true,
+                    "type": "string",
+                    "description": "Only Indonesia. URL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set callback_url instead."
+                  }
+                }
+              },
+              "examples": {
+                "Singapore": {
+                  "summary": "Singapore",
+                  "value": {
+                    "id_front_url": "example.com",
+                    "selfie_2id_url": "example.com",
+                    "mother_maiden_name": "Marry",
+                    "first_name": "Doe",
+                    "last_name": "John",
+                    "email": "example@example.com",
+                    "date_of_birth": "1990-01-01",
+                    "gender": "male",
+                    "address_line_1": "Lorem Ipsum Road",
+                    "address_line_2": "#01-01",
+                    "nationality": "Singaporean",
+                    "postal_code": "123456",
+                    "identity_no": "s12345678g",
+                    "country": "SG",
+                    "city": "Singapore",
+                    "annual_income": 60000,
+                    "id_back_url": "example.com",
+                    "proof_of_address_url": "example.com",
+                    "support_document_1_url": "example.com",
+                    "support_document_2_url": "example.com",
+                    "support_document_3_url": "example.com",
+                    "support_document_4_url": "example.com",
+                    "support_document_5_url": "example.com",
+                    "meta_data": "string",
+                    "blood_type": "A",
+                    "state": "string",
+                    "district": "string"
+                  }
+                },
+                "Indonesia": {
+                  "summary": "Indonesia",
+                  "value": {
+                    "id_front_url": "example.com",
+                    "selfie_2id_url": "example.com",
+                    "mother_maiden_name": "Marry",
+                    "first_name": "Doe",
+                    "last_name": "John",
+                    "email": "example@example.com",
+                    "date_of_birth": "1990-01-01",
+                    "gender": "male",
+                    "address_line_1": "Lorem Ipsum Road",
+                    "address_line_2": "#01-01",
+                    "nationality": "Indonesian",
+                    "postal_code": "123456",
+                    "identity_no": "3171123412341234",
+                    "country": "Indonesia",
+                    "city": "Jakarta",
+                    "annual_income": 60000,
+                    "id_back_url": "example.com",
+                    "proof_of_address_url": "example.com",
+                    "support_document_1_url": "example.com",
+                    "support_document_2_url": "example.com",
+                    "support_document_3_url": "example.com",
+                    "support_document_4_url": "example.com",
+                    "support_document_5_url": "example.com",
+                    "meta_data": "string",
+                    "place_of_birth": "Jakarta",
+                    "blood_type": "A",
+                    "rt": "001",
+                    "rw": "005",
+                    "administrative_village": "Meruya Utara",
+                    "state": "Jawa Barat",
+                    "district": "Kembangan",
+                    "religion": "Islam",
+                    "marital_status": "Belum Kawin",
+                    "occupation": "Pelajar/Mahasiswa"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "callbacks": {
+          "Xfers' POST request to notify KYC status": {
+            "yoururl.com": {
+              "post": {
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "properties": {
+                          "id": {
+                            "description": "A unique ID for the user",
+                            "type": "string",
+                            "example": "user_gksj43jgzgqv"
+                          },
+                          "verification_status": {
+                            "description": "`true` or `false`",
+                            "type": "string",
+                            "example": "user_gksj43jgzgqv"
+                          },
+                          "reason": {
+                            "description": "reason for verification status. Only applicable when verification_status is false",
+                            "type": "string",
+                            "example": "The NRIC Photo is too blur"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "Your server returns this code if it accepts the callback"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "available_balance": "0.32",
+                    "ledger_balance": "0.32",
+                    "bank_transfer_rates": "0.0",
+                    "bank_transfer_fees": "0.45",
+                    "first_name": "Winston",
+                    "last_name": "Andersen",
+                    "date_of_birth": "1986-02-27",
+                    "country_of_birth": "",
+                    "gender": "male",
+                    "email": "winston@xfers.com",
+                    "country": "id",
+                    "nationality": "Indonesian",
+                    "address_line_1": "Blk 712 loyang Avenue 5",
+                    "address_line_2": "#01-41",
+                    "postal_code": "340712",
+                    "nric_type": "",
+                    "identity_no": "317201180894005",
+                    "nric_issue_date": "",
+                    "phone_no": "+6287785725657",
+                    "bank_accounts": [
+                      {
+                        "id": 69,
+                        "account_no": "1150006390175",
+                        "account_holder_name": "PROD ONLY",
+                        "detected_name": "PROD ONLY",
+                        "verification_status": "pending",
+                        "verified": true,
+                        "bank_abbrev": "BCA",
+                        "usage": "all"
+                      },
+                      {
+                        "id": 175,
+                        "account_no": "1680366060",
+                        "account_holder_name": "PROD ONLY",
+                        "detected_name": "PROD ONLY",
+                        "verification_status": "pending",
+                        "verified": true,
+                        "bank_abbrev": "BCA",
+                        "usage": "all"
+                      },
+                      {
+                        "id": 177,
+                        "account_no": "1150006390175",
+                        "account_holder_name": "PROD ONLY",
+                        "detected_name": "PROD ONLY",
+                        "verification_status": "pending",
+                        "verified": true,
+                        "bank_abbrev": "MANDIRI",
+                        "usage": "all"
+                      },
+                      {
+                        "id": 207,
+                        "account_no": "1234567890",
+                        "account_holder_name": "Some Name",
+                        "detected_name": "PROD ONLY",
+                        "verification_status": "pending",
+                        "verified": true,
+                        "bank_abbrev": "BCA",
+                        "usage": "all"
+                      }
+                    ],
+                    "annual_income": "",
+                    "id_front": "15332940588453-a-blue-sky-with-white-clouds-pv.jpg",
+                    "id_front_url": "https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_fronts/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=eBPUqBc0tCwmmpbKu5HmISLBiaQ%3D",
+                    "selfie_2id": "15332940588453-a-blue-sky-with-white-clouds-pv.jpg",
+                    "selfie_2id_url": "https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_selfies/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=cK6icTFvQC6XSOPMfLSMjZ1ZVlo%3D",
+                    "account_locked": false,
+                    "kyc_verified": true,
+                    "meta_data": "",
+                    "place_of_birth": null,
+                    "blood_type": null,
+                    "rt_rw": null,
+                    "administrative_village": null,
+                    "district": null,
+                    "religion": null,
+                    "marital_status": null,
+                    "occupation": null,
+                    "mother_maiden_name": "Luna"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "List of possible errors",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Missing Api Key": {
+                    "summary": "Missing API KEY in header",
+                    "value": {
+                      "error": "Missing API KEY in header"
+                    }
+                  },
+                  "Invalid Api Key": {
+                    "summary": "Invalid API KEY",
+                    "value": {
+                      "error": "Invalid API KEY"
+                    }
+                  },
+                  "Invalid signature": {
+                    "summary": "Invalid api_key/signature",
+                    "value": {
+                      "error": "Invalid api_key/signature"
+                    }
+                  },
+                  "Blood type can only be A, B, AB, O, or -": {
+                    "summary": "Blood type can only be A, B, AB, O, or -",
+                    "value": {
+                      "error": "Blood type can only be A, B, AB, O, or -",
+                      "error_code": "XFE12",
+                      "error_handling": "Make sure you entered the correct parameters."
+                    }
+                  },
+                  "The birth date you inputted is invalid": {
+                    "summary": "The birth date you inputted is invalid",
+                    "value": {
+                      "error": "The birth date you inputted is invalid",
+                      "error_code": "XFE12",
+                      "error_handling": "Make sure you entered the correct parameters."
+                    }
+                  },
+                  "RT must be a number or -": {
+                    "summary": "RT must be a number or -",
+                    "value": {
+                      "error": "RT must be a number or -",
+                      "error_code": "XFE12",
+                      "error_handling": "Make sure you entered the correct parameters."
+                    }
+                  },
+                  "RW must be a number or -": {
+                    "summary": "RW must be a number or -",
+                    "value": {
+                      "error": "RW must be a number or -",
+                      "error_code": "XFE12",
+                      "error_handling": "Make sure you entered the correct parameters."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1017,16 +1725,191 @@
         ],
         "summary": "Get Account Balance/User Info",
         "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account. \nYou can also use this API to check various data of the user such as first_name, last_name.\nDescription of some notable response.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            "$ref": "#/components/parameters/user-api-token"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "user_gksj43jgzgqv",
+                    "available_balance": "2595750.79",
+                    "ledger_balance": "2595750.79",
+                    "bank_transfer_rates": "0.0",
+                    "bank_transfer_fees": "0.45",
+                    "first_name": "docs.xfers.io",
+                    "last_name": "testingaccount",
+                    "date_of_birth": "1990-11-09",
+                    "country_of_birth": "SG",
+                    "gender": "male",
+                    "email": "docs@xfers.com",
+                    "country": "sg",
+                    "state": "Singapore",
+                    "city": "Singapore",
+                    "nationality": "Singaporean",
+                    "address_line_1": "Blk 71 Ayer Rajah Cresent",
+                    "address_line_2": "#02-52",
+                    "postal_code": "541121",
+                    "nric_type": "",
+                    "identity_no": "S8117102G",
+                    "nric_issue_date": "",
+                    "phone_no": "+6281128125",
+                    "bank_accounts": [
+                      {
+                        "id": 329,
+                        "account_no": "800006788912",
+                        "account_holder_name": "Tian Wei",
+                        "detected_name": "PROD ONLY",
+                        "verification_status": "pending",
+                        "verified": true,
+                        "bank_abbrev": "CIMB_NIAGA",
+                        "usage": "all"
+                      },
+                      {
+                        "id": 561,
+                        "account_no": "2480096820",
+                        "account_holder_name": null,
+                        "detected_name": "PROD ONLY",
+                        "verification_status": "pending",
+                        "verified": true,
+                        "bank_abbrev": "BCA",
+                        "usage": "all"
+                      }
+                    ],
+                    "annual_income": "",
+                    "id_front": "15357011921535007959147096578.jpg",
+                    "id_front_url": "https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_fronts/000/000/383/original/15357011921535007959147096578.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1540979796&Signature=JVrLUGZUtYhfhef4mNXD0L45X%2BA%3D",
+                    "selfie_2id": "15357011921535007959147096578.jpg",
+                    "selfie_2id_url": "https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_selfies/000/000/383/original/15357011921535007959147096578.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1540979796&Signature=UUMSRP%2FWw55PY23oCLBYF5moZ60%3D",
+                    "account_locked": false,
+                    "google_auth_enabled": false,
+                    "kyc_verified": true,
+                    "kyc_needed": true,
+                    "meta_data": "",
+                    "display_name": "XfersDocsTest",
+                    "avatar": "cardProfileDefault.png",
+                    "avatar_url": "cardProfileDefault.png",
+                    "is_guest": false,
+                    "is_trial": true,
+                    "place_of_birth": null,
+                    "blood_type": null,
+                    "rt_rw": null,
+                    "administrative_village": null,
+                    "district": null,
+                    "religion": null,
+                    "marital_status": null,
+                    "occupation": null,
+                    "mother_maiden_name": "Putras"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "List of possible errors",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Missing Api Key": {
+                    "summary": "Missing API KEY in header",
+                    "value": {
+                      "error": "Missing API KEY in header"
+                    }
+                  },
+                  "Invalid Api Key": {
+                    "summary": "Invalid API KEY",
+                    "value": {
+                      "error": "Invalid API KEY"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
   "charges": {
     "{id}": {
+      "refunds": {
+        "/charges/{id}/refunds": {
+          "post": {
+            "tags": [
+              "Charge"
+            ],
+            "summary": "Refund Charge",
+            "description": "This API will refund a charge.\nBoth funds and fees in this transaction will be refunded to the user's Xfers account.\nPlease use the merchant’s API key for this endpoint",
+            "security": [
+              {
+                "X-XFERS-USER-API-KEY": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+              },
+              {
+                "name": "id",
+                "in": "path",
+                "description": "Charge ID that could be retrieved from the response in Create Charge endpoint",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string",
+                  "example": "contract_7abf6bb130d44c02862982ff6022875d"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "List of possible errors",
+                "content": {
+                  "application/json": {
+                    "examples": {
+                      "Missing Api Key": {
+                        "summary": "Missing API KEY in header",
+                        "value": {
+                          "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                          "object": "Sobatku::TransferContract",
+                          "status": "completed",
+                          "amount": "10000.0",
+                          "total_amount": "10000.0",
+                          "currency": "idr",
+                          "fee_amount": "100.0",
+                          "notify_url": "https://www.example.com/updates",
+                          "wallet_name": "General Wallet",
+                          "order_id": "Order_docs_12345",
+                          "description": "Testing for Documentation",
+                          "receipt_email": "winston@xfers.com",
+                          "metadata": {
+                            "callback_url": "https://www.example.com/updates",
+                            "merchant_metadata": "test metadata"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "/charges/{id}": {
         "get": {
           "tags": [
@@ -1034,6 +1917,13 @@
           ],
           "summary": "Get Charge",
           "description": "Retrieves the details of a charge that has previously been created.\nSupply the ID that was returned from your previous request, and Xfers will return the corresponding charge information.",
+          "security": [
+            {
+              "X-XFERS-USER-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
@@ -1052,39 +1942,59 @@
           ],
           "responses": {
             "200": {
-              "description": "Successful"
-            }
-          }
-        }
-      }
-    },
-    "{id},refunds": {
-      "/charges/{id},refunds": {
-        "post": {
-          "tags": [
-            "Charge"
-          ],
-          "summary": "Refund Charge",
-          "description": "This API will refund a charge.\nBoth funds and fees in this transaction will be refunded to the user's Xfers account.\nPlease use the merchant’s API key for this endpoint",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
-            },
-            {
-              "name": "id",
-              "in": "path",
-              "description": "Charge ID that could be retrieved from the response in Create Charge endpoint",
-              "required": true,
-              "explode": true,
-              "schema": {
-                "type": "string",
-                "example": "contract_7abf6bb130d44c02862982ff6022875d"
+              "description": "List of possible errors",
+              "content": {
+                "application/json": {
+                  "examples": {
+                    "Missing Api Key": {
+                      "summary": "Missing API KEY in header",
+                      "value": {
+                        "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                        "object": "Sobatku::TransferContract",
+                        "status": "completed",
+                        "amount": "10000.0",
+                        "total_amount": "10000.0",
+                        "currency": "idr",
+                        "fee_amount": "100.0",
+                        "notify_url": "https://www.example.com/updates",
+                        "wallet_name": "General Wallet",
+                        "order_id": "Order_docs_12345",
+                        "description": "Testing for Documentation",
+                        "receipt_email": "winston@xfers.com",
+                        "metadata": {
+                          "callback_url": "https://www.example.com/updates",
+                          "merchant_metadata": "test metadata"
+                        }
+                      }
+                    }
+                  }
+                }
               }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful"
+            },
+            "4XX": {
+              "description": "List of possible errors",
+              "content": {
+                "application/json": {
+                  "examples": {
+                    "Invalid order_id or trans_id": {
+                      "summary": "Invalid order_id or trans_id",
+                      "value": {
+                        "error": "Invalid order_id or trans_id",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    },
+                    "Invalid google_auth_code provided": {
+                      "summary": "Invalid google_auth_code provided",
+                      "value": {
+                        "error": "Invalid order_id or trans_id",
+                        "error_code": "XFE12",
+                        "error_handling": "Make sure you entered the correct parameters."
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1097,81 +2007,153 @@
         ],
         "summary": "Create Charge",
         "description": "The following API will allow you to move money from user's account to merchant's account.\nIn header X-XFERS-USER-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).",
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
-          },
-          {
-            "$ref": "#/components/parameters/content_type_application/application/json"
-          },
-          {
-            "name": "amount",
-            "in": "body",
-            "description": "Transaction Amount",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "float",
-              "example": 10000
-            }
-          },
-          {
-            "name": "user_api_token",
-            "in": "body",
-            "description": "Buyer’s api token obtain via get_user_token API.",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "order_id",
-            "in": "body",
-            "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Order_docs_12345"
-            }
-          },
-          {
-            "name": "description",
-            "in": "body",
-            "description": "Description of transaction for display purposes",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Testing for Documentation"
-            }
-          },
-          {
-            "name": "notify_url",
-            "in": "body",
-            "description": "URL to receive callback notifications on charge success/failure. Parameter is still supported but it is going through deprecation. Please set notify_url on dashboard instead.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Testing for Documentation"
-            }
-          },
-          {
-            "name": "meta_data",
-            "in": "body",
-            "description": " A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "description": "Request Body. Click on Schema for information on the parameters.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "Transaction Amount."
+                  },
+                  "user_api_token": {
+                    "type": "string",
+                    "description": "This is your user's api token. You can retrieve this from the Get Token API."
+                  },
+                  "order_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Testing for Documentation."
+                  },
+                  "notify_url": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set notify_url instead."
+                  },
+                  "meta_data": {
+                    "type": "string",
+                    "description": "A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format."
+                  }
+                },
+                "required": [
+                  "amount",
+                  "user_api_token",
+                  "order_id"
+                ]
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "amount": 10000,
+                    "user_api_token": "user-api-key",
+                    "order_id": "Order_docs_12345",
+                    "description": "Testing for Documentation",
+                    "notify_url": "https://www.example.com/updates",
+                    "meta_data": "test metadata"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Successful"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                    "object": "Sobatku::TransferContract",
+                    "status": "processing",
+                    "amount": "10000.0",
+                    "total_amount": "10000.0",
+                    "currency": "idr",
+                    "fee_amount": "100.0",
+                    "notify_url": "https://www.example.com/updates",
+                    "wallet_name": "General Wallet",
+                    "order_id": "Order_docs_12345",
+                    "description": "Testing for Documentation",
+                    "receipt_email": "winston@xfers.com",
+                    "metadata": {
+                      "callback_url": "https://www.example.com/updates",
+                      "merchant_metadata": "test metadata"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "List of possible errors",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Missing Api Key": {
+                    "summary": "Missing API KEY in header",
+                    "value": {
+                      "error": "Missing API KEY in header"
+                    }
+                  },
+                  "Invalid Api Key": {
+                    "summary": "Invalid API KEY",
+                    "value": {
+                      "error": "Invalid API KEY"
+                    }
+                  },
+                  "Seller is not a merchant": {
+                    "summary": "Seller is not a merchant",
+                    "value": {
+                      "error": "Seller example@example.com is not a merchant",
+                      "error_code": "XFE201",
+                      "error_handling": "Please verify your merchant or business account."
+                    }
+                  },
+                  "No customer details found. Enter valid customer details or register customer with signup_login.": {
+                    "summary": "No customer details found. Enter valid customer details or register customer with signup_login.",
+                    "value": {
+                      "error": "No customer details found. Enter valid customer details or register customer with signup_login.",
+                      "error_code": "XFE13",
+                      "error_handling": "Please check that you provided the correct API Key and the correct parameters."
+                    }
+                  },
+                  "Source user account is locked": {
+                    "summary": "Invalid google_auth_code provided",
+                    "value": {
+                      "error": "Invalid google_auth_code provided",
+                      "error_code": "XFE301",
+                      "error_handling": "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+                    }
+                  },
+                  "Cannot find transaction. Please try again": {
+                    "summary": "Cannot find transaction. Please try again",
+                    "value": {
+                      "error": "Cannot find transaction. Please try again",
+                      "error_code": "XFE13",
+                      "error_handling": "Please check that you provided the correct API Key and the correct parameters."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1186,9 +2168,27 @@
           ],
           "summary": "Get Payout",
           "description": "Retrieves the details of a payout that has previously been created.\nSupply the unique payout ID that was returned from your previous request, and Xfers will return the corresponding payout information.",
+          "security": [
+            {
+              "X-XFERS-USER-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            },
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Payout ID. You can get this from the create payout API.",
+              "required": true,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "contract_9b562994c4274d9993ba93c94619a8f6"
+              }
             }
           ],
           "responses": {
@@ -1206,57 +2206,62 @@
         ],
         "summary": "Create Payout",
         "description": "The following API will allow you to move money from merchant's account to user's account.\nIn header X-XFERS-USER-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).\nAlternatively, You can also make a peer to peer transfer using this API by putting the sender's token in X-XFERS-USER-API-KEY in the header and putting the receiver's token in user_api_token in the body",
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
-          },
-          {
-            "$ref": "#/components/parameters/content_type_application/application/json"
-          },
-          {
-            "name": "user_api_token",
-            "in": "body",
-            "description": "Buyer’s api token obtain via get_user_token API.",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "amount",
-            "in": "body",
-            "description": "Transaction Amount",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "float",
-              "example": 150000
-            }
-          },
-          {
-            "name": "invocie_id",
-            "in": "body",
-            "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Order_1234"
-            }
-          },
-          {
-            "name": "description",
-            "in": "body",
-            "description": "Description of transaction for display purposes",
-            "required": true,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "example": "Order_1234"
-            }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "description": "Request Body. Click on Schema for information on the parameters.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "user_api_token",
+                  "amount",
+                  "invoice_id"
+                ],
+                "properties": {
+                  "user_api_token": {
+                    "type": "string",
+                    "description": "Your user API token which you can retrieve this from the get token API response"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "description": "Transaction Amount"
+                  },
+                  "invoice_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of transaction for display purposes"
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "user_api_token": "user-api-key",
+                    "amount": 10000,
+                    "invocie_id": "Order_docs_12345",
+                    "description": "Testing for Documentation"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful"
@@ -1271,107 +2276,17 @@
         "/loans/{id}/disbursement_reports": {
           "post": {
             "tags": [
-              "Channeling"
+              "Disbursements"
             ],
             "summary": "Create Disbursement Report",
             "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
-            "parameters": [
+            "security": [
               {
-                "$ref": "#/components/parameters/user-api-token"
-              },
-              {
-                "$ref": "#/components/content_type_application/x-www-form-urlencoded"
-              },
-              {
-                "name": "id",
-                "in": "path",
-                "description": "Loan ID. You can find this from the response when you create loan.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string"
-                }
+                "user-api-token": [
+
+                ]
               }
             ],
-            "responses": {
-              "200": {
-                "description": "Successful"
-              }
-            }
-          }
-        }
-      },
-      "repayments": {
-        "/loans/{id}/repayments": {
-          "post": {
-            "tags": [
-              "Channeling"
-            ],
-            "summary": "Create Repayment",
-            "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
-            "parameters": [
-              {
-                "$ref": "#/components/parameters/user-api-token"
-              },
-              {
-                "$ref": "#/components/content_type_application/application/json"
-              },
-              {
-                "name": "id",
-                "in": "path",
-                "description": "Loan ID. You can find this from the response when you create loan.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string"
-                }
-              },
-              {
-                "name": "amount",
-                "in": "body",
-                "description": "Amount of repayment.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": "1000.50"
-                }
-              },
-              {
-                "name": "collection_fee",
-                "in": "body",
-                "description": "Collection fee",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": "10.50"
-                }
-              },
-              {
-                "name": "idempotency_id",
-                "in": "body",
-                "description": "idempotency id to indicate your transaction",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": "order_123"
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Successful"
-              }
-            }
-          },
-          "get": {
-            "tags": [
-              "Channeling"
-            ],
-            "summary": "List Repayment",
-            "description": "Get the Details of a repayment given a loan id",
             "parameters": [
               {
                 "$ref": "#/components/parameters/user-api-token"
@@ -1398,10 +2313,17 @@
       "/loans/{id}": {
         "get": {
           "tags": [
-            "Channeling"
+            "Loans"
           ],
           "summary": "Get Loan Details",
           "description": "Get the Detail of a Loan Request Given The id of a its loan.\nAvailable Status:\ncreated -> after customer just created the loan to us\nloan_request_processing -> after we called sampoerna loan API and no callback yet\nloan_request_approved -> after we just received sampoerna callback and it is approved\nloan_request_rejected -> after we just received sampoerna callback and it is rejected\nwithdrawal_on_behalf_processing -> after they call our WOB API, WOB still in pending state\nwithdrawal_on_behalf_completed -> after they call our WOB API, WOB still in completed state\nwithdrawal_on_behalf_failed -> after they call our WOB API, WOB in bank_rejected, they need to retry or this is final state\ndisbursement_report_processing -> after customer call our disbursement report API\ndisbursement_report_completed -> after we just call sampoerna disbursement API and completed\ndisbursement_report_failed-> after we just call sampoerna disbursement API and failed",
+          "security": [
+            {
+              "X-XFERS-USER-API-KEY": [
+
+              ]
+            }
+          ],
           "parameters": [
             {
               "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
@@ -1429,12 +2351,19 @@
       "repayments": {
         "{loan_repayment_id}": {
           "/loans/{loan_id}/repayments/{loan_repayment_id}": {
-            "GET": {
+            "get": {
               "tags": [
-                "Channeling"
+                "Repayments"
               ],
               "summary": "Get Repayment",
               "description": "Get the Detail of a repayment given its id",
+              "security": [
+                {
+                  "user-api-token": [
+
+                  ]
+                }
+              ],
               "parameters": [
                 {
                   "$ref": "#/components/parameters/user-api-token"
@@ -1467,6 +2396,115 @@
               }
             }
           }
+        },
+        "/loans/{loan_id}/repayments": {
+          "post": {
+            "tags": [
+              "Repayments"
+            ],
+            "summary": "Create Repayment",
+            "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "name": "loan_id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "requestBody": {
+              "description": "Request Body. Click on Schema for information on the parameters.",
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "required": [
+                      "amount",
+                      "collection_fee",
+                      "idempotency_id"
+                    ],
+                    "properties": {
+                      "amount": {
+                        "type": "string",
+                        "description": "amount of repayment"
+                      },
+                      "collection_fee": {
+                        "type": "string",
+                        "description": "collection fee"
+                      },
+                      "idempotency_id": {
+                        "type": "string",
+                        "description": "idempotency id to indicate your transaction"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Request Body Example": {
+                      "summary": "Request Body Example",
+                      "value": {
+                        "amount": "1000.50",
+                        "collection_fee": "10.50",
+                        "idempotency_id": "order_123"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
+          },
+          "get": {
+            "tags": [
+              "Repayments"
+            ],
+            "summary": "List Repayment",
+            "description": "Get the Details of a repayment given a loan id",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/user-api-token"
+              },
+              {
+                "name": "loan_id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
+          }
         }
       },
       "disbursements": {
@@ -1474,10 +2512,17 @@
           "/loans/{loan_id}/disbursements/{id}": {
             "get": {
               "tags": [
-                "Channeling"
+                "Disbursements"
               ],
               "summary": "Get Loan Disbursement",
               "description": "This API is used to get the current status of the loan disbursement (in the form of a withdrawal contract), in case the callback of the disbursement status is unclear.",
+              "security": [
+                {
+                  "user-api-token": [
+
+                  ]
+                }
+              ],
               "parameters": [
                 {
                   "$ref": "#/components/parameters/user-api-token"
@@ -1491,24 +2536,115 @@
                   "schema": {
                     "type": "string"
                   }
+                },
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Disbursement ID. You can find this from the response when you create loan.",
+                  "required": true,
+                  "explode": true,
+                  "schema": {
+                    "type": "string"
+                  }
                 }
-              ]
+              ],
+              "responses": {
+                "200": {
+                  "description": "Successful"
+                }
+              }
             }
           }
-        },
-        "/loans/{loan_id}/disbursements": {
+        }
+      }
+    },
+    "reconciliations": {
+      "/loans/reconciliations": {
+        "post": {
+          "tags": [
+            "Reconciliation"
+          ],
+          "summary": "Loans Reconciliation",
+          "description": "Get Outstanding Loans. Response of this reconciliation request will be in callback.",
+          "security": [
+            {
+              "X-XFERS-USER-API-KEY": [
+
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            }
+          ],
+          "requestBody": {
+            "description": "Request Body. Click on Schema for information on the parameters.",
+            "required": true,
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "properties": {
+                    "page": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The page number of loan_reconciliation. Starts with 1. Automatically set to 1 if this is not present while per_page is present."
+                    },
+                    "per_page": {
+                      "type": "string",
+                      "description": " The amount of outstanding loans per page. If this is null or not present, will returns all outstanding loans."
+                    },
+                    "from": {
+                      "type": "string",
+                      "description": "Starting Date of the recon time."
+                    },
+                    "to": {
+                      "type": "string",
+                      "description": "Ending Date of the recon time."
+                    }
+                  }
+                },
+                "examples": {
+                  "Request Body Example": {
+                    "summary": "Request Body Example",
+                    "value": {
+                      "page": "1",
+                      "per_page": "120000.0",
+                      "from": "2015-01-26",
+                      "to": "2020-01-30"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
+        }
+      }
+    },
+    "<loan_id>": {
+      "disbursements": {
+        "/loans/<loan_id>/disbursements": {
           "post": {
             "tags": [
-              "Channeling"
+              "Disbursements"
             ],
             "summary": "Create Loan Disbursement",
             "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
             "parameters": [
               {
                 "$ref": "#/components/parameters/user-api-token"
-              },
-              {
-                "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
               },
               {
                 "name": "loan_id",
@@ -1519,65 +2655,73 @@
                 "schema": {
                   "type": "string"
                 }
-              },
-              {
-                "name": "bank_account_id",
-                "in": "body",
-                "description": "User bank_account_id.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string",
-                  "example": "123456"
-                }
-              },
-              {
-                "name": "amount",
-                "in": "body",
-                "description": "User bank_account_id.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": 120000
-                }
-              },
-              {
-                "name": "idempotency_id",
-                "in": "body",
-                "description": "ONLY Indonesia Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": 120000
-                }
-              },
-              {
-                "name": "user_api_token",
-                "in": "body",
-                "description": "Your user_api_token which can be retrieved from the get token api endpoint. Use this param if you want to withdraw to another user’s bank account instead of your own.",
-                "required": false,
-                "explode": true,
-                "schema": {
-                  "type": "float",
-                  "example": 120000
+              }
+            ],
+            "requestBody": {
+              "description": "Request Body. Click on Schema for information on the parameters.",
+              "required": true,
+              "content": {
+                "application/x-www-form-urlencoded": {
+                  "schema": {
+                    "required": [
+                      "bank_account_id",
+                      "amount",
+                      "idempotency_id"
+                    ],
+                    "properties": {
+                      "bank_account_id": {
+                        "type": "string",
+                        "description": " User Bank Account id"
+                      },
+                      "amount": {
+                        "type": "string",
+                        "description": "Transaction Amount"
+                      },
+                      "idempotency_id": {
+                        "type": "string",
+                        "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia."
+                      },
+                      "user_api_token": {
+                        "type": "string",
+                        "description": "Use this param if you want to withdraw to another user’s bank account instead of your own. This is your user API token which you can retrieve from the get token API response"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Request Body Example": {
+                      "summary": "Request Body Example",
+                      "value": {
+                        "bank_account_id": "12345678",
+                        "amount": "120000.0",
+                        "idempotency_id": "Order_1234"
+                      }
+                    }
+                  }
                 }
               }
-            ]
+            },
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
           },
           "get": {
             "tags": [
-              "Channeling"
+              "Disbursements"
             ],
             "summary": "List Loan Disbursement",
             "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
             "parameters": [
               {
                 "$ref": "#/components/parameters/user-api-token"
-              },
-              {
-                "$ref": "#/components/parameters/content_type_application/x-www-form-urlencoded"
               },
               {
                 "name": "loan_id",
@@ -1589,7 +2733,12 @@
                   "type": "string"
                 }
               }
-            ]
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful"
+              }
+            }
           }
         }
       }
@@ -1597,15 +2746,122 @@
     "/loans": {
       "post": {
         "tags": [
-          "Channeling"
+          "Loans"
         ],
         "summary": "Create Loan",
         "description": "Creating a Loan. We will pass this loan asynchronously and give callback after complete.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/user-api-token"
           }
-        ]
+        ],
+        "requestBody": {
+          "description": "Request Body. Click on Schema for information on the parameters.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "customer_data",
+                  "loan_data",
+                  "collateral_data",
+                  "installment_data"
+                ],
+                "properties": {
+                  "customer_data": {
+                    "$ref": "#/components/schemas/customer_data"
+                  },
+                  "loan_data": {
+                    "$ref": "#/components/schemas/loan_data"
+                  },
+                  "collateral_data": {
+                    "$ref": "#/components/schemas/collateral_data"
+                  },
+                  "installment_data": {
+                    "$ref": "#/components/schemas/installment_data"
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "$ref": "#/components/examples/create_loan"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful"
+          }
+        }
+      }
+    }
+  },
+  "repayment": {
+    "reconciliations": {
+      "/repayment/reconciliations": {
+        "post": {
+          "tags": [
+            "Reconciliation"
+          ],
+          "summary": "Repayments Reconciliation",
+          "description": "?????",
+          "security": [
+            {
+              "X-XFERS-USER-API-KEY": [
+
+              ]
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
+            }
+          ],
+          "requestBody": {
+            "description": "Request Body. Click on Schema for information on the parameters.",
+            "required": true,
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "properties": {
+                    "page": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The page number of loan_reconciliation. Starts with 1. Automatically set to 1 if this is not present while per_page is present."
+                    },
+                    "per_page": {
+                      "type": "string",
+                      "description": " The amount of outstanding loans per page. If this is null or not present, will returns all outstanding loans."
+                    }
+                  }
+                },
+                "examples": {
+                  "Request Body Example": {
+                    "summary": "Request Body Example",
+                    "value": {
+                      "page": "1",
+                      "per_page": "120000.0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful"
+            }
+          }
+        }
       }
     }
   },
@@ -1617,11 +2873,23 @@
         ],
         "summary": "Get Bank and Abbreviation Mapping",
         "description": "This will provide you with a list of banks we support. Usually used for Add Bank Account API",
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/X-XFERS-USER-API-KEY"
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful"
+          }
+        }
       }
     }
   }

@@ -1,42 +1,24 @@
 :Singapore:
   :paths:
-    - "/authorize*"
-    - "/user"
-    - "/user/activities"
-    - "/user/transfer_info"
-    - "/user/bank_account*"
-    - "/charges"
-    - "/payouts*"
-    - "/banks"
+    - "/user*"
+    - "/user/bank_account/{bank_account_id}/withdraw*"
   :tags:
     - "Registration"
     - "User Account"
-    - "Charge"
-    - "Payout"
     - "Bank Account"
     - "Withdraw"
+    - "Sobatku"
+    - "Testint"
 :Indonesia:
   :paths:
-    - "/authorize*"
-    - "/user*"
-    - "/charges"
-    - "/payouts*"
-    - "/banks"
+    - "/user"
+    - "/user/bank_account/{bank_account_id}/withdraw"
     - "/loans*"
   :tags:
     - "Registration"
     - "User Account"
-    - "Charge"
-    - "Payout"
-    - "Bank Account"
     - "Withdraw"
-    - "Channeling"
-# :Singapore_and_Indonesia:
-#   :paths:
-#     - "/pet"
-#     - "/store/inventory"
-#     - "/user"
-#   :tags:
-#     - "pet"
-#     - "store"
-#     - "user"
+    - "Loans"
+    - "Repayments"
+    - "Reconciliation"
+
