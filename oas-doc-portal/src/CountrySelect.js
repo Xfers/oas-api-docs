@@ -6,6 +6,7 @@ import Select from 'react-select';
 const CountrySelect = props => {
 
   const options = [
+    {label: "Master", value: "Master"},
     {label: "Singapore", value: "Singapore"},
     {label: "Indonesia", value: "Indonesia"}
   ]
@@ -26,25 +27,6 @@ const CountrySelect = props => {
     }
   }
 
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: '1px dotted pink',
-      color: state.isSelected ? 'red' : 'blue',
-      padding: 20,
-    }),
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-      width: 200,
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-
-      return { ...provided, opacity, transition };
-    }
-  }
-
   return(
 
     <Select
@@ -57,7 +39,6 @@ const CountrySelect = props => {
       onChange = {(e) => handleChange(e)}
       options = {options}
       autoFocus = "true"
-      style = {customStyles}
     />
   )
 }

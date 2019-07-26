@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css'
-import SwaggerUI from 'swagger-ui';
-import '../node_modules/swagger-ui/dist/swagger-ui.css'
+import { RedocStandalone } from 'redoc';
 import CountrySelect from "./CountrySelect.js";
 import Select from 'react-select';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       sgOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/Singapore.json'),
       idOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/Indonesia.json'),
-      country: "Indonesia",
+      masterOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/master-openapi.json'),
+      country: "Master",
       definitionJSON: null,
     }
     this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this)
@@ -30,58 +31,46 @@ class App extends Component {
         country: country
       })
     }
+    else if (country === "Master") {
+      this.setState({
+        definitionJSON: this.state.masterOasDoc,
+        country: country
+      })
+    }
     else {
       throw new Error("Invalid country name check string");
     }
-  }
-
-  componentDidUpdate(){
-    SwaggerUI({
-      domNode: document.getElementById("api-data"),
-      spec: this.state.definitionJSON
-    })
   }
 
   componentWillMount() {
     this.updateDefinitionJSON(this.state.country)
   }
 
-  componentDidMount() {
-    if (this.state.definitionJSON !== null) {
-      SwaggerUI({
-        domNode: document.getElementById("api-data"),
-        spec: this.state.definitionJSON
-      })
-    } else {
-      throw new Error(this.state.definitionJSON);
-    }
-  }
-
-
   render() {
     return (
       <div className="App" >
-        <div style={{
-          display: 'block',
-          textAlign: 'center'
-        }} >
-          <CountrySelect
-            country = {this.state.country}
-            updateDefinitionJSON = {this.updateDefinitionJSON}
-            style={{
-              width: 200,
-              float: 'left'
-            }}
-          />
+        <StickyContainer>
+        <div >
+          <Sticky>{({ style,isSticky }) =>
+            <CountrySelect
+              country = {this.state.country}
+              updateDefinitionJSON = {this.updateDefinitionJSON}
+            />}
+           </Sticky>
 
-          <title
-          style = {{
-            display: "inline",
-            fontSize: 56,
-          }}
-          >API documentation for {this.state.country}</title>
+            <Sticky>{({ style,isSticky }) =>
+              <h1 style={style}>API documentation for {this.state.country}</h1>}
+            </Sticky>
+
           </div>
-        <div id="api-data" />
+        <RedocStandalone
+          spec={this.state.definitionJSON}
+          options={{
+            nativeScrollbars: true,
+            theme: { colors: { primary: { main: '#dd5522' } } },
+          }}
+        />
+        </StickyContainer>
       </div>
     );
   }
