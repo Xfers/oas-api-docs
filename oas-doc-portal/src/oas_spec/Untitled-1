@@ -64,3 +64,24 @@
       }
     }
 }
+        "requestBody": {
+          "description": "Request Body. Click on Schema for information on the parameters.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "idempotency_id": {
+                    "type": "string",
+                    "description": "Idempotency ID you use to create your withdrawal request"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["completed", "failed"],
+                    "description": "desired status for withdrawal"
+                  }
+                }
+              }
+            }
+          }
+        },
