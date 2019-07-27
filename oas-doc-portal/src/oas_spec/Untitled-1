@@ -3,9 +3,7 @@
           "source": "curl --location --request POST \"https:\/\/sandbox-id.xfers.com\/api\/v3\/authorize\/signup_login\" \\\r\n  --header \"X-XFERS-APP-API-KEY: dS7zxQydn4PLxwNE3kuyb4pg6BsNWHE818D2wbhoavQ\" \\\r\n  --header \"Content-Type: application\/json\" \\\r\n  --data \"{\\\"phone_no\\\" : \\\"+6287785725657\\\", \\\"signature\\\" : \\\"5488737c67d790565a15a2dbc3c98bf778aac2c0\\\"}\""
         }],
 
-"4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
+
 "200": {
             "description": "Success",
             "content": {
@@ -15,6 +13,9 @@
                 }
               }
             }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
           }
 "x-custom-requirements" : {
                   "Indonesia" : ["id_front_url", "selfie_2id_url", "full_name", "identity_no", "gender", "mother_maiden_name", "date_of_birth", "place_of_birth", "marital_status", "occupation", "city", "state", "postal_code", "address_line_1"]
