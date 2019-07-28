@@ -11,6 +11,7 @@
     - "Testint"
 :Indonesia:
   :paths:
+    - "/authorize*"
     - "/user"
     - "/user/bank_account/{bank_account_id}/withdraw"
     - "/loans*"

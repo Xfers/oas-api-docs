@@ -33,11 +33,28 @@ class JsonWYamlController < JsonController
   end
 
    def process_for_tag(name)
-    tags = @yml[name][:tags]
-    tags_json = @curr_oas["tags"]
-    curr_tags_json = tags_json.dup
-    curr_tags_json.delete_if { |key, value|
-      !tags.include? key["name"]
+    curr_tags = []
+    @curr_oas["paths"].each_value {|operationObj|
+      operationObj.each_value {|value|
+        raise StandardError, "#{operationObj} + no tags" if value["tags"].nil?
+        value["tags"].each {|curr_tag|
+          curr_tags.push(curr_tag) if !curr_tags.include?(curr_tag)
+          puts("added " + curr_tag.to_s + " to tags") if !curr_tags.include?(curr_tag)
+        }
+      }
+    }
+
+    curr_tags_json = deep_copy(@curr_oas)["tags"]
+    curr_tags_json.delete_if { |key|
+      curr_boolean = ""
+      if curr_tags.include? key["name"]
+        curr_boolean = false
+      elsif !key["x-traitTag"].nil?
+        curr_boolean = false
+      else
+        curr_boolean = true
+      end
+      curr_boolean
     }
     @curr_oas["tags"] = curr_tags_json
     JsonWYamlController.new(@yml, @master_oas_wo_paths_json, @populate_nested_hash, @curr_oas)
@@ -49,9 +66,8 @@ class JsonWYamlController < JsonController
       outer_value.each { |method, inner_value|
         if inner_value["parameters"] != nil
           inner_value["parameters"] = inner_value["parameters"].select { |curr_param|
-            if curr_param["description"] != nil
-              curr_words = curr_param["description"].split(" ")
-              if curr_words.length > 2 && curr_words[0] == "ONLY" && !curr_words[1].include?(name.to_s)
+            if curr_param["x-custom-params"] != nil
+              if !curr_param["x-custom-params"].include?(name.to_s)
                 puts(curr_param["name"].to_s + " deleted from " + name.to_s)
                 false
               else
@@ -62,14 +78,13 @@ class JsonWYamlController < JsonController
             end
           }
         end
-        inner_value.delete("parameters") if inner_value["parameters"].empty?
+        inner_value.delete("parameters") if inner_value["parameters"].nil?
       }
     }
      puts("Finished filtering parameters for " + name.to_s)
     curr_oas = deep_copy(@curr_oas)
     curr_oas["paths"] = paths_json
     JsonWYamlController.new(@yml, @master_oas_wo_paths_json, @populate_nested_hash, curr_oas)
-
   end
 
   def process_for_requestBody (name)
@@ -80,10 +95,8 @@ class JsonWYamlController < JsonController
         opp_obj["requestBody"]["content"].each { |media_type, schema|
           bybug if schema["schema"]["properties"].nil?
           schema["schema"]["properties"].each { |field, value|
-            next if value["description"].nil?
-            description_arr = value["description"].to_s.split(" ")
-            next if !description_arr[0].include?("Only")
-            if !description_arr[1].to_s.include?(name.to_s)
+            next if value["x-custom-params"].nil?
+            if !value["x-custom-params"].include?(name.to_s)
               schema["schema"]["properties"].delete(field)
               puts("deleted " + field.to_s + " for " + name.to_s )
             end
