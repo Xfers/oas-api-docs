@@ -30,12 +30,12 @@ Features
 ###How to contribute
 
 1. Change OAS definition
-  a. Clone repo
-  b. cd oas-doc-portal
-  c. run `npm install`
-  d. run `npm start`
-  e. Any changes made to /src/oas_spec/master-openapi.json will be reflected on localhost://3000 master tab on the top
-  f. If you made any changes to master-oas.json create a PR to this repo
+  - Clone repo
+  - cd oas-doc-portal
+  - run `npm install`
+  - run `npm start`
+  - Any changes made to /src/oas_spec/master-openapi.json will be reflected on localhost://3000 master tab on the top
+  - If you made any changes to master-oas.json create a PR to this repo
   extra: use VSCode `OpenAPI(Swagger) editor` to have a side bar that navigate through the json easily and `openapi-linter`   to check if you follow the OpenAPI specs
   
  Other notes
