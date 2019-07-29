@@ -515,7 +515,7 @@
                   "callback_url": {
                     "deprecated": true,
                     "type": "string",
-                    "description": "URL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set callback_url instead."
+                    "description": "***This parameter is going through deprecation. It is still supported but we suggest you use the dash board in  {{base-api-url}}/merchant_settings/callback_settings to submit your callback url.***\r\n\r\nURL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set callback_url instead."
                   }
                 }
               }
@@ -1204,9 +1204,8 @@
                   }
                 },
                 "required": [
-                  "amount",
-                  "user_api_token",
-                  "order_id"
+                  "callback_url",
+                  "events"
                 ]
               }
             }
@@ -1406,14 +1405,62 @@
                     "type": "string",
                     "description": "Testing for Documentation."
                   },
+                  "meta_data": {
+                    "type": "string",
+                    "description": "A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "3-letter ISO code for currency"
+                  },
+                  "customer": {
+                    "type": "string",
+                    "description": "Customer email or phone number. If provided, only that user can use the checkout_url returned. If the customer does not exist, an account will be created for them using the email/phone number provided. An OTP will be sent to the email/phone for the user to log in."
+                  },
+                  "return_url": {
+                    "type": "string",
+                    "description": "URL Xfers will redirect customer to on completion of Xfers checkout."
+                  },
+                  
+                  "card_only": {
+                    "type": "string",
+                    "x-custom-params" : ["Singapore"],
+                    "description": "When this is true, this charge will will attempt to take payments via credit/debit card."
+                  },
+                  "redirect": {
+                    "type": "string",
+                    "x-custom-params" : ["Singapore"],
+                    "description": "When this is true, instead of the JSON response, Xfers will automatically redirect the request to our checkout page"
+                  },
+                  "cancel_url": {
+                    "type": "string",
+                    "x-custom-params" : ["Singapore"],
+                    "description": "URL Xfers will redirect customer to on cancellation of Xfers checkout."
+                  },
                   "notify_url": {
                     "type": "string",
                     "deprecated": true,
                     "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set notify_url instead."
                   },
-                  "meta_data": {
+                  "google_auth": {
                     "type": "string",
-                    "description": "A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format."
+                    "deprecated": true,
+                    "description": "When this is true and user_phone_no is provided, instead of phone SMS OTP, user can use Google Authenticator to do OTP. See Authorize a Charge"
+                  },
+                  "transactional_only": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "Enables transactional charge when true. See more info. Only selected Xfers partners have this feature available."
+                  },
+                  "receipt_email": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "The email address to send this charge’s receipt."
+                  },
+                  "skip_notifications": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "Setting this to true will not send transaction reminders/cancelled/expired emails/SMS. Users will still receive payment completed notification."
                   }
                 },
                 "required": [
@@ -2313,6 +2360,26 @@
                   "description": {
                     "type": "string",
                     "description": "Description of transaction for display purposes"
+                  },
+                  "wallet_id": {
+                    "type": "string",
+                    "x-custom-params" : ["Singapore"],
+                    "description": "Your user API token which you can retrieve this from the get token API response"
+                  },
+                  "meta_data": {
+                    "type": "string",
+                    "x-custom-params" : ["Singapore"],
+                    "description": "Transaction Amount"
+                  },
+                  "recipient": {
+                    "type": "string",
+                    "x-custom-params" : ["Singapore"],
+                    "description": "Email or Mobile Phone No of the recipient for this payout."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "An internal description that you can attach to a payout. It can be useful for storing additional information about the customer in a structured format. You will be provided with these meta_data in your queries for payouts."
                   }
                 }
               },
@@ -2548,10 +2615,12 @@
           "content": {
             "application/json": {
               "schema": {
+                "x-custom-requirements" : {
+                  "Indonesia" : ["account_holder_name"]
+                },
                 "required": [
                   "account_no",
-                  "bank",
-                  "account_holder_name"
+                  "bank"
                 ],
                 "properties": {
                   "account_no": {
@@ -2565,6 +2634,11 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                  },
+                  "usage": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -2622,6 +2696,18 @@
             "user-api-token": [
 
             ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "usage",
+            "required": false,
+            "in": "query",
+            "deprecated": true,
+            "description": "type of bank account",
+            "schema" : {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2688,10 +2774,12 @@
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
+                "x-custom-requirements" : {
+                  "Indonesia" : ["account_holder_name"]
+                },
                 "required": [
                   "account_no",
-                  "bank",
-                  "account_holder_name"
+                  "bank"
                 ],
                 "properties": {
                   "account_no": {
@@ -2705,6 +2793,11 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                  },
+                  "usage": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -2862,6 +2955,16 @@
                   "user_api_token": {
                     "type": "string",
                     "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
+                  },
+                  "payout_invoice_id": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "This parameter is no longer supported."
+                  },
+                  "notify_url": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set notify_url instead."
                   }
                 }
               },
@@ -4784,6 +4887,9 @@
           "content": {
             "application/json": {
               "schema": {
+                "required": [
+                  "proxy_number", "provider"
+                ],
                 "properties": {
                   "proxy_number": {
                     "type": "string",
@@ -4899,6 +5005,7 @@
           "content": {
             "application/json": {
               "schema": {
+                "required": ["amount"],
                 "properties": {
                   "amount": {
                     "type": "number",
@@ -6478,6 +6585,7 @@
           "content": {
             "application/json": {
               "schema": {
+                "required": ["status", "idempotency_id"],
                 "properties": {
                   "idempotency_id": {
                     "type": "string",

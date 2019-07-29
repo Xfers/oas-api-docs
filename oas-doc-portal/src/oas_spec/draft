@@ -85,3 +85,5 @@
             }
           }
         },
+
+        ***This parameter is going through deprecation. It is still supported but we suggest you use the dash board in  {{base-api-url}}/merchant_settings/callback_settings to submit your callback url.***\r\n\r\n
