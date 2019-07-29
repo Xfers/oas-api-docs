@@ -426,6 +426,44 @@
         }
       }
     },
+    "/authorize/hello": {
+      "get": {
+        "tags": [
+          "Testing"
+        ],
+        "operationId": "authorizeHello",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl \"https://sandbox.xfers.io/api/v3/authorize/hello\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+          }
+        ],
+        "summary": "Check connection",
+        "description": "Use this endpoint to check connection with our server",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "msg": "Hello world"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
     "/authorize/get_mock_otp": {
       "get": {
         "tags": [

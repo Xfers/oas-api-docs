@@ -2,24 +2,10 @@
   :paths:
     - "/user*"
     - "/user/bank_account/{bank_account_id}/withdraw*"
-  :tags:
-    - "Registration"
-    - "User Account"
-    - "Bank Account"
-    - "Withdraw"
-    - "Sobatku"
-    - "Testint"
 :Indonesia:
   :paths:
     - "/authorize*"
     - "/user"
     - "/user/bank_account/{bank_account_id}/withdraw"
     - "/loans*"
-  :tags:
-    - "Registration"
-    - "User Account"
-    - "Withdraw"
-    - "Loans"
-    - "Repayments"
-    - "Reconciliation"
 
