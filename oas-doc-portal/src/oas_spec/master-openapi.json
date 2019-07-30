@@ -137,7 +137,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -199,7 +198,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -380,7 +378,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -716,9 +713,9 @@
         }
       }
     },
-    "/notify_kyc_status" :{
+    "/notify_kyc_callback" :{
       "post": {
-        "operationId": "notifyKYC",
+        "operationId": "notifyKYCCallback",
         "description" : "This is Xfers' callback request to notify KYC status",
         "summary": "Notify KYC status Callback",
         "tags": ["Registration"],
@@ -1182,7 +1179,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -1384,7 +1380,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -1911,7 +1906,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -2335,7 +2329,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -2610,7 +2603,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -2769,7 +2761,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -2929,7 +2920,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -3012,11 +3002,11 @@
         }
       }
     },
-    "/notify_withdrawal" :{
+    "/notify_withdrawal_callback" :{
       "post": {
-        "operationId": "withdrawalNotification",
+        "operationId": "withdrawalNotificationCallback",
         "description" : "This is Xfers' callback request to your server to notify withdrawl status",
-        "summary": "Withdrawal notification",
+        "summary": "Withdrawal Notification Callback",
         "tags": ["Withdraw"],
         "security": [],
         "servers": [
@@ -3275,7 +3265,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -3378,11 +3367,11 @@
         }
       }
     },
-    "/notify_loan" :{
+    "/notify_loan_callback" :{
       "post": {
         "operationId": "loanNotification",
         "description" : "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_request_approved), we will send you the callback with the following parameters",
-        "summary": "Loan notification",
+        "summary": "Loan Notification Callback",
         "tags": ["Loans"],
         "security": [],
         "servers": [
@@ -3473,11 +3462,11 @@
         }
       }
     },
-    "/notify_disbursement_report" :{
+    "/notify_disbursement_report_callback" :{
       "post": {
         "operationId": "disbursementReportNotification",
         "description" : "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_disbursement_report_completed)",
-        "summary": "Disbursement report notification",
+        "summary": "Disbursement Report Notification Callback",
         "tags": ["Disbursements"],
         "security": [],
         "servers": [
@@ -3552,7 +3541,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -3791,11 +3779,11 @@
         }
       }
     },
-    "/notify_repayment" :{
+    "/notify_repayment_callback" :{
       "post": {
         "operationId": "repaymentNotification",
         "description" : "This is Xfers' callback request to your server to notify repayment status",
-        "summary": "Repayment notification",
+        "summary": "Repayment Notification Callback",
         "tags": ["Repayments"],
         "security": [],
         "servers": [
@@ -3970,7 +3958,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -4172,7 +4159,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -4251,7 +4237,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -4356,7 +4341,7 @@
         }
       }
     },
-    "/notify_loan_disbursement" :{
+    "/notify_loan_disbursement_callback" :{
       "post": {
         "operationId": "loanDisbursementNotification",
         "description" : "This is Xfers' callback request to your server to notify loan disbursement status",
@@ -4591,7 +4576,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -4700,7 +4684,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -4869,7 +4852,7 @@
           "Prepaid Cards"
         ],
         "deprecated": true,
-        "summary": "Add prepaid card",
+        "summary": "Add Prepaid Card",
         "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint adds a prepaid card to your account.",
         "x-code-samples": [{
           "lang": "Shell_curl",
@@ -5206,7 +5189,7 @@
         "tags": [
           "Intents"
         ],
-        "summary": "List current Intent",
+        "summary": "List Current Intent",
         "description": "Returns the current pending intent of the user. If multiple intents are created, only the last one is returned.\r\n\r\n`transfer_info_array`  is returned so you can display a list of all Xfers banks to transfer to.",
         "x-code-samples": [{
           "lang": "Shell_curl",
@@ -5283,11 +5266,11 @@
         }
       }
     },
-    "/notify_intent" :{
+    "/notify_intent_callback" :{
       "post": {
         "operationId": "notifyIntent",
         "description" : "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
-        "summary": "Intent Notification",
+        "summary": "Intent Notification Callbacl",
         "tags": ["Intent"],
         "security": [],
         "servers": [
@@ -6449,7 +6432,7 @@
           "source": "curl \"https:\/\/sandbox.xfers.io\/api\/v3\/authorize\/hello\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
         }],
 
-        "summary": "Check connection",
+        "summary": "Check Connection",
         "description": "Use this endpoint to check connection with our server",
         "security": [
           {
@@ -6580,7 +6563,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -6651,7 +6633,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {

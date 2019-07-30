@@ -7,13 +7,14 @@ const CountrySelect = props => {
 
   const options = [
     {label: "Master", value: "Master"},
-    {label: "Singapore", value: "Singapore"},
-    {label: "Indonesia", value: "Indonesia"}
+    {label: "Singapore", value: "Singapore", image: { '/images/singapore-flag-xs.jpg' }},
+    {label: "Indonesia", value: "Indonesia", image: { '/images/indonesia-flag-xs.jpg' }}
   ]
 
   let country = props.country;
 
-  function handleChange(e){
+  function handleChange(e,{value}){
+    console.log(e)
     country = e.value
     props.updateDefinitionJSON(country);
   }
@@ -36,7 +37,7 @@ const CountrySelect = props => {
           return x;
         }
       })}
-      onChange = {(e) => handleChange(e)}
+      onChange = {(e,{value}) => handleChange(e,{value})}
       options = {options}
       autoFocus = "true"
     />

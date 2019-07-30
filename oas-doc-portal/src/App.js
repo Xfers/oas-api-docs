@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css'
 import { RedocStandalone } from 'redoc';
-import CountrySelect from "./CountrySelect.js";
-import Select from 'react-select';
-import { StickyContainer, Sticky } from 'react-sticky';
+import { Dropdown } from 'semantic-ui-react'
+import DropdownCountry from "./DropdownCountry.js";
+import MasterOas from "./pages/MasterOas"
+import ReactGA from 'react-ga';
+
+ReactGA.initialize("UA-144834615-1");
 
 class App extends Component {
   constructor(props) {
@@ -14,11 +18,18 @@ class App extends Component {
       masterOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/master-openapi.json'),
       country: "Master",
       definitionJSON: null,
+      loading: false
     }
     this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this)
   }
 
+
+
   updateDefinitionJSON(country){
+    ReactGA.event({
+      category: 'User',
+      action: 'Viewing doucmentation for ' + country
+    });
     if (country === "Singapore") {
       this.setState({
         definitionJSON: this.state.sgOasDoc,
@@ -38,6 +49,7 @@ class App extends Component {
       })
     }
     else {
+      console.log("app "+country)
       throw new Error("Invalid country name check string");
     }
   }
@@ -48,30 +60,31 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" >
-        <StickyContainer>
-        <div >
-          <Sticky>{({ style,isSticky }) =>
-            <CountrySelect
-              country = {this.state.country}
-              updateDefinitionJSON = {this.updateDefinitionJSON}
-            />}
-           </Sticky>
-
-            <Sticky>{({ style,isSticky }) =>
-              <h1 style={style}>API documentation for {this.state.country}</h1>}
-            </Sticky>
-
-          </div>
-        <RedocStandalone
-          spec={this.state.definitionJSON}
-          options={{
-            nativeScrollbars: true,
-            theme: { colors: { primary: { main: '#dd5522' } } },
-          }}
-        />
-        </StickyContainer>
-      </div>
+      <Router>
+        <div className="App" >
+            <Route exact path="/" render={props => (
+              <React.Fragment>
+                 <h1 className="country-header-title">API documentation for {this.state.country}</h1>
+              <DropdownCountry
+                className="country-header-dropbox"
+                country = {this.state.country}
+                updateDefinitionJSON = {this.updateDefinitionJSON}
+              />
+              <RedocStandalone
+                spec={this.state.definitionJSON}
+                options={{
+                  nativeScrollbars: true,
+                  theme: { colors: { primary: { main: '#dd5522' } } },
+                  jsonSampleExpandLevel: 0,
+                  menuToggle: true,
+                  requiredPropsFirst: true
+                }}
+              />
+            </React.Fragment>
+          )} />
+            <Route path="/master" component={MasterOas}/>
+        </div>
+      </Router>
     );
   }
 }
