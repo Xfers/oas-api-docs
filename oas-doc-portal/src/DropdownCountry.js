@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dropdown } from 'semantic-ui-react'
+import { Button, Dropdown, Flag, Icon } from 'semantic-ui-react'
 
 
 const DropdownCountry = props => {
@@ -7,12 +7,22 @@ const DropdownCountry = props => {
   const options = [
     {
       key: "Singapore",
-      text: "Singapore",
+      text: (
+        <span>
+          <Flag name="sg" />
+          Singapore
+        </span>
+      ),
       value: "Singapore"
     },
     {
       key: "Indonesia",
-      text: "Indonesia",
+      text: (
+        <span>
+          <Flag name="id" />
+          Indonesia
+        </span>
+      ),
       value: "Indonesia"
     }
   ]
@@ -40,9 +50,9 @@ const DropdownCountry = props => {
   return(
 
     <Dropdown
-      text = "Select Country"
+      placeholder = {<span> Select Country <Icon name="world"/> </span>}
+      compact
       onChange = {(e,{value}) => handleChange(e,value)}
-      value = {country}
       selection
       options = {options}
 
