@@ -13,19 +13,26 @@ To tackle the above problems, this repo aims to create a way of documentation at
 
 Flow (https://www.lucidchart.com/invitations/accept/a4e6c44e-9b06-4ffb-a75b-3bc50304cc05)
 
-1. Any changes Xfers wants to make will be made to the master-documentation
-  - Master-documentation will contain all of Xfers endpoints (Singapore-specific and Indonesia-specific) and all of Xfers parameters
-  - Master-documentation will be hosted on swagger-hub GUI (https://app.swaggerhub.com/apis/xfers/xfers-api/3)
+1. Any changes Xfers wants to make will be made to `/oas-doc-portal/src/oas_spec/master-openapi.json`
+  - `master-openapi.json` will contain all of Xfers endpoints (Singapore-specific and Indonesia-specific) and all of Xfers parameters
 2. Run `cd xfers-swagger-api` in the root directory and execute `rake generate` in the command line. This will:
-  - call swagger hub API to retrieve the our master-docuementation from them
-  - create 2 `.json` files: `Singapore.json` and `Indonesia.json`. These files will be written to `/oas-doc-portal/src/oas_spec` and `/xfers-swagger-api/template_oas`
+  - read and parse the local `/oas-doc-portal/src/oas_spec/master-openapi.json`
+  - create 2 `.json` files: `Singapore.json` and `Indonesia.json`. These files will be written to `/oas-doc-portal/src/oas_spec`
   - The json file will be generated in accordance to `/xfers-swagger-api/config/oas.yml`, where you can state the endpoints you want in each documentation by stating it under the `paths` field (e.g. `"/user/activities"` and `"/authorize*"`
 3. The github pages that host our docuementation is built according to json files in the `/oas-doc-portal/src/oas_spec/` folder. Once the json files have been written into the directory, the page will be updated.
 
 ## Features
 1. Ability to generate any number of customized documentation quickly by changing `xfers-swagger-api/config/oas.yml`
-2. Ability to define specific parameters for different sets of documentation by typing `ONLY <clientname>` in the description field of parameters.
-  - For example if you type `ONLY Singapore...` in the description field of the parameter, `Indonesia.json` will not contain the parameter.
+2. Ability to define specific parameters for different sets of documentation by adding this fied to `requestBody>media_type>schema>properties>{desire_params}`
+`"x-custom-params" : ["{name of merchant/country must match oas.yml}"],`
+or to `parameters>{desired_params}`
+3. Ability to state custom parameter requires wrt to the country add this field to `requestBody>media_type>schema`
+
+```
+"x-custom-params-requirements" : {
+	"{name of merchant/country must match oas.yml}" : ["{custom_required_params1}", "{custom_required_params2}"] 
+}
+```
 
 ## How to contribute
 
@@ -34,7 +41,7 @@ Flow (https://www.lucidchart.com/invitations/accept/a4e6c44e-9b06-4ffb-a75b-3bc5
   - run `cd oas-doc-portal`
   - run `npm install`
   - run `npm start`
-  - Any changes made to `/src/oas_spec/master-openapi.json` will be reflected on `http://localhost:3000/master`
+  - Any changes made to `/src/oas_spec/master-openapi.json` will be reflected on http://localhost:3000/#/
   - If you made any changes to `master-oas.json`, please create a pull request
   ** extra: use VSCode `OpenAPI(Swagger) editor` to have a sidebar that can help navigate through the json easily and `openapi-linter` to check if you follow the OpenAPI specifications
   
