@@ -34,7 +34,7 @@ Flow(https://www.lucidchart.com/invitations/accept/a4e6c44e-9b06-4ffb-a75b-3bc50
   - run `cd oas-doc-portal`
   - run `npm install`
   - run `npm start`
-  - Any changes made to `/src/oas_spec/master-openapi.json` will be reflected on `localhost://3000/master` master tab on the top
+  - Any changes made to `/src/oas_spec/master-openapi.json` will be reflected on `http://localhost:3000/master`
   - If you made any changes to `master-oas.json`, please create a pull request
   ** extra: use VSCode `OpenAPI(Swagger) editor` to have a sidebar that can help navigate through the json easily and `openapi-linter` to check if you follow the OpenAPI specifications
   
