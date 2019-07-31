@@ -34,7 +34,7 @@ Features
   - cd oas-doc-portal
   - run `npm install`
   - run `npm start`
-  - Any changes made to /src/oas_spec/master-openapi.json will be reflected on localhost://3000 master tab on the top
+  - Any changes made to /src/oas_spec/master-openapi.json will be reflected on localhost://3000/master master tab on the top
   - If you made any changes to master-oas.json create a PR to this repo
   extra: use VSCode `OpenAPI(Swagger) editor` to have a side bar that navigate through the json easily and `openapi-linter`   to check if you follow the OpenAPI specs
   
