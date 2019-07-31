@@ -57,7 +57,17 @@ class App extends Component {
         <div className="App" >
             <Route exact path="/" render={props => (
               <React.Fragment>
+                <div className = "logo-wrapper">
+                  <span className="helper"></span>
+                  <img
+                  className ="logo"
+                  src={require("./images/Xfers_Blue_120.png")}
+                  />
+                </div>
                 <div className="country-header">
+                  <div className = "empty-block">
+                  </div>
+
                   <h1
                   className="country-header-title"
                   >API documentation for {this.state.country}</h1>
@@ -76,6 +86,7 @@ class App extends Component {
                   pathInMiddlePanel: true,
                   jsonSampleExpandLevel: 5,
                   requiredPropsFirst: true,
+                  scrollYOffset: 128,
                 }}
               />
             </React.Fragment>
