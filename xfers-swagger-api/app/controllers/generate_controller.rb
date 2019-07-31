@@ -22,8 +22,6 @@ class GenerateController < ApplicationController
     split_keys = JsonWHashController.new(master_oas_paths_json).split_keys_arr
     populate_nested_hash =
       JsonWHashController.new(master_oas_paths_json).build_nested_hash(split_keys).populate_nested_hash
-    write_file("master_oas_processed", JSON.pretty_generate(populate_nested_hash.get_nested_hash))
-
     #Generate the individual docs
     master_oas_wo_paths_json = Hash[master_oas_json]
     master_oas_wo_paths_json.delete("paths")

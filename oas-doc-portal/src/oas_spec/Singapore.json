@@ -113,7 +113,7 @@
                     "example": "+6287785725657"
                   },
                   "signature": {
-                    "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+                    "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/",
                     "type": "string",
                     "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
                   }
@@ -190,7 +190,7 @@
           {
             "name": "signature",
             "in": "query",
-            "description": "SHA1-hex of (phone_no + OTP + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+            "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/",
             "required": true,
             "explode": true,
             "schema": {

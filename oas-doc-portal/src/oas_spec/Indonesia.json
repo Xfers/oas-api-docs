@@ -113,7 +113,7 @@
                     "example": "+6287785725657"
                   },
                   "signature": {
-                    "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+                    "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/",
                     "type": "string",
                     "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
                   }
@@ -176,7 +176,7 @@
                     "example": "+6287785725657"
                   },
                   "signature": {
-                    "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+                    "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/",
                     "type": "string",
                     "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
                   }
@@ -288,7 +288,7 @@
           {
             "name": "signature",
             "in": "query",
-            "description": "SHA1-hex of (phone_no + OTP + X-XFERS-APP_SECRET_KEY). Generate SH1 key using ...",
+            "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/",
             "required": true,
             "explode": true,
             "schema": {
@@ -3320,7 +3320,7 @@
           "Repayments"
         ],
         "summary": "Repayments Reconciliation",
-        "description": "?????",
+        "description": "Get Outstanding Repayments. Response of this reconciliation request will be in callback.",
         "x-code-samples": [
           {
             "lang": "Shell_curl",
@@ -3369,7 +3369,133 @@
             "content": {
               "application/json": {
                 "example": {
-                  "msg": "success"
+                  "RESULT": {
+                    "CODE": "00",
+                    "DESC": "OK",
+                    "CURRENTPAGE": "1",
+                    "TOTALPAGES": "3",
+                    "TOTALROWS": "21",
+                    "OSPRINCIPALTOTAL": "30500000.0000",
+                    "OSINTERESTTOTAL": "15755626.1000",
+                    "PRINCIPALTOTAL": "48250000.0000",
+                    "INTERESTTOTAL": "15947580.2700",
+                    "DATA": [
+                      {
+                        "RECONDATA": [
+                          {
+                            "ROWNUMBER": "0",
+                            "REFNO": "A6",
+                            "OSPRINCIPALREAL": "0.0000",
+                            "OSINTERESTREAL": "0.0000",
+                            "DPD": "0",
+                            "ACCNO": "TK001.1",
+                            "BOOKINGDATE": "2019-02-25",
+                            "PRINCIPAL": "10000000.0000",
+                            "INTEREST": "100.0000"
+                          },
+                          {
+                            "ROWNUMBER": "1",
+                            "REFNO": "CVY0JOS6E9",
+                            "OSPRINCIPALREAL": "0.0000",
+                            "OSINTERESTREAL": "0.0000",
+                            "DPD": "0",
+                            "ACCNO": "TK001.6",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "500000.0000",
+                            "INTEREST": "20833.3300"
+                          },
+                          {
+                            "ROWNUMBER": "2",
+                            "REFNO": "HUN0JOS7W7",
+                            "OSPRINCIPALREAL": "0.0000",
+                            "OSINTERESTREAL": "0.0000",
+                            "DPD": "0",
+                            "ACCNO": "TK001.9",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "500000.0000",
+                            "INTEREST": "20833.3300"
+                          },
+                          {
+                            "ROWNUMBER": "3",
+                            "REFNO": "NPM0JOR9955",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "38666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.17",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          },
+                          {
+                            "ROWNUMBER": "4",
+                            "REFNO": "NPM0JOR9956",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "41666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.16",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          },
+                          {
+                            "ROWNUMBER": "5",
+                            "REFNO": "NPM0JOR9957",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "41666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.15",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          },
+                          {
+                            "ROWNUMBER": "6",
+                            "REFNO": "NPM0JOR996",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "41666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.18",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          },
+                          {
+                            "ROWNUMBER": "7",
+                            "REFNO": "NPM0JOR997",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "41666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.19",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          },
+                          {
+                            "ROWNUMBER": "8",
+                            "REFNO": "NPM0JOR998",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "41666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.20",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          },
+                          {
+                            "ROWNUMBER": "9",
+                            "REFNO": "NPM0JOR999",
+                            "OSPRINCIPALREAL": "1000000.0000",
+                            "OSINTERESTREAL": "41666.6700",
+                            "DPD": "-21",
+                            "ACCNO": "TK001.21",
+                            "BOOKINGDATE": "2019-03-01",
+                            "PRINCIPAL": "1000000.0000",
+                            "INTEREST": "41666.6700"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
               }
             }

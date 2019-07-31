@@ -15,10 +15,6 @@ class JsonWYamlController < JsonController
     file = File.open(path, "w")
     file.puts(JSON.pretty_generate(@curr_oas))
     file.close
-    path = File.expand_path("template_oas") + "/" + name.to_s + ".json"
-    file = File.open(path, "w")
-    file.puts(JSON.pretty_generate(@curr_oas))
-    file.close
   end
 
   def generate_doc(name)
