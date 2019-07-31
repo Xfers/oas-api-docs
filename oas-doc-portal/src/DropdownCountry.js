@@ -6,11 +6,6 @@ const DropdownCountry = props => {
 
   const options = [
     {
-      key: "Master",
-      text: "Master",
-      value: "Master"
-    },
-    {
       key: "Singapore",
       text: "Singapore",
       value: "Singapore"
