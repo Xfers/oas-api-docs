@@ -16,7 +16,7 @@ class GenerateController < ApplicationController
   end
 
   def generate
-    master_oas_json = JSON.parse(File.read("../oas-doc-portal/src/oas_spec/master-openapi.json"))
+    master_oas_json = Marshal.load(Marshal.dump(JSON.parse(File.read("../oas-doc-portal/src/oas_spec/master-openapi.json"))))
     #Get populated nested hash
     master_oas_paths_json = master_oas_json["paths"]
     split_keys = JsonWHashController.new(master_oas_paths_json).split_keys_arr

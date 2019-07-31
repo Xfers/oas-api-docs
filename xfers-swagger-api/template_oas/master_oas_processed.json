@@ -23,7 +23,6 @@
             }
           ],
           "requestBody": {
-            "description": "Request Body. Click on Schema for information on the parameters.",
             "required": true,
             "content": {
               "application/x-www-form-urlencoded": {
@@ -89,7 +88,6 @@
             }
           ],
           "requestBody": {
-            "description": "Request Body. Click on Schema for information on the parameters.",
             "required": true,
             "content": {
               "application/x-www-form-urlencoded": {
@@ -274,7 +272,7 @@
               "source": "curl \"https://sandbox.xfers.io/api/v3/authorize/hello\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
             }
           ],
-          "summary": "Check connection",
+          "summary": "Check Connection",
           "description": "Use this endpoint to check connection with our server",
           "security": [
             {
@@ -808,7 +806,6 @@
           ],
           "requestBody": {
             "required": true,
-            "description": "Request Body. Click on Schema for information on the parameters.",
             "content": {
               "application/json": {
                 "schema": {
@@ -832,9 +829,8 @@
                     }
                   },
                   "required": [
-                    "amount",
-                    "user_api_token",
-                    "order_id"
+                    "callback_url",
+                    "events"
                   ]
                 }
               }
@@ -946,7 +942,6 @@
                 }
               ],
               "requestBody": {
-                "description": "Request Body. Click on Schema for information on the parameters.",
                 "required": true,
                 "content": {
                   "application/x-www-form-urlencoded": {
@@ -972,6 +967,16 @@
                         "user_api_token": {
                           "type": "string",
                           "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
+                        },
+                        "payout_invoice_id": {
+                          "type": "string",
+                          "deprecated": true,
+                          "description": "This parameter is no longer supported."
+                        },
+                        "notify_url": {
+                          "type": "string",
+                          "deprecated": true,
+                          "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set notify_url instead."
                         }
                       }
                     },
@@ -1055,15 +1060,18 @@
               }
             ],
             "requestBody": {
-              "description": "Request Body. Click on Schema for information on the parameters.",
               "required": true,
               "content": {
                 "application/x-www-form-urlencoded": {
                   "schema": {
+                    "x-custom-requirements": {
+                      "Indonesia": [
+                        "account_holder_name"
+                      ]
+                    },
                     "required": [
                       "account_no",
-                      "bank",
-                      "account_holder_name"
+                      "bank"
                     ],
                     "properties": {
                       "account_no": {
@@ -1077,6 +1085,11 @@
                       "account_holder_name": {
                         "type": "string",
                         "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                      },
+                      "usage": {
+                        "type": "string",
+                        "deprecated": true,
+                        "description": "Is this bank account to be used as a funding source or for withdrawals?"
                       }
                     }
                   },
@@ -1243,6 +1256,86 @@
             }
           }
         },
+        "mock_result": {
+          "/user/bank_account/withdrawal_requests/mock_result": {
+            "put": {
+              "tags": [
+                "Testing"
+              ],
+              "summary": "Mock Withdrawal Result",
+              "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
+              "x-code-samples": [
+                {
+                  "lang": "Shell_curl",
+                  "source": "curl --location --request PUT \"https://sandbox-id.xfers.com/api/v3/user/bank_account/withdrawal_requests/mock_result\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"status=completed\""
+                }
+              ],
+              "security": [
+                {
+                  "user-api-token": [
+
+                  ]
+                }
+              ],
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "required": [
+                        "status",
+                        "idempotency_id"
+                      ],
+                      "properties": {
+                        "idempotency_id": {
+                          "type": "string",
+                          "description": "Idempotency ID you use to create your withdrawal request"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "completed",
+                            "failed"
+                          ],
+                          "description": "desired status for withdrawal"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Success",
+                  "content": {
+                    "application/json": {
+                      "example": {
+                        "available_balance": 308446,
+                        "ledger_balance": 308446,
+                        "withdrawal_request": {
+                          "id": "contract_78a3e9bbae474e5ab6fffad8e609f716",
+                          "idempotency_id": "Order_1234",
+                          "type": "Sobatku/withdrawal",
+                          "status": "completed",
+                          "amount": "120000.0",
+                          "fees": "0.0",
+                          "account_no": "1680366060",
+                          "bank_abbrev": "BCA",
+                          "express": true,
+                          "value_date": null,
+                          "created_at": "2018-11-01T17:48:42+07:00"
+                        }
+                      }
+                    }
+                  }
+                },
+                "4XX": {
+                  "$ref": "#/components/responses/4XX"
+                }
+              }
+            }
+          }
+        },
         "/user/bank_account/withdrawal_requests": {
           "get": {
             "operationId": "listWithdrawalRequests",
@@ -1293,85 +1386,6 @@
           }
         }
       },
-      "withdraawal_request": {
-        "mock_result": {
-          "/user/bank_account/withdraawal_request/mock_result": {
-            "put": {
-              "tags": [
-                "Testing"
-              ],
-              "summary": "Mock Withdrawal Result",
-              "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
-              "x-code-samples": [
-                {
-                  "lang": "Shell_curl",
-                  "source": "curl --location --request PUT \"https://sandbox-id.xfers.com/api/v3/user/bank_account/withdrawal_requests/mock_result\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"status=completed\""
-                }
-              ],
-              "security": [
-                {
-                  "user-api-token": [
-
-                  ]
-                }
-              ],
-              "requestBody": {
-                "description": "Request Body. Click on Schema for information on the parameters.",
-                "required": true,
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "properties": {
-                        "idempotency_id": {
-                          "type": "string",
-                          "description": "Idempotency ID you use to create your withdrawal request"
-                        },
-                        "status": {
-                          "type": "string",
-                          "enum": [
-                            "completed",
-                            "failed"
-                          ],
-                          "description": "desired status for withdrawal"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "description": "Success",
-                  "content": {
-                    "application/json": {
-                      "example": {
-                        "available_balance": 308446,
-                        "ledger_balance": 308446,
-                        "withdrawal_request": {
-                          "id": "contract_78a3e9bbae474e5ab6fffad8e609f716",
-                          "idempotency_id": "Order_1234",
-                          "type": "Sobatku/withdrawal",
-                          "status": "completed",
-                          "amount": "120000.0",
-                          "fees": "0.0",
-                          "account_no": "1680366060",
-                          "bank_abbrev": "BCA",
-                          "express": true,
-                          "value_date": null,
-                          "created_at": "2018-11-01T17:48:42+07:00"
-                        }
-                      }
-                    }
-                  }
-                },
-                "4XX": {
-                  "$ref": "#/components/responses/4XX"
-                }
-              }
-            }
-          }
-        }
-      },
       "/user/bank_account": {
         "post": {
           "operationId": "addBankAccount",
@@ -1394,15 +1408,18 @@
             }
           ],
           "requestBody": {
-            "description": "Request Body. Click on Schema for information on the parameters.",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
+                  "x-custom-requirements": {
+                    "Indonesia": [
+                      "account_holder_name"
+                    ]
+                  },
                   "required": [
                     "account_no",
-                    "bank",
-                    "account_holder_name"
+                    "bank"
                   ],
                   "properties": {
                     "account_no": {
@@ -1416,6 +1433,11 @@
                     "account_holder_name": {
                       "type": "string",
                       "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                    },
+                    "usage": {
+                      "type": "string",
+                      "deprecated": true,
+                      "description": "Is this bank account to be used as a funding source or for withdrawals?"
                     }
                   }
                 },
@@ -1475,6 +1497,18 @@
               "user-api-token": [
 
               ]
+            }
+          ],
+          "parameters": [
+            {
+              "name": "usage",
+              "required": false,
+              "in": "query",
+              "deprecated": true,
+              "description": "type of bank account",
+              "schema": {
+                "type": "string"
+              }
             }
           ],
           "responses": {
@@ -1623,7 +1657,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1787,7 +1820,7 @@
                   "callback_url": {
                     "deprecated": true,
                     "type": "string",
-                    "description": "URL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set callback_url instead."
+                    "description": "***This parameter is going through deprecation. It is still supported but we suggest you use the dash board in  {{base-api-url}}/merchant_settings/callback_settings to submit your callback url.***\r\n\r\nURL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set callback_url instead."
                   }
                 }
               }
@@ -1991,10 +2024,10 @@
       }
     }
   },
-  "notify_kyc_status": {
-    "/notify_kyc_status": {
+  "notify_kyc_callback": {
+    "/notify_kyc_callback": {
       "post": {
-        "operationId": "notifyKYC",
+        "operationId": "notifyKYCCallback",
         "description": "This is Xfers' callback request to notify KYC status",
         "summary": "Notify KYC status Callback",
         "tags": [
@@ -2490,7 +2523,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -2511,14 +2543,67 @@
                     "type": "string",
                     "description": "Testing for Documentation."
                   },
+                  "meta_data": {
+                    "type": "string",
+                    "description": "A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "3-letter ISO code for currency"
+                  },
+                  "customer": {
+                    "type": "string",
+                    "description": "Customer email or phone number. If provided, only that user can use the checkout_url returned. If the customer does not exist, an account will be created for them using the email/phone number provided. An OTP will be sent to the email/phone for the user to log in."
+                  },
+                  "return_url": {
+                    "type": "string",
+                    "description": "URL Xfers will redirect customer to on completion of Xfers checkout."
+                  },
+                  "card_only": {
+                    "type": "string",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "When this is true, this charge will will attempt to take payments via credit/debit card."
+                  },
+                  "redirect": {
+                    "type": "string",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "When this is true, instead of the JSON response, Xfers will automatically redirect the request to our checkout page"
+                  },
+                  "cancel_url": {
+                    "type": "string",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "URL Xfers will redirect customer to on cancellation of Xfers checkout."
+                  },
                   "notify_url": {
                     "type": "string",
                     "deprecated": true,
                     "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advice you to use the dashboard to set notify_url instead."
                   },
-                  "meta_data": {
+                  "google_auth": {
                     "type": "string",
-                    "description": "A set of key/value pairs that you can attach to a charge. It can be useful for storing additional information about the customer in a structured format."
+                    "deprecated": true,
+                    "description": "When this is true and user_phone_no is provided, instead of phone SMS OTP, user can use Google Authenticator to do OTP. See Authorize a Charge"
+                  },
+                  "transactional_only": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "Enables transactional charge when true. See more info. Only selected Xfers partners have this feature available."
+                  },
+                  "receipt_email": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "The email address to send this charge’s receipt."
+                  },
+                  "skip_notifications": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "Setting this to true will not send transaction reminders/cancelled/expired emails/SMS. Users will still receive payment completed notification."
                   }
                 },
                 "required": [
@@ -2566,6 +2651,70 @@
                     "merchant_metadata": "test metadata"
                   }
                 }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      },
+      "get": {
+        "operationId": "listCharge",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl \"https://sandbox.xfers.io/api/v3/charges?limit=1\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+          }
+        ],
+        "tags": [
+          "Charge"
+        ],
+        "summary": "List all Charge",
+        "description": "Returns a list of charges you’ve previously created. The charges are returned in sorted order, with the most recent charges appearing first.",
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "contract_b840cc9fc5a359c22ed2ccef3427aacd",
+                    "object": "TransferContract",
+                    "checkout_url": "https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd",
+                    "notify_url": "https://mysite.com/payment_notification",
+                    "return_url": "https://mysite.com/return",
+                    "cancel_url": "https://mysite.com/cancel",
+                    "amount": "9.99",
+                    "currency": "SGD",
+                    "order_id": "A012312",
+                    "description": "Carousell user - Konsolidate",
+                    "receipt_email": "",
+                    "total_amount": "12.49",
+                    "fee_amount": "0.12",
+                    "status": "completed",
+                    "metadata": {
+                      "firstname": "Tianwei",
+                      "lastname": "Liu"
+                    },
+                    "transfer_info": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_name_abbreviation": "UOB",
+                      "bank_account_no": "123456789",
+                      "bank_code": "7375",
+                      "swift_code": "UOVBSGSGXXX",
+                      "unique_id": "89898989",
+                      "outstanding_amount": "0"
+                    }
+                  }
+                ]
               }
             }
           },
@@ -2730,7 +2879,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -3128,7 +3276,6 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "content": {
             "application/json": {
               "schema": {
@@ -3153,6 +3300,32 @@
                   "description": {
                     "type": "string",
                     "description": "Description of transaction for display purposes"
+                  },
+                  "wallet_id": {
+                    "type": "string",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "Your user API token which you can retrieve this from the get token API response"
+                  },
+                  "meta_data": {
+                    "type": "string",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "Transaction Amount"
+                  },
+                  "recipient": {
+                    "type": "string",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "Email or Mobile Phone No of the recipient for this payout."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "deprecated": true,
+                    "description": "An internal description that you can attach to a payout. It can be useful for storing additional information about the customer in a structured format. You will be provided with these meta_data in your queries for payouts."
                   }
                 }
               },
@@ -3203,15 +3376,108 @@
             "$ref": "#/components/responses/4XX"
           }
         }
+      },
+      "get": {
+        "operationId": "listPayout",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl \"https://sandbox.xfers.io/api/v3/payouts?limit=1\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+          }
+        ],
+        "tags": [
+          "Payout"
+        ],
+        "summary": "List All Payout",
+        "description": "Returns a list of payouts you’ve previously created. The payouts are returned in sorted order, with the most recent charges appearing first.",
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recipient",
+            "in": "query",
+            "description": "Only return charges for the recipient(email for phone no) specified by this recipient ID.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "+65XXXXXXXX"
+            }
+          },
+          {
+            "name": "ending_before",
+            "in": "query",
+            "description": "A cursor for use in pagination. ending_before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_bar, your subsequent call can include ending_before=obj_bar in order to fetch the previous page of the list.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "A limit on the number of objects to be returned. Limit can range between 1 and 50 items.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": "10"
+            }
+          },
+          {
+            "name": "starting_after",
+            "in": "query",
+            "description": "A cursor for use in pagination. starting_after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include starting_after=obj_foo in order to fetch the next page of the list.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "6fa51cd08c8ae115f858593412bb72c8",
+                    "recipient": "+65XXXXXXXX",
+                    "invoice_id": "AZ0001",
+                    "amount": 150.0,
+                    "currency": "SGD",
+                    "descriptions": "Payment for Rent for July",
+                    "bank": "",
+                    "bank_account_no": "",
+                    "created_date": "2015-07-01T19:01:25Z",
+                    "completed_date": "",
+                    "status": "completed",
+                    "meta_data": "Liu Tianwei"
+                  }
+                ]
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
       }
     }
   },
-  "notify_withdrawal": {
-    "/notify_withdrawal": {
+  "notify_withdrawal_callback": {
+    "/notify_withdrawal_callback": {
       "post": {
-        "operationId": "withdrawalNotification",
+        "operationId": "withdrawalNotificationCallback",
         "description": "This is Xfers' callback request to your server to notify withdrawl status",
-        "summary": "Withdrawal notification",
+        "summary": "Withdrawal Notification Callback",
         "tags": [
           "Withdraw"
         ],
@@ -3340,6 +3606,95 @@
                   "application/json": {
                     "example": {
                       "msg": "success"
+                    }
+                  }
+                }
+              },
+              "4XX": {
+                "$ref": "#/components/responses/4XX"
+              }
+            }
+          }
+        }
+      },
+      "mocks": {
+        "/loans/{id}/mocks": {
+          "post": {
+            "tags": [
+              "Testing"
+            ],
+            "summary": "Mock Loan Status",
+            "description": "Mock the Status so you can change its status and get its callback",
+            "x-code-samples": [
+              {
+                "lang": "Shell_curl",
+                "source": "curl --location --request POST \"{{base-api-url}}api/v3/loans/loan_457d2959cff448a1951c589f8c841946/mocks\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --form \"status=loan_request_approved\""
+              }
+            ],
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "ID of the loan you want to request mock status.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "requestBody": {
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "required": [
+                      "status"
+                    ],
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "loan_request_approved",
+                          "loan_request_rejected",
+                          "disbursement_report_completed",
+                          "disbursement_report_failed"
+                        ],
+                        "description": "Mock loan status"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "Success",
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "available_balance": 308446,
+                      "ledger_balance": 308446,
+                      "withdrawal_request": {
+                        "id": "contract_78a3e9bbae474e5ab6fffad8e609f716",
+                        "idempotency_id": "Order_1234",
+                        "type": "Sobatku/withdrawal",
+                        "status": "completed",
+                        "amount": "120000.0",
+                        "fees": "0.0",
+                        "account_no": "1680366060",
+                        "bank_abbrev": "BCA",
+                        "express": true,
+                        "value_date": null,
+                        "created_at": "2018-11-01T17:48:42+07:00"
+                      }
                     }
                   }
                 }
@@ -3529,7 +3884,6 @@
               }
             ],
             "requestBody": {
-              "description": "Request Body. Click on Schema for information on the parameters.",
               "required": true,
               "content": {
                 "application/json": {
@@ -3833,6 +4187,146 @@
               }
             }
           }
+        },
+        "/loans/{loan_id}/disbursements": {
+          "post": {
+            "operationId": "createLoanDisbursement",
+            "tags": [
+              "Disbursements"
+            ],
+            "x-code-samples": [
+              {
+                "lang": "Shell_curl",
+                "source": "curl --location --request POST \"{{base-api-url}}api/v3/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
+              }
+            ],
+            "summary": "Create Loan Disbursement",
+            "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "name": "loan_id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "requestBody": {
+              "required": true,
+              "content": {
+                "application/x-www-form-urlencoded": {
+                  "schema": {
+                    "required": [
+                      "bank_account_id",
+                      "amount",
+                      "idempotency_id"
+                    ],
+                    "properties": {
+                      "bank_account_id": {
+                        "type": "string",
+                        "description": " User Bank Account id"
+                      },
+                      "amount": {
+                        "type": "string",
+                        "description": "Transaction Amount"
+                      },
+                      "idempotency_id": {
+                        "type": "string",
+                        "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia."
+                      },
+                      "user_api_token": {
+                        "type": "string",
+                        "description": "Use this param if you want to withdraw to another user’s bank account instead of your own. This is your user API token which you can retrieve from the get token API response"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Request Body Example": {
+                      "summary": "Request Body Example",
+                      "value": {
+                        "bank_account_id": "12345678",
+                        "amount": "120000.0",
+                        "idempotency_id": "Order_1234"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "Success",
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "msg": "success"
+                    }
+                  }
+                }
+              },
+              "4XX": {
+                "$ref": "#/components/responses/4XX"
+              }
+            }
+          },
+          "get": {
+            "operationId": "listLoanDisbursement",
+            "tags": [
+              "Disbursements"
+            ],
+            "x-code-samples": [
+              {
+                "lang": "Shell_curl",
+                "source": "curl --location --request GET \"{{base-api-url}}api/v3/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
+              }
+            ],
+            "summary": "List Loan Disbursement",
+            "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
+            "security": [
+              {
+                "user-api-token": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "name": "loan_id",
+                "in": "path",
+                "description": "Loan ID. You can find this from the response when you create loan.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Success",
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "msg": "success"
+                    }
+                  }
+                }
+              },
+              "4XX": {
+                "$ref": "#/components/responses/4XX"
+              }
+            }
+          }
         }
       }
     },
@@ -3859,7 +4353,6 @@
             }
           ],
           "requestBody": {
-            "description": "Request Body. Click on Schema for information on the parameters.",
             "required": true,
             "content": {
               "application/x-www-form-urlencoded": {
@@ -4042,68 +4535,43 @@
         }
       }
     },
-    "<loan_id>": {
-      "disbursements": {
-        "/loans/<loan_id>/disbursements": {
+    "repayments": {
+      "reconciliations": {
+        "/loans/repayments/reconciliations": {
           "post": {
-            "operationId": "createLoanDisbursement",
+            "operationId": "repaymentRecon",
             "tags": [
-              "Disbursements"
+              "Repayments"
             ],
+            "summary": "Repayments Reconciliation",
+            "description": "?????",
             "x-code-samples": [
               {
                 "lang": "Shell_curl",
-                "source": "curl --location --request POST \"{{base-api-url}}api/v3/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
+                "source": "curl --location --request GET \"{{base-api-url}}api/v3/loans/loan_c4f036668cf64d13a87beb8f15d12443/repayments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
               }
             ],
-            "summary": "Create Loan Disbursement",
-            "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
             "security": [
               {
-                "user-api-token": [
+                "X-XFERS-USER-API-KEY": [
 
                 ]
               }
             ],
-            "parameters": [
-              {
-                "name": "loan_id",
-                "in": "path",
-                "description": "Loan ID. You can find this from the response when you create loan.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            ],
             "requestBody": {
-              "description": "Request Body. Click on Schema for information on the parameters.",
               "required": true,
               "content": {
                 "application/x-www-form-urlencoded": {
                   "schema": {
-                    "required": [
-                      "bank_account_id",
-                      "amount",
-                      "idempotency_id"
-                    ],
                     "properties": {
-                      "bank_account_id": {
-                        "type": "string",
-                        "description": " User Bank Account id"
+                      "page": {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "The page number of loan_reconciliation. Starts with 1. Automatically set to 1 if this is not present while per_page is present."
                       },
-                      "amount": {
+                      "per_page": {
                         "type": "string",
-                        "description": "Transaction Amount"
-                      },
-                      "idempotency_id": {
-                        "type": "string",
-                        "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia."
-                      },
-                      "user_api_token": {
-                        "type": "string",
-                        "description": "Use this param if you want to withdraw to another user’s bank account instead of your own. This is your user API token which you can retrieve from the get token API response"
+                        "description": " The amount of outstanding loans per page. If this is null or not present, will returns all outstanding loans."
                       }
                     }
                   },
@@ -4111,63 +4579,14 @@
                     "Request Body Example": {
                       "summary": "Request Body Example",
                       "value": {
-                        "bank_account_id": "12345678",
-                        "amount": "120000.0",
-                        "idempotency_id": "Order_1234"
+                        "page": "1",
+                        "per_page": "120000.0"
                       }
                     }
                   }
                 }
               }
             },
-            "responses": {
-              "200": {
-                "description": "Success",
-                "content": {
-                  "application/json": {
-                    "example": {
-                      "msg": "success"
-                    }
-                  }
-                }
-              },
-              "4XX": {
-                "$ref": "#/components/responses/4XX"
-              }
-            }
-          },
-          "get": {
-            "operationId": "listLoanDisbursement",
-            "tags": [
-              "Disbursements"
-            ],
-            "x-code-samples": [
-              {
-                "lang": "Shell_curl",
-                "source": "curl --location --request GET \"{{base-api-url}}api/v3/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
-              }
-            ],
-            "summary": "List Loan Disbursement",
-            "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
-            "security": [
-              {
-                "user-api-token": [
-
-                ]
-              }
-            ],
-            "parameters": [
-              {
-                "name": "loan_id",
-                "in": "path",
-                "description": "Loan ID. You can find this from the response when you create loan.",
-                "required": true,
-                "explode": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            ],
             "responses": {
               "200": {
                 "description": "Success",
@@ -4209,7 +4628,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -4263,12 +4681,12 @@
       }
     }
   },
-  "notify_loan": {
-    "/notify_loan": {
+  "notify_loan_callback": {
+    "/notify_loan_callback": {
       "post": {
         "operationId": "loanNotification",
         "description": "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_request_approved), we will send you the callback with the following parameters",
-        "summary": "Loan notification",
+        "summary": "Loan Notification Callback",
         "tags": [
           "Loans"
         ],
@@ -4319,12 +4737,12 @@
       }
     }
   },
-  "notify_disbursement_report": {
-    "/notify_disbursement_report": {
+  "notify_disbursement_report_callback": {
+    "/notify_disbursement_report_callback": {
       "post": {
         "operationId": "disbursementReportNotification",
         "description": "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_disbursement_report_completed)",
-        "summary": "Disbursement report notification",
+        "summary": "Disbursement Report Notification Callback",
         "tags": [
           "Disbursements"
         ],
@@ -4375,12 +4793,12 @@
       }
     }
   },
-  "notify_repayment": {
-    "/notify_repayment": {
+  "notify_repayment_callback": {
+    "/notify_repayment_callback": {
       "post": {
         "operationId": "repaymentNotification",
         "description": "This is Xfers' callback request to your server to notify repayment status",
-        "summary": "Repayment notification",
+        "summary": "Repayment Notification Callback",
         "tags": [
           "Repayments"
         ],
@@ -4457,80 +4875,8 @@
       }
     }
   },
-  "repayment": {
-    "reconciliations": {
-      "/repayment/reconciliations": {
-        "post": {
-          "operationId": "repaymentRecon",
-          "tags": [
-            "Repayments"
-          ],
-          "summary": "Repayments Reconciliation",
-          "description": "?????",
-          "x-code-samples": [
-            {
-              "lang": "Shell_curl",
-              "source": "curl --location --request GET \"{{base-api-url}}api/v3/loans/loan_c4f036668cf64d13a87beb8f15d12443/repayments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
-            }
-          ],
-          "security": [
-            {
-              "X-XFERS-USER-API-KEY": [
-
-              ]
-            }
-          ],
-          "requestBody": {
-            "description": "Request Body. Click on Schema for information on the parameters.",
-            "required": true,
-            "content": {
-              "application/x-www-form-urlencoded": {
-                "schema": {
-                  "properties": {
-                    "page": {
-                      "type": "integer",
-                      "default": 1,
-                      "description": "The page number of loan_reconciliation. Starts with 1. Automatically set to 1 if this is not present while per_page is present."
-                    },
-                    "per_page": {
-                      "type": "string",
-                      "description": " The amount of outstanding loans per page. If this is null or not present, will returns all outstanding loans."
-                    }
-                  }
-                },
-                "examples": {
-                  "Request Body Example": {
-                    "summary": "Request Body Example",
-                    "value": {
-                      "page": "1",
-                      "per_page": "120000.0"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Success",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "msg": "success"
-                  }
-                }
-              }
-            },
-            "4XX": {
-              "$ref": "#/components/responses/4XX"
-            }
-          }
-        }
-      }
-    }
-  },
-  "notify_loan_disbursement": {
-    "/notify_loan_disbursement": {
+  "notify_loan_disbursement_callback": {
+    "/notify_loan_disbursement_callback": {
       "post": {
         "operationId": "loanDisbursementNotification",
         "description": "This is Xfers' callback request to your server to notify loan disbursement status",
@@ -4727,7 +5073,6 @@
             }
           ],
           "requestBody": {
-            "description": "Request Body. Click on Schema for information on the parameters.",
             "required": true,
             "content": {
               "application/json": {
@@ -4945,7 +5290,6 @@
           }
         ],
         "requestBody": {
-          "description": "Request Body. Click on Schema for information on the parameters.",
           "required": true,
           "content": {
             "application/json": {
@@ -5075,6 +5419,9 @@
               "content": {
                 "application/json": {
                   "schema": {
+                    "required": [
+                      "amount"
+                    ],
                     "properties": {
                       "amount": {
                         "type": "number",
@@ -5169,7 +5516,7 @@
           "Prepaid Cards"
         ],
         "deprecated": true,
-        "summary": "Add prepaid card",
+        "summary": "Add Prepaid Card",
         "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint adds a prepaid card to your account.",
         "x-code-samples": [
           {
@@ -5189,6 +5536,10 @@
           "content": {
             "application/json": {
               "schema": {
+                "required": [
+                  "proxy_number",
+                  "provider"
+                ],
                 "properties": {
                   "proxy_number": {
                     "type": "string",
@@ -5266,6 +5617,334 @@
           },
           "4XX": {
             "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    }
+  },
+  "intents": {
+    "{intent_id}": {
+      "cancel": {
+        "/intents/{intent_id}/cancel": {
+          "post": {
+            "operationId": "cancelIntent",
+            "tags": [
+              "Intents"
+            ],
+            "summary": "Cancel an Intent",
+            "description": "Cancelling a intent that has been previously created by not yet completed.",
+            "x-code-samples": [
+              {
+                "lang": "Shell_curl",
+                "source": "curl \"https://sandbox.xfers.io/api/v3/intent/<INTENT_ID>/cancel\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n  -X POST"
+              }
+            ],
+            "security": [
+              {
+                "X-XFERS-USER-API-KEY": [
+
+                ]
+              }
+            ],
+            "parameters": [
+              {
+                "name": "intent_id",
+                "in": "path",
+                "description": "Intent ID. You can get this from the create create Intent response.",
+                "required": true,
+                "explode": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Success",
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "id": "6f5f85859a51cd08c8ae113412bb72c8",
+                      "request_id": "AZ0001",
+                      "amount": "5000",
+                      "currency": "IDR",
+                      "amount_to_transfer": "4999",
+                      "bank_name": "Bank Central Asia",
+                      "bank_abbrev": "BCA",
+                      "account_name": "Xveria Media Indonesia",
+                      "bank_account_no": "0124121241",
+                      "notify_url": "https://mysite.com/topup_notification",
+                      "expiration_date": "2016-09-09T17:55:51Z",
+                      "status": "pending"
+                    }
+                  }
+                }
+              },
+              "4XX": {
+                "$ref": "#/components/responses/4XX"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/intents": {
+      "post": {
+        "operationId": "createIntent",
+        "tags": [
+          "Intents"
+        ],
+        "summary": "Create an Intent",
+        "description": "The following request will allow you to create a intent for a transfer and register a callback notification once a transfer has be received or expired(all intents expires in 72 hours.)\r\n\r\nUser should be prompted to transfer  `unique_amount`  amount to the  `bank_account_no`  and  `bank_name`provided. Once the user deposits with  `unique_amount`, the full amount will be credited to his account.",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl \"https://sandbox.xfers.io/api/v3/intents\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n -H \"Content-Type: application/json\" \\\r\n  -d '{ \"amount\": \"5000\", \"currency\": \"SGD\", \"bank\": \"BCA\", \"request_id\" : \"AZ0001\", \"notify_url\" : \"https://mysite.com/topup_notification\"}'"
+          }
+        ],
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "amount",
+                  "currency",
+                  "request_id"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount that user intends to transfer",
+                    "example": "5000"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "3-letter ISO code for currency(IDR/SGD)"
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by requester. This will need to be unique or the intent request will be considered a duplicate and ignored.",
+                    "example": "AZ0001"
+                  },
+                  "bank": {
+                    "type": "string",
+                    "description": "bank abbreviation (BCA, UOB, MANDIRI)",
+                    "example": "BCA"
+                  },
+                  "notify_url": {
+                    "type": "string",
+                    "description": "URL to receive callback notifications when transfer is received",
+                    "example": "https://mysite.com/payment_notification"
+                  },
+                  "disable_va": {
+                    "type": "boolean",
+                    "description": "If true, does not return a Virtual Account for this intent",
+                    "default": "false"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "a975f036cb4b43f3b2d1ff90040ec292",
+                  "request_id": "AI1001",
+                  "amount": "30000.0",
+                  "currency": "IDR",
+                  "unique_amount": "29999",
+                  "bank_abbrev": "MANDIRI",
+                  "bank_name": "Bank Mandiri",
+                  "account_name": "PT Media Indonusa",
+                  "bank_account_no": "8855845678901235",
+                  "notify_url": "https://mysite.com/topup_notification",
+                  "expiration_date": "2017-06-01T07:46:40Z",
+                  "status": "pending",
+                  "transfer_info_array": [
+                    {
+                      "bank_name_full": "Bank Central Asia",
+                      "bank_name_abbreviation": "BCA",
+                      "bank_account_no": "1063003003",
+                      "bank_code": "",
+                      "branch_code": "",
+                      "branch_area": "",
+                      "unique_id": "97266867",
+                      "img_src": "https://www.xfers.io/images/bankLogos/bank-logo-bca.png"
+                    },
+                    {
+                      "bank_name_full": "Bank Mandiri",
+                      "bank_name_abbreviation": "MANDIRI",
+                      "bank_account_no": "8855845678901235",
+                      "bank_code": "",
+                      "branch_code": "",
+                      "branch_area": "",
+                      "unique_id": "97266867",
+                      "img_src": "https://www.xfers.io/images/bankLogos/bank-logo-mandiri.png"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      },
+      "get": {
+        "operationId": "listIntent",
+        "tags": [
+          "Intents"
+        ],
+        "summary": "List Current Intent",
+        "description": "Returns the current pending intent of the user. If multiple intents are created, only the last one is returned.\r\n\r\n`transfer_info_array`  is returned so you can display a list of all Xfers banks to transfer to.",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl \"https://sandbox.xfers.io/api/v3/intents\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+          }
+        ],
+        "security": [
+          {
+            "X-XFERS-USER-API-KEY": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "disable_va",
+            "in": "query",
+            "description": "If true, does not return a Virtual Account for intent",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "a975f036cb4b43f3b2d1ff90040ec292",
+                  "request_id": "AI1001",
+                  "amount": "30000.0",
+                  "currency": "IDR",
+                  "unique_amount": "29999",
+                  "bank_abbrev": "MANDIRI",
+                  "bank_name": "Bank Mandiri",
+                  "account_name": "PT Media Indonusa",
+                  "bank_account_no": "8855845678901235",
+                  "notify_url": "https://mysite.com/topup_notification",
+                  "expiration_date": "2017-06-01T07:46:40Z",
+                  "status": "pending",
+                  "transfer_info_array": [
+                    {
+                      "bank_name_full": "Bank Central Asia",
+                      "bank_name_abbreviation": "BCA",
+                      "bank_account_no": "1063003003",
+                      "bank_code": "",
+                      "branch_code": "",
+                      "branch_area": "",
+                      "unique_id": "97266867",
+                      "img_src": "https://www.xfers.io/images/bankLogos/bank-logo-bca.png"
+                    },
+                    {
+                      "bank_name_full": "Bank Mandiri",
+                      "bank_name_abbreviation": "MANDIRI",
+                      "bank_account_no": "8855845678901235",
+                      "bank_code": "",
+                      "branch_code": "",
+                      "branch_area": "",
+                      "unique_id": "97266867",
+                      "img_src": "https://www.xfers.io/images/bankLogos/bank-logo-mandiri.png"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    }
+  },
+  "notify_intent_callback": {
+    "/notify_intent_callback": {
+      "post": {
+        "operationId": "notifyIntent",
+        "description": "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
+        "summary": "Intent Notification Callbacl",
+        "tags": [
+          "Intents"
+        ],
+        "security": [
+
+        ],
+        "servers": [
+          {
+            "url": "yourserver.com",
+            "description": "This is your endpoint you set in the dashboard or notify_url"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "intent_id": {
+                    "description": "Xfers’s id unique to each intent",
+                    "type": "string",
+                    "example": "6f5f85859a51cd08c8ae113412bb72c8"
+                  },
+                  "request_id": {
+                    "description": "Unique ref no provided by your during your intent call",
+                    "type": "string",
+                    "example": "A012312"
+                  },
+                  "amount": {
+                    "description": "reason for verification status. Only applicable when verification_status is false",
+                    "type": "string",
+                    "example": "Amount that user intented to transfer."
+                  },
+                  "currency": {
+                    "description": "U3-letter ISO code for currency(IDR/SGD)",
+                    "type": "string"
+                  },
+                  "status": {
+                    "description": "Transfer status.",
+                    "type": "string",
+                    "enum": [
+                      "expired",
+                      "completed"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Your server returns this code if it accepts the callback"
           }
         }
       }

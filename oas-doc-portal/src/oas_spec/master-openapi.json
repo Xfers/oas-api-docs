@@ -2,10 +2,6 @@
   "openapi": "3.0.0",
   "servers": [
     {
-      "description": "Local host",
-      "url": "http://localhost:3000/api/v3"
-    },
-    {
       "description": "Singapore Production",
       "url": "https://www.xfers.io/api/v3"
     },
@@ -28,49 +24,34 @@
     "title": "Xfers API",
     "contact": {
       "name": "Contact us through our help desk",
-      "url": "https://bit.ly/XfersSupport.'"
+      "url": "https://bit.ly/XfersSupport"
     }
   },
   "tags": [
     {
+      "name": "Error Response",
+      "description": "The API categorises the various failures with Xfers' own error code. The body of the response will be JSON in the following format:\r\n```\r\nerror: \"string\"\r\nerror_code: \"string\"\r\nerror_handling: \"string\"\r\n```\r\nThe field `error` returns the error message that is specific to your request, `error_code` returns the category the error and `error_handling` returns the instruction on how to resolve the error.",
+      "x-traitTag" : true
+    },
+    {
       "name": "Registration",
-      "description": "Register and verify new users.",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://xfers.github.io/xfers-merchant-guide"
-      }
+      "description": "Register and verify new users."
     },
     {
       "name": "User Account",
-      "description": "Manage user account",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://xfers.github.io/xfers-merchant-guide"
-      }
+      "description": "Manage user account"
     },
     {
       "name": "Charge",
-      "description": "API for Charges",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://xfers.github.io/xfers-merchant-guide"
-      }
+      "description": "API for Charges"
     },
     {
       "name": "Cards",
-      "description": "The following APIs allow you to add or update credit cards to a connected user (which means you have to go through our [Xfers Connect flow](http:\/\/docs.xfers.io\/#xfers-connect) to get their `user_api_token`). You are also able to charge a credit card without creating an Xfers account for your user (see [Charge Guest Card](http:\/\/docs.xfers.io\/#charge-guest-card)) or to charge the default card belonging to a user (see [Charge Existing Card](http:\/\/docs.xfers.io\/#charge-existing-card)).",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://xfers.github.io/xfers-merchant-guide"
-      }
+      "description": "The following APIs allow you to add or update credit cards to a connected user (which means you have to go through our [Xfers Connect flow](http:\/\/docs.xfers.io\/#xfers-connect) to get their `user_api_token`). You are also able to charge a credit card without creating an Xfers account for your user (see [Charge Guest Card](http:\/\/docs.xfers.io\/#charge-guest-card)) or to charge the default card belonging to a user (see [Charge Existing Card](http:\/\/docs.xfers.io\/#charge-existing-card))."
     },
     {
       "name": "Payout",
-      "description": "API for Payout",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://xfers.github.io/xfers-merchant-guide"
-      }
+      "description": "API for Payout"
     },
     {
       "name": "Bank Account",
@@ -3317,6 +3298,53 @@
         }
       }
     },
+    "/notify_loan_callback" :{
+      "post": {
+        "operationId": "loanNotification",
+        "description" : "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_request_approved), we will send you the callback with the following parameters",
+        "summary": "Loan Notification Callback",
+        "tags": ["Loans"],
+        "security": [],
+        "servers": [
+          {
+            "url" : "yourserver.com",
+            "description" : "This is your endpoint you set in the dashboard or notify_url"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "id": {
+                    "description": "the loan id as provided",
+                    "type": "string",
+                    "format": "loan_XXX",
+                    "example" : "loan_dfghjkiuyfdcbnmjhgfc"
+                  },
+                  "status": {
+                    "description": "the latest status after callback",
+                    "type": "string",
+                    "enum": ["loan_request_approved", "loan_request_rejected"],
+                    "example" : "loan_request_approved"
+                  },
+                  "failure_reason": {
+                    "description": "failure reason as given from the bank , only exist on `loan_request_rejected`",
+                    "type": "string",
+                    "example" : "[{\"REASONCODE\":\"REQ\",\"REMARK\":\"[JENIS OBJECT\/KENDARAAN] IS NOT REGISTERED\"},{\"REASONCODE\":\"MAXTENOR\",\"REMARK\":\"MINIMUM TENOR Exception: 0<1, OBJECT\/Car Age : 9 Months\"}]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Your server returns this code if it accepts the callback"
+          }
+        }
+      }
+    },
     "/loans/{id}": {
       "get": {
         "operationId": "getLoan",
@@ -3367,53 +3395,7 @@
         }
       }
     },
-    "/notify_loan_callback" :{
-      "post": {
-        "operationId": "loanNotification",
-        "description" : "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_request_approved), we will send you the callback with the following parameters",
-        "summary": "Loan Notification Callback",
-        "tags": ["Loans"],
-        "security": [],
-        "servers": [
-          {
-            "url" : "yourserver.com",
-            "description" : "This is your endpoint you set in the dashboard or notify_url"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "description": "the loan id as provided",
-                    "type": "string",
-                    "format": "loan_XXX",
-                    "example" : "loan_dfghjkiuyfdcbnmjhgfc"
-                  },
-                  "status": {
-                    "description": "the latest status after callback",
-                    "type": "string",
-                    "enum": ["loan_request_approved", "loan_request_rejected"],
-                    "example" : "loan_request_approved"
-                  },
-                  "failure_reason": {
-                    "description": "failure reason as given from the bank , only exist on `loan_request_rejected`",
-                    "type": "string",
-                    "example" : "[{\"REASONCODE\":\"REQ\",\"REMARK\":\"[JENIS OBJECT\/KENDARAAN] IS NOT REGISTERED\"},{\"REASONCODE\":\"MAXTENOR\",\"REMARK\":\"MINIMUM TENOR Exception: 0<1, OBJECT\/Car Age : 9 Months\"}]"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
-          }
-        }
-      }
-    },
+    
     "/loans/{id}/disbursement_reports": {
       "post": {
         "operationId": "createDisbursementReport",
@@ -4204,7 +4186,7 @@
         }
       }
     },
-    "/loans/<loan_id>/disbursements": {
+    "/loans/{loan_id}/disbursements": {
       "post": {
         "operationId": "createLoanDisbursement",
         "tags": [
@@ -5271,7 +5253,7 @@
         "operationId": "notifyIntent",
         "description" : "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
         "summary": "Intent Notification Callbacl",
-        "tags": ["Intent"],
+        "tags": ["Intents"],
         "security": [],
         "servers": [
           {
@@ -6632,6 +6614,18 @@
             ]
           }
         ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the loan you want to request mock status.",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -6686,15 +6680,6 @@
     "url": "https://www.xfers.com"
   },
   "components": {
-    "headers": {
-      "X-XFERS-APP-API-KEY": {
-        "required": true,
-        "description": "Retrive this API key from the dashboard",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
     "parameters": {
       "X-XFERS-APP-API-KEY": {
         "name": "X-XFERS-APP-API-KEY",
@@ -6871,54 +6856,484 @@
           }
         }
       },
-      "Missing API KEY in header": {
-        "summary": "Missing API KEY in header",
+      "XFE1": {
+        "summary" : "XFE1 - Server busy",
         "value": {
-          "error": "Missing API KEY in header"
+          "error" : "string",
+          "error_code" : "XFE1",
+          "error_handling" : "Follow instructions in the response."
         }
       },
-      "Invalid API KEY": {
-        "summary": "Invalid API KEY",
+      "XFE2": {
+        "summary" : "XFE2 - Access denied",
         "value": {
-          "error": "Invalid API KEY"
+          "error" : "string",
+          "error_code" : "XFE2",
+          "error_handling" : "Make sure you call the correct API or contact customer support at https://bit.ly/XfersSupport."
         }
       },
-      "Invalid api_key_signature": {
-        "summary": "Invalid api_key/signature",
+      "XFE3": {
+        "summary" : "XFE3 - Internal Error",
         "value": {
-          "error": "Invalid api_key/signature"
+          "error" : "string",
+          "error_code" : "XFE3",
+          "error_handling" : "Unexpected error. Try again later or contact customer support at https://bit.ly/XfersSupport."
         }
       },
-      "Invalid phone no provided": {
-        "summary": "Invalid phone no provided",
+      "XFE4": {
+        "summary" : "XFE4 - Authentication field empty",
         "value": {
-          "error": "Invalid phone no provided.",
-          "error_code": "XFE12",
-          "error_handling": "Make sure you entered the correct parameters."
+          "error" : "string",
+          "error_code" : "XFE4",
+          "error_handling" : "Follow instructions in the response."
         }
       },
-      "Must be a valid Singapore mobile number": {
-        "summary": "Must be a valid Singapore mobile number.",
+      "XFE5": {
+        "summary" : "XFE5 - Api key is invalid",
         "value": {
-          "error": "Must be a valid Singapore mobile number.",
-          "error_code": "XFE101",
-          "error_handling": "Follow instructions in the response."
+          "error" : "string",
+          "error_code" : "XFE5",
+          "error_handling" : "Make sure you entered the correct API key or contact customer support at https://bit.ly/XfersSupport"
         }
       },
-      "Invalid OTP provided": {
-        "summary": "Invalid OTP provided",
+      "XFE6": {
+        "summary" : "XFE6 - Invalid signature",
         "value": {
-          "error": "Invalid OTP provided.",
-          "error_code": "XFE12",
-          "error_handling": "Make sure you entered the correct parameters."
+          "error" : "string",
+          "error_code" : "XFE6",
+          "error_handling" : "Follow instructions in the response."
         }
       },
-      "Invalid contact no.": {
-        "summary": "Invalid contact no",
+      "XFE7": {
+        "summary" : "XFE7 - Database error",
         "value": {
-          "error": "Invalid contact no.",
-          "error_code": "XFE12",
-          "error_handling": "Make sure you entered the correct parameters."
+          "error" : "string",
+          "error_code" : "XFE7",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE8": {
+        "summary" : "XFE8 - Cannot retrieve media",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE8",
+          "error_handling" : "Cannot retrieve media. Please enter a new URL or try again later."
+        }
+      },
+      "XFE9": {
+        "summary" : "XFE9 - ....",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE9",
+          "error_handling" : "..."
+        }
+      },
+      "XFE10": {
+        "summary" : "XFE10 - Invalid environment",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE10",
+          "error_handling" : "Request not supported for this environment."
+        }
+      },
+      "XFE11": {
+        "summary" : "XFE11 - Timeout",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE11",
+          "error_handling" : "Please try again later."
+        }
+      },
+      "XFE12": {
+        "summary" : "XFE12 - Invalid parameter",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE12",
+          "error_handling" : "Make sure you entered the correct parameters."
+        }
+      },
+      "XFE13": {
+        "summary" : "XFE13 - Record not found",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE13",
+          "error_handling" : "Please check that you provided the correct API Key and the correct parameters."
+        }
+      },
+      "XFE14": {
+        "summary" : "XFE14 - API only allowed for fully verified user",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE14",
+          "error_handling" : "Please submit KYC data to get your account fully verified."
+        }
+      },
+      "XFE15": {
+        "summary" : "XFE15 - Required parameter empty",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE15",
+          "error_handling" : "Make sure you entered the correct required parameter."
+        }
+      },
+      "XFE16": {
+        "summary" : "XFE16 - Invalid request",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE16",
+          "error_handling" : "API request not supported. Make sure you entered the correct API key or contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE101": {
+        "summary" : "XFE101 - Not local number",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE101",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE102": {
+        "summary" : "XFE102 - Entered value is less than minimum",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE102",
+          "error_handling" : "Make sure you entered the correct number."
+        }
+      },
+      "XFE103": {
+        "summary" : "XFE103 - ...",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE103",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE104": {
+        "summary" : "XFE104 - Media provided too large",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE104",
+          "error_handling" : "Media too big. Follow the guidelines in the response."
+        }
+      },
+      "XFE105": {
+        "summary" : "XFE105 - Captcha error",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE1",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE106": {
+        "summary" : "XFE106 - No auth_code provided",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE106",
+          "error_handling" : "Enter either phone OTP or Google Auth OTP"
+        }
+      },
+      "XFE107": {
+        "summary" : "XFE107 - Only enter one auth_code",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE107",
+          "error_handling" : "Do not enter both OTP or Google Auth OTP. Only need to enter one."
+        }
+      },
+      "XFE108": {
+        "summary" : "XFE108 - More user information required",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE108",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE109": {
+        "summary" : "XFE109 - Invalid credentials",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE109",
+          "error_handling" : "Make sure you entered the correct credentials."
+        }
+      },
+      "XFE110": {
+        "summary" : "XFE110 - Cannot sign up twice",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE110",
+          "error_handling" : "Please sign in instead"
+        }
+      },
+      "XFE111": {
+        "summary" : "XFE1 - Duplicate credentials",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE111",
+          "error_handling" : "Particulars already exist. Please make sure you entered the correct parameters."
+        }
+      },
+      "XFE112": {
+        "summary" : "XFE112 - Repeat request",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE112",
+          "error_handling" : "API request has already been made. Please follow the instructions in the response or call aother API."
+        }
+      },
+      "XFE201": {
+        "summary" : "XFE201 - Not yet a merchant",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE201",
+          "error_handling" : "Please verify your merchant or business account."
+        }
+      },
+      "XFE301": {
+        "summary" : "XFE301 - Account locked",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE301",
+          "error_handling" : "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE302": {
+        "summary" : "XFE302 - Account deleted",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE302",
+          "error_handling" : "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE303": {
+        "summary" : "XFE303 - Account terminated",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE303",
+          "error_handling" : "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE304": {
+        "summary" : "XFE304- Account closed",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE304",
+          "error_handling" : "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE305": {
+        "summary" : "XFE305 - ....",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE305",
+          "error_handling" : "..."
+        }
+      },
+      "XFE306": {
+        "summary" : "XFE306 - ...",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE306",
+          "error_handling" : "..."
+        }
+      },
+      "XFE307": {
+        "summary" : "XFE307 - ...",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE307",
+          "error_handling" : "..."
+        }
+      },
+      "XFE308": {
+        "summary" : "XFE308 - ...",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE308",
+          "error_handling" : "..."
+        }
+      },
+      "XFE309": {
+        "summary" : "XFE309 - Cannot use same account",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE309",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE310": {
+        "summary" : "XFE310 - Cannot use same account",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE310",
+          "error_handling" : "Follow instructions in the response."
+        }
+      },
+      "XFE311": {
+        "summary" : "XFE311 - Cannot be different wallet type",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE311",
+          "error_handling" : "Follow instruction in response or contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE312": {
+        "summary" : "XFE312 - Conditions not met to close account",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE312",
+          "error_handling" : "Invalid request to close account. Follow instruction in the response."
+        }
+      },
+      "XFE401": {
+        "summary" : "XFE401 - Cannot refund charge",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE401",
+          "error_handling" : "Invalid request. Please call another API or Contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE402": {
+        "summary" : "XFE402 - Cannot use placeholder account",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE402",
+          "error_handling" : "Follow instructions in response."
+        }
+      },
+      "XFE403": {
+        "summary" : "XFE403 - ...",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE403",
+          "error_handling" : "..."
+        }
+      },
+      "XFE404": {
+        "summary" : "XFE404 - Forex not supported",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE404",
+          "error_handling" : "Make sure you call the correct API or contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE405": {
+        "summary" : "XFE405 - Charge cannot be refunded",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE405",
+          "error_handling" : "Only completed contract can be refunded."
+        }
+      },
+      "XFE406": {
+        "summary" : "XFE406 - Cannot refund prepaid transaction",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE406",
+          "error_handling" : "Please choose another transaction to refund."
+        }
+      },
+      "XFE407": {
+        "summary" : "XFE407 - Conditions to charge card not met",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE407",
+          "error_handling" : "Invalid request for this transaction. Make sure you entered the correct txn_id."
+        }
+      },
+      "XFE408": {
+        "summary" : "XFE408 - Invalid charge request",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE408",
+          "error_handling" : "Invalid request. Please follow instructions in response or contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE409": {
+        "summary" : "XFE409 - Order id exist",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE409",
+          "error_handling" : "Please enter another order_id."
+        }
+      },
+      "XFE410": {
+        "summary" : "XFE410 - Invalid application fee",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE410",
+          "error_handling" : "Invalid request. Please make changes to the parameters as stated in the response."
+        }
+      },
+      "XFE501": {
+        "summary" : "XFE501 - Expected Bank API error",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE501",
+          "error_handling" : "Try again later or contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE502": {
+        "summary" : "XFE502 - Unexpected BANK API error",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE502",
+          "error_handling" : "Try again later or contact customer support at https://bit.ly/XfersSupport."
+        }
+      },
+      "XFE503": {
+        "summary" : "XFE503 - Failed name check",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE503",
+          "error_handling" : "Bank account name and name provided have to be similar."
+        }
+      },
+      "XFE504": {
+        "summary" : "XFE504 - Maximum number of bank account",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE504",
+          "error_handling" : "Delete existing bank accounts."
+        }
+      },
+      "XFE505": {
+        "summary" : "XFE505 - Bank abbrev provided invalid",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE505",
+          "error_handling" : "Use GET {{base-api-url}}api/v3/banks to get the correct bank abbrev."
+        }
+      },
+      "XFE506": {
+        "summary" : "XFE506 - Bank account already taken",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE506",
+          "error_handling" : "Please use another bank account."
+        }
+      },
+      "XFE601": {
+        "summary" : "XFE601 - Conditions to withdraw not met. Can be solved by changing amount",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE601",
+          "error_handling" : "Your withdrawal does not meet the conditions required. Please follow the instructions in the response."
+        }
+      },
+      "XFE602": {
+        "summary" : "XFE602 - Server busy",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE602",
+          "error_handling" : "Your withdrawal exceeds the limit for the time period. Please change the amount or verify your account."
+        }
+      },
+      "XFE603": {
+        "summary" : "XFE603 - Not allowed to carry out request",
+        "value": {
+          "error" : "string",
+          "error_code" : "XFE603",
+          "error_handling" : "Invalid request. Please call another API or contact customer support at https://bit.ly/XfersSupport."
         }
       }
     },
@@ -6929,6 +7344,69 @@
           "application/json": {
             "schema" : {
               "$ref": "#/components/schemas/error_response"
+  
+            },
+            "examples": {
+              "XFE1" : {"$ref": "#/components/examples/XFE1"},
+              "XFE2" : {"$ref": "#/components/examples/XFE2"},
+              "XFE3" : {"$ref": "#/components/examples/XFE3"},
+              "XFE4" : {"$ref": "#/components/examples/XFE4"},
+              "XFE5" : {"$ref": "#/components/examples/XFE5"},
+              "XFE6" : {"$ref": "#/components/examples/XFE6"},
+              "XFE7" : {"$ref": "#/components/examples/XFE7"},
+              "XFE8" : {"$ref": "#/components/examples/XFE8"},
+              "XFE9" : {"$ref": "#/components/examples/XFE9"},
+              "XFE10" : {"$ref": "#/components/examples/XFE10"},
+              "XFE11" : {"$ref": "#/components/examples/XFE11"},
+              "XFE12" : {"$ref": "#/components/examples/XFE12"},
+              "XFE13" : {"$ref": "#/components/examples/XFE13"},
+              "XFE14" : {"$ref": "#/components/examples/XFE14"},
+              "XFE15" : {"$ref": "#/components/examples/XFE15"},
+              "XFE16" : {"$ref": "#/components/examples/XFE16"},
+              "XFE101" : {"$ref": "#/components/examples/XFE101"},
+              "XFE102" : {"$ref": "#/components/examples/XFE102"},
+              "XFE103" : {"$ref": "#/components/examples/XFE103"},
+              "XFE104" : {"$ref": "#/components/examples/XFE104"},
+              "XFE105" : {"$ref": "#/components/examples/XFE105"},
+              "XFE106" : {"$ref": "#/components/examples/XFE106"},
+              "XFE107" : {"$ref": "#/components/examples/XFE107"},
+              "XFE108" : {"$ref": "#/components/examples/XFE108"},
+              "XFE109" : {"$ref": "#/components/examples/XFE109"},
+              "XFE110" : {"$ref": "#/components/examples/XFE110"},
+              "XFE111" : {"$ref": "#/components/examples/XFE111"},
+              "XFE112" : {"$ref": "#/components/examples/XFE112"},
+              "XFE201" : {"$ref": "#/components/examples/XFE201"},
+              "XFE301" : {"$ref": "#/components/examples/XFE301"},
+              "XFE302" : {"$ref": "#/components/examples/XFE302"},
+              "XFE303" : {"$ref": "#/components/examples/XFE303"},
+              "XFE304" : {"$ref": "#/components/examples/XFE304"},
+              "XFE305" : {"$ref": "#/components/examples/XFE305"},
+              "XFE306" : {"$ref": "#/components/examples/XFE306"},
+              "XFE307" : {"$ref": "#/components/examples/XFE307"},
+              "XFE308" : {"$ref": "#/components/examples/XFE308"},
+              "XFE309" : {"$ref": "#/components/examples/XFE309"},
+              "XFE310" : {"$ref": "#/components/examples/XFE310"},
+              "XFE311" : {"$ref": "#/components/examples/XFE311"},
+              "XFE312" : {"$ref": "#/components/examples/XFE312"},
+              "XFE401" : {"$ref": "#/components/examples/XFE401"},
+              "XFE402" : {"$ref": "#/components/examples/XFE402"},
+              "XFE403" : {"$ref": "#/components/examples/XFE403"},
+              "XFE404" : {"$ref": "#/components/examples/XFE404"},
+              "XFE405" : {"$ref": "#/components/examples/XFE405"},
+              "XFE406" : {"$ref": "#/components/examples/XFE406"},
+              "XFE407" : {"$ref": "#/components/examples/XFE407"},
+              "XFE408" : {"$ref": "#/components/examples/XFE408"},
+              "XFE409" : {"$ref": "#/components/examples/XFE409"},
+              "XFE410" : {"$ref": "#/components/examples/XFE410"},
+              "XFE501" : {"$ref": "#/components/examples/XFE501"},
+              "XFE502" : {"$ref": "#/components/examples/XFE502"},
+              "XFE503" : {"$ref": "#/components/examples/XFE503"},
+              "XFE504" : {"$ref": "#/components/examples/XFE504"},
+              "XFE505" : {"$ref": "#/components/examples/XFE505"},
+              "XFE506" : {"$ref": "#/components/examples/XFE506"},
+              "XFE601" : {"$ref": "#/components/examples/XFE601"},
+              "XFE602" : {"$ref": "#/components/examples/XFE602"},
+              "XFE603" : {"$ref": "#/components/examples/XFE603"}
             }
           }
         }

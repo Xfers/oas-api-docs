@@ -93,7 +93,12 @@ class JsonWYamlController < JsonController
       path_obj.each { |http_method, opp_obj|
         next if opp_obj["requestBody"].nil?
         opp_obj["requestBody"]["content"].each { |media_type, schema|
-          bybug if schema["schema"]["properties"].nil?
+          if !schema["schema"]['x-custom-params-requirements'].nil? && schema["schema"]['x-custom-params-requirements'].keys.include?(name.to_s)
+            schema["schema"]["required"].push(schema["schema"]['x-custom-params-requirements']) if !schema["schema"]["required"].nil?
+            schema["schema"]["required"] = []
+            schema["schema"]["required"].push(*(schema["schema"]['x-custom-params-requirements'][name.to_s]))
+            puts("added #{schema["schema"]["x-custom-params-requirements"]} as custom requirements")
+          end
           schema["schema"]["properties"].each { |field, value|
             next if value["x-custom-params"].nil?
             if !value["x-custom-params"].include?(name.to_s)
@@ -117,6 +122,8 @@ class JsonWYamlController < JsonController
 
   def travel_curr_path (split_key ,hash)
     return hash if split_key.empty?
+    raise StandardError, "#{split_key}" if hash.nil?
+    #raise StandardError, "#{hash}" if split_key.nil? || split_key.empty?
     node = split_key[0]
     split_key = split_key.drop(1)
     travel_curr_path(split_key, hash[node])
@@ -154,12 +161,13 @@ class JsonWYamlController < JsonController
   def merge_a_path(path) #assume no * and return new obj
     split_curr_path = path.split("/").drop(1)
     curr_path_json = travel_curr_path(split_curr_path, @populate_nested_hash.get_nested_hash)
-    "Invlid path: " + path if curr_path_json.empty?
+    raise StandardError, "Invlid path: #{path}" if curr_path_json.nil?
     curr_path_json.each {|key, value|
       if key.include?("/")
         @curr_oas.merge!({key=> value})
       end
     }
+    puts("merged #{path}")
     JsonWYamlController.new(@yml, @master_oas_wo_paths_json, @populate_nested_hash, @curr_oas)
   end
 

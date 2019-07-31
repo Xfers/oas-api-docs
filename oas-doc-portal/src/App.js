@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css'
 import { RedocStandalone } from 'redoc';
 import { Dropdown } from 'semantic-ui-react'
@@ -15,10 +15,8 @@ class App extends Component {
     this.state = {
       sgOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/Singapore.json'),
       idOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/Indonesia.json'),
-      masterOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/master-openapi.json'),
-      country: "Master",
+      country: "Singapore",
       definitionJSON: null,
-      loading: false
     }
     this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this)
   }
@@ -42,12 +40,6 @@ class App extends Component {
         country: country
       })
     }
-    else if (country === "Master") {
-      this.setState({
-        definitionJSON: this.state.masterOasDoc,
-        country: country
-      })
-    }
     else {
       console.log("app "+country)
       throw new Error("Invalid country name check string");
@@ -60,24 +52,30 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router
+      basename ="/dynamic-api-doc">
         <div className="App" >
             <Route exact path="/" render={props => (
               <React.Fragment>
-                 <h1 className="country-header-title">API documentation for {this.state.country}</h1>
-              <DropdownCountry
-                className="country-header-dropbox"
-                country = {this.state.country}
-                updateDefinitionJSON = {this.updateDefinitionJSON}
-              />
+                <div className="country-header">
+                  <h1
+                  className="country-header-title"
+                  >API documentation for {this.state.country}</h1>
+                  <DropdownCountry
+                    className="country-header-dropbox"
+                    country = {this.state.country}
+                    updateDefinitionJSON = {this.updateDefinitionJSON}
+                  />
+                </div>
+
               <RedocStandalone
                 spec={this.state.definitionJSON}
                 options={{
                   nativeScrollbars: true,
                   theme: { colors: { primary: { main: '#dd5522' } } },
-                  jsonSampleExpandLevel: 0,
-                  menuToggle: true,
-                  requiredPropsFirst: true
+                  pathInMiddlePanel: true,
+                  jsonSampleExpandLevel: 5,
+                  requiredPropsFirst: true,
                 }}
               />
             </React.Fragment>

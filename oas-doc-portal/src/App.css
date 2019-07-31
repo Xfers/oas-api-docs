@@ -3,17 +3,21 @@
   flex-direction: row;
   height: 100vh;
 }
-
-.country-header-title {
-  display: inline;
-  floatit : center;
+.country-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.country-header-dropbox {
-  display: inline;
-  float: right;
+.country-header-title{
+  margin: 10px;
+  font-size: 3rem;
 }
 
+
+.ui.selection.dropdown {
+  min-width: 10em;
+}
 
 #api-data {
   width: 90vw;
