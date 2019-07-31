@@ -46,6 +46,16 @@ or to `parameters>{desired_params}`
   - If you made any changes to `master-oas.json`, please create a pull request
   ** extra: use VSCode `OpenAPI(Swagger) editor` to have a sidebar that can help navigate through the json easily and `openapi-linter` to check if you follow the OpenAPI specifications
   
+## Known Errors
+If you receive this error message when you run `npm start`
+```
+./node_modules/redoc/bundles/redoc.lib.js
+Module not found: Can't resolve 'core-js/es6/promise' in '/Users/elsha/dynamic-api-doc/oas-doc-portal/node_modules/redoc/bundles'
+```
+
+Run this command to resolve the probelm 
+`npm i -S core-js@2.5.7`
+  
 ## Other notes
  
  Template of path with requestBody(Post/put)
