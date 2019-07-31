@@ -1,5 +1,5 @@
 This repo is for Xfers' API documentation.
-Beta site for API documentation(https://klementtan.github.io/dynamic-api-doc/)
+Beta site for API documentation (https://klementtan.github.io/dynamic-api-doc/)
 
 ## Problem
 
@@ -11,11 +11,11 @@ Beta site for API documentation(https://klementtan.github.io/dynamic-api-doc/)
  
 To tackle the above problems, this repo aims to create a way of documentation at a higher level of abstraction. Any changes made to the documentation should only be made to 1 source to ensure efficiency and standardization.
 
-Flow(https://www.lucidchart.com/invitations/accept/a4e6c44e-9b06-4ffb-a75b-3bc50304cc05)
+Flow (https://www.lucidchart.com/invitations/accept/a4e6c44e-9b06-4ffb-a75b-3bc50304cc05)
 
 1. Any changes Xfers wants to make will be made to the master-documentation
   - Master-documentation will contain all of Xfers endpoints (Singapore-specific and Indonesia-specific) and all of Xfers parameters
-  - Master-documentation will be hosted on swagger-hub gui(https://app.swaggerhub.com/apis/xfers/xfers-api/3)
+  - Master-documentation will be hosted on swagger-hub GUI (https://app.swaggerhub.com/apis/xfers/xfers-api/3)
 2. Run `cd xfers-swagger-api` in the root directory and execute `rake generate` in the command line. This will:
   - call swagger hub API to retrieve the our master-docuementation from them
   - create 2 `.json` files: `Singapore.json` and `Indonesia.json`. These files will be written to `/oas-doc-portal/src/oas_spec` and `/xfers-swagger-api/template_oas`
