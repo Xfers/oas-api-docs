@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route} from 'react-router-dom';
 import './App.css'
 import { RedocStandalone } from 'redoc';
 import { Dropdown } from 'semantic-ui-react'
@@ -80,7 +80,7 @@ class App extends Component {
               />
             </React.Fragment>
           )} />
-            <Route path="/master" component={MasterOas}/>
+            <Route exact path="/master" component={MasterOas}/>
         </div>
       </Router>
     );
