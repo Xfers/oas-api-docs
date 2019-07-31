@@ -15,10 +15,6 @@
 }
 
 
-.ui.selection.dropdown {
-  min-width: 10em;
-}
-
 #api-data {
   width: 90vw;
   padding-left: 30px;

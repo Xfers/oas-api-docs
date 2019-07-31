@@ -6,7 +6,7 @@ class MasterOas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      masterOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/master-openapi.json'),
+      masterOasDoc: require('../oas_spec/master-openapi.json'),
       country: "Master",
       definitionJSON: null,
       loading: false

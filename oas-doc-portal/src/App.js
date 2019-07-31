@@ -13,8 +13,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sgOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/Singapore.json'),
-      idOasDoc: require('/Users/tandeningklement/Desktop/Parser/oas-doc-portal/src/oas_spec/Indonesia.json'),
+      sgOasDoc: require('./oas_spec/Singapore.json'),
+      idOasDoc: require('./oas_spec/Indonesia.json'),
       country: "Singapore",
       definitionJSON: null,
     }
