@@ -37,6 +37,7 @@ or to `parameters>{desired_params}`
 ## How to contribute
 
 1. Change OAS definition
+  - Slack to get access to make PR
   - Clone this repository
   - run `cd oas-doc-portal`
   - run `npm install`
