@@ -10,8 +10,13 @@
 }
 
 .country-header-title{
-  margin: 10px;
+  display: inline;
+  margin: auto;
+  align-items: center;
   font-size: 3rem;
+  font-size: 2.5vw;
+  word-wrap: break-word;
+  justify-content: center;
 }
 
 .logo-wrapper{
@@ -24,11 +29,15 @@
   justify-content: center;
 }
 
-.logo{
-
+.title-wrapper{
+  width: 40%;
+  padding-left: 40px;
+  margin-right: 2vw;
+  text-align: left;
 }
 
 .empty-block{
+  display:flex;
   width: 260px;
   height: 128px;
 }
