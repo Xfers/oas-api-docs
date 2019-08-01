@@ -32,6 +32,7 @@ class ParserController < ApplicationController
       if master_path_item_objs[path].nil?
         raise StandardError, "Matser oas does not contain #{path} check if you enter the correct parameter in oas.config"
       else
+        puts("Added path #{path} for #{name.to_s}" )
         path_item_obj =  copy_obj({path => master_path_item_objs[path]})
         curr_path_item_objs.merge!(path_item_obj)
       end
@@ -41,18 +42,37 @@ class ParserController < ApplicationController
     ParserController.new(@master_oas_json,@oas_config,curr_oas_holder)
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
+  def process_tag
+    curr_tags = []
+    @curr_oas["paths"].each_value {|path_item_obj|
+      path_item_obj.each_value {|operation_obj|
+        raise StandardError, "Missing tags for #{operationObj}" if operation_obj["tags"].nil?
+        operation_obj["tags"].each {|tag|
+          curr_tags.push(tag) if !curr_tags.include?(tag)
+          puts("added " + tag.to_s + " to tags") if !curr_tags.include?(tag)
+        }
+      }
+    }
+    #tag obj will initially hold all the tags from master
+    tag_objs = copy_obj(@curr_oas["tags"])
+    tag_objs.delete_if { |tag|
+      delete_flag = ""
+      byebug
+      if curr_tags.include? tag["name"]
+        delete_flag = false
+      elsif !tag["x-traitTag"].nil?
+        delete_flag = false
+      else
+        delete_flag = true
+      end
+      raise StandardError, "Did not account for extreme case tag: processing #{tag.to_s}" if delete_flag == ""
+      delete_flag
+    }
+    byebug
+    @curr_oas["tags"] = tag_objs
+    curr_oas_holder = copy_obj(@curr_oas)
+    ParserController.new(@master_oas_json,@oas_config,curr_oas_holder)
+  end
 
   ### Helpers methods that do not support method chaining. Meant for internal use.
 
