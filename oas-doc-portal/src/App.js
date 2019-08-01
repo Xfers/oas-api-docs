@@ -8,6 +8,7 @@ import DropdownCountry from "./DropdownCountry.js";
 import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
 import ToTopButton from "./ToTopButton.js";
+import { Popup, Button } from 'semantic-ui-react'
 
 ReactGA.initialize("UA-144834615-1");
 
@@ -18,15 +19,17 @@ class App extends Component {
       sgOasDoc: require('./oas_spec/Singapore.json'),
       idOasDoc: require('./oas_spec/Indonesia.json'),
       country: "Singapore",
-      definitionJSON: null,
+      definitionJSON: require('./oas_spec/Singapore.json'),
       windowWidth: 0,
-      windowHeight: 0
+      windowHeight: 0,
+      loading: true
     }
     this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
     this.renderLogo = this.renderLogo.bind(this);
     this.convertRemToPixel = this.convertRemToPixel.bind(this);
     this.renderEmptyLogo = this.renderEmptyLogo.bind(this);
+
   }
 
 
@@ -54,6 +57,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.updateDefinitionJSON(this.state.country);
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
   }
@@ -66,7 +70,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.updateDefinitionJSON(this.state.country);
+
     window.removeEventListener("resize", this.updateDimensions);
   }
 
@@ -97,9 +101,9 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.convertRemToPixel(50));
     const { windowWidth } = this.state;
     const showLogo = windowWidth > this.convertRemToPixel(50);
+    console.log(this.state.loading)
     return (
       <Router
       basename ="/dynamic-api-doc">
@@ -125,6 +129,11 @@ class App extends Component {
                 </div>
               <RedocStandalone
                 spec={this.state.definitionJSON}
+                onLoaded={error => {
+                  if (!error) {
+                    console.log("successfully rendered")
+                  }
+                }}
                 options={{
                   nativeScrollbars: true,
                   theme: { colors: { primary: { main: '#dd5522' } } },
@@ -132,6 +141,7 @@ class App extends Component {
                   jsonSampleExpandLevel: 5,
                   requiredPropsFirst: true,
                   scrollYOffset: 128,
+                  jsonSampleExpandLevel: "all"
                 }}
               />
 

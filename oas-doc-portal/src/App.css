@@ -3,6 +3,7 @@
   flex-direction: row;
   height: 100vh;
 }
+
 .country-header {
   display: flex;
   align-items: center;
