@@ -7,6 +7,7 @@ import { Dropdown } from 'semantic-ui-react'
 import DropdownCountry from "./DropdownCountry.js";
 import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
+import ToTopButton from "./ToTopButton.js";
 
 ReactGA.initialize("UA-144834615-1");
 
@@ -119,6 +120,9 @@ class App extends Component {
                     updateDefinitionJSON = {this.updateDefinitionJSON}
                   />
                 </div>
+                <div className="up-button">
+                  <ToTopButton/>
+                </div>
               <RedocStandalone
                 spec={this.state.definitionJSON}
                 options={{
@@ -130,6 +134,7 @@ class App extends Component {
                   scrollYOffset: 128,
                 }}
               />
+
             </React.Fragment>
           )} />
             <Route exact path="/master" component={MasterOas}/>
