@@ -32,7 +32,7 @@
 .title-wrapper{
   width: 40%;
   padding-left: 40px;
-  margin-right: 2vw;
+  margin-right: 1vw;
   text-align: left;
 }
 
@@ -40,6 +40,13 @@
   display:flex;
   width: 260px;
   height: 128px;
+}
+
+.up-button{
+  position: fixed;
+  z-index: 2;
+  left: 90%;
+  top: 90%;
 }
 
 #api-data {
