@@ -42,11 +42,7 @@ const DropdownCountry = props => {
       }
     }
   }
-  console.log(options.map(x => {
-        if(x.value == country) {
-          return x;
-        }
-      }))
+
   return(
 
     <Dropdown

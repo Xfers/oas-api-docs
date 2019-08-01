@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {HashRouter as Router, Route} from 'react-router-dom';
+import ReactDOM from 'react-dom'
 import './App.css'
 import { RedocStandalone } from 'redoc';
 import { Dropdown } from 'semantic-ui-react'
@@ -17,8 +18,14 @@ class App extends Component {
       idOasDoc: require('./oas_spec/Indonesia.json'),
       country: "Singapore",
       definitionJSON: null,
+      windowWidth: 0,
+      windowHeight: 0
     }
-    this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this)
+    this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this);
+    this.updateDimensions = this.updateDimensions.bind(this);
+    this.renderLogo = this.renderLogo.bind(this);
+    this.convertRemToPixel = this.convertRemToPixel.bind(this);
+    this.renderEmptyLogo = this.renderEmptyLogo.bind(this);
   }
 
 
@@ -41,43 +48,77 @@ class App extends Component {
       })
     }
     else {
-      console.log("app "+country)
       throw new Error("Invalid country name check string");
     }
   }
 
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions() {
+    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+    this.setState({ windowWidth, windowHeight });
+  }
+
   componentWillMount() {
-    this.updateDefinitionJSON(this.state.country)
+    this.updateDefinitionJSON(this.state.country);
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  renderLogo(showLogo) {
+    if (showLogo) {
+      return (
+        <div className = "logo-wrapper">
+          <img
+          className ="logo"
+          src={require("./images/Xfers_Blue_120.png")}
+          />
+        </div>
+      )
+    }
+  }
+
+  renderEmptyLogo(showLogo) {
+    if (showLogo) {
+      return (
+         <div className = "empty-block">
+        </div>
+      )
+    }
+  }
+
+  convertRemToPixel(rem) {
+    return rem * 16;
   }
 
   render() {
+    console.log(this.convertRemToPixel(50));
+    const { windowWidth } = this.state;
+    const showLogo = windowWidth > this.convertRemToPixel(50);
     return (
       <Router
       basename ="/dynamic-api-doc">
         <div className="App" >
             <Route exact path="/" render={props => (
               <React.Fragment>
-                <div className = "logo-wrapper">
-                  <span className="helper"></span>
-                  <img
-                  className ="logo"
-                  src={require("./images/Xfers_Blue_120.png")}
-                  />
-                </div>
+                {this.renderLogo(showLogo)}
                 <div className="country-header">
-                  <div className = "empty-block">
+                  {this.renderEmptyLogo(showLogo)}
+                  <div className = "title-wrapper">
+                    <h1
+                    className="country-header-title"
+                    >API documentation for {this.state.country}</h1>
                   </div>
-
-                  <h1
-                  className="country-header-title"
-                  >API documentation for {this.state.country}</h1>
                   <DropdownCountry
                     className="country-header-dropbox"
                     country = {this.state.country}
                     updateDefinitionJSON = {this.updateDefinitionJSON}
                   />
                 </div>
-
               <RedocStandalone
                 spec={this.state.definitionJSON}
                 options={{
