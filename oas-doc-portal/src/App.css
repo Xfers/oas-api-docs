@@ -3,6 +3,7 @@
   flex-direction: row;
   height: 100vh;
 }
+
 .country-header {
   display: flex;
   align-items: center;
@@ -10,8 +11,13 @@
 }
 
 .country-header-title{
-  margin: 10px;
+  display: inline;
+  margin: auto;
+  align-items: center;
   font-size: 3rem;
+  font-size: 2.5vw;
+  word-wrap: break-word;
+  justify-content: center;
 }
 
 .logo-wrapper{
@@ -24,13 +30,24 @@
   justify-content: center;
 }
 
-.logo{
-
+.title-wrapper{
+  width: 40%;
+  padding-left: 40px;
+  margin-right: 1vw;
+  text-align: left;
 }
 
 .empty-block{
+  display:flex;
   width: 260px;
   height: 128px;
+}
+
+.up-button{
+  position: fixed;
+  z-index: 2;
+  left: 90%;
+  top: 90%;
 }
 
 #api-data {

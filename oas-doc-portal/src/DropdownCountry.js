@@ -10,7 +10,7 @@ const DropdownCountry = props => {
       text: (
         <span>
           <Flag name="sg" />
-          Singapore
+          SG
         </span>
       ),
       value: "Singapore"
@@ -20,7 +20,7 @@ const DropdownCountry = props => {
       text: (
         <span>
           <Flag name="id" />
-          Indonesia
+          ID
         </span>
       ),
       value: "Indonesia"
@@ -42,18 +42,13 @@ const DropdownCountry = props => {
       }
     }
   }
-  console.log(options.map(x => {
-        if(x.value == country) {
-          return x;
-        }
-      }))
+
   return(
 
     <Dropdown
-      placeholder = {<span> Select Country <Icon name="world"/> </span>}
-      compact
+      button
+      placeholder = {<span> <Icon name="world"/> </span>}
       onChange = {(e,{value}) => handleChange(e,value)}
-      selection
       options = {options}
 
     />
