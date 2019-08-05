@@ -8,7 +8,7 @@ import DropdownCountry from "./DropdownCountry.js";
 import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
 import ToTopButton from "./ToTopButton.js";
-import { Popup, Button } from 'semantic-ui-react'
+import { Popup, Button, Flag } from 'semantic-ui-react'
 
 ReactGA.initialize("UA-144834615-1");
 
@@ -29,6 +29,7 @@ class App extends Component {
     this.renderLogo = this.renderLogo.bind(this);
     this.convertRemToPixel = this.convertRemToPixel.bind(this);
     this.renderEmptyLogo = this.renderEmptyLogo.bind(this);
+    this.getCountryForIcon = this.getCountryForIcon.bind(this)
 
   }
 
@@ -74,7 +75,18 @@ class App extends Component {
     window.removeEventListener("resize", this.updateDimensions);
   }
 
+  getCountryForIcon(){
+    let abrv = ""
+    if(this.state.country == "Singapore"){
+      abrv = "sg"
+    } else if (this.state.country == "Indonesia"){
+      abrv = "id"
+    }
+    return abrv
+  }
+
   renderLogo(showLogo) {
+    console.log(this.getCountryForIcon())
     if (showLogo) {
       return (
         <div className = "logo-wrapper">
@@ -82,6 +94,11 @@ class App extends Component {
           className ="logo"
           src={require("./images/Xfers_Blue_120.png")}
           />
+          <span
+          style={{
+            margin: "5px",
+          }}
+          > <Flag name={this.getCountryForIcon()}/> </span>
         </div>
       )
     }
