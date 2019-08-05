@@ -17,7 +17,7 @@ class MainController < ApplicationController
   end
 
   def generate
-    Parser.new(@master_oas_json, @oas_config).generate_all
+    ParserController.new(@master_oas_json, @oas_config).generate_all
     puts("OAS docs generated")
   end
 

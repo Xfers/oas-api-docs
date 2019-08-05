@@ -11,6 +11,13 @@ class ParserController < ApplicationController
     @curr_oas = copy_obj(curr_oas)
   end
 
+  def generate_all
+    names_arr = @oas_config.keys
+    names_arr.each do |curr_name|
+      ParserController.new(@master_oas_json,@oas_config).generate_doc(curr_name)
+    end
+  end
+
   def add_general_info
     general_info = copy_obj(master_oas_json)
     general_info.delete("paths")
@@ -29,6 +36,20 @@ class ParserController < ApplicationController
     specific_paths = get_specific_path_arr(name) #array of paths in string that the documents wants
     master_path_item_objs = @master_oas_json["paths"]
     specific_paths.each {|path|
+      if path.include?("*")
+        puts("Adding #{path} for #{name.to_s}")
+        path_added_flag = false
+        master_path_item_objs.keys.each { |master_path|
+          if master_path.include?(path.delete("*"))
+            path_added_flag = true
+            path_item_obj =  copy_obj({master_path => master_path_item_objs[master_path]})
+            puts("Added path #{master_path} for #{name.to_s}")
+            curr_path_item_objs.merge!(path_item_obj)
+          end
+        }
+        raise StandardError, "Matser oas does not contain #{path} check if you enter the correct parameter in oas.config" if !path_added_flag
+        next
+      end
       if master_path_item_objs[path].nil?
         raise StandardError, "Matser oas does not contain #{path} check if you enter the correct parameter in oas.config"
       else
@@ -138,7 +159,20 @@ class ParserController < ApplicationController
     ParserController.new(@master_oas_json,@oas_config,curr_oas)
   end
 
+
+
   ### Helpers methods that do not support method chaining. Meant for internal use.
+
+  def generate_file(name)
+    path = File.expand_path("../oas-doc-portal/src/oas_spec") + "/" + name.to_s + ".json"
+    file = File.open(path, "w")
+    file.puts(JSON.pretty_generate(@curr_oas))
+    file.close
+  end
+
+  def generate_doc(name)
+    add_paths(name).add_general_info.process_tag.process_params(name).process_requestBody(name).generate_file(name)
+  end
 
   def get_doc_names
     names = @oas_config.keys
