@@ -97,19 +97,46 @@ class ParserController < ApplicationController
     ParserController.new(@master_oas_json,@oas_config,curr_oas)
   end
 
+  def process_requestBody(name)
+    curr_oas = copy_obj(@curr_oas)
+    curr_path_item_objs = curr_oas["paths"]
+    curr_path_item_objs.each_value {|path_item_obj|
+      path_item_obj.each_value { |opperation_obj|
+        next if opperation_obj["requestBody"].nil?
+        raise StandardError, "content hash missing from oas" if opperation_obj["requestBody"]["content"].nil?
+        opperation_obj["requestBody"]["content"].each_value { |media_type_value|
+          raise StandardError, "schema for media type missing in oas" if media_type_value["schema"].nil?
+          schema = media_type_value["schema"]
 
+          ###add custom params requirements
+          if schema.has_key?("x-custom-params-requirements")
+            cust_params_requirements = schema["x-custom-params-requirements"]
+            if cust_params_requirements.keys.include?(name.to_s)
+              if schema["required"].nil?
+                schema["required"] = []
+                schema["required"].push(*cust_params_requirements[name.to_s])
+              else
+                schema["required"].push(*cust_params_requirements[name.to_s])
+              end
+              puts("added #{cust_params_requirements[name.to_s]} for #{name.to_s} as custom requirements")
+            end
+          end
 
-
-
-
-
-
-
-
-
-
-
-
+          ###process each property of request body
+          raise StandardError, "properties for schema missing in oas" if schema["properties"].nil?
+          properties = schema["properties"]
+          properties.each { |property_name, property_obj|
+            next if property_obj["x-custom-params"].nil?
+            if !property_obj["x-custom-params"].include?(name.to_s)
+              properties.delete(property_name)
+              puts("deleted " + property_name.to_s + " for " + name.to_s )
+            end
+          }
+        }
+      }
+    }
+    ParserController.new(@master_oas_json,@oas_config,curr_oas)
+  end
 
   ### Helpers methods that do not support method chaining. Meant for internal use.
 
