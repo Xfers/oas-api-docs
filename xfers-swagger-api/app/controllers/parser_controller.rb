@@ -54,10 +54,10 @@ class ParserController < ApplicationController
       }
     }
     #tag obj will initially hold all the tags from master
+    raise StandardError, "You can only call this method after add_general_info method" if @curr_oas["tags"].nil?
     tag_objs = copy_obj(@curr_oas["tags"])
     tag_objs.delete_if { |tag|
       delete_flag = ""
-      byebug
       if curr_tags.include? tag["name"]
         delete_flag = false
       elsif !tag["x-traitTag"].nil?
@@ -68,11 +68,48 @@ class ParserController < ApplicationController
       raise StandardError, "Did not account for extreme case tag: processing #{tag.to_s}" if delete_flag == ""
       delete_flag
     }
-    byebug
     @curr_oas["tags"] = tag_objs
     curr_oas_holder = copy_obj(@curr_oas)
     ParserController.new(@master_oas_json,@oas_config,curr_oas_holder)
   end
+
+  def process_params(name)
+    curr_oas = copy_obj(@curr_oas)
+    curr_path_item_objs = curr_oas["paths"]
+    curr_path_item_objs.each_value {|path_item_obj|
+      path_item_obj.each_value { |opperation_obj|
+        next if opperation_obj["parameters"].nil?
+        opperation_obj["parameters"] = opperation_obj["parameters"].select {|curr_param|
+          if curr_param["x-custom-params"] != nil
+            if !curr_param["x-custom-params"].include?(name.to_s)
+              puts(curr_param["name"].to_s + " deleted from " + name.to_s)
+              false
+            else
+              true
+            end
+          else
+            true
+          end
+        }
+        opperation_obj.delete("parameters") if (opperation_obj["parameters"].nil? || opperation_obj["parameters"].empty?)
+      }
+    }
+    ParserController.new(@master_oas_json,@oas_config,curr_oas)
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ### Helpers methods that do not support method chaining. Meant for internal use.
 

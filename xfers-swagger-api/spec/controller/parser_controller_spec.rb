@@ -57,11 +57,17 @@ RSpec.describe ParserController do
       expect(oas.curr_oas.include?("info")).to eq true
       expect(oas.curr_oas.include?("paths")).to eq true
     end
-    it "should support method chaining of add path and process_tag" do
+    it "proccess tag happy flow" do
       doc_name1 = @yml.keys[0]
       oas = @parser_controller.add_paths(doc_name1).add_general_info.process_tag
-      byebug
-      expect(oas.curr_oas["tags"]).to eq ["pets"]
+      tags = oas.curr_oas["tags"][0]
+      expect(tags["name"]).to eq "pets"
+    end
+
+    it "process params happy flow" do
+      doc_name = @yml.keys[1]
+      oas = @parser_controller.add_paths(doc_name).process_params(doc_name)
+      expect(oas.curr_oas["paths"]["/pets/{petId}"]["get"]["parameters"].nil?).to eq true
     end
   end
 end

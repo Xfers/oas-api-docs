@@ -121,6 +121,7 @@
             "in": "path",
             "required": true,
             "description": "The id of the pet to retrieve",
+            "x-custom-params" : ["Tian"],
             "schema": {
               "type": "string"
             }
