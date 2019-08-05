@@ -17,7 +17,7 @@
           "4XX": {
             "$ref": "#/components/responses/4XX"
           }
-"x-custom-requirements" : {
+"x-custom-params-requirements" : {
                   "Indonesia" : ["id_front_url", "selfie_2id_url", "full_name", "identity_no", "gender", "mother_maiden_name", "date_of_birth", "place_of_birth", "marital_status", "occupation", "city", "state", "postal_code", "address_line_1"]
                 },
 "x-custom-params" : ["Indonesia"],

@@ -2,5 +2,7 @@ directory '/Users/tandeningklement/Desktop/Parser/xfers-swagger-api/app/controll
 
 desc "generate oas"
 task :generate => :environment do
-  GenerateController.new("https://api.swaggerhub.com/apis/xfers/xfers-api/3/swagger.json").generate
+  master_oas_path = "../oas-doc-portal/src/oas_spec/master-openapi.json"
+  oas_config_path = File.expand_path("config") + "/oas.yml"
+  MainController.new(File.read(master_oas_path),YAML.load(File.read(oas_config_path))).generate
 end
