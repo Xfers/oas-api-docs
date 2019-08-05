@@ -1,7 +1,0 @@
-:Tian:
-  :paths:
-    - "/pets"
-:Wei:
-  :paths:
-    - "/pets"
-    - "/pets/{petId}"
