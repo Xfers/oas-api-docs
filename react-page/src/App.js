@@ -33,8 +33,6 @@ class App extends Component {
 
   }
 
-
-
   updateDefinitionJSON(country){
     ReactGA.event({
       category: 'User',
@@ -98,7 +96,8 @@ class App extends Component {
           style={{
             margin: "5px",
           }}
-          > <Flag name={this.getCountryForIcon()}/> </span>
+          > <Flag name={this.getCountryForIcon()}/>
+          </span>
         </div>
       )
     }
