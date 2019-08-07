@@ -21,8 +21,7 @@ class App extends Component {
       country: "Singapore",
       definitionJSON: require('./oas_spec/Singapore.json'),
       windowWidth: 0,
-      windowHeight: 0,
-      loading: true
+      windowHeight: 0
     }
     this.updateDefinitionJSON = this.updateDefinitionJSON.bind(this);
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -68,7 +67,7 @@ class App extends Component {
     this.setState({ windowWidth, windowHeight });
   }
 
-  componentWillMount() {
+  componentWillUnmount() {
 
     window.removeEventListener("resize", this.updateDimensions);
   }
