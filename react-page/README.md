@@ -41,7 +41,6 @@ you can review the changes you made
 
 #### Other notes
 - Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
-- Refer to [/src/template/README.md](/src/template/README.md) for information on how to create a new path for client specific enpoint
 
 # How it works
 
