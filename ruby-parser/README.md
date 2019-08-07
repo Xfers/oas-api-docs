@@ -2,6 +2,12 @@
 
 This directory contains all the code and information pertaining to the Parser that will take in `master-openapi.json` and write multiple `.json` file based on the specification of the `oas.yml`
 
+## How to contribute
+1. Clone repo
+2. Make changes to code in `app/controller` 
+3. Write test case
+4. Create PR
+
 ## Technical Flow for Parser
 
 1. Read `master-openapi.json` in `../react-page/src/oas_spec/master-openapi.json` as `master_oas_json` and `oas.yml` in `/config` as `oas_config`.
