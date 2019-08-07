@@ -1,4 +1,6 @@
-All OAS definition in JSON will live in this directory. 
+All OAS definition in JSON will live in this directory.
+
+# Details on OAS in the context of Xfers and Redoc check [here](https://www.lucidchart.com/documents/edit/162333a7-ba63-4f02-9ee3-ffb54d7cfa50/0)
 
 # Files
 `master-openapi.json` is the master OAS definition of Xfers' API and is written manually.

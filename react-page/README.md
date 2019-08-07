@@ -1,11 +1,21 @@
 # What is this?
 This directory powers the API documentation that all Xfers' client will see.
 
+#### Other notes
+- Refer to /src/oas_spec/README.md for information on details on OAS
+- Refer to /src/template/README.md for information on how to create a new path for client specific enpoint
+
 # How it works
 
 ## Overview
 The webpage is powered by `React` with the help of `redoc` for the rendering of nice looking documentation from the
 JSON file in `/oas_spec` and `semantic-ui-react` for the interactive components of the webpage.
+
+## Overall TODO
+- [ ] create test for the react site
+- [ ] ensure that there is no dependicy issue
+- [ ] find a way to optimise speed of loading the react page
+- [ ] Implement loading screen
 
 ## App.js details
 
@@ -39,6 +49,21 @@ The Xfers' logo collapse the same time as Redoc side bar collapse. According to 
 at `50rem`. `convertRemToPixel` converts `rem` to `pixel` according to the default 1:16 ratio.
 
 To make the country header responsive, the font size is `2.5vw`. Refer to [here](https://css-tricks.com/viewport-sized-typography/) for more information
+
+### Routing
+
+`react-router-dom` is used for the routing of the page. `HashRouter` is used instead of the traditional `BrowserRouter` as
+github pages will break if is used to render subpages `BrowserRouter`([info](https://levelup.gitconnected.com/deploying-a-create-react-app-with-routing-to-github-pages-f386b6ce84c2)).
+
+
+For,
+```
+<Router
+      basename ="/repo">
+        <div className="App" >
+            <Route exact path="/" render={props => (
+```
+is used because github pages will break if you do not specificy basename. More info [here](https://github.community/t5/GitHub-Pages/My-react-project-doesn-t-work-on-github-pages/m-p/19515/highlight/true#M1438).
 
 **TODO**
 - [ ] Find a way to get the `rem` to `pixel` ratio from the browser. There could be a chance that the browser ratio is not 1:16
