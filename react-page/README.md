@@ -42,6 +42,16 @@ you can review the changes you made
 #### Other notes
 - Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
 
+**Known Errors***
+If you receive this error message when you run `npm start`
+```
+./node_modules/redoc/bundles/redoc.lib.js
+Module not found: Can't resolve 'core-js/es6/promise' in '/Users/elsha/dynamic-api-doc/oas-doc-portal/node_modules/redoc/bundles'
+```
+
+Run this command to resolve the probelm
+`npm i -S core-js@2.5.7`
+
 # How it works
 
 ## Overview

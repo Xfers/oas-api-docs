@@ -76,9 +76,9 @@ class App extends Component {
   getCountryForIcon(){
     let abrv = ""
     if(this.state.country == "Singapore"){
-      abrv = "sg"
+      abrv = "SG"
     } else if (this.state.country == "Indonesia"){
-      abrv = "id"
+      abrv = "ID"
     }
     return abrv
   }
@@ -93,9 +93,10 @@ class App extends Component {
           />
           <span
           style={{
+            fontWeight: "bold",
             margin: "5px",
           }}
-          > <Flag name={this.getCountryForIcon()}/>
+          > {this.getCountryForIcon()}
           </span>
         </div>
       )
