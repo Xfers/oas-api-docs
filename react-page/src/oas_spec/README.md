@@ -9,7 +9,6 @@ All OAS definition in JSON will live in this directory.
 
 `template.json` is a template for Xfers' internal use. Copy and paste the code from template if you wish to add an endpoint quickly
 
-
 # Things to note
 1. Make changes that will affect all documents(Single Source of Truth) make changes to `master-openapi.json`. Parser will generate specific API documentation based on this `json` file.
     - The document rendered in url/#/master is powered by this `json` file.

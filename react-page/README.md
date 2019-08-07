@@ -2,8 +2,8 @@
 This directory powers the API documentation that all Xfers' client will see.
 
 #### Other notes
-- Refer to /src/oas_spec/README.md for information on details on OAS
-- Refer to /src/template/README.md for information on how to create a new path for client specific enpoint
+- Refer to [/src/oas_spec/README.md](/src/oas_spec/README.md) for information on details on OAS
+- Refer to [/src/template/README.md](/src/template/README.md) for information on how to create a new path for client specific enpoint
 
 # How it works
 
