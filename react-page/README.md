@@ -26,7 +26,7 @@ based on the new JSON
 This document has analytics feature. This is powered by the `react-ga` package. Basic information such as the number of people
 that viewed the site and which category the client chose(Singapore/Indonesia).
 
-TODO
+**TODO**
 - [ ] Find a way to allow google analytics to record which endpoint the user click on in the docuemntation. Log all the url request to
 the site
 - [ ] Use Xfers' own google analytics key
@@ -40,15 +40,15 @@ at `50rem`. `convertRemToPixel` converts `rem` to `pixel` according to the defau
 
 To make the country header responsive, the font size is `2.5vw`. Refer to [here](https://css-tricks.com/viewport-sized-typography/) for more information
 
-TODO
+**TODO**
 - [ ] Find a way to get the `rem` to `pixel` ratio from the browser. There could be a chance that the browser ratio is not 1:16
 - [ ] Decide on what the header and to top button should happen when the side bar collaspes
 
-##App.css
+## App.css
 
-TODO
+**TODO**
 - [ ] Find a more elegant way to define the `CSS`. A lot of the styling is hard code -> Might fail
 
-##ToTopButton.js
+## ToTopButton.js
 
 This is the component to bring the user to the top of the page. Implementation adopted from [here](https://codepen.io/Qbrid/pen/GjVvwL).
