@@ -49,6 +49,7 @@ The webpage is powered by `React` with the help of `redoc` for the rendering of 
 JSON file in `/oas_spec` and `semantic-ui-react` for the interactive components of the webpage.
 
 ## Overall TODO
+- [ ] change the domain name from `https://xfers.github.io` to something more professional(Only Victor have access to this)
 - [ ] create test for the react site
 - [ ] ensure that there is no dependicy issue
 - [ ] find a way to optimise speed of loading the react page
