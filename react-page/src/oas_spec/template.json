@@ -1,0 +1,166 @@
+//Redoc specific fields
+
+//For sample request on the right menu. Add this to the operation object(Http method)
+"x-code-samples": [{
+  "lang": "Shell_curl", //Lang of request
+  "source": "curl --location --request ..." //example of curl request
+}],
+
+//Xfers specific fields
+
+//For parameters that are present for all documentation but required by a few only. Add this under the schema object of requestBody
+"x-custom-params-requirements" : {
+  "doc_name" : ["param1", "param2", "param3"]
+},
+
+//For parameters that are only present in certain documents. Add this to properties->"param-name" or parameters->parameterObject
+"x-custom-params" : ["doc_name1","doc_name2"],
+
+
+//OAS template
+
+//Path
+
+"/path....": {
+      "post/put/get": {
+        "operationId": "String", //Unique Id for the operation
+        "x-code-samples": [{
+          "lang": "Shell_curl", //Lang of request
+          "source": "curl --location --request ..." //example of curl request
+        }],
+        "tags": [
+          "tage_name1..." //Name of tage that this endpoint will be under
+        ],
+        "summary": "String", //Short summary of the endpoint will be displayed on side bar
+        "description": "String", //Detailed description
+        "security": [
+          {
+            "String": [] //"String" is the name of the security scheme for this endpoint. Must match the securityScheme
+          }
+        ],
+
+        //Add "parameters" only if 
+        "parameters": [
+          {
+            "name": "String", //name of parameter. Must match path if is path param. Will be the ?name=XXX for query params
+            "in": "String", //"String" is either path, query or header(NA to xfers)
+            "description": "String", //description of path
+            "required": true,
+            "x-custom-params" : ["doc_name1","doc_name2"] // Add this if you want this param to be shown only on specified documents
+            "schema": {
+              "type": "string",
+              "example": XXX //Exaple of parameter
+            }
+          }
+        ],
+
+        /* Add this only if there is a http request body
+        "requestBody": {
+          "description": "Request Body. Click on Schema for information on the parameters.",
+          "required": true,
+          "content": { //must have this
+            "application/json or application/x-www-form-urlencoded": { //must have this
+              "schema": { //must have this
+                "properties": {
+                  "param 1": { //name of parameter if phone_no/signature
+                    "type": "String", // can only be String number integer or boolean
+                    "format": "String" // No restriction. Will show client what is the format of input
+                    "enum": [XXX,XXX,XXX] //Add this if there is a exhuastive list of what the client can input
+                    "x-custom-params" : ["doc_name1","doc_name2"] // Add this if you want this param to be shown only on specified documents
+                    "default": XXX // Add this if there is default value if client does not enter anything
+                    "description": "String"
+                  }
+                }
+              }
+            }
+          }
+        },*/
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  /*Xfers Json Response*/
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    }
+
+//Xfers Call back example
+
+"/notify_kyc_status" :{
+      "post": {
+        "description" : "This is Xfers' callback request to notify KYC status",
+        "summary": "Notify KYC status",
+        "tags": ["Registration"],
+        "security": [],
+        //Biggest difference. This will tell the client that the request is send to their server instead of xfers'
+        "servers": [
+          {
+            "url" : "yourserver.com",
+            "description" : "This is your endpoint you set in the dashboard or notify_url"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "id": {
+                    "description": "A unique ID for the user",
+                    "type": "string"
+                  },
+                  "verification_status": {
+                    "description": "`true` or `false`",
+                    "type": "string"
+                  },
+                  "reason": {
+                    "description": "reason for verification status. Only applicable when verification_status is false",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                     "card_id":"card_196hygI7jGeCrIKDAwXhGcHm",
+                     "last_4":"4242",
+                     "card_type":"Visa",
+                     "card_country":"US",
+                     "exp_yr":"2022",
+                     "exp_month":"3",
+                     "is_default":true
+                  },
+                  {
+                     "card_id":"card_196kFHI7jGeCrIKD7HxYauMv",
+                     "last_4":"4444",
+                     "card_type":"MasterCard",
+                     "card_country":"US",
+                     "exp_yr":"2022",
+                     "exp_month":"5",
+                     "is_default":false
+                  }
+               ]
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    }
