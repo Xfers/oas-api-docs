@@ -121,7 +121,7 @@ class App extends Component {
     console.log(this.state.loading)
     return (
       <Router
-      basename ="/dynamic-api-doc">
+      basename ="/oas-api-docs">
         <div className="App" >
             <Route exact path="/" render={props => (
               <React.Fragment>

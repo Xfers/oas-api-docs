@@ -59,7 +59,7 @@ github pages will break if is used to render subpages `BrowserRouter`([info](htt
 For,
 ```
 <Router
-      basename ="/repo">
+      basename ="/oas-api-docs">
         <div className="App" >
             <Route exact path="/" render={props => (
 ```
