@@ -14,7 +14,7 @@ This directory powers the API documentation that all Xfers' client will see.
 2. `cd react-page`
 3. `npm install`
 
-** Make changes to `master-openapi.json` **
+**Make changes to `master-openapi.json`**
 
 4. `npm start`
 5. open `http://localhost:3000/#/master`
@@ -26,7 +26,7 @@ you can review the changes you made
 10. Once approved run `npm run deploy` in `react-page`
 11. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/`
 
-** Generate new documentation for a specific merchant **
+**Generate new documentation for a specific merchant**
 
 4. open `/ruby-parser/config/oas.yml`
 5. add a new object at the bottom of the yaml file following this format stated
@@ -39,7 +39,9 @@ you can review the changes you made
 12. Once approved run `npm run deploy` in `react-page`
 13. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/{doc-name}`
 
-
+#### Other notes
+- Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
+- Refer to [/src/template/README.md](/src/template/README.md) for information on how to create a new path for client specific enpoint
 
 # How it works
 
