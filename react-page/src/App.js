@@ -8,7 +8,7 @@ import DropdownCountry from "./DropdownCountry.js";
 import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
 import ToTopButton from "./ToTopButton.js";
-import { Popup, Button, Flag } from 'semantic-ui-react'
+import { Popup, Button} from 'semantic-ui-react'
 //import {doc-name} from "./pages/{doc-name}"
 
 ReactGA.initialize("UA-144834615-1");
