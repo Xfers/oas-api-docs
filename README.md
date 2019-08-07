@@ -43,3 +43,10 @@ To tackle the above problems, this repo aims to create a way of documentation at
 2. Changes to behavior and functionality of Parser
   - Refer to [/ruby-parser/README.md](https://github.com/Xfers/oas-api-docs/tree/master/ruby-parser)
 
+## Xfers / Redoc specific functions(MUST READ BEFORE EDITING OAS DEFINITION!)
+
+Here are information that you cannot find anywhere on the interent. Read this to save your time googling it.
+
+### Xfers specific functions
+
+1. 
