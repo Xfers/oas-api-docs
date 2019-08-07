@@ -78,3 +78,7 @@
     - "/authorize/get_mock_otp"
     - "/user/verify"
     - "/user/bank_account/withdrawal_requests/mock_result"
+#:doc-name:
+#  :paths:
+#    - "/pathABC"
+#    - "/pathXYZ"

@@ -1,9 +1,45 @@
 # What is this?
 This directory powers the API documentation that all Xfers' client will see.
 
-#### Other notes
-- Refer to [/src/oas_spec/README.md](/src/oas_spec/README.md) for information on details on OAS
-- Refer to [/src/template/README.md](/src/template/README.md) for information on how to create a new path for client specific enpoint
+#### Important README notes
+- Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
+
+# How to contribute
+
+## Optional Env setup(make your life easier)
+- Download VS Code [OpenAPI (Swagger) editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
+- Download [openapi-lint](https://marketplace.visualstudio.com/items?itemName=mermade.openapi-lint)
+
+1. clone entire repo
+2. `cd react-page`
+3. `npm install`
+
+** Make changes to `master-openapi.json` **
+
+4. `npm start`
+5. open `http://localhost:3000/#/master`
+6. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/#/master` will hot reload and
+you can review the changes you made
+7. Once satisfied cd to `ruby-parser` and run `rake generate`
+8. View changes made to client facing interface on `http://localhost:3000`
+9. Create PR and let PM/Engineer review
+10. Once approved run `npm run deploy` in `react-page`
+11. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/`
+
+** Generate new documentation for a specific merchant **
+
+4. open `/ruby-parser/config/oas.yml`
+5. add a new object at the bottom of the yaml file following this format stated
+6. run `rake generate` in `ruby-parser`
+7. open `/react-pages/src/pages/TemplateOas.json`
+8. Make changes according to comment and save as new file(name of file: {doc-name}.js)
+9. open `/react-pages/src/App.js` and make changes according to the comment(make sure you do not delete the comments)
+10. run `npm run` in `react-page` and check doc in `http://localhost:3000/#/{doc-name}`
+11. Once satisfied create PR and let PM/Engineer review
+12. Once approved run `npm run deploy` in `react-page`
+13. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/{doc-name}`
+
+
 
 # How it works
 

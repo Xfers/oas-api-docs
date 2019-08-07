@@ -1,19 +1,26 @@
+/*
+
+This is a template to add a new route for specific Xfers clients
+
+Steps:
+1. Change code according to comments in line 18, 78, 106
+2. Save the file as a new file name -> doc-name.js
+3. Make Changes to App.js
+
+ */
+
 import React, { Component } from 'react';
 import { RedocStandalone } from 'redoc';
 import ToTopButton from "../ToTopButton.js";
 
-class MasterOas extends Component {
+class /*{doc-name}*/ extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      definitionJSON: require('../oas_spec/master-openapi.json'),
+      definitionJSON: require('../oas_spec/'/*fill in {doc-name} as per oas.yml*/'.json'),
       windowWidth: 0,
       windowHeight: 0
     }
-    this.updateDimensions = this.updateDimensions.bind(this);
-    this.renderLogo = this.renderLogo.bind(this);
-    this.convertRemToPixel = this.convertRemToPixel.bind(this);
-    this.renderEmptyLogo = this.renderEmptyLogo.bind(this);
   }
 
   componentDidMount() {
@@ -70,7 +77,7 @@ class MasterOas extends Component {
             <div className = "title-wrapper">
               <h1
               className="country-header-title"
-              >API documentation for Master</h1>
+              >API documentation for {/*{doc-name}*/} </h1>
             </div>
           </div>
           <div className="up-button">
@@ -98,4 +105,4 @@ class MasterOas extends Component {
   }
 }
 
-export default MasterOas;
+export default /*{doc-name}*/;

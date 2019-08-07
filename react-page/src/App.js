@@ -9,6 +9,7 @@ import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
 import ToTopButton from "./ToTopButton.js";
 import { Popup, Button, Flag } from 'semantic-ui-react'
+//import {doc-name} from "./pages/{doc-name}"
 
 ReactGA.initialize("UA-144834615-1");
 
@@ -83,7 +84,6 @@ class App extends Component {
   }
 
   renderLogo(showLogo) {
-    console.log(this.getCountryForIcon())
     if (showLogo) {
       return (
         <div className = "logo-wrapper">
@@ -157,13 +157,13 @@ class App extends Component {
                   requiredPropsFirst: true,
                   scrollYOffset: 128,
                   sortPropsAlphabetically: true,
-                  jsonSampleExpandLevel: "all"
                 }}
               />
 
             </React.Fragment>
           )} />
             <Route exact path="/master" component={MasterOas}/>
+          {/* <Route exact path="/{doc-name}" component={{doc-name}}/> */}
         </div>
       </Router>
     );

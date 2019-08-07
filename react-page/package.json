@@ -1,6 +1,5 @@
 {
   "homepage": "https://xfers.github.io/oas-api-docs",
-  "name": "oas-doc-portal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

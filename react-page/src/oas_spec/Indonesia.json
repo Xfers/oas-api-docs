@@ -635,7 +635,7 @@
           "User Account"
         ],
         "summary": "Get Account Balance/User Info",
-        "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account. \nYou can also use this API to check various data of the user such as first_name, last_name.\nDescription of some notable responses.",
+        "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account.  \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
         "security": [
           {
             "user-api-token": [
@@ -789,7 +789,7 @@
         "description": "This API displays a user’s transaction history. \n\n\nThis API displays a user’s transaction history.\n\nI.e. user’s transactions with other merchants will not be displayed.",
         "security": [
           {
-            "X-XFERS-USER-API-KEY": [
+            "user-api-token": [
 
             ]
           }
