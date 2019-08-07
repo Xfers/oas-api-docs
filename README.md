@@ -1,7 +1,7 @@
 This repo is for Xfers' API documentation.
 Beta site for API documentation (https://xfers.github.io/oas-api-docs/)
 
-##Overview
+## Overview
 
 This README contains information regarding the big picture of Xfers' approach to API documentation. To get the detailed information
 on the OAS definition or Client facing interface check `react-pages` directory. For information on the `Parser` check `ruby-parser`
@@ -17,9 +17,9 @@ directory.
 
 To tackle the above problems, this repo aims to create a way of documentation at a higher level of abstraction. Any changes made to the documentation should only be made to 1 source to ensure efficiency and standardization.
 
-Flow
+**Flow 
 
-[Insert Image Flow]
+ 
 
 1. Any changes Xfers wants to make will be made to `/react-page/src/oas_spec/master-openapi.json`
   - `master-openapi.json` will contain all of Xfers endpoints (Singapore-specific and Indonesia-specific) and all of Xfers parameters
