@@ -17,10 +17,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sgOasDoc: require('./oas_spec/Singapore.json'),
-      idOasDoc: require('./oas_spec/Indonesia.json'),
+      sgOasDoc: "https://www.xfers.io/api/v4/swagger_doc",
+      idOasDoc: "https://id.xfers.com/api/v4/swagger_doc",
       country: "Singapore",
-      definitionJSON: require('./oas_spec/Singapore.json'),
+      definitionJSON: "https://www.xfers.io/api/v4/swagger_doc",
       windowWidth: 0,
       windowHeight: 0
     }
@@ -144,7 +144,7 @@ class App extends Component {
                   <ToTopButton/>
                 </div>
               <RedocStandalone
-                spec={this.state.definitionJSON}
+                specUrl={this.state.definitionJSON}
                 onLoaded={error => {
                   if (!error) {
                     console.log("successfully rendered")
