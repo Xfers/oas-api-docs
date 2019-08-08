@@ -49,4 +49,30 @@ Here are information that you cannot find anywhere on the interent. Read this to
 
 ### Xfers specific functions
 
-1. 
+1. To have path/query/requestBody parameters only present in certain document
+- This code will only work if you add into `Parameter Object` and `Schema Object` 
+- Legend: `doc_nameX => the name of the document(as per config.yml)`
+```
+"x-custom-params" : ["doc_name1","doc_name2"],
+```
+2. To have certain parameters only required for certain document
+- This code will only work if you add into `Shema Object` in requestBody
+- Legend: `doc_nameX => the name of the document(as per config.yml)`, `paramX => the name of parameters you want to be required by only certain documents`
+
+### Redoc specific functions
+
+Documentation [here](https://github.com/Redocly/redoc/blob/master/docs/redoc-vendor-extensions.md#x-tagGroups)
+
+1. Tags that are for general information and have nothing to do with endpoints
+- This code will only work if you add into `Tags Object` in `"tags"`
+```
+"x-traitTag" : true
+```
+
+2. To add sample `curl or ...` http request
+```
+"x-code-samples": [{
+  "lang": "Shell_curl", //Lang of request
+  "source": "curl --location --request ..." //example of curl request
+}],
+```
