@@ -21,6 +21,8 @@ class /*{doc-name}*/ extends Component {
       windowWidth: 0,
       windowHeight: 0
     }
+
+    this.updateDimensions = this.updateDimensions.bind(this);
   }
 
   componentDidMount() {
