@@ -23,6 +23,37 @@ This directory contains all the code and information pertaining to the Parser th
 - For the presence of `x-custom-params`. If there is this field and the name of the document it is generating for does not tally with the name in this field, the object will be deleted and that parameter will not be present.
 9. `generate_file` will write `@curr_oas` as a json file in `react-page/src/oas_spec`. At this point in time the document has been created successfully
 
+**copy_obj**
+
+The purpose of this method is to prevent any potential bug due to different references pointing to the same object
+
+```
+A = {"a"=>1}
+B = A
+B.delete("a")
+```
+B will be `{}`
+A will also be `{}`
+This bug could occur as `rake generate` deals with a lot of objects such programming mistakes could occur easily
+
+`copy_obj` will copy the object exactly and create a new instance of it
+
+```
+A = {"a"=>1}
+B = copy_obj(A)
+B.delete("a")
+```
+B will be `{}`
+A will also be `{"a"=>1}`
+This will protect the tasks from breaking by bad codes
+
+Refere to this (here)[https://stackoverflow.com/questions/1465569/ruby-how-can-i-copy-a-variable-without-pointing-to-the-same-object] last comment
+
+
+**return Parser.new(...) for most method**
+
+The reason for this is to allow make tasks `stateless` and support method chaining. This will prevent bugs due to the state of the objects, make the code simpler and support method chaining.
+
 ## Things to note
 1. All methods will make a copy of the object at the begining of reduce the chance of any bug occurring due to different references pointing to the same instance of an object
 2. All methods will return a new `ParserController` to promote statelessness. This will allow for method chaining and standardization among the methods.
