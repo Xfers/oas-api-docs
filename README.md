@@ -79,6 +79,10 @@ you can review the changes you made
 12. Once approved run `npm run deploy` in `react-page`
 13. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/{doc-name}`
 
+## API V4
+Refer to PR https://github.com/Xfers/oas-api-docs/pull/2 for front end changes
+Refer to Issue https://github.com/Xfers/Xfers/issues/11078 for the complete picture
+
 
 ## Xfers / Redoc specific functions(MUST READ BEFORE EDITING OAS DEFINITION!)
 
