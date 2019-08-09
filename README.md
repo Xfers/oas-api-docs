@@ -3,9 +3,7 @@ Beta site for API documentation (https://xfers.github.io/oas-api-docs/)
 
 ## Overview
 
-This README contains information regarding the big picture of Xfers' approach to API documentation. To get the detailed information
-on the OAS definition or Client facing interface check `react-pages` directory. For information on the `Parser` check `ruby-parser`
-directory.
+This README contains information regarding the big picture of Xfers' approach to API documentation. To get the detailed information on how the parser or front end works refer to the dir README. Client facing interface check `react-pages` directory. For information on the `Parser` check `ruby-parser`directory.
 
 ## Problem
 
@@ -46,6 +44,8 @@ To tackle the above problems, this repo aims to create a way of documentation at
   
 3. Changes to content of the docuementation rendered to the client see below
 
+- Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
+
 **Optional Env setup(make your life easier)**
 - Download VS Code [OpenAPI (Swagger) editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
 - Download [openapi-lint](https://marketplace.visualstudio.com/items?itemName=mermade.openapi-lint)
@@ -78,6 +78,7 @@ you can review the changes you made
 11. Once satisfied create PR and let PM/Engineer review
 12. Once approved run `npm run deploy` in `react-page`
 13. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/{doc-name}`
+
 
 ## Xfers / Redoc specific functions(MUST READ BEFORE EDITING OAS DEFINITION!)
 
