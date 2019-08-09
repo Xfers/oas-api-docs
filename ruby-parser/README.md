@@ -1,5 +1,7 @@
 # What is this for
 
+This README contains information regarding the technicals behind the parser. If you want to simply make changes to the content of the documentation refer to the main repo README.
+
 This directory contains all the code and information pertaining to the Parser that will take in `master-openapi.json` and write multiple `.json` file based on the specification of the `oas.yml`
 
 ## How to contribute
