@@ -1,8 +1,10 @@
 # What is this?
+
+This README contains information regarding the technicals behind the front end of the website. If you want to simply make changes to the content of the documentation refer to the main repo README.
+
 This directory powers the API documentation that all Xfers' client will see.
 
 #### Important README notes
-- Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
 
 # How to contribute
 
