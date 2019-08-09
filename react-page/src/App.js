@@ -17,8 +17,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sgOasDoc: "https://www.xfers.io/api/v4/swagger_doc",
-      idOasDoc: "https://id.xfers.com/api/v4/swagger_doc",
+      sgOasDoc: "http://localhost:3000/api/v4/swagger_doc",
+      idOasDoc: "http://localhost:3000/api/v4/swagger_doc",
       country: "Singapore",
       definitionJSON: "https://www.xfers.io/api/v4/swagger_doc",
       windowWidth: 0,
