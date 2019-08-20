@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
-import {HashRouter as Router, Route} from 'react-router-dom';
-import ReactDOM from 'react-dom'
-import './App.css'
+import '../App.css'
 import { RedocStandalone } from 'redoc';
 import { Dropdown } from 'semantic-ui-react'
-import DropdownCountry from "./DropdownCountry.js";
-import MasterOas from "./pages/MasterOas"
+import DropdownCountry from "../DropdownCountry.js";
 import ReactGA from 'react-ga';
-import ToTopButton from "./ToTopButton.js";
+import ToTopButton from "../ToTopButton.js";
 import { Popup, Button} from 'semantic-ui-react'
-import API_V4 from "./pages/API_V4.js"
 //import {doc-name} from "./pages/{doc-name}"
 
 ReactGA.initialize("UA-144834615-1");
 
-class App extends Component {
+class API_V4 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sgOasDoc: require('./oas_spec/Singapore.json'),
-      idOasDoc: require('./oas_spec/Indonesia.json'),
+      sgOasDoc: "https://www.xfers.io/api/v4/swagger_doc",
+      idOasDoc: "https://id.xfers.com/api/v4/swagger_doc",
       country: "Singapore",
-      definitionJSON: require('./oas_spec/Singapore.json'),
+      definitionJSON: "https://www.xfers.io/api/v4/swagger_doc",
       windowWidth: 0,
       windowHeight: 0
     }
@@ -90,7 +86,7 @@ class App extends Component {
         <div className = "logo-wrapper">
           <img
           className ="logo"
-          src={require("./images/Xfers_Blue_120.png")}
+          src={require("../images/Xfers_Blue_120.png")}
           />
           <span
           style={{
@@ -122,55 +118,40 @@ class App extends Component {
     const showLogo = windowWidth > this.convertRemToPixel(50);
     console.log(this.state.loading)
     return (
-      <Router
-      basename ="/oas-api-docs">
-        <div className="App" >
-            <Route exact path="/" render={props => (
-              <React.Fragment>
-                {this.renderLogo(showLogo)}
-                <div className="country-header">
-                  {this.renderEmptyLogo(showLogo)}
-                  <div className = "title-wrapper">
-                    <h1
-                    className="country-header-title"
-                    >API documentation for {this.state.country}</h1>
-                  </div>
-                  <DropdownCountry
-                    className="country-header-dropbox"
-                    country = {this.state.country}
-                    updateDefinitionJSON = {this.updateDefinitionJSON}
-                  />
-                </div>
-                <div className="up-button">
-                  <ToTopButton/>
-                </div>
-              <RedocStandalone
-                spec={this.state.definitionJSON}
-                onLoaded={error => {
-                  if (!error) {
-                    console.log("successfully rendered")
-                  }
-                }}
-                options={{
-                  nativeScrollbars: true,
-                  theme: { colors: { primary: { main: '#dd5522' } } },
-                  pathInMiddlePanel: true,
-                  jsonSampleExpandLevel: 5,
-                  requiredPropsFirst: true,
-                  scrollYOffset: 128,
-                  sortPropsAlphabetically: true,
-                }}
-              />
-
-            </React.Fragment>
-          )} />
-            <Route exact path="/master" component={MasterOas}/>
-            <Route exact path="/APIV4" component={API_V4}/>
-          {/* <Route exact path="/{doc-name}" component={{doc-name}}/> */}
+      <div className="API_V4" >
+      <div className="country-header">
+        {this.renderEmptyLogo(showLogo)}
+        <div className = "title-wrapper">
+          <h1
+          className="country-header-title"
+          >API documentation for {this.state.country}</h1>
         </div>
-      </Router>
-    );
+        <DropdownCountry
+          className="country-header-dropbox"
+          country = {this.state.country}
+          updateDefinitionJSON = {this.updateDefinitionJSON}
+        />
+      </div>
+    <RedocStandalone
+      specUrl={this.state.definitionJSON}
+      onLoaded={error => {
+        if (!error) {
+          console.log("successfully rendered")
+        }
+      }}
+      options={{
+        nativeScrollbars: true,
+        theme: { colors: { primary: { main: '#dd5522' } } },
+        pathInMiddlePanel: true,
+        jsonSampleExpandLevel: 5,
+        requiredPropsFirst: true,
+        scrollYOffset: 128,
+        sortPropsAlphabetically: true,
+      }}
+    />
+    </div>
+    )
   }
 }
 
-export default App;
+export default API_V4;
