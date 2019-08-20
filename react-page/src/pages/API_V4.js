@@ -119,6 +119,7 @@ class API_V4 extends Component {
     console.log(this.state.loading)
     return (
       <div className="API_V4" >
+        {this.renderLogo(showLogo)}
       <div className="country-header">
         {this.renderEmptyLogo(showLogo)}
         <div className = "title-wrapper">
