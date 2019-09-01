@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import {HashRouter as Router, Route} from 'react-router-dom';
-import ReactDOM from 'react-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css'
 import { RedocStandalone } from 'redoc';
-import { Dropdown } from 'semantic-ui-react'
 import DropdownCountry from "./DropdownCountry.js";
 import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
 import ToTopButton from "./ToTopButton.js";
-import { Popup, Button} from 'semantic-ui-react'
 import API_V4 from "./pages/API_V4.js"
 //import {doc-name} from "./pages/{doc-name}"
 
@@ -125,7 +122,7 @@ class App extends Component {
       <Router
       basename ="/oas-api-docs">
         <div className="App" >
-            <Route exact path="/" render={props => (
+            <Route exact path="/" render={() => (
               <React.Fragment>
                 {this.renderLogo(showLogo)}
                 <div className="country-header">
@@ -165,7 +162,7 @@ class App extends Component {
             </React.Fragment>
           )} />
             <Route exact path="/master" component={MasterOas}/>
-            <Route exact path="/APIV4" component={API_V4}/>
+            <Route exact path="/API_V4" component={API_V4}/>
           {/* <Route exact path="/{doc-name}" component={{doc-name}}/> */}
         </div>
       </Router>
