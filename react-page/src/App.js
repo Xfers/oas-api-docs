@@ -7,6 +7,7 @@ import MasterOas from "./pages/MasterOas"
 import ReactGA from 'react-ga';
 import ToTopButton from "./ToTopButton.js";
 import API_V4 from "./pages/API_V4.js"
+import XfersRedoc from "./components/XfersRedoc.js"
 //import {doc-name} from "./pages/{doc-name}"
 
 ReactGA.initialize("UA-144834615-1");
@@ -163,6 +164,12 @@ class App extends Component {
           )} />
             <Route exact path="/master" component={MasterOas}/>
             <Route exact path="/API_V4" component={API_V4}/>
+            <Route exact path="/test" render={(props) => <XfersRedoc
+            oasSpec={require('./oas_spec/Singapore.json')}
+            isUrl={false}
+            docName={"Singapore"}
+            apiVersion = {3}/>
+            }/>
           {/* <Route exact path="/{doc-name}" component={{doc-name}}/> */}
         </div>
       </Router>
