@@ -120,9 +120,10 @@ class XfersRedoc extends Component {
 						>API V{this.props.apiVersion} documentation for {this.props.docName}</h1>
 					</div>
 					<DropdownCountry
+						{...this.props}
 						className="country-header-dropbox"
-						country = {this.state.country}
-						updateDefinitionJSON = {this.updateDefinitionJSON}
+						docName = {this.props.docName}
+						dropDownOptions = {this.props.dropDownOptions}
 					/>
 				</div>
 				<div className="up-button">
@@ -138,7 +139,8 @@ XfersRedoc.propTypes = {
     oasSpec: PropTypes.string.isRequired,
     isUrl: PropTypes.bool.isRequired,
     docName: PropTypes.string.isRequired,
-    apiVersion: PropTypes.number.isRequired,
+		apiVersion: PropTypes.number.isRequired,
+		dropDownOptions: PropTypes.array.isRequired,
 }
 
 const redocOptions = {

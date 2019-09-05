@@ -1,43 +1,27 @@
 import React from 'react';
-import { Button, Dropdown, Flag, Icon } from 'semantic-ui-react'
+import { Dropdown, Icon } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom'
 
 
 const DropdownCountry = props => {
 
-  const options = [
-    {
-      key: "Singapore",
-      text: (
-        <span>
-          <Flag name="sg" />
-          SG
-        </span>
-      ),
-      value: "Singapore"
-    },
-    {
-      key: "Indonesia",
-      text: (
-        <span>
-          <Flag name="id" />
-          ID
-        </span>
-      ),
-      value: "Indonesia"
-    }
-  ]
+  const options = props.dropDownOptions;
 
-  let country = props.country;
+  function handleChange(e,{value}){
 
-  function handleChange(e,value){
-    country = e.value
-    props.updateDefinitionJSON(value);
+    redirectToTarget(value);
   }
+
+  function redirectToTarget(path){
+    props.history.push(eval('`'+path+'`'))
+  }
+
+  let docName = props.docName;
 
   function getCurrOption() {
 
     for(let i = 0 ; i < options.length ; i ++) {
-      if (options[i].label === country) {
+      if (options[i].label === docName) {
         return options[i]
       }
     }
@@ -46,9 +30,11 @@ const DropdownCountry = props => {
   return(
 
     <Dropdown
+      {...props}
       button
+      value = {getCurrOption()}
       placeholder = {<span> <Icon name="world"/> </span>}
-      onChange = {(e,{value}) => handleChange(e,value)}
+      onChange = {(e,{value}) => handleChange(e,{value})}
       options = {options}
 
     />
