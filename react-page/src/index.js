@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import LandingPage from './pages/LandingPage.js'
 import XfersRedoc from './components/XfersRedoc.js'
 import { Route, BrowserRouter as Router, Switch  } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
@@ -12,6 +13,7 @@ const routing = (
 	<Router>
 	<div>
 		<Switch>
+			<Route exact path="/" component={LandingPage} />
 			<Route exact path="/V3/Singapore" render={(props) => <XfersRedoc
 				{...props}
 				oasSpec={require('./oas_spec/Singapore.json')}
@@ -112,7 +114,7 @@ const routing = (
 				{...props}
 				oasSpec={'https://id.xfers.com/api/v4/swagger_doc'}
 				isUrl={false}
-				docName={"Singapore"}
+				docName={"Indonesia"}
 				apiVersion = {3}
 				dropDownOptions = {
 					[
