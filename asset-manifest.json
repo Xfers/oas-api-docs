@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/oas-api-docs/static/css/main.8f3ce6dc.chunk.css",
-    "main.js": "/oas-api-docs/static/js/main.522adf0b.chunk.js",
-    "main.js.map": "/oas-api-docs/static/js/main.522adf0b.chunk.js.map",
+    "main.css": "/oas-api-docs/static/css/main.9394c38a.chunk.css",
+    "main.js": "/oas-api-docs/static/js/main.2a1d5441.chunk.js",
+    "main.js.map": "/oas-api-docs/static/js/main.2a1d5441.chunk.js.map",
     "runtime~main.js": "/oas-api-docs/static/js/runtime~main.0971ca1c.js",
     "runtime~main.js.map": "/oas-api-docs/static/js/runtime~main.0971ca1c.js.map",
     "static/css/2.d5268ea3.chunk.css": "/oas-api-docs/static/css/2.d5268ea3.chunk.css",
-    "static/js/2.75d428c7.chunk.js": "/oas-api-docs/static/js/2.75d428c7.chunk.js",
-    "static/js/2.75d428c7.chunk.js.map": "/oas-api-docs/static/js/2.75d428c7.chunk.js.map",
+    "static/js/2.a126de81.chunk.js": "/oas-api-docs/static/js/2.a126de81.chunk.js",
+    "static/js/2.a126de81.chunk.js.map": "/oas-api-docs/static/js/2.a126de81.chunk.js.map",
     "index.html": "/oas-api-docs/index.html",
-    "precache-manifest.d3e3947307bf93ded2282d27f5b24f92.js": "/oas-api-docs/precache-manifest.d3e3947307bf93ded2282d27f5b24f92.js",
+    "precache-manifest.76d47e71155636f59fe8755bace5be15.js": "/oas-api-docs/precache-manifest.76d47e71155636f59fe8755bace5be15.js",
     "service-worker.js": "/oas-api-docs/service-worker.js",
     "static/css/2.d5268ea3.chunk.css.map": "/oas-api-docs/static/css/2.d5268ea3.chunk.css.map",
-    "static/css/main.8f3ce6dc.chunk.css.map": "/oas-api-docs/static/css/main.8f3ce6dc.chunk.css.map",
+    "static/css/main.9394c38a.chunk.css.map": "/oas-api-docs/static/css/main.9394c38a.chunk.css.map",
     "static/media/semantic.min.css": "/oas-api-docs/static/media/outline-icons.ef60a4f6.woff"
   }
 }
