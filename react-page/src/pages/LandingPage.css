@@ -3,6 +3,7 @@
   height: 100vh;
   width: 100vw;
   flex-direction: row;
+  background: -webkit-radial-gradient(right bottom , ellipse cover , rgb(114, 237, 242) , rgb(81, 81, 229) 100%);
 }
 
 .title{
@@ -16,8 +17,8 @@
 }
 
 .title h1{
-  
-  font-size: 3rem;
+  color: white;
+  font-size: 6rem;
   display: inline-block;
 }
 
