@@ -1,5 +1,8 @@
 This repo is for Xfers' API documentation.
-Beta site for API documentation (https://xfers.github.io/oas-api-docs/)
+Beta site for API documentation (https://docs.xfers.io/)
+
+#### Know Error
+Currently github pages does not work well with the custom domain. If you run `npm run deploy` to deploy changes to the docs, you must set the custom domain in the settings to docs.xfers.io.
 
 ## Overview
 
