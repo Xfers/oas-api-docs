@@ -1063,7 +1063,7 @@
                   "offset": 0,
                   "start_date": "2018-07-04T11:49:58+08:00 ",
                   "end_date": "2019-10-30T11:49:58+08:00"
-                
+
                 },
                 "schema": {
                   "properties": {
@@ -1154,7 +1154,7 @@
                     }
                   ],
                   "wallet_name": "Xfers"
-                
+
                 },
                 "schema" : {
                   "properties": {
@@ -1450,7 +1450,7 @@
                     "type": "string",
                     "description": "URL Xfers will redirect customer to on completion of Xfers checkout."
                   },
-                  
+
                   "card_only": {
                     "type": "string",
                     "x-custom-params" : ["Singapore"],
@@ -1833,7 +1833,7 @@
                 }
               }
             }
-          }, 
+          },
           "4XX": {
             "$ref": "#/components/responses/4XX"
           }
@@ -1902,7 +1902,7 @@
                 }
               }
             }
-          }, 
+          },
           "4XX": {
             "$ref": "#/components/responses/4XX"
           }
@@ -1979,7 +1979,7 @@
                 }
               }
             }
-          }, 
+          },
           "4XX": {
             "$ref": "#/components/responses/4XX"
           }
@@ -2545,7 +2545,7 @@
                 }
               }
             }
-          }, 
+          },
           "4XX": {
             "$ref": "#/components/responses/4XX"
           }
@@ -2571,27 +2571,6 @@
         ],
         "parameters": [
           {
-            "name": "recipient",
-            "in": "query",
-            "description": "Only return charges for the recipient(email or phone number) specified by this recipient ID.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "format": "+65XXXXXXXX"
-            }
-          },
-          {
-            "name": "ending_before",
-            "in": "query",
-            "description": "A cursor for use in pagination. ending_before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_bar, your subsequent call can include ending_before=obj_bar in order to fetch the previous page of the list.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "limit",
             "in": "query",
             "description": "A limit on the number of objects to be returned. Limit can range between 1 and 50 items.",
@@ -2600,16 +2579,6 @@
             "schema": {
               "type": "integer",
               "default": "10"
-            }
-          },
-          {
-            "name": "starting_after",
-            "in": "query",
-            "description": "A cursor for use in pagination. starting_after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include starting_after=obj_foo in order to fetch the next page of the list.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -2636,7 +2605,7 @@
                 ]
               }
             }
-          }, 
+          },
           "4XX": {
             "$ref": "#/components/responses/4XX"
           }
@@ -3542,7 +3511,7 @@
         }
       }
     },
-    
+
     "/loans/{id}/disbursement_reports": {
       "post": {
         "operationId": "createDisbursementReport",
@@ -3943,7 +3912,7 @@
                     "type": "string",
                     "enum": ["success", "failed"],
                     "example" : "completed"
-                  },  
+                  },
                   "failure_reason": {
                     "description": "Reason of failed. Will only available for \"failed\" status",
                     "type": "string",
@@ -3951,12 +3920,12 @@
                   },
                   "amount": {
                     "description": "Repayment amount",
-                    "type": "string"  
+                    "type": "string"
                   },
                   "collection_fee": {
                     "description": "collection fee",
                     "type": "string"
-                  }, 
+                  },
                   "idempotency_id": {
                     "description": "The key you put in the repayment request",
                     "type": "string"
@@ -4629,7 +4598,7 @@
                     "type": "string",
                     "enum": ["success", "failed"],
                     "example" : "completed"
-                  },  
+                  },
                   "status": {
                     "description": "Status of transaction",
                     "type": "string",
@@ -4638,14 +4607,14 @@
                   },
                   "amount": {
                     "description": "Withdrawal amount",
-                    "type": "string",  
+                    "type": "string",
                     "example" : "125000"
                   },
                   "fees": {
                     "description": "Withdrawal Fee",
                     "type": "string",
                     "example" : "0"
-                  }, 
+                  },
                   "account_no": {
                     "description": "bank account number of withdrawal",
                     "type": "string",
@@ -4665,7 +4634,7 @@
                     "description": "Date of withdrawal completed as provided by partner bank. Will only available for `\"completed\"` status",
                     "type": "string",
                     "example" : "2019-02-15"
-                  }, 
+                  },
                   "failure_reason": {
                     "description": "Reason for failure as provided by partner bank. Will only available for `\"failed\"` status",
                     "type": "string",
@@ -7617,7 +7586,7 @@
           "application/json": {
             "schema" : {
               "$ref": "#/components/schemas/error_response"
-  
+
             },
             "examples": {
               "XFE1" : {"$ref": "#/components/examples/XFE1"},
@@ -8118,7 +8087,7 @@
           "error_code" : {
             "description" : "Xfers' error code XFEXXX",
             "type" : "string"
-          }, 
+          },
           "error_handling" : {
             "description": "Instruction on how to handle error. Refer to Error Codes tag for more information.",
             "type": "string"
