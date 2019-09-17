@@ -15,7 +15,7 @@ const routing = (
 	>
 	<div>
 		<Switch>
-			<Route exact path="/" component={LandingPage} />
+			<Route exact path="/" render={(props) => props.history.push(eval(`"V3/Singapore"`))} />
 			<Route exact path="/V3/Singapore" render={(props) => <XfersRedoc
 				{...props}
 				oasSpec={require('./oas_spec/Singapore.json')}
