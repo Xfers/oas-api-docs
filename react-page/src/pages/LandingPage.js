@@ -59,7 +59,7 @@ class LandingPage extends Component {
   	return (
 			<div className="wrap">
 				<div className="title">
-					<h1>Welcome to Xfers API Doucmentation</h1>
+					<h1>Welcome to Xfers API Documentation</h1>
 					<div className="buttons">
 						<div className="dropdown-api-version">
 							<Dropdown
