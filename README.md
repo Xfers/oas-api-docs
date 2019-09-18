@@ -60,14 +60,15 @@ To tackle the above problems, this repo aims to create a way of documentation at
 **Make changes to `master-openapi.json`**
 
 4. `npm start`
-5. open `http://localhost:3000/#/master`
-6. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/#/master` will hot reload and
+5. open `http://localhost:3000/V3/Master`
+6. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/V3/Master` will hot reload and
 you can review the changes you made
 7. Once satisfied cd to `ruby-parser` and run `rake generate`
 8. View changes made to client facing interface on `http://localhost:3000`
 9. Create PR and let PM/Engineer review
 10. Once approved run `npm run deploy` in `react-page`
-11. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/`
+11. There is bug with github pages. Everytime you `npm run deploy` the domain name will switch back to the default github domain. Remember to change back to the custom domain `docs.xfers.io`
+11. Changes will be seen on `docs.xfers.io`
 
 **Generate new documentation for a specific merchant**
 
@@ -77,10 +78,10 @@ you can review the changes you made
 7. open `/react-pages/src/pages/TemplateOas.js`
 8. Make changes according to comment and save as new file(name of file: {doc-name}.js)
 9. open `/react-pages/src/App.js` and make changes according to the comment(make sure you do not delete the comments)
-10. run `npm run` in `react-page` and check doc in `http://localhost:3000/#/{doc-name}`
+10. run `npm run` in `react-page` and check doc in `http://localhost:3000/V3/{doc-name}`
 11. Once satisfied create PR and let PM/Engineer review
 12. Once approved run `npm run deploy` in `react-page`
-13. Changes will be seen on `https://xfers.github.io/oas-api-docs/#/{doc-name}`
+13. Changes will be seen on `docs.xfers.io`
 
 ## API V4
 Refer to PR https://github.com/Xfers/oas-api-docs/pull/2 for front end changes
