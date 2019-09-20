@@ -1,9 +1,6 @@
 This repo is for Xfers' API documentation.
 Beta site for API documentation (https://docs.xfers.io/)
 
-#### Know Error
-Currently github pages does not work well with the custom domain. If you run `npm run deploy` to deploy changes to the docs, you must set the custom domain in the settings to docs.xfers.io.
-
 ## Overview
 
 This README contains information regarding the big picture of Xfers' approach to API documentation. To get the detailed information on how the parser or front end works refer to the dir README. Client facing interface check `react-pages` directory. For information on the `Parser` check `ruby-parser`directory.
