@@ -87,10 +87,6 @@
       "description": "***These endpoint are still supported but is going through deprecation. We suggest you use the dashboard to manage your merchant account instead.***"
     },
     {
-      "name": "Prepaid Cards",
-      "description": "***These endpoint are going through deprecation. We suggest you avoid using them.***"
-    },
-    {
       "name": "Intents",
       "description": "**For user case 1:**\r\n\r\nWhen a user is performing a top-up via  [GET \/transfer_info](http:\/\/docs.xfers.io\/#get-transfer-info), they might forget to enter their contact number which is needed for our system to identify them.\r\n\r\nThe Intents API solves this issue by requiring the user to transfer a unique amount to Xfers which will be used to identify them. The difference between the  `unique_amount`  and the actual  `amount`  will be very small, and Xfers provides the difference for free to the user.\r\n\r\nNote that this only acts as a backup, and the user should enter his contact number in the comments section when doing a bank transfer whenever possible.\r\n\r\nExample: Jane wishes to transfer 5000 Indonesian Rupiah via  `\/intents`.\r\n\r\n1.  She makes a HTTP GET request to  `\/user\/transfer_info`  to get the correct Xfers bank to transfer to (we have many banks!). The response tells her to transfer to Bank Central Asia (BCA).\r\n2.  She makes a HTTP POST request to create an intent. The response tells her to make a bank transfer of 4999 to Xfers.\r\n3.  Jane makes a transfer of 4999 to Xfers BCA. Within a few minutes, Xfers detects the transfer and tops up Jane\u2019s Xfers account with 5000. Xfers absorbs the difference for free.\r\n4.  If  `notify_url`  is given, Xfers will send a callback to this url.\r\n\r\nNote the above scenario is only valid when disable_va is set to True\r\n\r\n**For user case 2:**\r\n\r\nIntent can also be use a means to get callback notifications from Xfers when a user successfully fund their virtual account on Xfers.\r\n\r\nExample: Jane wishes to transfer 5000 Indonesian Rupiah via  `\/intents`  to her virtual Xfers account and get a callback notification when it successful\r\n\r\n1.  She makes a HTTP POST request to create an intent with disable_va set to false(default) and provide a  `notify_url`. The response will provide a list of virtual account nos she can fund her account with from a list of bank that Xfers support.\r\n2.  Jane makes a transfer of 500 to the Xfers BCA Virtual account that the intent api provide. Within a few minutes, Xfers detects the transfer and tops up Jane\u2019s Xfers account with 5000.\r\n3.  Since  `notify_url`  is provided, Xfers will send a callback to this url."
     },
@@ -776,7 +772,7 @@
         "operationId": "getTransactionHistory",
         "x-code-samples": [{
           "lang": "Shell_curl",
-          "source": "curl --location --request GET \"{base_url}\/user\/activities?limit=50&start_date=2018-07-04T11%253A49%253A58%252B08%253A00%20&end_date=2019-10-30T11%253A49%253A58%252B08%253A00%20&offset=0&types=Credit%20Card,%20Charge,%20Payout,%20Deposit,Withdrawal&status=Completed,%20Refunded,%20Expired,%20Cancelled,%20Pending,%20Accepted,%20On_hold\" \\\r\n  --header \"Content-Type: application\/x-www-form-urlencoded\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --data \"\""
+          "source": "curl --location --request GET \"{base_url}\/user\/activities --header \"Content-Type: application\/x-www-form-urlencoded\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --data \"\""
         }],
         "tags": [
           "User Account"
@@ -838,24 +834,13 @@
             }
           },
           {
-            "name": "type",
+            "name": "types",
             "in": "query",
             "description": "Will only show transactions of that type. You can add additional types by separating with a comma.",
             "required": false,
             "explode": true,
             "schema": {
-              "enum": ["Credit Card","Charge","Payout","Deposit","Withdrawal"],
-              "type": "string"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Will only show transactions of that status. You can add additional types by separating with a comma. Note that putting “completed” will also return transactions with “paid” - you can take them to be the same.",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "enum": ["completed","refunded","expired","cancelled","pending","accepted","on_hold"],
+              "enum": ["Charge","Payout","Deposit","Withdrawal"],
               "type": "string"
             }
           }
@@ -1077,7 +1062,7 @@
                     },
                     "type" :{
                       "description": "Transaction type",
-                      "enum": ["Credit Card","Charge","Payout","Deposit","Withdrawal"]
+                      "enum": ["Charge","Payout","Deposit","Withdrawal"]
                     },
                     "amount" :{
                       "description": "If money going out of account, negative. If coming in, positive. Note that only a completed Charge will actually deduct money. For example, if a Charge is expired/accepted/pending/unclaimed, no money will actually flow in/out of the wallet, even though there is a amount displayed."
@@ -5062,233 +5047,6 @@
                   "shareholders": [
                   ]
                 }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/prepaid": {
-      "post": {
-        "operationId": "addPrepaidCard",
-        "tags": [
-          "Prepaid Cards"
-        ],
-        "deprecated": true,
-        "summary": "Add Prepaid Card",
-        "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint adds a prepaid card to your account.",
-        "x-code-samples": [{
-          "lang": "Shell_curl",
-          "source": "curl \"{base_url}\/prepaid\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application\/json\" \\\r\n  -d '{\"proxy_number\": \"21794\", \"description\":\"John card\", \"provider\": \"wirecard_test_2\"}'"
-        }],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "proxy_number", "provider"
-                ],
-                "properties": {
-                  "proxy_number": {
-                    "type": "string",
-                    "description": "The prepaid card’s proxy number",
-                    "example" : "21794"
-                  },
-                  "provider": {
-                    "type": "string",
-                    "description": "Prepaid card provider type",
-                    "example" : "wirecard_test_2"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Description about this prepaid card.",
-                    "example" : "Sam’s card"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json" : {
-                "example": {
-                  "id" : "12315",
-                  "proxy_number" : "21794",
-                  "description" : "John card",
-                  "provider": "wirecard_test_2"
-               }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      },
-      "get": {
-        "operationId": "listPrepaidCard",
-        "tags": [
-          "Prepaid Cards"
-        ],
-        "deprecated": true,
-        "summary": "List All Prepaid Cards",
-        "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nList of prepaid cards added",
-        "x-code-samples": [{
-          "lang": "Shell_curl",
-          "source": "curl \"{base_url}\/prepaid\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
-        }],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json" : {
-                "example": {
-                  "id" : "12315",
-                  "proxy_number" : "21794",
-                  "description" : "John card",
-                  "provider": "wirecard_test_2"
-               }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/prepaid/{card_id}/topup": {
-      "post": {
-        "operationId": "topupPrepaidCard",
-        "tags": [
-          "Prepaid Cards"
-        ],
-        "deprecated": true,
-        "summary": "Topup Prepaid Card",
-        "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint adds a prepaid card to your account.",
-        "x-code-samples": [{
-          "lang": "Shell_curl",
-          "source": "curl \"{base_url}\/prepaid\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application\/json\" \\\r\n  -d '{\"proxy_number\": \"21794\", \"description\":\"John card\", \"provider\": \"wirecard_test_2\"}'"
-        }],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "card_id",
-            "in" : "path",
-            "description": "ID of card",
-            "required": true,
-            "schema" : {
-              "type" : "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": ["amount"],
-                "properties": {
-                  "amount": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "How much to topup",
-                    "example" : "9.85"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json" : {
-                "example": {
-                  "id" : "12315",
-                  "proxy_number" : "21794",
-                  "description" : "John card",
-                  "provider": "wirecard_test_2"
-               }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/prepaid/{card_id}" : {
-      "delete": {
-        "operationId": "deletePrepaidCard",
-        "tags": [
-          "Prepaid Cards"
-        ],
-        "deprecated": true,
-        "summary": "Delete Prepaid Card",
-        "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis request allow you to delete an existing prepaid card. Note that this only deletes the prepaid card stored on Xfers; the card will still work and you can add back the card anytime.",
-        "x-code-samples": [{
-          "lang": "Shell_curl",
-          "source": "curl -X DELETE \"{base_url}\/prepaid\/<card_id>\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
-        }],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "card_id",
-            "in" : "path",
-            "description": "ID of card",
-            "required": true,
-            "schema" : {
-              "type" : "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json" : {
-                "example": {
-                  "id" : "12315",
-                  "proxy_number" : "21794",
-                  "description" : "John card",
-                  "provider": "wirecard_test_2"
-               }
               }
             }
           },
