@@ -29,7 +29,6 @@
     - "/authorize/get_mock_otp"
     - "/user/verify"
     - "/user/bank_account/withdrawal_requests/mock_result"
-    - "/prepaid*"
     - "/cards*"
     - "/credit_card_charges/charge_card_guest"
     - "/credit_card_charges/charge_card"
