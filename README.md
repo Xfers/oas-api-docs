@@ -61,12 +61,13 @@ To tackle the above problems, this repo aims to create a way of documentation at
 4. `cd ruby-parser`
 5. `bundle install`
 
-**Make changes to `master-openapi.json`**
+## How to make changes to documentation
+
+**Generate new documentation for all merchants**
 
 1. `npm start`
 2. open `http://localhost:3000/V3/Master`
-3. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/V3/Master` will hot reload and
-you can review the changes you made
+3. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/V3/Master` will hot reload and you can review the changes you made
 4. Once satisfied cd to `ruby-parser` and run `rake generate`
 5. View changes made to client facing interface on `http://localhost:3000`
 6. Create PR and let PM/Engineer review
