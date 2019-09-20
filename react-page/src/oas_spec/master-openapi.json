@@ -841,7 +841,8 @@
             "explode": true,
             "schema": {
               "enum": ["Charge","Payout","Deposit","Withdrawal"],
-              "type": "string"
+              "type": "string",
+              "default": "All types included"              
             }
           }
         ],
@@ -852,225 +853,99 @@
               "application/json": {
                 "example": {
                   "activities": [
-                    {
-                      "fee": 0,
-                      "created_at": "2019-04-02T17:50:41+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_6453bc8bdd8641c8abf26c9fefefacd3",
-                      "amount": 100000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
+                      {
+                          "fee": 0.0,
+                          "created_at": "2019-09-18T14:58:29+08:00",
+                          "wallet_name": "Digital Goods",
+                          "id": "contract_52683616c80b4c91bc6d6aa83eca4874",
+                          "amount": 559.0,
+                          "status": "completed",
+                          "type": "Transfer",
+                          "metadata": {
+                              "origin_name": "John Tan",
+                              "destination_name": "ABC Business",
+                              "description": "This is a charge, money is moving from a customer to the business account"
+                          },
+                          "order_id": "12345",
+                          "invoice_id": null
                       },
-                      "external_id": "4pssAgcRvz5Px08o0LVicI18Ej8TKMGAVtBGchCF9r0"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2019-04-02T17:49:36+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_0deed17f4c7440b7bb6a205daf060ee8",
-                      "amount": 100000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
+                      {
+                          "fee": 0.0,
+                          "created_at": "2019-09-18T11:55:04+08:00",
+                          "wallet_name": "Digital Goods",
+                          "id": "contract_402539e247424cf1af35aae32b087727",
+                          "amount": -695.29,
+                          "status": "completed",
+                          "type": "Transfer",
+                          "metadata": {
+                              "origin_name": "ABC Business",
+                              "destination_name": "Mary Jane",
+                              "description": "This is a payout, money is moving from the business account to a customer"
+                          },
+                          "order_id": null,
+                          "invoice_id": "87676"
                       },
-                      "external_id": "73EBb7URAkcfcMteuZyXPusczumab78IwT2MuCiVaVw"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2019-04-02T17:48:52+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_40fdc298f5f14784ab139a5ad916ee9d",
-                      "amount": 1000000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
+                      {
+                          "fee": 0.0,
+                          "created_at": "2019-08-25T21:47:59+08:00",
+                          "wallet_name": "Digital Goods",
+                          "id": "contract_aaebb4c688ea4a34b73ede332a5c78c3",
+                          "amount": -99.88,
+                          "status": "completed",
+                          "type": "Withdrawal",
+                          "metadata": {
+                              "description": "POSB 208767841"
+                          }
                       },
-                      "external_id": "DiMU_TDoUFZGCaqOZfLEv1EbPqn_BkNSrfTlopHZl_0"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2019-04-02T17:47:36+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_446ea0427fe746cc81b9f136c5514759",
-                      "amount": 100000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
-                      },
-                      "external_id": "fgCl2fVcKh-2ZW_5lleZVVLtlqiMhlljAG-bS_3yJPg"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2019-04-02T17:44:41+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_fd5117460c164784af661f1af726e4f1",
-                      "amount": 100000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
-                      },
-                      "external_id": "RBOrTYTGDahomRv4o4_mjYIlk3kfUcx3YR0_5hmb4nc"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2019-04-02T17:44:18+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_e485bbeab296474390b941d3f40b6018",
-                      "amount": 1000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
-                      },
-                      "external_id": "DnB4s09v-SdRXWOw9v5ZqILm6NyoXzw9RR1VM7YKWZA"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2019-02-13T14:18:04+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_c327044b18744d2893f5e1d05d2d1fbb",
-                      "amount": 100000,
-                      "status": "completed",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
-                      },
-                      "external_id": "5YaskT_YcqBV73LWPIfU56IQfALVAErOZCmf-e6lCT8"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2018-10-05T18:19:15+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_0252ff1bf4944859a1b0b8b908255f4e",
-                      "amount": 100,
-                      "status": "processing",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
-                      },
-                      "external_id": "FfNMyaL7lS_SQ3Y4q_HlT55TkTATclIGsy446V9oay8"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2018-10-05T18:18:04+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "contract_9ec9e9aae7da4df7aefd03071c3cd1a1",
-                      "amount": 100000,
-                      "status": "processing",
-                      "type": "Deposit",
-                      "metadata": {
-                        "origin_name": "System -TM-",
-                        "destination_name": "Karina",
-                        "description": ""
-                      },
-                      "external_id": "8t944mmbHZUDI4Ws04fPJ79xbshKLX6COlUgC2r7UTI"
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2018-12-14T17:49:12+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "77234e141a42492c95c04df62a6c539a",
-                      "invoice_id": "QUpveF_hqwloCmMuP3yGNKIoY3d_iKsGVKuhTetQQPc",
-                      "amount": 100000,
-                      "status": "completed",
-                      "type": "Payout",
-                      "metadata": {
-                        "origin_name": "admin+faspay_va",
-                        "destination_name": "Karina",
-                        "description": "paid via faspay_virtual_account"
-                      }
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2018-12-14T17:47:20+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "796bde9bbec04369908db99ba4e68751",
-                      "invoice_id": "C-hW0wugMoFI2iU4Y3eyTtk9iphoNL-DbQzKKKCwnt8",
-                      "amount": 12334,
-                      "status": "completed",
-                      "type": "Payout",
-                      "metadata": {
-                        "origin_name": "admin+faspay_va",
-                        "destination_name": "Karina",
-                        "description": "paid via faspay_virtual_account"
-                      }
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2018-12-14T17:46:31+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "d6d91a8d7c0a4d0ebfc77f33bbd7bf1e",
-                      "invoice_id": "Qmbxr8Q5Qkyrcp2Sp6xQU7GJYj1GobAt_fYKD0JVZOM",
-                      "amount": 10000,
-                      "status": "completed",
-                      "type": "Payout",
-                      "metadata": {
-                        "origin_name": "admin+faspay_va",
-                        "destination_name": "Karina",
-                        "description": "paid via faspay_virtual_account"
-                      }
-                    },
-                    {
-                      "fee": 0,
-                      "created_at": "2018-08-16T11:11:49+07:00",
-                      "wallet_name": "General Wallet",
-                      "id": "83efbcbc76c5497f803ea82769ea2457",
-                      "invoice_id": "ZNKwSb9Ajhs5dg0EKgGDwVYhBvZeSulTtnfzZIuh5_0",
-                      "amount": 100000000000,
-                      "status": "completed",
-                      "type": "Payout",
-                      "metadata": {
-                        "origin_name": "admin+faspay_va",
-                        "destination_name": "Karina",
-                        "description": "paid via faspay_virtual_account"
-                      }
-                    }
+                      {
+                          "fee": 0.0,
+                          "created_at": "2019-08-24T14:50:43+08:00",
+                          "wallet_name": "Digital Goods",
+                          "id": "contract_e8db413d5f94476aa38de79b04128db6",
+                          "amount": 300.0,
+                          "status": "completed",
+                          "type": "Deposit",
+                          "metadata": {
+                              "description": "Xfers - CIMB"
+                          }
+                      }        
                   ],
-                  "activities_returned": 13,
-                  "limit": 50,
+                  "activities_returned": 10,
+                  "limit": 10,
                   "offset": 0,
-                  "start_date": "2018-07-04T11:49:58+08:00 ",
-                  "end_date": "2019-10-30T11:49:58+08:00"
-
+                  "start_date": "2019-08-20T14:02:38+08:00",
+                  "end_date": "2019-09-20T23:59:59+08:00"
                 },
                 "schema": {
                   "properties": {
                     "id" : {
+                      "type": "string",
                       "description": "ID of the Charge/Payout/Withdrawal/Payout. You can use this ID to query Charges and Payouts."
                     },
                     "type" :{
-                      "description": "Transaction type",
-                      "enum": ["Charge","Payout","Deposit","Withdrawal"]
+                      "type": "string",                      
+                      "description": "Transaction type. Charge and Payout are named as 'Transfer', because they are internal transfers between two xfers accounts.",
+                      "enum": ["Transfer","Deposit","Withdrawal"]
+                    },
+                    "order_id": {
+                      "type": "string",                      
+                      "description": "If it is a charge, it will have a order_id"
+                    },
+                    "invoice_id": {
+                      "type": "string",                      
+                      "description": "If it is a payout, it will have a invoice_id"
                     },
                     "amount" :{
+                      "type": "float",                      
                       "description": "If money going out of account, negative. If coming in, positive. Note that only a completed Charge will actually deduct money. For example, if a Charge is expired/accepted/pending/unclaimed, no money will actually flow in/out of the wallet, even though there is a amount displayed."
                     }, "fee" :{
+                      "type": "float",                      
                       "description": "Fee charged by Xfers for the transaction, if any. Will be 0 if no fees"
                     }, "metadata" :{
+                      "type": "object",                      
                       "description": "Shows additional information about a transaction"
                     }, "activities_returned" :{
+                      "type": "integer",                      
                       "description": "Number of activities returned. If activities returned is less than the limit, this is the final page."
                     }
                   }
