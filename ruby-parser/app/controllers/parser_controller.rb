@@ -47,11 +47,11 @@ class ParserController < ApplicationController
             curr_path_item_objs.merge!(path_item_obj)
           end
         }
-        raise StandardError, "Matser oas does not contain #{path} check if you enter the correct parameter in oas.config" if !path_added_flag
+        raise StandardError, "Master oas does not contain #{path} check if you enter the correct parameter in oas.config" if !path_added_flag
         next
       end
       if master_path_item_objs[path].nil?
-        raise StandardError, "Matser oas does not contain #{path} check if you enter the correct parameter in oas.config"
+        raise StandardError, "Master oas does not contain #{path} check if you enter the correct parameter in oas.config"
       else
         puts("Added path #{path} for #{name.to_s}" )
         path_item_obj =  copy_obj({path => master_path_item_objs[path]})
