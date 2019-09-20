@@ -53,35 +53,39 @@ To tackle the above problems, this repo aims to create a way of documentation at
 - Download VS Code [OpenAPI (Swagger) editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
 - Download [openapi-lint](https://marketplace.visualstudio.com/items?itemName=mermade.openapi-lint)
 
+**Env Setup**
+
 1. clone entire repo
 2. `cd react-page`
 3. `npm install`
+4. `cd ruby-parser`
+5. `bundle install`
 
 **Make changes to `master-openapi.json`**
 
-4. `npm start`
-5. open `http://localhost:3000/V3/Master`
-6. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/V3/Master` will hot reload and
+1. `npm start`
+2. open `http://localhost:3000/V3/Master`
+3. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/V3/Master` will hot reload and
 you can review the changes you made
-7. Once satisfied cd to `ruby-parser` and run `rake generate`
-8. View changes made to client facing interface on `http://localhost:3000`
-9. Create PR and let PM/Engineer review
-10. Once approved run `npm run deploy` in `react-page`
-11. There is bug with github pages. Everytime you `npm run deploy` the domain name will switch back to the default github domain. Remember to change back to the custom domain `docs.xfers.io`
-11. Changes will be seen on `docs.xfers.io`
+4. Once satisfied cd to `ruby-parser` and run `rake generate`
+5. View changes made to client facing interface on `http://localhost:3000`
+6. Create PR and let PM/Engineer review
+7. Once approved run `npm run deploy` in `react-page`
+8. There is bug with github pages. Everytime you `npm run deploy` the domain name will switch back to the default github domain. Remember to change back to the custom domain `docs.xfers.io`
+9. Changes will be seen on `docs.xfers.io`
 
 **Generate new documentation for a specific merchant**
 
-4. open `/ruby-parser/config/oas.yml`
-5. add a new object at the bottom of the yaml file following this format stated
-6. run `rake generate` in `ruby-parser`
-7. open `/react-pages/src/pages/TemplateOas.js`
-8. Make changes according to comment and save as new file(name of file: {doc-name}.js)
-9. open `/react-pages/src/App.js` and make changes according to the comment(make sure you do not delete the comments)
-10. run `npm run` in `react-page` and check doc in `http://localhost:3000/V3/{doc-name}`
-11. Once satisfied create PR and let PM/Engineer review
-12. Once approved run `npm run deploy` in `react-page`
-13. Changes will be seen on `docs.xfers.io`
+1. open `/ruby-parser/config/oas.yml`
+2. add a new object at the bottom of the yaml file following this format stated
+3. run `rake generate` in `ruby-parser`
+4. open `/react-pages/src/pages/TemplateOas.js`
+5. Make changes according to comment and save as new file(name of file: {doc-name}.js)
+6. open `/react-pages/src/App.js` and make changes according to the comment(make sure you do not delete the comments)
+7. run `npm run` in `react-page` and check doc in `http://localhost:3000/V3/{doc-name}`
+8. Once satisfied create PR and let PM/Engineer review
+9. Once approved run `npm run deploy` in `react-page`
+10. Changes will be seen on `docs.xfers.io`
 
 ## API V4
 Refer to PR https://github.com/Xfers/oas-api-docs/pull/2 for front end changes
