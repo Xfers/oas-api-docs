@@ -69,8 +69,7 @@ To tackle the above problems, this repo aims to create a way of documentation at
 5. View changes made to client facing interface on `http://localhost:3000`
 6. Create PR and let PM/Engineer review
 7. Once approved run `npm run deploy` in `react-page`
-8. There is bug with github pages. Everytime you `npm run deploy` the domain name will switch back to the default github domain. Remember to change back to the custom domain `docs.xfers.io`
-9. Changes will be seen on `docs.xfers.io`
+8. Changes will be seen on `docs.xfers.io`
 
 **Generate new documentation for a specific merchant**
 
