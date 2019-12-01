@@ -208,6 +208,28 @@ const routing = (
 				}
 				/>}
 			/>
+			<Route exact path="/sg/sandbox/api/v4" render={(props) => <XfersRedoc
+				{...props}
+				oasSpec={'https://sandbox.xfers.io/api/v4/swagger_doc'}
+				isUrl={true}
+				docName={"Singapore"}
+				apiVersion = {4}
+				dropDownOptions = {
+					[
+						{
+							key: "Singapore",
+							text: (
+								<span>
+									<Flag name="sg" />
+									SG
+								</span>
+							),
+							value: "/sg/sandbox/api/v4"
+						},
+					]
+				}
+				/>}
+			/>
 			<Route component={ErrorPage} />
 		</Switch>
 	</div>
