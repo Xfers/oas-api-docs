@@ -53,12 +53,12 @@ To tackle the above problems, this repo aims to create a way of documentation at
 ## How to make changes to documentation
 
 **Env Setup**
-
 1. clone entire repo
 2. `cd react-page`
 3. `npm install`
-4. `cd ruby-parser`
-5. `bundle install`
+4. `cd ..`
+5. `cd ruby-parser`
+6. `bundle install`
 
 **Generate new documentation for all merchants**
 
