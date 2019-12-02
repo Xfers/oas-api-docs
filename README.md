@@ -50,6 +50,8 @@ To tackle the above problems, this repo aims to create a way of documentation at
 - Download VS Code [OpenAPI (Swagger) editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
 - Download [openapi-lint](https://marketplace.visualstudio.com/items?itemName=mermade.openapi-lint)
 
+## How to make changes to documentation
+
 **Env Setup**
 
 1. clone entire repo
@@ -57,8 +59,6 @@ To tackle the above problems, this repo aims to create a way of documentation at
 3. `npm install`
 4. `cd ruby-parser`
 5. `bundle install`
-
-## How to make changes to documentation
 
 **Generate new documentation for all merchants**
 
