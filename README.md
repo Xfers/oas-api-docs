@@ -61,6 +61,7 @@ To tackle the above problems, this repo aims to create a way of documentation at
 6. `bundle install`
 
 **Generate new documentation for all merchants**
+
 MAKE SURE YOU ARE IN `react-page` folder
 
 1. `npm start`
