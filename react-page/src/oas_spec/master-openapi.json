@@ -721,48 +721,6 @@
         }
       }
     },
-    "/notify_kyc_callback" :{
-      "post": {
-        "operationId": "notifyKYCCallback",
-        "description" : "This is Xfers' callback request to notify KYC status",
-        "summary": "Notify KYC status Callback",
-        "tags": ["Registration"],
-        "security": [],
-        "servers": [
-          {
-            "url" : "https://yourserver.com",
-            "description" : "This is your endpoint you set in the dashboard or notify_url"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "description": "A unique ID for the user",
-                    "type": "string"
-                  },
-                  "verification_status": {
-                    "description": "`true` or `false`",
-                    "type": "string"
-                  },
-                  "reason": {
-                    "description": "reason for verification status. Only applicable when verification_status is false",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
-          }
-        }
-      }
-    },
     "/user/activities": {
       "get": {
         "operationId": "getTransactionHistory",
