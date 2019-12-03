@@ -7,7 +7,6 @@
     - "/user/activities"
     - "/user/transfer_info"
     - "/user/balance_callback"
-    - "/notify_callback"
     - "/charges"
     - "/charges/{id}/authorize"
     - "/charges/{id}/cancel"
