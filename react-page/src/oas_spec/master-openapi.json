@@ -44,7 +44,7 @@
     },
     {
       "name": "User Account",
-      "description": "Manage user account"
+      "description": "Manage User and Accounts"
     },
     {
       "name": "Charge",
@@ -611,7 +611,7 @@
         }
       },
       "get": {
-        "operationId": "getAccountInfo",
+        "operationId": "getUserInfo",
         "x-code-samples": [{
           "lang": "Shell_curl",
           "source": "curl --location --request GET \"{base_url}\/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
@@ -619,8 +619,8 @@
         "tags": [
           "User Account"
         ],
-        "summary": "Get Account Balance/User Info",
-        "description": "The main usage of this API is to get the current user\u2019s balance to be displayed to user when he checks his account.  \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
+        "summary": "Get User Info",
+        "description": "The main usage of this API is to get the current user. One user can have multiple accounts, and the balance returned is the account tied to the current API token. \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
         "security": [
           {
             "user-api-token": [
@@ -712,6 +712,106 @@
         }
       }
     },
+    "/accounts": {
+      "get": {
+        "operationId": "getAccountInfo",
+        "x-code-samples": [{
+          "lang": "Shell_curl",
+          "source": "curl --location --request GET \"{base_url}\/accounts --header \"Content-Type: application\/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --data \"\""
+        }],
+        "tags": [
+          "User Account"
+        ],
+        "summary": "Get Account Info (Coming Soon)",
+        "description": "This API displays the account information, including the storage limits.\n\n Note that this API is on our newer v4 endpoint instead of v3, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json" : {
+                "example": {
+                  "id": "account_ioajisdjfos",
+                  "object": "PersonalAccount",
+                  "balance": "150.00",
+                  "wallet_type": "Digital Goods Wallet",
+                  "wallet_id": 2,
+                  "limitations": {
+                    "max_storage_limit": "200.00",
+                    "max_storage_limit_remaining": "50.00"                    
+                  },
+                  "currency": "sgd"                  
+                },
+                "schema": {
+                  "properties": {
+                    "id" : {
+                      "type": "string",
+                      "description": "ID of the Account."
+                    },
+                    "object" :{
+                      "type": "string",                      
+                      "description": "Type of the object. Subject to changes.",
+                      "enum": ["PersonalAccount","SettlementAccount","BusinessAccount"]
+                    },
+                    "balance": {
+                      "type": "string",                      
+                      "description": "Account balance"
+                    },
+                    "wallet_type": {
+                      "type": "string",                      
+                      "description": "The Xfers wallet type name"
+                    },
+                    "wallet_id": {
+                      "type": "integer",                      
+                      "description": "The Xfers wallet type id"
+                    },                    
+                    "limitations" :{
+                      "type": "object",                      
+                      "description": "Name-value pairs of the various limit amounts and the remaining limits."
+                    },
+                    "max_storage_limit" :{
+                      "type": "string",                      
+                      "description": "Maximum amount you can store in this account."
+                    },
+                    "max_storage_limit_remaining" :{
+                      "type": "string",                      
+                      "description": "How much storage limit is remaining for this account."
+                    }                                        
+                  }
+                }                
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },    
     "/user/activities": {
       "get": {
         "operationId": "getTransactionHistory",
