@@ -4103,7 +4103,7 @@
       "post": {
         "operationId": "notifyIntent",
         "description" : "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
-        "summary": "Intent Notification Callbacl",
+        "summary": "Intent Notification Callback",
         "tags": ["Intents"],
         "security": [],
         "servers": [
