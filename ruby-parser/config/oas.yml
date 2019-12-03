@@ -9,7 +9,6 @@
     - "/user/transfer_info"
     - "/user/balance_callback"
     - "/notify_callback"
-    - "/merchant*"
     - "/charges"
     - "/notify_charge_callback"
     - "/charges/{id}/authorize"
