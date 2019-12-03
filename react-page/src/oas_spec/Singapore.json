@@ -44,15 +44,11 @@
     },
     {
       "name": "User Account",
-      "description": "Manage user account"
+      "description": "Manage User and Accounts"
     },
     {
       "name": "Charge",
       "description": "API for Charges"
-    },
-    {
-      "name": "Cards",
-      "description": "The following APIs allow you to add or update credit cards to a connected user (which means you have to go through our [Xfers Connect flow](http://docs.xfers.io/#xfers-connect) to get their `user_api_token`). You are also able to charge a credit card without creating an Xfers account for your user (see [Charge Guest Card](http://docs.xfers.io/#charge-guest-card)) or to charge the default card belonging to a user (see [Charge Existing Card](http://docs.xfers.io/#charge-existing-card))."
     },
     {
       "name": "Payout",
@@ -407,11 +403,6 @@
                   "marital_status": {
                     "type": "string",
                     "description": "Only Indonesia. Account holder’s marital status according to his/her KTP. Possible Values: 'Belum Kawin’, 'Kawin’, 'Janda’, or 'Duda’"
-                  },
-                  "callback_url": {
-                    "deprecated": true,
-                    "type": "string",
-                    "description": "***This parameter is going through deprecation. It is still supported but we suggest you use the dash board in  {{base-api-url}}/merchant_settings/callback_settings to submit your callback url.***\r\n\r\nURL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set callback_url instead."
                   }
                 }
               }
@@ -512,7 +503,7 @@
         }
       },
       "get": {
-        "operationId": "getAccountInfo",
+        "operationId": "getUserInfo",
         "x-code-samples": [
           {
             "lang": "Shell_curl",
@@ -522,8 +513,8 @@
         "tags": [
           "User Account"
         ],
-        "summary": "Get Account Balance/User Info",
-        "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account.  \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
+        "summary": "Get User Info",
+        "description": "The main usage of this API is to get the current user. One user can have multiple accounts, and the balance returned is the account tied to the current API token. \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
         "security": [
           {
             "user-api-token": [
@@ -605,6 +596,140 @@
                   "marital_status": null,
                   "occupation": null,
                   "mother_maiden_name": "Putras"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "get": {
+        "operationId": "getAccountInfo",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --data \"\""
+          }
+        ],
+        "tags": [
+          "User Account"
+        ],
+        "summary": "Get Account Info (Coming Soon)",
+        "description": "This API displays the account information, including the storage limits.\n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "wallet_id",
+            "in": "query",
+            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Account\n\n`2`: Digital Goods Account\n\n`8`: Settlement Account",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                8
+              ]
+            }
+          },
+          {
+            "name": "include_limits",
+            "in": "query",
+            "description": "Whether you want the limits to be returned.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "account_ioajisdjfos",
+                  "object": "PersonalAccount",
+                  "balance": "150.00",
+                  "wallet_type": "Digital Goods Wallet",
+                  "wallet_id": 2,
+                  "limitations": {
+                    "max_storage_limit": "200.00",
+                    "max_storage_limit_remaining": "50.00"
+                  },
+                  "currency": "sgd"
+                },
+                "schema": {
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the Account."
+                    },
+                    "object": {
+                      "type": "string",
+                      "description": "Type of the object. Subject to changes.",
+                      "enum": [
+                        "PersonalAccount",
+                        "SettlementAccount",
+                        "BusinessAccount"
+                      ]
+                    },
+                    "balance": {
+                      "type": "string",
+                      "description": "Account balance"
+                    },
+                    "wallet_type": {
+                      "type": "string",
+                      "description": "The Xfers wallet type name"
+                    },
+                    "wallet_id": {
+                      "type": "integer",
+                      "description": "The Xfers wallet type id"
+                    },
+                    "limitations": {
+                      "type": "object",
+                      "description": "Name-value pairs of the various limit amounts and the remaining limits."
+                    },
+                    "max_storage_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can store in this account."
+                    },
+                    "max_storage_limit_remaining": {
+                      "type": "string",
+                      "description": "How much storage limit is remaining for this account."
+                    }
+                  }
                 }
               }
             }
@@ -952,127 +1077,6 @@
                       "description": "Number of activities returned. If activities returned is less than the limit, this is the final page."
                     }
                   }
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/user/balance_callback": {
-      "post": {
-        "operationId": "registerCallback",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/user/balance_callback\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"callback_url\": \"www.example.com/update\", \"name\": \"hello-world\", \"events\":\"[\\\"deposit\\\"]\"}'\r\n"
-          }
-        ],
-        "deprecated": true,
-        "tags": [
-          "User Account"
-        ],
-        "summary": "Register Callback",
-        "description": "***This endpoint is going through deprecation. It is still supported but we suggest you use the dash board to set your callback url.***\r\n\r\nThis will allow you to register for a callback which will be triggered whenever the event you registered for occurs.\r\n\r\nThere can only be one registration at any point. Any existing ones will be overwritten.\"",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "callback_url": {
-                    "type": "string",
-                    "description": "URL to receive callback notifications on account changes",
-                    "example": "https://www.example.com/updates"
-                  },
-                  "events": {
-                    "type": "array",
-                    "enum": [
-                      "deposit"
-                    ],
-                    "description": "Array of events to subscribe to. This should be a valid JSON array. Refer to the section below on the types of events available"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "A name that you can attach to this request. It can be useful for storing additional information. You will be provided with this field in your callback notification",
-                    "example": "xyz-123"
-                  }
-                },
-                "required": [
-                  "callback_url",
-                  "events"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "callback_id": "1",
-                  "callback_url": "www.example.com/update",
-                  "name": "hello-world",
-                  "events": [
-                    "deposit"
-                  ],
-                  "created_at": "2017-07-12T03:36:28Z"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      },
-      "delete": {
-        "operationId": "cancelCallback",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl -X DELETE \"{base_url}/user/balance_callback\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk"
-          }
-        ],
-        "deprecated": true,
-        "tags": [
-          "User Account"
-        ],
-        "summary": "Cancel Callback",
-        "description": "***This endpoint is going through deprecation. It is still supported but we suggest you use the dash board to cancel your callback url.***\r\n\r\nDeletes the existing callback subscription",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "callback_id": "1",
-                  "callback_url": "www.example.com/update",
-                  "name": "hello-world",
-                  "events": [
-                    "deposit"
-                  ],
-                  "created_at": "2017-07-12T03:36:28Z",
-                  "deleted": true
                 }
               }
             }
@@ -2083,11 +2087,6 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
-                  },
-                  "usage": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -2253,11 +2252,6 @@
                     "type": "string",
                     "deprecated": true,
                     "description": "This parameter is no longer supported."
-                  },
-                  "notify_url": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set notify_url instead."
                   }
                 }
               },
@@ -3715,473 +3709,6 @@
         }
       }
     },
-    "/cards": {
-      "post": {
-        "operationId": "addCards",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\", \"credit_card_token\": \"tok_197O8gB8MXWbQJDjPMILsIr6\", \"first6\": \"424242\", \"last4\": \"4242\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Add Cards",
-        "description": "The following request will allow you to add a credit card to your connected user.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "user_api_token": {
-                    "type": "string",
-                    "description": "Buyer’s api token obtained via Connect’s get user token API.",
-                    "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-                  },
-                  "credit_card_token": {
-                    "type": "string",
-                    "description": "Tokenized credit card from Xfers Tokenize.",
-                    "example": "tok_197O8gB8MXWbQJDjPMILsIr6"
-                  },
-                  "first6": {
-                    "type": "string",
-                    "description": "First 6 digits of credit card. Returned via Xfers Tokenize.",
-                    "example": "424242"
-                  },
-                  "last4": {
-                    "type": "string",
-                    "description": "Last 4 digits of credit card. Returned via Xfers Tokenize.",
-                    "example": "last4"
-                  }
-                },
-                "required": [
-                  "user_api_token",
-                  "credit_card_token",
-                  "first6",
-                  "last4"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "card_id": "card_197O8yI7jGeCrIKDeI6SexB6",
-                  "last_4": "4242",
-                  "card_type": "Visa",
-                  "card_country": "US",
-                  "exp_yr": "2022",
-                  "exp_month": "3",
-                  "is_default": false
-                },
-                "schema": {
-                  "properties": {
-                    "card_id": {
-                      "type": "string",
-                      "description": "The id of the card added"
-                    },
-                    "last_4": {
-                      "type": "string",
-                      "description": "Last 4 digits of credit card"
-                    },
-                    "card_type": {
-                      "type": "string",
-                      "description": "Card type",
-                      "enum": [
-                        "Visa",
-                        "AmericanExpress",
-                        "MasterCard",
-                        "Discover",
-                        "JCB",
-                        "Dinners Club",
-                        "Unkown"
-                      ],
-                      "example": "424242"
-                    },
-                    "card_country": {
-                      "type": "string",
-                      "description": "Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected"
-                    },
-                    "exp_yr": {
-                      "type": "string",
-                      "description": "Credit card expiry year"
-                    },
-                    "exp_month": {
-                      "type": "string",
-                      "description": "Credit card expiry month",
-                      "example": "424242"
-                    },
-                    "is_default": {
-                      "type": "boolean",
-                      "description": "Is this the default card to be charged"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      },
-      "get": {
-        "operationId": "listCards",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards?user_api_token=osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\" \\\r\n-H \"X-XFERS-USER-API-KEY: WuTp3zM7UEpmUkeAyGPxRHmnXAx-hXJ7jzdqmxY6S1o\""
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "List Cards",
-        "description": "The following request will allow you to list all credit cards added to a user",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "user_api_token",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": [
-                  {
-                    "card_id": "card_196hygI7jGeCrIKDAwXhGcHm",
-                    "last_4": "4242",
-                    "card_type": "Visa",
-                    "card_country": "US",
-                    "exp_yr": "2022",
-                    "exp_month": "3",
-                    "is_default": true
-                  },
-                  {
-                    "card_id": "card_196kFHI7jGeCrIKD7HxYauMv",
-                    "last_4": "4444",
-                    "card_type": "MasterCard",
-                    "card_country": "US",
-                    "exp_yr": "2022",
-                    "exp_month": "5",
-                    "is_default": false
-                  }
-                ]
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/cards/{card_id}/set_default": {
-      "post": {
-        "operationId": "setDefaultCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards/<the_card_id>/set_default\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Set Default Card",
-        "description": "The following request will allow you to set a default credit card for your connected user.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "card_id",
-            "description": "Card ID. You can retrieve this from the response in add card api.",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "user_api_token": {
-                    "type": "string",
-                    "description": "Buyer’s api token obtained via Connect’s gets user token API.",
-                    "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-                  }
-                },
-                "required": [
-                  "user_api_token"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "card_id": "card_197O8yI7jGeCrIKDeI6SexB6",
-                  "last_4": "4242",
-                  "card_type": "Visa",
-                  "card_country": "US",
-                  "exp_yr": "2022",
-                  "exp_month": "3",
-                  "is_default": true
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/cards/{card_id}": {
-      "delete": {
-        "operationId": "deleteCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl -X DELETE \"{base_url}/cards/<the_card_id>\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Delete Card",
-        "description": "The following request will allow you to delete your user’s credit card.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "card_id",
-            "description": "Card ID. You can retrieve this from the response in add card api.",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "user_api_token": {
-                    "type": "string",
-                    "description": "Buyer’s api token obtained via Connect’s gets user token API.",
-                    "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-                  }
-                },
-                "required": [
-                  "user_api_token"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "card_id": "card_197O8yI7jGeCrIKDeI6SexB6",
-                  "deleted": true
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/credit_card_charges/charge_card_guest": {
-      "post": {
-        "operationId": "chargeGuestCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards/<the_card_id>/set_default\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Charge Guest Card",
-        "description": "The following request will allow you to charge a newly obtained credit card token from Xfers Tokenize. This credit card charge is not linked to any user, so you will not be able to save the token for reuse. Note that each credit card token can only be used once - either charge it directly with this endpoint, or add the token to a user.\r\n\r\nOne use case is to be able to charge a credit card without the user having to go through OTP, since no Xfers account needs to be created (usually because it is a guest user on your platform and you want to speed up the checkout process).\r\n\r\nNo API key authentication is needed. Instead, we will only charge a card if a valid charge id is found together with a valid credit card token.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "txn_id": {
-                    "type": "string",
-                    "description": "The id of the created charge",
-                    "example": "b840cc9fc5a359c22ed2ccef3427aacd"
-                  },
-                  "credit_card_token": {
-                    "type": "string",
-                    "description": "Tokenized credit card from Xfers Tokenize",
-                    "example": "tok_197O8gB8MXWbQJDjPMILsIr6"
-                  },
-                  "first6": {
-                    "type": "string",
-                    "description": "First 6 digits of credit card",
-                    "example": "424242"
-                  },
-                  "last4": {
-                    "type": "string",
-                    "description": "Last 4 digits of credit card",
-                    "example": "4242"
-                  }
-                },
-                "required": [
-                  "txn_id",
-                  "credit_card_token",
-                  "first6",
-                  "last4"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "success": true,
-                  "return_url": "https://www.yoursite.com"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/credit_card_charges/charge_card": {
-      "post": {
-        "operationId": "chargeExistingCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/credit_card_charges/charge_card\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"txn_id\": \"<charge_id>\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Charge Exiting Card",
-        "description": "The following request will allow you to charge a user with his existing default card. Before this, the Charge must be created with `user_api_token` of your user passed in.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "txn_id": {
-                    "type": "string",
-                    "description": "The id of the created charge",
-                    "example": "b840cc9fc5a359c22ed2ccef3427aacd"
-                  }
-                },
-                "required": [
-                  "txn_id"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "success": true,
-                  "return_url": "https://www.yoursite.com"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
     "/intents": {
       "post": {
         "operationId": "createIntent",
@@ -4446,7 +3973,7 @@
       "post": {
         "operationId": "notifyIntent",
         "description": "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
-        "summary": "Intent Notification Callbacl",
+        "summary": "Intent Notification Callback",
         "tags": [
           "Intents"
         ],

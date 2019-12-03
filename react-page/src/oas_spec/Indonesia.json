@@ -44,7 +44,7 @@
     },
     {
       "name": "User Account",
-      "description": "Manage user account"
+      "description": "Manage User and Accounts"
     },
     {
       "name": "Charge",
@@ -508,11 +508,6 @@
                       "Indonesia"
                     ],
                     "description": "Only Indonesia. Account holder’s occupation according to his/her KTP."
-                  },
-                  "callback_url": {
-                    "deprecated": true,
-                    "type": "string",
-                    "description": "***This parameter is going through deprecation. It is still supported but we suggest you use the dash board in  {{base-api-url}}/merchant_settings/callback_settings to submit your callback url.***\r\n\r\nURL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set callback_url instead."
                   }
                 },
                 "required": [
@@ -629,7 +624,7 @@
         }
       },
       "get": {
-        "operationId": "getAccountInfo",
+        "operationId": "getUserInfo",
         "x-code-samples": [
           {
             "lang": "Shell_curl",
@@ -639,8 +634,8 @@
         "tags": [
           "User Account"
         ],
-        "summary": "Get Account Balance/User Info",
-        "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account.  \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
+        "summary": "Get User Info",
+        "description": "The main usage of this API is to get the current user. One user can have multiple accounts, and the balance returned is the account tied to the current API token. \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
         "security": [
           {
             "user-api-token": [
@@ -722,6 +717,140 @@
                   "marital_status": null,
                   "occupation": null,
                   "mother_maiden_name": "Putras"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "get": {
+        "operationId": "getAccountInfo",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --data \"\""
+          }
+        ],
+        "tags": [
+          "User Account"
+        ],
+        "summary": "Get Account Info (Coming Soon)",
+        "description": "This API displays the account information, including the storage limits.\n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "wallet_id",
+            "in": "query",
+            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Account\n\n`2`: Digital Goods Account\n\n`8`: Settlement Account",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                8
+              ]
+            }
+          },
+          {
+            "name": "include_limits",
+            "in": "query",
+            "description": "Whether you want the limits to be returned.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "account_ioajisdjfos",
+                  "object": "PersonalAccount",
+                  "balance": "150.00",
+                  "wallet_type": "Digital Goods Wallet",
+                  "wallet_id": 2,
+                  "limitations": {
+                    "max_storage_limit": "200.00",
+                    "max_storage_limit_remaining": "50.00"
+                  },
+                  "currency": "sgd"
+                },
+                "schema": {
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the Account."
+                    },
+                    "object": {
+                      "type": "string",
+                      "description": "Type of the object. Subject to changes.",
+                      "enum": [
+                        "PersonalAccount",
+                        "SettlementAccount",
+                        "BusinessAccount"
+                      ]
+                    },
+                    "balance": {
+                      "type": "string",
+                      "description": "Account balance"
+                    },
+                    "wallet_type": {
+                      "type": "string",
+                      "description": "The Xfers wallet type name"
+                    },
+                    "wallet_id": {
+                      "type": "integer",
+                      "description": "The Xfers wallet type id"
+                    },
+                    "limitations": {
+                      "type": "object",
+                      "description": "Name-value pairs of the various limit amounts and the remaining limits."
+                    },
+                    "max_storage_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can store in this account."
+                    },
+                    "max_storage_limit_remaining": {
+                      "type": "string",
+                      "description": "How much storage limit is remaining for this account."
+                    }
+                  }
                 }
               }
             }
@@ -1818,11 +1947,6 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
-                  },
-                  "usage": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -1988,11 +2112,6 @@
                     "type": "string",
                     "deprecated": true,
                     "description": "This parameter is no longer supported."
-                  },
-                  "notify_url": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set notify_url instead."
                   }
                 }
               },
