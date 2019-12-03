@@ -732,52 +732,6 @@
         }
       }
     },
-    "/notify_kyc_callback": {
-      "post": {
-        "operationId": "notifyKYCCallback",
-        "description": "This is Xfers' callback request to notify KYC status",
-        "summary": "Notify KYC status Callback",
-        "tags": [
-          "Registration"
-        ],
-        "security": [
-
-        ],
-        "servers": [
-          {
-            "url": "https://yourserver.com",
-            "description": "This is your endpoint you set in the dashboard or notify_url"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "description": "A unique ID for the user",
-                    "type": "string"
-                  },
-                  "verification_status": {
-                    "description": "`true` or `false`",
-                    "type": "string"
-                  },
-                  "reason": {
-                    "description": "reason for verification status. Only applicable when verification_status is false",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
-          }
-        }
-      }
-    },
     "/user/activities": {
       "get": {
         "operationId": "getTransactionHistory",
@@ -1147,20 +1101,10 @@
                     "type": "string",
                     "description": "URL Xfers will redirect customer to on completion of Xfers checkout."
                   },
-                  "notify_url": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set notify_url instead."
-                  },
                   "google_auth": {
                     "type": "string",
                     "deprecated": true,
                     "description": "When this is true and user_phone_no is provided, instead of phone SMS OTP, user can use Google Authenticator to do OTP. See Authorize a Charge"
-                  },
-                  "transactional_only": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Enables transactional charge when true. See more info. Only selected Xfers partners have this feature available."
                   },
                   "receipt_email": {
                     "type": "string",
@@ -1295,78 +1239,6 @@
           },
           "4XX": {
             "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/notify_charge_callback": {
-      "post": {
-        "operationId": "notifyChargeCallback",
-        "description": "Charges here will return a callback after it is completed. (Notification For this API is used for specific case, for most of use cases you can assume charge completed after receiving API response)",
-        "summary": "Notify Charge Callback",
-        "tags": [
-          "Charge"
-        ],
-        "security": [
-
-        ],
-        "servers": [
-          {
-            "url": "https://yourserver.com",
-            "description": "This is your endpoint you set in the dashboard or notify_url"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "description": "Xfers Generated Unique Key",
-                    "type": "string",
-                    "example": "contract_dd5a6b83"
-                  },
-                  "idempotency_id": {
-                    "description": "The key you put in the charge API",
-                    "type": "string",
-                    "example": "AZ0001"
-                  },
-                  "type": {
-                    "description": "Type of this notification",
-                    "type": "string",
-                    "example": "Sobatku/transfer"
-                  },
-                  "status": {
-                    "description": "Status of transaction",
-                    "type": "string",
-                    "enum": [
-                      "completed",
-                      "failed"
-                    ]
-                  },
-                  "amount": {
-                    "description": "amount",
-                    "type": "string",
-                    "example": "125000"
-                  },
-                  "fees": {
-                    "description": "Fee",
-                    "type": "string",
-                    "example": "0"
-                  },
-                  "created_at": {
-                    "description": "Date the Charge creation",
-                    "type": "string",
-                    "example": "2018-11-29T13:10:13+07:00"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
           }
         }
       }
@@ -1799,11 +1671,6 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
-                  },
-                  "usage": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -1863,18 +1730,6 @@
             "user-api-token": [
 
             ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "usage",
-            "required": false,
-            "in": "query",
-            "deprecated": true,
-            "description": "type of bank account",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {

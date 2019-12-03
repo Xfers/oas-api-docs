@@ -1194,20 +1194,10 @@
                     "x-custom-params" : ["Singapore"],
                     "description": "URL Xfers will redirect customer to on cancellation of Xfers checkout."
                   },
-                  "notify_url": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set notify_url instead."
-                  },
                   "google_auth": {
                     "type": "string",
                     "deprecated": true,
                     "description": "When this is true and user_phone_no is provided, instead of phone SMS OTP, user can use Google Authenticator to do OTP. See Authorize a Charge"
-                  },
-                  "transactional_only": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Enables transactional charge when true. See more info. Only selected Xfers partners have this feature available."
                   },
                   "receipt_email": {
                     "type": "string",
@@ -2385,11 +2375,6 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
-                  },
-                  "usage": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -2447,18 +2432,6 @@
             "user-api-token": [
 
             ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "usage",
-            "required": false,
-            "in": "query",
-            "deprecated": true,
-            "description": "type of bank account",
-            "schema" : {
-              "type": "string"
-            }
           }
         ],
         "responses": {
