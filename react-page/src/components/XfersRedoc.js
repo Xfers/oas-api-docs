@@ -150,7 +150,7 @@ const redocOptions = {
 	jsonSampleExpandLevel: 5,
 	requiredPropsFirst: true,
 	scrollYOffset: 128,
-	sortPropsAlphabetically: true,
+	sortPropsAlphabetically: false,
 }
 
 export default XfersRedoc;
