@@ -2421,19 +2421,20 @@
                     "type": "string",
                     "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia"
                   },
+                  "from_wallet_id": {
+                    "type": "integer",
+                    "x-custom-params" : ["Singapore"],                    
+                    "description": "Only Singapore.\n\nWallet ID of the Xfers wallet to withdraw from.\n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
+                    "enum": [1, 2, 8]                    
+                  },
                   "express": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Only Singapore. Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
+                    "description": "Only Singapore.\n\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
                   },
                   "user_api_token": {
                     "type": "string",
                     "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
-                  },
-                  "payout_invoice_id": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "This parameter is no longer supported."
                   }
                 }
               },
