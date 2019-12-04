@@ -3,19 +3,11 @@
   "servers": [
     {
       "description": "Singapore Production",
-      "url": "https://www.xfers.io/api/v3"
+      "url": "https://www.xfers.io/"
     },
     {
       "description": "Singapore Sandbox for testing",
-      "url": "https://sandbox.xfers.io/api/v3"
-    },
-    {
-      "description": "Indonesia Production",
-      "url": "https://id.xfers.com/api/v3"
-    },
-    {
-      "description": "Indonesia Sandbox for testing",
-      "url": "https://sandbox-id.xfers.com/api/v3"
+      "url": "https://sandbox.xfers.io/"
     }
   ],
   "info": {
@@ -60,11 +52,11 @@
       "description": "API for Payout"
     },
     {
-      "name": "Inter Wallet Payments",
+      "name": "Inter Wallet Payments (Coming Soon)",
       "description": "Transferring between wallets belonging to the same user. Currently used as a way to transfer money out of your Settlement Wallet."
     },
     {
-      "name": "Direct Bank Transfer Payments",
+      "name": "Direct Bank Transfer Payments (Coming Soon)",
       "description": "API for Direct Bank Transfer Payments"
     },
     {
@@ -95,7 +87,7 @@
     }
   ],
   "paths": {
-    "/authorize/signup_login": {
+    "/api/v3/authorize/signup_login": {
       "post": {
         "tags": [
           "Registration"
@@ -158,7 +150,7 @@
         }
       }
     },
-    "/authorize/get_token": {
+    "/api/v3/authorize/get_token": {
       "get": {
         "tags": [
           "Registration"
@@ -250,7 +242,7 @@
         }
       }
     },
-    "/user": {
+    "/api/v3/user": {
       "put": {
         "operationId": "submitKYC",
         "tags": [
@@ -624,7 +616,7 @@
         }
       }
     },
-    "/accounts": {
+    "/api/v4/accounts": {
       "get": {
         "operationId": "getAccountInfo",
         "x-code-samples": [
@@ -671,24 +663,6 @@
               "type": "boolean",
               "default": false
             }
-          }
-        ],
-        "servers": [
-          {
-            "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v4"
-          },
-          {
-            "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v4"
-          },
-          {
-            "description": "Indonesia Production",
-            "url": "https://id.xfers.com/api/v4"
-          },
-          {
-            "description": "Indonesia Sandbox for testing",
-            "url": "https://sandbox-id.xfers.com/api/v4"
           }
         ],
         "responses": {
@@ -773,10 +747,16 @@
         }
       }
     },
-    "/user/verify": {
+    "/api/v3/user/verify": {
       "patch": {
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "operationId": "mockKYCVerification",
         "x-code-samples": [
@@ -811,7 +791,7 @@
         }
       }
     },
-    "/user/activities": {
+    "/api/v3/user/activities": {
       "get": {
         "operationId": "getTransactionHistory",
         "x-code-samples": [
@@ -1017,7 +997,7 @@
         }
       }
     },
-    "/user/transfer_info": {
+    "/api/v3/user/transfer_info": {
       "get": {
         "operationId": "getTransferInfo",
         "x-code-samples": [
@@ -1120,7 +1100,7 @@
         }
       }
     },
-    "/charges": {
+    "/api/v3/charges": {
       "post": {
         "operationId": "createCharge",
         "x-code-samples": [
@@ -1343,7 +1323,7 @@
         }
       }
     },
-    "/charges/{id}/authorize": {
+    "/api/v3/charges/{id}/authorize": {
       "post": {
         "operationId": "authorizeCharge",
         "x-code-samples": [
@@ -1446,7 +1426,7 @@
         }
       }
     },
-    "/charges/{id}/cancel": {
+    "/api/v3/charges/{id}/cancel": {
       "post": {
         "operationId": "cancelCharge",
         "x-code-samples": [
@@ -1525,7 +1505,7 @@
         }
       }
     },
-    "/charges/{id}": {
+    "/api/v3/charges/{id}": {
       "get": {
         "operationId": "getCharge",
         "x-code-samples": [
@@ -1594,7 +1574,7 @@
         }
       }
     },
-    "/charges/{id}/refunds": {
+    "/api/v3/charges/{id}/refunds": {
       "post": {
         "operationId": "refundCharge",
         "x-code-samples": [
@@ -1665,7 +1645,7 @@
         }
       }
     },
-    "/payouts": {
+    "/api/v3/payouts": {
       "post": {
         "operationId": "createPayout",
         "x-code-samples": [
@@ -1857,7 +1837,7 @@
         }
       }
     },
-    "/payouts/{id}": {
+    "/api/v3/payouts/{id}": {
       "get": {
         "operationId": "getPayout",
         "tags": [
@@ -1926,7 +1906,7 @@
         }
       }
     },
-    "/inter_wallet_payments": {
+    "/api/v4/inter_wallet_payments": {
       "post": {
         "operationId": "createInterwalletPayment",
         "x-code-samples": [
@@ -1936,7 +1916,7 @@
           }
         ],
         "tags": [
-          "Inter Wallet Payments"
+          "Inter Wallet Payments (Coming Soon)"
         ],
         "summary": "Create Inter Wallet Payment (Coming Soon)",
         "description": "The following API will allow you to move money between wallets belonging to the same user. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
@@ -1945,24 +1925,6 @@
             "Authorization": [
 
             ]
-          }
-        ],
-        "servers": [
-          {
-            "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v4"
-          },
-          {
-            "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v4"
-          },
-          {
-            "description": "Indonesia Production",
-            "url": "https://id.xfers.com/api/v4"
-          },
-          {
-            "description": "Indonesia Sandbox for testing",
-            "url": "https://sandbox-id.xfers.com/api/v4"
           }
         ],
         "requestBody": {
@@ -2055,7 +2017,7 @@
         }
       }
     },
-    "/inter_wallet_payments/{id}": {
+    "/api/v4/inter_wallet_payments/{id}": {
       "get": {
         "operationId": "getInterwalletPayment",
         "x-code-samples": [
@@ -2065,7 +2027,7 @@
           }
         ],
         "tags": [
-          "Inter Wallet Payments"
+          "Inter Wallet Payments (Coming Soon)"
         ],
         "summary": "Get Inter Wallet Payment (Coming Soon)",
         "description": "Retrive a previously created inter wallet payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
@@ -2074,24 +2036,6 @@
             "Authorization": [
 
             ]
-          }
-        ],
-        "servers": [
-          {
-            "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v4"
-          },
-          {
-            "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v4"
-          },
-          {
-            "description": "Indonesia Production",
-            "url": "https://id.xfers.com/api/v4"
-          },
-          {
-            "description": "Indonesia Sandbox for testing",
-            "url": "https://sandbox-id.xfers.com/api/v4"
           }
         ],
         "requestBody": {
@@ -2151,7 +2095,7 @@
         }
       }
     },
-    "/direct_bank_transfer_payments": {
+    "/api/v4/direct_bank_transfer_payments": {
       "post": {
         "operationId": "createDirectBankTransferPayment",
         "x-code-samples": [
@@ -2161,7 +2105,7 @@
           }
         ],
         "tags": [
-          "Direct Bank Transfer Payments"
+          "Direct Bank Transfer Payments (Coming Soon)"
         ],
         "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
         "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
@@ -2170,24 +2114,6 @@
             "Authorization": [
 
             ]
-          }
-        ],
-        "servers": [
-          {
-            "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v4"
-          },
-          {
-            "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v4"
-          },
-          {
-            "description": "Indonesia Production",
-            "url": "https://id.xfers.com/api/v4"
-          },
-          {
-            "description": "Indonesia Sandbox for testing",
-            "url": "https://sandbox-id.xfers.com/api/v4"
           }
         ],
         "requestBody": {
@@ -2265,7 +2191,7 @@
         }
       }
     },
-    "/direct_bank_transfer_payments/{id}": {
+    "/api/v4/direct_bank_transfer_payments/{id}": {
       "get": {
         "operationId": "getDirectBankTransferPayment",
         "x-code-samples": [
@@ -2275,7 +2201,7 @@
           }
         ],
         "tags": [
-          "Direct Bank Transfer Payments"
+          "Direct Bank Transfer Payments (Coming Soon)"
         ],
         "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
         "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
@@ -2284,24 +2210,6 @@
             "Authorization": [
 
             ]
-          }
-        ],
-        "servers": [
-          {
-            "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v4"
-          },
-          {
-            "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v4"
-          },
-          {
-            "description": "Indonesia Production",
-            "url": "https://id.xfers.com/api/v4"
-          },
-          {
-            "description": "Indonesia Sandbox for testing",
-            "url": "https://sandbox-id.xfers.com/api/v4"
           }
         ],
         "requestBody": {
@@ -2353,7 +2261,7 @@
         }
       }
     },
-    "/user/bank_account": {
+    "/api/v3/user/bank_account": {
       "post": {
         "operationId": "addBankAccount",
         "x-code-samples": [
@@ -2487,7 +2395,7 @@
         }
       }
     },
-    "/user/bank_account/{bank_account_id}": {
+    "/api/v3/user/bank_account/{bank_account_id}": {
       "put": {
         "operationId": "updateBankAccount",
         "x-code-samples": [
@@ -2647,7 +2555,7 @@
         }
       }
     },
-    "/user/bank_account/{bank_account_id}/withdraw": {
+    "/api/v3/user/bank_account/{bank_account_id}/withdraw": {
       "post": {
         "operationId": "createWithdrawal",
         "x-code-samples": [
@@ -2766,7 +2674,7 @@
         }
       }
     },
-    "/user/bank_account/withdrawal_requests": {
+    "/api/v3/user/bank_account/withdrawal_requests": {
       "get": {
         "operationId": "listWithdrawalRequests",
         "x-code-samples": [
@@ -2815,7 +2723,7 @@
         }
       }
     },
-    "/banks": {
+    "/api/v3/banks": {
       "get": {
         "operationId": "getBankAbbrev",
         "x-code-samples": [
@@ -3858,7 +3766,7 @@
         }
       }
     },
-    "/notify_withdrawal_callback": {
+    "/api/v3/notify_withdrawal_callback": {
       "post": {
         "operationId": "withdrawalNotificationCallback",
         "description": "This is Xfers' callback request to your server to notify withdrawl status",
@@ -3947,7 +3855,7 @@
         }
       }
     },
-    "/user/bank_account/withdrawal_requests/{withdrawal_request_id}": {
+    "/api/v3/user/bank_account/withdrawal_requests/{withdrawal_request_id}": {
       "get": {
         "operationId": "getWithdrawal",
         "x-code-samples": [
@@ -4009,10 +3917,16 @@
         }
       }
     },
-    "/authorize/hello": {
+    "/api/v3/authorize/hello": {
       "get": {
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "operationId": "authorizeHello",
         "x-code-samples": [
@@ -4047,10 +3961,16 @@
         }
       }
     },
-    "/authorize/get_mock_otp": {
+    "/api/v3/authorize/get_mock_otp": {
       "get": {
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "operationId": "getMockOtp",
         "x-code-samples": [
@@ -4097,11 +4017,17 @@
         }
       }
     },
-    "/user/bank_account/withdrawal_requests/mock_result": {
+    "/api/v3/user/bank_account/withdrawal_requests/mock_result": {
       "put": {
         "operationId": "mockWithdrawalResult",
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "summary": "Mock Withdrawal Result",
         "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
@@ -4176,7 +4102,7 @@
         }
       }
     },
-    "/intents": {
+    "/api/v3/intents": {
       "post": {
         "operationId": "createIntent",
         "tags": [
@@ -4375,7 +4301,7 @@
         }
       }
     },
-    "/intents/{intent_id}/cancel": {
+    "/api/v3/intents/{intent_id}/cancel": {
       "post": {
         "operationId": "cancelIntent",
         "tags": [
@@ -4436,7 +4362,7 @@
         }
       }
     },
-    "/notify_intent_callback": {
+    "/api/v3/notify_intent_callback": {
       "post": {
         "operationId": "notifyIntent",
         "description": "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
