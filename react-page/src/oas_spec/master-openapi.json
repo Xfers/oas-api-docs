@@ -2013,6 +2013,82 @@
         }
       }
     },
+    "/inter_wallet_payments/{id}": {
+      "get": {
+        "operationId": "getInterwalletPayment",
+        "x-code-samples": [{
+          "lang": "Shell_curl",
+          "source": "curl --location --request GET \"{base_url}\/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+        }],
+        "tags": [
+          "Inter Wallet Payments"
+        ],
+        "summary": "Get Inter Wallet Payment",
+        "description": "Retrive a previously created inter wallet payment. You can use this to check the status, whether it has been completed or still processing. The API Token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "in": "query",
+                    "type": "string",
+                    "description": "Inter Wallet Payment ID."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json" : {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "InterWallet",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "completed",                  
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "source": {
+                    "id": "account_00002",
+                    "object": "PersonalSettlementAccount",
+                    "balance": "150.00",
+                    "wallet_type": "Settlement Wallet",
+                    "wallet_id": 8,
+                    "currency": "sgd"
+                  },
+                  "destination": {
+                    "id": "account_1244",
+                    "object": "PersonalAccount",
+                    "balance": "3000.00",
+                    "wallet_type": "Digital Goods Wallet",
+                    "wallet_id": 2,
+                    "currency": "sgd"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },    
     "/user/bank_account": {
       "post": {
         "operationId": "addBankAccount",
