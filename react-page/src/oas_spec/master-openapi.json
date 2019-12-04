@@ -786,7 +786,10 @@
                   "wallet_id": 2,
                   "limitations": {
                     "max_storage_limit": "200.00",
-                    "max_storage_limit_remaining": "50.00"                    
+                    "max_storage_limit_remaining": "50.00",
+                    "charge_per_transaction_limit" : "5000.00",                    
+                    "charge_rolling_yearly_limit" : "30000.00",
+                    "charge_rolling_yearly_limit_remaining" : "20000.00"
                   },
                   "currency": "sgd"                  
                 },
@@ -824,7 +827,19 @@
                     "max_storage_limit_remaining" :{
                       "type": "string",                      
                       "description": "How much storage limit is remaining for this account."
-                    }                                        
+                    },
+                    "charge_per_transaction_limit" :{
+                      "type": "string",                      
+                      "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
+                    },                    
+                    "charge_rolling_yearly_limit" :{
+                      "type": "string",                      
+                      "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit_remaining" :{
+                      "type": "string",                      
+                      "description": "How much more you can charge for this account. (`/charges`)"
+                    }                                                                                              
                   }
                 }                
               }
@@ -6810,6 +6825,12 @@
       }
     },
     "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "You can retrieve this from the dashboard"
+      },
       "X-XFERS-APP-API-KEY": {
         "type": "apiKey",
         "name": "X-XFERS-APP-API-KEY",
@@ -6831,6 +6852,6 @@
     }
   },
   "security": [
-    {"X-XFERS-APP-API-KEY": []},{"X-XFERS-USER-API-KEY": []}, {"user-api-token":[]}
+    {"Authorization": []}, {"X-XFERS-APP-API-KEY": []},{"X-XFERS-USER-API-KEY": []}, {"user-api-token":[]}
   ]
 }
