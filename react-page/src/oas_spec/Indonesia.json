@@ -51,6 +51,11 @@
       "description": "API for Charges"
     },
     {
+      "name": "Credit Card (Singapore)",
+      "description": "Web SDK for Singapore Credit card\r\n\r\nhttps://github.com/Xfers/xfers-sdk/wiki/%5BWeb-Integration%5D-Xfers-Components#5-startcreditcardflow",
+      "x-traitTag": true
+    },
+    {
       "name": "Payout",
       "description": "API for Payout"
     },
@@ -77,6 +82,11 @@
     {
       "name": "Testing",
       "description": "API for testing purposes"
+    },
+    {
+      "name": "Callback Configuration",
+      "description": "For certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\nSingapore: `https://www.xfers.io/merchant_settings/callback_settings`\n\nIndonesia: `https://id.xfers.com/merchant_settings/callback_settings`",
+      "x-traitTag": true
     },
     {
       "name": "Pagination",
@@ -752,7 +762,7 @@
           {
             "name": "wallet_id",
             "in": "query",
-            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Account\n\n`2`: Digital Goods Account\n\n`8`: Settlement Account",
+            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
             "required": true,
             "explode": true,
             "schema": {
@@ -807,7 +817,10 @@
                   "wallet_id": 2,
                   "limitations": {
                     "max_storage_limit": "200.00",
-                    "max_storage_limit_remaining": "50.00"
+                    "max_storage_limit_remaining": "50.00",
+                    "charge_per_transaction_limit": "5000.00",
+                    "charge_rolling_yearly_limit": "30000.00",
+                    "charge_rolling_yearly_limit_remaining": "20000.00"
                   },
                   "currency": "sgd"
                 },
@@ -849,6 +862,18 @@
                     "max_storage_limit_remaining": {
                       "type": "string",
                       "description": "How much storage limit is remaining for this account."
+                    },
+                    "charge_per_transaction_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit_remaining": {
+                      "type": "string",
+                      "description": "How much more you can charge for this account. (`/charges`)"
                     }
                   }
                 }
@@ -2102,16 +2127,11 @@
                   "express": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Only Singapore. Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
+                    "description": "Only Singapore.\n\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
                   },
                   "user_api_token": {
                     "type": "string",
                     "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
-                  },
-                  "payout_invoice_id": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "This parameter is no longer supported."
                   }
                 }
               },
@@ -5488,6 +5508,12 @@
       }
     },
     "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "You can retrieve this from the dashboard"
+      },
       "X-XFERS-APP-API-KEY": {
         "type": "apiKey",
         "name": "X-XFERS-APP-API-KEY",

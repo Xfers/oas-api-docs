@@ -51,8 +51,21 @@
       "description": "API for Charges"
     },
     {
+      "name": "Credit Card (Singapore)",
+      "description": "Web SDK for Singapore Credit card\r\n\r\nhttps://github.com/Xfers/xfers-sdk/wiki/%5BWeb-Integration%5D-Xfers-Components#5-startcreditcardflow",
+      "x-traitTag": true
+    },
+    {
       "name": "Payout",
       "description": "API for Payout"
+    },
+    {
+      "name": "Inter Wallet Payments",
+      "description": "Transferring between wallets belonging to the same user. Currently used as a way to transfer money out of your Settlement Wallet."
+    },
+    {
+      "name": "Direct Bank Transfer Payments",
+      "description": "API for Direct Bank Transfer Payments"
     },
     {
       "name": "Bank Account",
@@ -69,6 +82,11 @@
     {
       "name": "Testing",
       "description": "API for testing purposes"
+    },
+    {
+      "name": "Callback Configuration",
+      "description": "For certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\nSingapore: `https://www.xfers.io/merchant_settings/callback_settings`\n\nIndonesia: `https://id.xfers.com/merchant_settings/callback_settings`",
+      "x-traitTag": true
     },
     {
       "name": "Pagination",
@@ -631,7 +649,7 @@
           {
             "name": "wallet_id",
             "in": "query",
-            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Account\n\n`2`: Digital Goods Account\n\n`8`: Settlement Account",
+            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
             "required": true,
             "explode": true,
             "schema": {
@@ -686,7 +704,10 @@
                   "wallet_id": 2,
                   "limitations": {
                     "max_storage_limit": "200.00",
-                    "max_storage_limit_remaining": "50.00"
+                    "max_storage_limit_remaining": "50.00",
+                    "charge_per_transaction_limit": "5000.00",
+                    "charge_rolling_yearly_limit": "30000.00",
+                    "charge_rolling_yearly_limit_remaining": "20000.00"
                   },
                   "currency": "sgd"
                 },
@@ -728,6 +749,18 @@
                     "max_storage_limit_remaining": {
                       "type": "string",
                       "description": "How much storage limit is remaining for this account."
+                    },
+                    "charge_per_transaction_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit_remaining": {
+                      "type": "string",
+                      "description": "How much more you can charge for this account. (`/charges`)"
                     }
                   }
                 }
@@ -1893,6 +1926,433 @@
         }
       }
     },
+    "/inter_wallet_payments": {
+      "post": {
+        "operationId": "createInterwalletPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request POST \"{base_url}/inter_wallet_payments\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\" \\\r\n--form \"from_wallet_id=8\"\\\r\n--form \"to_wallet_id=2\""
+          }
+        ],
+        "tags": [
+          "Inter Wallet Payments"
+        ],
+        "summary": "Create Inter Wallet Payment (Coming Soon)",
+        "description": "The following API will allow you to move money between wallets belonging to the same user. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "amount",
+                  "external_id",
+                  "from_wallet_id",
+                  "to_wallet_id"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Transaction Amount. Please note that you cannot exceed the total wallet storage balance."
+                  },
+                  "external_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  },
+                  "from_wallet_id": {
+                    "type": "integer",
+                    "description": "Wallet ID of the Xfers wallet to transfer from. Can only choose Settlement Wallet for now. \n\n`8`: Settlement Wallet",
+                    "enum": [
+                      8
+                    ]
+                  },
+                  "to_wallet_id": {
+                    "type": "integer",
+                    "description": "Wallet ID of the Xfers wallet to transfer to. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet",
+                    "enum": [
+                      1,
+                      2
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "amount": 3000.0,
+                    "external_id": "foo_bar_123",
+                    "from_wallet_id": 8,
+                    "to_wallet_id": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "InterWallet",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "processing",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "source": {
+                    "id": "account_00002",
+                    "object": "PersonalSettlementAccount",
+                    "balance": "150.00",
+                    "wallet_type": "Settlement Wallet",
+                    "wallet_id": 8,
+                    "currency": "sgd"
+                  },
+                  "destination": {
+                    "id": "account_1244",
+                    "object": "PersonalAccount",
+                    "balance": "3000.00",
+                    "wallet_type": "Digital Goods Wallet",
+                    "wallet_id": 2,
+                    "currency": "sgd"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/inter_wallet_payments/{id}": {
+      "get": {
+        "operationId": "getInterwalletPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+          }
+        ],
+        "tags": [
+          "Inter Wallet Payments"
+        ],
+        "summary": "Get Inter Wallet Payment (Coming Soon)",
+        "description": "Retrive a previously created inter wallet payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "in": "query",
+                    "type": "string",
+                    "description": "Inter Wallet Payment ID."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "InterWallet",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "completed",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "source": {
+                    "id": "account_00002",
+                    "object": "PersonalSettlementAccount",
+                    "balance": "150.00",
+                    "wallet_type": "Settlement Wallet",
+                    "wallet_id": 8,
+                    "currency": "sgd"
+                  },
+                  "destination": {
+                    "id": "account_1244",
+                    "object": "PersonalAccount",
+                    "balance": "3000.00",
+                    "wallet_type": "Digital Goods Wallet",
+                    "wallet_id": 2,
+                    "currency": "sgd"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/direct_bank_transfer_payments": {
+      "post": {
+        "operationId": "createDirectBankTransferPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request POST \"{base_url}/direct_bank_transfer_payments\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\""
+          }
+        ],
+        "tags": [
+          "Direct Bank Transfer Payments"
+        ],
+        "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
+        "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "amount",
+                  "external_id"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Transaction Amount."
+                  },
+                  "external_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "amount": 3000.0,
+                    "external_id": "foo_bar_123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "DirectBankTransferPayment",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "created",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "data": {
+                    "topup_bank": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "877316208856"
+                    },
+                    "unique_topup_identifier": "XYZ123"
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "topup_bank": {
+                      "type": "object",
+                      "description": "The bank details for your customer to top up to."
+                    },
+                    "unique_topup_identifier": {
+                      "type": "string",
+                      "description": "Your customer should type this string in the comments field when making a bank transfer. This will be used to identify that the transfer is from him."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/direct_bank_transfer_payments/{id}": {
+      "get": {
+        "operationId": "getDirectBankTransferPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+          }
+        ],
+        "tags": [
+          "Direct Bank Transfer Payments"
+        ],
+        "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
+        "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "in": "query",
+                    "type": "string",
+                    "description": "Direct Bank Transfer Payment ID."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "DirectBankTransferPayment",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "completed",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "data": {
+                    "topup_bank": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "877316208856"
+                    },
+                    "unique_topup_identifier": "XYZ123"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
     "/user/bank_account": {
       "post": {
         "operationId": "addBankAccount",
@@ -2239,19 +2699,26 @@
                     "type": "string",
                     "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia"
                   },
+                  "from_wallet_id": {
+                    "type": "integer",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "Only Singapore.\n\nWallet ID of the Xfers wallet to withdraw from.\n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
+                    "enum": [
+                      1,
+                      2,
+                      8
+                    ]
+                  },
                   "express": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Only Singapore. Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
+                    "description": "Only Singapore.\n\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
                   },
                   "user_api_token": {
                     "type": "string",
                     "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
-                  },
-                  "payout_invoice_id": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "This parameter is no longer supported."
                   }
                 }
               },
@@ -5329,6 +5796,12 @@
       }
     },
     "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "You can retrieve this from the dashboard"
+      },
       "X-XFERS-APP-API-KEY": {
         "type": "apiKey",
         "name": "X-XFERS-APP-API-KEY",
