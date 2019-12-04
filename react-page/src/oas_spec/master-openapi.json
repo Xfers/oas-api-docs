@@ -100,6 +100,11 @@
       "description": "API for testing purposes"
     },
     {
+      "name": "Callback Configuration",
+      "description": "For certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\nSingapore: `https://www.xfers.io/merchant_settings/callback_settings`\n\nIndonesia: `https://id.xfers.com/merchant_settings/callback_settings`",
+      "x-traitTag" : true      
+    },    
+    {
       "name": "Pagination",
       "description": "To do pagination:\r\n\r\n1.  Decide on number of entries per page (e.g. 100 for this example). Set the limit as this\r\n2.  First page: Offset 0. The latest 100 entries, 1-100, will be returned.\r\n3.  Second page: Offset 100. The next 100 entries, 101-200, will be returned.\r\n4.  Third page: Offset 200. The next 100 entries, 201-300, will be returned.\r\n\r\nHence your offset should always be a multiple of limits.",
       "x-traitTag" : true
