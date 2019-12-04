@@ -3,19 +3,11 @@
   "servers": [
     {
       "description": "Singapore Production",
-      "url": "https://www.xfers.io/api/v3"
+      "url": "https://www.xfers.io/"
     },
     {
       "description": "Singapore Sandbox for testing",
-      "url": "https://sandbox.xfers.io/api/v3"
-    },
-    {
-      "description": "Indonesia Production",
-      "url": "https://id.xfers.com/api/v3"
-    },
-    {
-      "description": "Indonesia Sandbox for testing",
-      "url": "https://sandbox-id.xfers.com/api/v3"
+      "url": "https://sandbox.xfers.io/"
     }
   ],
   "info": {
@@ -44,19 +36,28 @@
     },
     {
       "name": "User Account",
-      "description": "Manage user account"
+      "description": "Manage User and Accounts"
     },
     {
       "name": "Charge",
       "description": "API for Charges"
     },
     {
-      "name": "Cards",
-      "description": "The following APIs allow you to add or update credit cards to a connected user (which means you have to go through our [Xfers Connect flow](http://docs.xfers.io/#xfers-connect) to get their `user_api_token`). You are also able to charge a credit card without creating an Xfers account for your user (see [Charge Guest Card](http://docs.xfers.io/#charge-guest-card)) or to charge the default card belonging to a user (see [Charge Existing Card](http://docs.xfers.io/#charge-existing-card))."
+      "name": "Credit Card (Singapore)",
+      "description": "Web SDK for Singapore Credit card\r\n\r\nhttps://github.com/Xfers/xfers-sdk/wiki/%5BWeb-Integration%5D-Xfers-Components#5-startcreditcardflow",
+      "x-traitTag": true
     },
     {
       "name": "Payout",
       "description": "API for Payout"
+    },
+    {
+      "name": "Inter Wallet Payments (Coming Soon)",
+      "description": "Transferring between wallets belonging to the same user. Currently used as a way to transfer money out of your Settlement Wallet."
+    },
+    {
+      "name": "Direct Bank Transfer Payments (Coming Soon)",
+      "description": "API for Direct Bank Transfer Payments"
     },
     {
       "name": "Bank Account",
@@ -67,10 +68,6 @@
       "description": "API for Withdrawal"
     },
     {
-      "name": "Merchant",
-      "description": "***These endpoint are still supported but is going through deprecation. We suggest you use the dashboard to manage your merchant account instead.***"
-    },
-    {
       "name": "Intents",
       "description": "**For user case 1:**\r\n\r\nWhen a user is performing a top-up via  [GET /transfer_info](http://docs.xfers.io/#get-transfer-info), they might forget to enter their contact number which is needed for our system to identify them.\r\n\r\nThe Intents API solves this issue by requiring the user to transfer a unique amount to Xfers which will be used to identify them. The difference between the  `unique_amount`  and the actual  `amount`  will be very small, and Xfers provides the difference for free to the user.\r\n\r\nNote that this only acts as a backup, and the user should enter his contact number in the comments section when doing a bank transfer whenever possible.\r\n\r\nExample: Jane wishes to transfer 5000 Indonesian Rupiah via  `/intents`.\r\n\r\n1.  She makes a HTTP GET request to  `/user/transfer_info`  to get the correct Xfers bank to transfer to (we have many banks!). The response tells her to transfer to Bank Central Asia (BCA).\r\n2.  She makes a HTTP POST request to create an intent. The response tells her to make a bank transfer of 4999 to Xfers.\r\n3.  Jane makes a transfer of 4999 to Xfers BCA. Within a few minutes, Xfers detects the transfer and tops up Jane’s Xfers account with 5000. Xfers absorbs the difference for free.\r\n4.  If  `notify_url`  is given, Xfers will send a callback to this url.\r\n\r\nNote the above scenario is only valid when disable_va is set to True\r\n\r\n**For user case 2:**\r\n\r\nIntent can also be use a means to get callback notifications from Xfers when a user successfully fund their virtual account on Xfers.\r\n\r\nExample: Jane wishes to transfer 5000 Indonesian Rupiah via  `/intents`  to her virtual Xfers account and get a callback notification when it successful\r\n\r\n1.  She makes a HTTP POST request to create an intent with disable_va set to false(default) and provide a  `notify_url`. The response will provide a list of virtual account nos she can fund her account with from a list of bank that Xfers support.\r\n2.  Jane makes a transfer of 500 to the Xfers BCA Virtual account that the intent api provide. Within a few minutes, Xfers detects the transfer and tops up Jane’s Xfers account with 5000.\r\n3.  Since  `notify_url`  is provided, Xfers will send a callback to this url."
     },
@@ -79,13 +76,18 @@
       "description": "API for testing purposes"
     },
     {
+      "name": "Callback Configuration",
+      "description": "For certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\nSingapore: `https://www.xfers.io/merchant_settings/callback_settings`\n\nIndonesia: `https://id.xfers.com/merchant_settings/callback_settings`",
+      "x-traitTag": true
+    },
+    {
       "name": "Pagination",
       "description": "To do pagination:\r\n\r\n1.  Decide on number of entries per page (e.g. 100 for this example). Set the limit as this\r\n2.  First page: Offset 0. The latest 100 entries, 1-100, will be returned.\r\n3.  Second page: Offset 100. The next 100 entries, 101-200, will be returned.\r\n4.  Third page: Offset 200. The next 100 entries, 201-300, will be returned.\r\n\r\nHence your offset should always be a multiple of limits.",
       "x-traitTag": true
     }
   ],
   "paths": {
-    "/authorize/signup_login": {
+    "/api/v3/authorize/signup_login": {
       "post": {
         "tags": [
           "Registration"
@@ -148,7 +150,7 @@
         }
       }
     },
-    "/authorize/get_token": {
+    "/api/v3/authorize/get_token": {
       "get": {
         "tags": [
           "Registration"
@@ -240,7 +242,7 @@
         }
       }
     },
-    "/user": {
+    "/api/v3/user": {
       "put": {
         "operationId": "submitKYC",
         "tags": [
@@ -411,11 +413,6 @@
                   "marital_status": {
                     "type": "string",
                     "description": "Only Indonesia. Account holder’s marital status according to his/her KTP. Possible Values: 'Belum Kawin’, 'Kawin’, 'Janda’, or 'Duda’"
-                  },
-                  "callback_url": {
-                    "deprecated": true,
-                    "type": "string",
-                    "description": "***This parameter is going through deprecation. It is still supported but we suggest you use the dash board in  {{base-api-url}}/merchant_settings/callback_settings to submit your callback url.***\r\n\r\nURL to receive callback notifications on account verification changes. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set callback_url instead."
                   }
                 }
               }
@@ -516,7 +513,7 @@
         }
       },
       "get": {
-        "operationId": "getAccountInfo",
+        "operationId": "getUserInfo",
         "x-code-samples": [
           {
             "lang": "Shell_curl",
@@ -526,8 +523,8 @@
         "tags": [
           "User Account"
         ],
-        "summary": "Get Account Balance/User Info",
-        "description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account.  \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
+        "summary": "Get User Info",
+        "description": "The main usage of this API is to get the current user. One user can have multiple accounts, and the balance returned is the account tied to the current API token. \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
         "security": [
           {
             "user-api-token": [
@@ -619,56 +616,147 @@
         }
       }
     },
-    "/notify_kyc_callback": {
-      "post": {
-        "operationId": "notifyKYCCallback",
-        "description": "This is Xfers' callback request to notify KYC status",
-        "summary": "Notify KYC status Callback",
-        "tags": [
-          "Registration"
-        ],
-        "security": [
-
-        ],
-        "servers": [
+    "/api/v4/accounts": {
+      "get": {
+        "operationId": "getAccountInfo",
+        "x-code-samples": [
           {
-            "url": "https://yourserver.com",
-            "description": "This is your endpoint you set in the dashboard or notify_url"
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --data \"\""
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "description": "A unique ID for the user",
-                    "type": "string"
+        "tags": [
+          "User Account"
+        ],
+        "summary": "Get Account Info (Coming Soon)",
+        "description": "This API displays the account information, including the storage limits.\n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "wallet_id",
+            "in": "query",
+            "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                8
+              ]
+            }
+          },
+          {
+            "name": "include_limits",
+            "in": "query",
+            "description": "Whether you want the limits to be returned.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "account_ioajisdjfos",
+                  "object": "PersonalAccount",
+                  "balance": "150.00",
+                  "wallet_type": "Digital Goods Wallet",
+                  "wallet_id": 2,
+                  "limitations": {
+                    "max_storage_limit": "200.00",
+                    "max_storage_limit_remaining": "50.00",
+                    "charge_per_transaction_limit": "5000.00",
+                    "charge_rolling_yearly_limit": "30000.00",
+                    "charge_rolling_yearly_limit_remaining": "20000.00"
                   },
-                  "verification_status": {
-                    "description": "`true` or `false`",
-                    "type": "string"
-                  },
-                  "reason": {
-                    "description": "reason for verification status. Only applicable when verification_status is false",
-                    "type": "string"
+                  "currency": "sgd"
+                },
+                "schema": {
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the Account."
+                    },
+                    "object": {
+                      "type": "string",
+                      "description": "Type of the object. Subject to changes.",
+                      "enum": [
+                        "PersonalAccount",
+                        "SettlementAccount",
+                        "BusinessAccount"
+                      ]
+                    },
+                    "balance": {
+                      "type": "string",
+                      "description": "Account balance"
+                    },
+                    "wallet_type": {
+                      "type": "string",
+                      "description": "The Xfers wallet type name"
+                    },
+                    "wallet_id": {
+                      "type": "integer",
+                      "description": "The Xfers wallet type id"
+                    },
+                    "limitations": {
+                      "type": "object",
+                      "description": "Name-value pairs of the various limit amounts and the remaining limits."
+                    },
+                    "max_storage_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can store in this account."
+                    },
+                    "max_storage_limit_remaining": {
+                      "type": "string",
+                      "description": "How much storage limit is remaining for this account."
+                    },
+                    "charge_per_transaction_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit": {
+                      "type": "string",
+                      "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
+                    },
+                    "charge_rolling_yearly_limit_remaining": {
+                      "type": "string",
+                      "description": "How much more you can charge for this account. (`/charges`)"
+                    }
                   }
                 }
               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
           }
         }
       }
     },
-    "/user/verify": {
+    "/api/v3/user/verify": {
       "patch": {
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "operationId": "mockKYCVerification",
         "x-code-samples": [
@@ -703,7 +791,7 @@
         }
       }
     },
-    "/user/activities": {
+    "/api/v3/user/activities": {
       "get": {
         "operationId": "getTransactionHistory",
         "x-code-samples": [
@@ -909,7 +997,7 @@
         }
       }
     },
-    "/user/transfer_info": {
+    "/api/v3/user/transfer_info": {
       "get": {
         "operationId": "getTransferInfo",
         "x-code-samples": [
@@ -1012,616 +1100,7 @@
         }
       }
     },
-    "/user/balance_callback": {
-      "post": {
-        "operationId": "registerCallback",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/user/balance_callback\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"callback_url\": \"www.example.com/update\", \"name\": \"hello-world\", \"events\":\"[\\\"deposit\\\"]\"}'\r\n"
-          }
-        ],
-        "deprecated": true,
-        "tags": [
-          "User Account"
-        ],
-        "summary": "Register Callback",
-        "description": "***This endpoint is going through deprecation. It is still supported but we suggest you use the dash board to set your callback url.***\r\n\r\nThis will allow you to register for a callback which will be triggered whenever the event you registered for occurs.\r\n\r\nThere can only be one registration at any point. Any existing ones will be overwritten.\"",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "callback_url": {
-                    "type": "string",
-                    "description": "URL to receive callback notifications on account changes",
-                    "example": "https://www.example.com/updates"
-                  },
-                  "events": {
-                    "type": "array",
-                    "enum": [
-                      "deposit"
-                    ],
-                    "description": "Array of events to subscribe to. This should be a valid JSON array. Refer to the section below on the types of events available"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "A name that you can attach to this request. It can be useful for storing additional information. You will be provided with this field in your callback notification",
-                    "example": "xyz-123"
-                  }
-                },
-                "required": [
-                  "callback_url",
-                  "events"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "callback_id": "1",
-                  "callback_url": "www.example.com/update",
-                  "name": "hello-world",
-                  "events": [
-                    "deposit"
-                  ],
-                  "created_at": "2017-07-12T03:36:28Z"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      },
-      "delete": {
-        "operationId": "cancelCallback",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl -X DELETE \"{base_url}/user/balance_callback\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk"
-          }
-        ],
-        "deprecated": true,
-        "tags": [
-          "User Account"
-        ],
-        "summary": "Cancel Callback",
-        "description": "***This endpoint is going through deprecation. It is still supported but we suggest you use the dash board to cancel your callback url.***\r\n\r\nDeletes the existing callback subscription",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "callback_id": "1",
-                  "callback_url": "www.example.com/update",
-                  "name": "hello-world",
-                  "events": [
-                    "deposit"
-                  ],
-                  "created_at": "2017-07-12T03:36:28Z",
-                  "deleted": true
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/notify_callback": {
-      "post": {
-        "operationId": "notifyCallback",
-        "deprecated": true,
-        "description": "***This endpoint is going through deprecation. It is still supported but we suggest you use the dash board to set your callback url.***\r\n\r\nThis is a server to server HTTPS/HTTP POST and  **you will need to acknowledge the callback by responding with a HTTP 200 status**.\r\n\r\nIf your callback_url given is  `https://www.example.com/updates`, Xfers will send:  `POST https://www.example.com/update`\r\nThere can only be one registration at any point. Any existing ones will be overwritten.\",",
-        "summary": "Notify Callback",
-        "tags": [
-          "User Account"
-        ],
-        "security": [
-
-        ],
-        "servers": [
-          {
-            "url": "https://yourserver.com",
-            "description": "This is your endpoint you set in the dashboard or notify_url"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "notification_id": {
-                    "description": "A unique ID for this particular event",
-                    "type": "string",
-                    "example": "5"
-                  },
-                  "callback_id": {
-                    "description": "The ID of your callback registration",
-                    "type": "string",
-                    "example": "5"
-                  },
-                  "name": {
-                    "description": "The string you previously provided in the register request",
-                    "type": "string",
-                    "example": "hello-world"
-                  },
-                  "event_type": {
-                    "description": "The type of event",
-                    "type": "string",
-                    "example": "deposit"
-                  },
-                  "created_at": {
-                    "description": "When this event was triggered.",
-                    "type": "string",
-                    "format": "ISO8601 datetime",
-                    "example": "5"
-                  },
-                  "user_contact": {
-                    "description": "Contact number of the user",
-                    "type": "string",
-                    "example": "83994956"
-                  },
-                  "ledger_balance": {
-                    "description": "Ledger balance of the user at this point in time",
-                    "type": "number",
-                    "format": "float",
-                    "example": "436750.00"
-                  },
-                  "available_balance": {
-                    "description": "Available balance of the user at this point in time",
-                    "type": "number",
-                    "format": "float",
-                    "example": "336750.00"
-                  },
-                  "credit": {
-                    "description": "was credited in this event",
-                    "type": "number",
-                    "format": "float",
-                    "example": "335000.00"
-                  },
-                  "debit": {
-                    "description": "How much was debited in this event",
-                    "type": "number",
-                    "format": "float",
-                    "example": "0.00"
-                  },
-                  "details": {
-                    "description": "Additional details. For deposit, it would be the bank the user did a transfer from",
-                    "type": "string",
-                    "example": "BCA Transfer"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
-          }
-        }
-      }
-    },
-    "/merchant": {
-      "get": {
-        "operationId": "getMerchantInfo",
-        "tags": [
-          "Merchant"
-        ],
-        "deprecated": true,
-        "summary": "Get Merchant Info",
-        "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint returns merchant information related to your account.",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/merchant\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
-          }
-        ],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "business_id": "53348831Z",
-                  "business_name": "Alpha Events",
-                  "business_type": "Private Company",
-                  "business_position": "Director",
-                  "business_address_line_1": "78 Lucky Plaza",
-                  "business_address_line_2": "#14-39",
-                  "business_postal_code": "938884",
-                  "business_telephone": "+6583994012",
-                  "bizfile_document": "BIZFILE.pdf",
-                  "business_verified": false,
-                  "shareholders": [
-                    {
-                      "firstName": "Samson",
-                      "lastName": "Leo",
-                      "nricNumber": "S8781203Q",
-                      "dateOfBirth": "19/02/1987",
-                      "nationality": "Singaporean",
-                      "address1": "Blk 600 Elias Road",
-                      "address2": "#09-123",
-                      "postalCode": "510600",
-                      "phoneNumber": "+6583004848",
-                      "businessType": "Private Company",
-                      "businessPosition": "Director"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      },
-      "put": {
-        "operationId": "updateMerchantInfo",
-        "tags": [
-          "Merchant"
-        ],
-        "deprecated": true,
-        "summary": "Update Merchant Info",
-        "description": "***This endpoint is going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint allows user to update their merchant information. If the user is not yet a merchant, this process converts them to a merchant.",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/merchant\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -X PUT \\\r\n  -d '{\"business_id\": \"53348831Z\", \"business_name\": \"Alpha Events\", \"business_type\": \"Private Company\"}'"
-          }
-        ],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "business_id": {
-                    "type": "string",
-                    "description": "Enter your singapore recognized bizfile ID. (eg: UEN, incorporation number, business registration number)."
-                  },
-                  "business_position": {
-                    "type": "string",
-                    "description": "Position in the business."
-                  },
-                  "business_name": {
-                    "type": "string",
-                    "description": "Enter in the name of your business."
-                  },
-                  "business_type": {
-                    "type": "string",
-                    "enum": [
-                      "Individual",
-                      "Sole Proprietorship",
-                      "Partnership",
-                      "Private Company",
-                      "Public Compan",
-                      "Societies / Nonprofit organisation",
-                      "Government Entity"
-                    ],
-                    "description": "Type of your business."
-                  },
-                  "business_address_line_1": {
-                    "type": "string",
-                    "description": "Enter in the first line of your business’ address."
-                  },
-                  "business_address_line_2": {
-                    "type": "string",
-                    "description": "Enter in the last line of your business’ address."
-                  },
-                  "business_postal_code": {
-                    "type": "string",
-                    "description": "Enter in your business’ postal code."
-                  },
-                  "business_telephone": {
-                    "type": "string",
-                    "description": "Enter your business’ phone number along with the country code."
-                  },
-                  "bizfile_document": {
-                    "type": "string",
-                    "description": "URL storing the ACRA Bizfile document as proof of your business details."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "business_id": "53348831Z",
-                  "business_name": "Alpha Events",
-                  "business_type": "Private Company",
-                  "business_position": "Director",
-                  "business_address_line_1": "78 Lucky Plaza",
-                  "business_address_line_2": "#14-39",
-                  "business_postal_code": "938884",
-                  "business_telephone": "+6583994012",
-                  "bizfile_document": "BIZFILE.pdf",
-                  "business_verified": false,
-                  "shareholders": [
-                    {
-                      "firstName": "Samson",
-                      "lastName": "Leo",
-                      "nricNumber": "S8781203Q",
-                      "dateOfBirth": "19/02/1987",
-                      "nationality": "Singaporean",
-                      "address1": "Blk 600 Elias Road",
-                      "address2": "#09-123",
-                      "postalCode": "510600",
-                      "phoneNumber": "+6583004848",
-                      "businessType": "Private Company",
-                      "businessPosition": "Director"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/merchant/share-holder": {
-      "post": {
-        "operationId": "addShareHolder",
-        "tags": [
-          "Merchant"
-        ],
-        "deprecated": true,
-        "summary": "Add Shareholder",
-        "description": "***This endpoint are going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis endpoint allows businesses to add a shareholder.",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/merchant/shareholder\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"firstName\": \"wenbin\", \"lastName\": \"tay\", \"nricNumber\": \"Blk 712 loyang Avenue 5\", \"dateOfBirth\": \"#01-41\", \"nationality\": \"Singaporean\", \"postalCode\": \"340712\", \"nricNumber\": \"s86917127G\", \"businessType\": \"Private Company\", \"businessPosition\": \"Director\", \"phoneNumber\":\"+6583004848\"}'"
-          }
-        ],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "business_id",
-                  "firstName",
-                  "lastName",
-                  "nricNumber",
-                  "dateOfBirth",
-                  "nationality",
-                  "address1",
-                  "address2",
-                  "postalCode",
-                  "phoneNumber",
-                  "businessType",
-                  "businessPosition"
-                ],
-                "properties": {
-                  "firstName": {
-                    "type": "string",
-                    "description": "First name"
-                  },
-                  "lastName": {
-                    "type": "string",
-                    "description": "Last name"
-                  },
-                  "nricNumber": {
-                    "type": "string",
-                    "description": "National identity number"
-                  },
-                  "dateOfBirth": {
-                    "type": "string",
-                    "description": "Date of birth"
-                  },
-                  "nationality": {
-                    "type": "string",
-                    "description": "Nationality"
-                  },
-                  "address1": {
-                    "type": "string",
-                    "description": "First line of address."
-                  },
-                  "address2": {
-                    "type": "string",
-                    "description": "Last line of address."
-                  },
-                  "postalCode": {
-                    "type": "string",
-                    "description": "Phone number with country code"
-                  },
-                  "phoneNumber": {
-                    "type": "string",
-                    "description": "Nationality"
-                  },
-                  "businessType": {
-                    "type": "string",
-                    "enum": [
-                      "Individual",
-                      "Sole Proprietorship",
-                      "Partnership",
-                      "Private Company",
-                      "Public Compan",
-                      "Societies / Nonprofit organisation",
-                      "Government Entity"
-                    ],
-                    "description": "Business type."
-                  },
-                  "businessPosition": {
-                    "type": "string",
-                    "description": "Business position",
-                    "enum": [
-                      "Owner",
-                      "Partner",
-                      "Director",
-                      "Shareholder",
-                      "Director & Shareholder",
-                      "Chairperson",
-                      "Treasurer",
-                      "Civil Servant"
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "business_id": "53348831Z",
-                  "business_name": "Alpha Events",
-                  "business_type": "Private Company",
-                  "business_position": "Director",
-                  "business_address_line_1": "78 Lucky Plaza",
-                  "business_address_line_2": "#14-39",
-                  "business_postal_code": "938884",
-                  "business_telephone": "+6583994012",
-                  "bizfile_document": "BIZFILE.pdf",
-                  "business_verified": false,
-                  "shareholders": [
-                    {
-                      "firstName": "Samson",
-                      "lastName": "Leo",
-                      "nricNumber": "S8781203Q",
-                      "dateOfBirth": "19/02/1987",
-                      "nationality": "Singaporean",
-                      "address1": "Blk 600 Elias Road",
-                      "address2": "#09-123",
-                      "postalCode": "510600",
-                      "phoneNumber": "+6583004848",
-                      "businessType": "Private Company",
-                      "businessPosition": "Director"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/merchant/share-holder/{shareholder_nric_number}": {
-      "delete": {
-        "operationId": "deleteShareHolder",
-        "tags": [
-          "Merchant"
-        ],
-        "deprecated": true,
-        "summary": "Delete Shareholder",
-        "description": "***This endpoint are going through deprecation. We suggest you use the dashboard to manage your merchant account***\r\n\r\nThis request allow you to delete an existing shareholder.",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl -X DELETE \"{base_url}/merchant/shareholder/<shareholder_nric_number>\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
-          }
-        ],
-        "parameters": [
-          {
-            "name": "shareholder_nric_number",
-            "description": "NRIC number of share holder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "business_id": "53348831Z",
-                  "business_name": "Alpha Events",
-                  "business_type": "Private Company",
-                  "business_position": "Director",
-                  "business_address_line_1": "78 Lucky Plaza",
-                  "business_address_line_2": "#14-39",
-                  "business_postal_code": "938884",
-                  "business_telephone": "+6583994012",
-                  "bizfile_document": "BIZFILE.pdf",
-                  "business_verified": false,
-                  "shareholders": [
-
-                  ]
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/charges": {
+    "/api/v3/charges": {
       "post": {
         "operationId": "createCharge",
         "x-code-samples": [
@@ -1702,20 +1181,10 @@
                     ],
                     "description": "URL Xfers will redirect customer to on cancellation of Xfers checkout."
                   },
-                  "notify_url": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set notify_url instead."
-                  },
                   "google_auth": {
                     "type": "string",
                     "deprecated": true,
                     "description": "When this is true and user_phone_no is provided, instead of phone SMS OTP, user can use Google Authenticator to do OTP. See Authorize a Charge"
-                  },
-                  "transactional_only": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Enables transactional charge when true. See more info. Only selected Xfers partners have this feature available."
                   },
                   "receipt_email": {
                     "type": "string",
@@ -1854,79 +1323,7 @@
         }
       }
     },
-    "/notify_charge_callback": {
-      "post": {
-        "operationId": "notifyChargeCallback",
-        "description": "Charges here will return a callback after it is completed. (Notification For this API is used for specific case, for most of use cases you can assume charge completed after receiving API response)",
-        "summary": "Notify Charge Callback",
-        "tags": [
-          "Charge"
-        ],
-        "security": [
-
-        ],
-        "servers": [
-          {
-            "url": "https://yourserver.com",
-            "description": "This is your endpoint you set in the dashboard or notify_url"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "description": "Xfers Generated Unique Key",
-                    "type": "string",
-                    "example": "contract_dd5a6b83"
-                  },
-                  "idempotency_id": {
-                    "description": "The key you put in the charge API",
-                    "type": "string",
-                    "example": "AZ0001"
-                  },
-                  "type": {
-                    "description": "Type of this notification",
-                    "type": "string",
-                    "example": "Sobatku/transfer"
-                  },
-                  "status": {
-                    "description": "Status of transaction",
-                    "type": "string",
-                    "enum": [
-                      "completed",
-                      "failed"
-                    ]
-                  },
-                  "amount": {
-                    "description": "amount",
-                    "type": "string",
-                    "example": "125000"
-                  },
-                  "fees": {
-                    "description": "Fee",
-                    "type": "string",
-                    "example": "0"
-                  },
-                  "created_at": {
-                    "description": "Date the Charge creation",
-                    "type": "string",
-                    "example": "2018-11-29T13:10:13+07:00"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Your server returns this code if it accepts the callback"
-          }
-        }
-      }
-    },
-    "/charges/{id}/authorize": {
+    "/api/v3/charges/{id}/authorize": {
       "post": {
         "operationId": "authorizeCharge",
         "x-code-samples": [
@@ -2029,7 +1426,7 @@
         }
       }
     },
-    "/charges/{id}/cancel": {
+    "/api/v3/charges/{id}/cancel": {
       "post": {
         "operationId": "cancelCharge",
         "x-code-samples": [
@@ -2108,7 +1505,7 @@
         }
       }
     },
-    "/charges/{id}": {
+    "/api/v3/charges/{id}": {
       "get": {
         "operationId": "getCharge",
         "x-code-samples": [
@@ -2177,7 +1574,7 @@
         }
       }
     },
-    "/charges/{id}/refunds": {
+    "/api/v3/charges/{id}/refunds": {
       "post": {
         "operationId": "refundCharge",
         "x-code-samples": [
@@ -2248,7 +1645,7 @@
         }
       }
     },
-    "/payouts": {
+    "/api/v3/payouts": {
       "post": {
         "operationId": "createPayout",
         "x-code-samples": [
@@ -2440,7 +1837,7 @@
         }
       }
     },
-    "/payouts/{id}": {
+    "/api/v3/payouts/{id}": {
       "get": {
         "operationId": "getPayout",
         "tags": [
@@ -2509,7 +1906,362 @@
         }
       }
     },
-    "/user/bank_account": {
+    "/api/v4/inter_wallet_payments": {
+      "post": {
+        "operationId": "createInterwalletPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request POST \"{base_url}/inter_wallet_payments\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\" \\\r\n--form \"from_wallet_id=8\"\\\r\n--form \"to_wallet_id=2\""
+          }
+        ],
+        "tags": [
+          "Inter Wallet Payments (Coming Soon)"
+        ],
+        "summary": "Create Inter Wallet Payment (Coming Soon)",
+        "description": "The following API will allow you to move money between wallets belonging to the same user. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "amount",
+                  "external_id",
+                  "from_wallet_id",
+                  "to_wallet_id"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Transaction Amount. Please note that you cannot exceed the total wallet storage balance."
+                  },
+                  "external_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  },
+                  "from_wallet_id": {
+                    "type": "integer",
+                    "description": "Wallet ID of the Xfers wallet to transfer from. Can only choose Settlement Wallet for now. \n\n`8`: Settlement Wallet",
+                    "enum": [
+                      8
+                    ]
+                  },
+                  "to_wallet_id": {
+                    "type": "integer",
+                    "description": "Wallet ID of the Xfers wallet to transfer to. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet",
+                    "enum": [
+                      1,
+                      2
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "amount": 3000.0,
+                    "external_id": "foo_bar_123",
+                    "from_wallet_id": 8,
+                    "to_wallet_id": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "InterWallet",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "processing",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "source": {
+                    "id": "account_00002",
+                    "object": "PersonalSettlementAccount",
+                    "balance": "150.00",
+                    "wallet_type": "Settlement Wallet",
+                    "wallet_id": 8,
+                    "currency": "sgd"
+                  },
+                  "destination": {
+                    "id": "account_1244",
+                    "object": "PersonalAccount",
+                    "balance": "3000.00",
+                    "wallet_type": "Digital Goods Wallet",
+                    "wallet_id": 2,
+                    "currency": "sgd"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/api/v4/inter_wallet_payments/{id}": {
+      "get": {
+        "operationId": "getInterwalletPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+          }
+        ],
+        "tags": [
+          "Inter Wallet Payments (Coming Soon)"
+        ],
+        "summary": "Get Inter Wallet Payment (Coming Soon)",
+        "description": "Retrive a previously created inter wallet payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "in": "query",
+                    "type": "string",
+                    "description": "Inter Wallet Payment ID."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "InterWallet",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "completed",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "source": {
+                    "id": "account_00002",
+                    "object": "PersonalSettlementAccount",
+                    "balance": "150.00",
+                    "wallet_type": "Settlement Wallet",
+                    "wallet_id": 8,
+                    "currency": "sgd"
+                  },
+                  "destination": {
+                    "id": "account_1244",
+                    "object": "PersonalAccount",
+                    "balance": "3000.00",
+                    "wallet_type": "Digital Goods Wallet",
+                    "wallet_id": 2,
+                    "currency": "sgd"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/api/v4/direct_bank_transfer_payments": {
+      "post": {
+        "operationId": "createDirectBankTransferPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request POST \"{base_url}/direct_bank_transfer_payments\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\""
+          }
+        ],
+        "tags": [
+          "Direct Bank Transfer Payments (Coming Soon)"
+        ],
+        "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
+        "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "amount",
+                  "external_id"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Transaction Amount."
+                  },
+                  "external_id": {
+                    "type": "string",
+                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "amount": 3000.0,
+                    "external_id": "foo_bar_123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "DirectBankTransferPayment",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "created",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "data": {
+                    "topup_bank": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "877316208856"
+                    },
+                    "unique_topup_identifier": "XYZ123"
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "topup_bank": {
+                      "type": "object",
+                      "description": "The bank details for your customer to top up to."
+                    },
+                    "unique_topup_identifier": {
+                      "type": "string",
+                      "description": "Your customer should type this string in the comments field when making a bank transfer. This will be used to identify that the transfer is from him."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/api/v4/direct_bank_transfer_payments/{id}": {
+      "get": {
+        "operationId": "getDirectBankTransferPayment",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request GET \"{base_url}/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+          }
+        ],
+        "tags": [
+          "Direct Bank Transfer Payments (Coming Soon)"
+        ],
+        "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
+        "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "in": "query",
+                    "type": "string",
+                    "description": "Direct Bank Transfer Payment ID."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "DirectBankTransferPayment",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "completed",
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "data": {
+                    "topup_bank": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "877316208856"
+                    },
+                    "unique_topup_identifier": "XYZ123"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/api/v3/user/bank_account": {
       "post": {
         "operationId": "addBankAccount",
         "x-code-samples": [
@@ -2556,11 +2308,6 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
-                  },
-                  "usage": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -2622,18 +2369,6 @@
             ]
           }
         ],
-        "parameters": [
-          {
-            "name": "usage",
-            "required": false,
-            "in": "query",
-            "deprecated": true,
-            "description": "type of bank account",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -2660,7 +2395,7 @@
         }
       }
     },
-    "/user/bank_account/{bank_account_id}": {
+    "/api/v3/user/bank_account/{bank_account_id}": {
       "put": {
         "operationId": "updateBankAccount",
         "x-code-samples": [
@@ -2720,11 +2455,6 @@
                   "account_holder_name": {
                     "type": "string",
                     "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
-                  },
-                  "usage": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "Is this bank account to be used as a funding source or for withdrawals?"
                   }
                 }
               },
@@ -2825,7 +2555,7 @@
         }
       }
     },
-    "/user/bank_account/{bank_account_id}/withdraw": {
+    "/api/v3/user/bank_account/{bank_account_id}/withdraw": {
       "post": {
         "operationId": "createWithdrawal",
         "x-code-samples": [
@@ -2877,24 +2607,26 @@
                     "type": "string",
                     "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia"
                   },
+                  "from_wallet_id": {
+                    "type": "integer",
+                    "x-custom-params": [
+                      "Singapore"
+                    ],
+                    "description": "Only Singapore.\n\nWallet ID of the Xfers wallet to withdraw from.\n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
+                    "enum": [
+                      1,
+                      2,
+                      8
+                    ]
+                  },
                   "express": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Only Singapore. Currently only used for Singapore.\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
+                    "description": "Only Singapore.\n\nExpress Withdrawal has fees but will arrive at recipient bank within 24 hrs.\nStandard withdrawal is free but takes 2-3 business day to arrive at recipient bank.\nDefaults to false"
                   },
                   "user_api_token": {
                     "type": "string",
                     "description": "Use this param if you want to withdraw to another user’s bank account instead of your own."
-                  },
-                  "payout_invoice_id": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "This parameter is no longer supported."
-                  },
-                  "notify_url": {
-                    "type": "string",
-                    "deprecated": true,
-                    "description": "URL to receive callback notifications on charge success/failure. This parameter is still supported but is going through deprecation. We strongly advise you to use the dashboard to set notify_url instead."
                   }
                 }
               },
@@ -2942,7 +2674,7 @@
         }
       }
     },
-    "/user/bank_account/withdrawal_requests": {
+    "/api/v3/user/bank_account/withdrawal_requests": {
       "get": {
         "operationId": "listWithdrawalRequests",
         "x-code-samples": [
@@ -2991,7 +2723,7 @@
         }
       }
     },
-    "/banks": {
+    "/api/v3/banks": {
       "get": {
         "operationId": "getBankAbbrev",
         "x-code-samples": [
@@ -4034,7 +3766,7 @@
         }
       }
     },
-    "/notify_withdrawal_callback": {
+    "/api/v3/notify_withdrawal_callback": {
       "post": {
         "operationId": "withdrawalNotificationCallback",
         "description": "This is Xfers' callback request to your server to notify withdrawl status",
@@ -4123,7 +3855,7 @@
         }
       }
     },
-    "/user/bank_account/withdrawal_requests/{withdrawal_request_id}": {
+    "/api/v3/user/bank_account/withdrawal_requests/{withdrawal_request_id}": {
       "get": {
         "operationId": "getWithdrawal",
         "x-code-samples": [
@@ -4185,10 +3917,16 @@
         }
       }
     },
-    "/authorize/hello": {
+    "/api/v3/authorize/hello": {
       "get": {
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "operationId": "authorizeHello",
         "x-code-samples": [
@@ -4223,10 +3961,16 @@
         }
       }
     },
-    "/authorize/get_mock_otp": {
+    "/api/v3/authorize/get_mock_otp": {
       "get": {
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "operationId": "getMockOtp",
         "x-code-samples": [
@@ -4273,11 +4017,17 @@
         }
       }
     },
-    "/user/bank_account/withdrawal_requests/mock_result": {
+    "/api/v3/user/bank_account/withdrawal_requests/mock_result": {
       "put": {
         "operationId": "mockWithdrawalResult",
         "tags": [
           "Testing"
+        ],
+        "servers": [
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/"
+          }
         ],
         "summary": "Mock Withdrawal Result",
         "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
@@ -4352,474 +4102,7 @@
         }
       }
     },
-    "/cards": {
-      "post": {
-        "operationId": "addCards",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\", \"credit_card_token\": \"tok_197O8gB8MXWbQJDjPMILsIr6\", \"first6\": \"424242\", \"last4\": \"4242\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Add Cards",
-        "description": "The following request will allow you to add a credit card to your connected user.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "user_api_token": {
-                    "type": "string",
-                    "description": "Buyer’s api token obtained via Connect’s get user token API.",
-                    "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-                  },
-                  "credit_card_token": {
-                    "type": "string",
-                    "description": "Tokenized credit card from Xfers Tokenize.",
-                    "example": "tok_197O8gB8MXWbQJDjPMILsIr6"
-                  },
-                  "first6": {
-                    "type": "string",
-                    "description": "First 6 digits of credit card. Returned via Xfers Tokenize.",
-                    "example": "424242"
-                  },
-                  "last4": {
-                    "type": "string",
-                    "description": "Last 4 digits of credit card. Returned via Xfers Tokenize.",
-                    "example": "last4"
-                  }
-                },
-                "required": [
-                  "user_api_token",
-                  "credit_card_token",
-                  "first6",
-                  "last4"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "card_id": "card_197O8yI7jGeCrIKDeI6SexB6",
-                  "last_4": "4242",
-                  "card_type": "Visa",
-                  "card_country": "US",
-                  "exp_yr": "2022",
-                  "exp_month": "3",
-                  "is_default": false
-                },
-                "schema": {
-                  "properties": {
-                    "card_id": {
-                      "type": "string",
-                      "description": "The id of the card added"
-                    },
-                    "last_4": {
-                      "type": "string",
-                      "description": "Last 4 digits of credit card"
-                    },
-                    "card_type": {
-                      "type": "string",
-                      "description": "Card type",
-                      "enum": [
-                        "Visa",
-                        "AmericanExpress",
-                        "MasterCard",
-                        "Discover",
-                        "JCB",
-                        "Dinners Club",
-                        "Unkown"
-                      ],
-                      "example": "424242"
-                    },
-                    "card_country": {
-                      "type": "string",
-                      "description": "Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you’ve collected"
-                    },
-                    "exp_yr": {
-                      "type": "string",
-                      "description": "Credit card expiry year"
-                    },
-                    "exp_month": {
-                      "type": "string",
-                      "description": "Credit card expiry month",
-                      "example": "424242"
-                    },
-                    "is_default": {
-                      "type": "boolean",
-                      "description": "Is this the default card to be charged"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      },
-      "get": {
-        "operationId": "listCards",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards?user_api_token=osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\" \\\r\n-H \"X-XFERS-USER-API-KEY: WuTp3zM7UEpmUkeAyGPxRHmnXAx-hXJ7jzdqmxY6S1o\""
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "List Cards",
-        "description": "The following request will allow you to list all credit cards added to a user",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "user_api_token",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": [
-                  {
-                    "card_id": "card_196hygI7jGeCrIKDAwXhGcHm",
-                    "last_4": "4242",
-                    "card_type": "Visa",
-                    "card_country": "US",
-                    "exp_yr": "2022",
-                    "exp_month": "3",
-                    "is_default": true
-                  },
-                  {
-                    "card_id": "card_196kFHI7jGeCrIKD7HxYauMv",
-                    "last_4": "4444",
-                    "card_type": "MasterCard",
-                    "card_country": "US",
-                    "exp_yr": "2022",
-                    "exp_month": "5",
-                    "is_default": false
-                  }
-                ]
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/cards/{card_id}/set_default": {
-      "post": {
-        "operationId": "setDefaultCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards/<the_card_id>/set_default\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Set Default Card",
-        "description": "The following request will allow you to set a default credit card for your connected user.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "card_id",
-            "description": "Card ID. You can retrieve this from the response in add card api.",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "user_api_token": {
-                    "type": "string",
-                    "description": "Buyer’s api token obtained via Connect’s gets user token API.",
-                    "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-                  }
-                },
-                "required": [
-                  "user_api_token"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "card_id": "card_197O8yI7jGeCrIKDeI6SexB6",
-                  "last_4": "4242",
-                  "card_type": "Visa",
-                  "card_country": "US",
-                  "exp_yr": "2022",
-                  "exp_month": "3",
-                  "is_default": true
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/cards/{card_id}": {
-      "delete": {
-        "operationId": "deleteCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl -X DELETE \"{base_url}/cards/<the_card_id>\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Delete Card",
-        "description": "The following request will allow you to delete your user’s credit card.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "card_id",
-            "description": "Card ID. You can retrieve this from the response in add card api.",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "user_api_token": {
-                    "type": "string",
-                    "description": "Buyer’s api token obtained via Connect’s gets user token API.",
-                    "example": "osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ"
-                  }
-                },
-                "required": [
-                  "user_api_token"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "card_id": "card_197O8yI7jGeCrIKDeI6SexB6",
-                  "deleted": true
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/credit_card_charges/charge_card_guest": {
-      "post": {
-        "operationId": "chargeGuestCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/cards/<the_card_id>/set_default\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"user_api_token\": \"osEdbc8uzxY5vaXA-oe-7E86sVWCYTCVPuHQyFQ-uPQ\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Charge Guest Card",
-        "description": "The following request will allow you to charge a newly obtained credit card token from Xfers Tokenize. This credit card charge is not linked to any user, so you will not be able to save the token for reuse. Note that each credit card token can only be used once - either charge it directly with this endpoint, or add the token to a user.\r\n\r\nOne use case is to be able to charge a credit card without the user having to go through OTP, since no Xfers account needs to be created (usually because it is a guest user on your platform and you want to speed up the checkout process).\r\n\r\nNo API key authentication is needed. Instead, we will only charge a card if a valid charge id is found together with a valid credit card token.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "txn_id": {
-                    "type": "string",
-                    "description": "The id of the created charge",
-                    "example": "b840cc9fc5a359c22ed2ccef3427aacd"
-                  },
-                  "credit_card_token": {
-                    "type": "string",
-                    "description": "Tokenized credit card from Xfers Tokenize",
-                    "example": "tok_197O8gB8MXWbQJDjPMILsIr6"
-                  },
-                  "first6": {
-                    "type": "string",
-                    "description": "First 6 digits of credit card",
-                    "example": "424242"
-                  },
-                  "last4": {
-                    "type": "string",
-                    "description": "Last 4 digits of credit card",
-                    "example": "4242"
-                  }
-                },
-                "required": [
-                  "txn_id",
-                  "credit_card_token",
-                  "first6",
-                  "last4"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "success": true,
-                  "return_url": "https://www.yoursite.com"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/credit_card_charges/charge_card": {
-      "post": {
-        "operationId": "chargeExistingCard",
-        "x-code-samples": [
-          {
-            "lang": "Shell_curl",
-            "source": "curl \"{base_url}/credit_card_charges/charge_card\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{ \"txn_id\": \"<charge_id>\"}'"
-          }
-        ],
-        "tags": [
-          "Cards"
-        ],
-        "summary": "Charge Exiting Card",
-        "description": "The following request will allow you to charge a user with his existing default card. Before this, the Charge must be created with `user_api_token` of your user passed in.",
-        "security": [
-          {
-            "X-XFERS-USER-API-KEY": [
-
-            ]
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "txn_id": {
-                    "type": "string",
-                    "description": "The id of the created charge",
-                    "example": "b840cc9fc5a359c22ed2ccef3427aacd"
-                  }
-                },
-                "required": [
-                  "txn_id"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "example": {
-                  "success": true,
-                  "return_url": "https://www.yoursite.com"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/4XX"
-          }
-        }
-      }
-    },
-    "/intents": {
+    "/api/v3/intents": {
       "post": {
         "operationId": "createIntent",
         "tags": [
@@ -5018,7 +4301,7 @@
         }
       }
     },
-    "/intents/{intent_id}/cancel": {
+    "/api/v3/intents/{intent_id}/cancel": {
       "post": {
         "operationId": "cancelIntent",
         "tags": [
@@ -5079,11 +4362,11 @@
         }
       }
     },
-    "/notify_intent_callback": {
+    "/api/v3/notify_intent_callback": {
       "post": {
         "operationId": "notifyIntent",
         "description": "After intent has been verified(transfer processed)/expired by Xfers, Xfers will send a callback to the `notify_url` you provided. This is a server to server HTTPS POST and you will need to acknowledge the callback by providing a HTTP 200 status.",
-        "summary": "Intent Notification Callbacl",
+        "summary": "Intent Notification Callback",
         "tags": [
           "Intents"
         ],
@@ -6439,6 +5722,12 @@
       }
     },
     "securitySchemes": {
+      "Authorization": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "You can retrieve this from the dashboard"
+      },
       "X-XFERS-APP-API-KEY": {
         "type": "apiKey",
         "name": "X-XFERS-APP-API-KEY",

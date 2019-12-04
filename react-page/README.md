@@ -90,6 +90,35 @@ For,
 ```
 is used because github pages will break if you do not specificy basename. More info [here](https://github.community/t5/GitHub-Pages/My-react-project-doesn-t-work-on-github-pages/m-p/19515/highlight/true#M1438).
 
+#### To add a route
+copy the route settings and addd to index.js
+and change the oasSpec property
+```
+<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
+  {...props}
+  oasSpec={require('./oas_spec/UnifiedSingapore.json')}
+  isUrl={true}
+  docName={"Singapore"}
+  apiVersion = {4}
+  dropDownOptions = {
+    [
+      {
+        key: "Singapore",
+        text: (
+          <span>
+            <Flag name="sg" />
+            SG
+          </span>
+        ),
+        value: "/sg/api/cutting-edge"
+      },
+    ]
+  }
+  />}
+/>
+```
+
+
 **TODO**
 - [ ] Find a way to get the `rem` to `pixel` ratio from the browser. There could be a chance that the browser ratio is not 1:16
 - [ ] Decide on what the header and to top button should happen when the side bar collaspes

@@ -208,9 +208,9 @@ const routing = (
 				}
 				/>}
 			/>
-			<Route exact path="/sg/sandbox/api/v4" render={(props) => <XfersRedoc
+			<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
 				{...props}
-				oasSpec={'https://sandbox.xfers.io/api/v4/swagger_doc'}
+				oasSpec={require('./oas_spec/UnifiedSingapore.json')}
 				isUrl={true}
 				docName={"Singapore"}
 				apiVersion = {4}
@@ -224,7 +224,7 @@ const routing = (
 									SG
 								</span>
 							),
-							value: "/sg/sandbox/api/v4"
+							value: "/sg/api/cutting-edge"
 						},
 					]
 				}

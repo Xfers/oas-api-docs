@@ -37,11 +37,11 @@ To tackle the above problems, this repo aims to create a way of documentation at
 ## How to contribute
 
 1. Changes to  Client facing [interface](https://xfers.github.io/oas-api-docs/)
-  - Refer to [/reac-pages/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page)
-  
+  - Refer to [/react-pages/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page)
+
 2. Changes to behavior and functionality of Parser
   - Refer to [/ruby-parser/README.md](https://github.com/Xfers/oas-api-docs/tree/master/ruby-parser)
-  
+
 3. Changes to content of the docuementation rendered to the client see below
 
 - Refer to [/src/oas_spec/README.md](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec) for information on details on OAS
@@ -98,7 +98,7 @@ Here are information that you cannot find anywhere on the interent. Read this to
 ### Xfers specific functions
 
 1. To have path/query/requestBody parameters only present in certain document
-- This code will only work if you add into `Parameter Object` and `Schema Object` 
+- This code will only work if you add into `Parameter Object` and `Schema Object`
 - Legend: `doc_nameX => the name of the document(as per config.yml)`
 ```
 "x-custom-params" : ["doc_name1","doc_name2"],
