@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.0",
+  "servers": [{
+      "description": "Singapore Production",
+      "url": "https://www.xfers.io/"
+    },
+    {
+      "description": "Singapore Sandbox for testing",
+      "url": "https://sandbox.xfers.io/"
+    }
+  ],
+  "info": {
+    "description": "Welcome to Xfers' API documentation. You can find information on our API endpoint specific to your country.",
+    "version": "0.1.0",
+    "title": "Xfers API",
+    "contact": {
+      "name": "Contact us through our help desk",
+      "url": "https://bit.ly/XfersSupport"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Xfers",
+    "url": "https://www.xfers.com"
+  }
+}

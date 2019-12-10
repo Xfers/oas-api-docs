@@ -210,7 +210,7 @@ const routing = (
 			/>
 			<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
 				{...props}
-				oasSpec={require('./oas_spec/UnifiedSingapore.json')}
+				oasSpec={require('./oas_spec/sg/index.js')}
 				isUrl={true}
 				docName={"Singapore"}
 				apiVersion = {4}

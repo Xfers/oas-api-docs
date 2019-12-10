@@ -1,0 +1,66 @@
+[{
+    "name": "Error Response",
+    "description": "The API categorises the various failures with Xfers' own error code. The body of the response will be JSON in the following format:\r\n```\r\nerror: \"string\"\r\nerror_code: \"string\"\r\nerror_handling: \"string\"\r\n```\r\nThe field `error` returns the error message that is specific to your request, `error_code` returns the category the error and `error_handling` returns the instruction on how to resolve the error.",
+    "x-traitTag": true
+  },
+  {
+    "name": "Try it out with Postman",
+    "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n#### Xfers Postman Collection\r\n|Singapore|Indonesia|\r\n|--|--|\r\n|[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5fa6d37311e7bfc6ef2a)| [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/453dd7b670533289a719)|",
+    "x-traitTag": true
+  },
+  {
+    "name": "Registration",
+    "description": "Register and verify new users."
+  },
+  {
+    "name": "User Account",
+    "description": "Manage User and Accounts"
+  },
+  {
+    "name": "Charge",
+    "description": "API for Charges"
+  },
+  {
+    "name": "Credit Card (Singapore)",
+    "description": "Web SDK for Singapore Credit card\r\n\r\nhttps://github.com/Xfers/xfers-sdk/wiki/%5BWeb-Integration%5D-Xfers-Components#5-startcreditcardflow",
+    "x-traitTag": true
+  },
+  {
+    "name": "Payout",
+    "description": "API for Payout"
+  },
+  {
+    "name": "Inter Wallet Payments (Coming Soon)",
+    "description": "Transferring between wallets belonging to the same user. Currently used as a way to transfer money out of your Settlement Wallet."
+  },
+  {
+    "name": "Direct Bank Transfer Payments (Coming Soon)",
+    "description": "API for Direct Bank Transfer Payments"
+  },
+  {
+    "name": "Bank Account",
+    "description": "API to manage Bank Account"
+  },
+  {
+    "name": "Withdraw",
+    "description": "API for Withdrawal"
+  },
+  {
+    "name": "Intents",
+    "description": "**For user case 1:**\r\n\r\nWhen a user is performing a top-up via  [GET /transfer_info](http://docs.xfers.io/#get-transfer-info), they might forget to enter their contact number which is needed for our system to identify them.\r\n\r\nThe Intents API solves this issue by requiring the user to transfer a unique amount to Xfers which will be used to identify them. The difference between the  `unique_amount`  and the actual  `amount`  will be very small, and Xfers provides the difference for free to the user.\r\n\r\nNote that this only acts as a backup, and the user should enter his contact number in the comments section when doing a bank transfer whenever possible.\r\n\r\nExample: Jane wishes to transfer 5000 Indonesian Rupiah via  `/intents`.\r\n\r\n1.  She makes a HTTP GET request to  `/user/transfer_info`  to get the correct Xfers bank to transfer to (we have many banks!). The response tells her to transfer to Bank Central Asia (BCA).\r\n2.  She makes a HTTP POST request to create an intent. The response tells her to make a bank transfer of 4999 to Xfers.\r\n3.  Jane makes a transfer of 4999 to Xfers BCA. Within a few minutes, Xfers detects the transfer and tops up Jane’s Xfers account with 5000. Xfers absorbs the difference for free.\r\n4.  If  `notify_url`  is given, Xfers will send a callback to this url.\r\n\r\nNote the above scenario is only valid when disable_va is set to True\r\n\r\n**For user case 2:**\r\n\r\nIntent can also be use a means to get callback notifications from Xfers when a user successfully fund their virtual account on Xfers.\r\n\r\nExample: Jane wishes to transfer 5000 Indonesian Rupiah via  `/intents`  to her virtual Xfers account and get a callback notification when it successful\r\n\r\n1.  She makes a HTTP POST request to create an intent with disable_va set to false(default) and provide a  `notify_url`. The response will provide a list of virtual account nos she can fund her account with from a list of bank that Xfers support.\r\n2.  Jane makes a transfer of 500 to the Xfers BCA Virtual account that the intent api provide. Within a few minutes, Xfers detects the transfer and tops up Jane’s Xfers account with 5000.\r\n3.  Since  `notify_url`  is provided, Xfers will send a callback to this url."
+  },
+  {
+    "name": "Testing",
+    "description": "API for testing purposes"
+  },
+  {
+    "name": "Callback Configuration",
+    "description": "For certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\nSingapore: `https://www.xfers.io/merchant_settings/callback_settings`\n\nIndonesia: `https://id.xfers.com/merchant_settings/callback_settings`",
+    "x-traitTag": true
+  },
+  {
+    "name": "Pagination",
+    "description": "To do pagination:\r\n\r\n1.  Decide on number of entries per page (e.g. 100 for this example). Set the limit as this\r\n2.  First page: Offset 0. The latest 100 entries, 1-100, will be returned.\r\n3.  Second page: Offset 100. The next 100 entries, 101-200, will be returned.\r\n4.  Third page: Offset 200. The next 100 entries, 201-300, will be returned.\r\n\r\nHence your offset should always be a multiple of limits.",
+    "x-traitTag": true
+  }
+]

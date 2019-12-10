@@ -1,0 +1,441 @@
+{
+  "customer_data": {
+    "type": "object",
+    "properties": {
+      "din": {
+        "type": "string"
+      },
+      "custtype": {
+        "type": "integer"
+      },
+      "fullname": {
+        "type": "string"
+      },
+      "custname": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "custaddress": {
+        "type": "string"
+      },
+      "custrt": {
+        "type": "string"
+      },
+      "custrw": {
+        "type": "string"
+      },
+      "custkel": {
+        "type": "string"
+      },
+      "custkec": {
+        "type": "string"
+      },
+      "custcity": {
+        "type": "string"
+      },
+      "custprov": {
+        "type": "string"
+      },
+      "custzip": {
+        "type": "string"
+      },
+      "custdati": {
+        "type": "integer"
+      },
+      "idtype": {
+        "type": "integer"
+      },
+      "idnumber": {
+        "type": "string"
+      },
+      "idexpired": {
+        "type": "string"
+      },
+      "gender": {
+        "type": "integer"
+      },
+      "maritalstatus": {
+        "type": "integer"
+      },
+      "birthdate": {
+        "type": "string"
+      },
+      "birthplace": {
+        "type": "string"
+      },
+      "birthdati": {
+        "type": "string"
+      },
+      "worksince": {
+        "type": "string"
+      },
+      "employeests": {
+        "type": "string"
+      },
+      "contractend": {
+        "type": "string"
+      },
+      "lasteducation": {
+        "type": "integer"
+      },
+      "economycode": {
+        "type": "integer"
+      },
+      "debiturcode": {
+        "type": "integer"
+      },
+      "mmn": {
+        "type": "string"
+      },
+      "npwp": {
+        "type": "string"
+      },
+      "homestatus": {
+        "type": "integer"
+      },
+      "livedsince": {
+        "type": "string"
+      },
+      "phonearea": {
+        "type": "string"
+      },
+      "phoneno": {
+        "type": "integer"
+      },
+      "mobileno": {
+        "type": "integer"
+      },
+      "dependent": {
+        "type": "integer"
+      },
+      "grossincome": {
+        "type": "integer"
+      },
+      "expenses": {
+        "type": "integer"
+      },
+      "sameidhomeaddr": {
+        "type": "integer"
+      },
+      "custaddresshome": {
+        "type": "string"
+      },
+      "custrthome": {
+        "type": "string"
+      },
+      "custrwhome": {
+        "type": "string"
+      },
+      "custkelhome": {
+        "type": "string"
+      },
+      "custkechome": {
+        "type": "string"
+      },
+      "custcityhome": {
+        "type": "string"
+      },
+      "custprovhome": {
+        "type": "string"
+      },
+      "custziphome": {
+        "type": "string"
+      },
+      "custdatihome": {
+        "type": "integer"
+      },
+      "spousename": {
+        "type": "string"
+      },
+      "spousebirthdate": {
+        "type": "string"
+      },
+      "spousebirthplace": {
+        "type": "string"
+      },
+      "spouseidtype": {
+        "type": "string"
+      },
+      "spouseidnumber": {
+        "type": "string"
+      },
+      "spousephoneno": {
+        "type": "string"
+      },
+      "spousemobileno": {
+        "type": "string"
+      },
+      "spouseoffice": {
+        "type": "string"
+      },
+      "spouseoffinephone": {
+        "type": "string"
+      },
+      "relativestype": {
+        "type": "string"
+      },
+      "relativesname": {
+        "type": "string"
+      },
+      "custaddressrel": {
+        "type": "string"
+      },
+      "custrtrel": {
+        "type": "string"
+      },
+      "custrwrel": {
+        "type": "string"
+      },
+      "custkelrel": {
+        "type": "string"
+      },
+      "custkecrel": {
+        "type": "string"
+      },
+      "custcityrel": {
+        "type": "string"
+      },
+      "custprovrel": {
+        "type": "string"
+      },
+      "custziprel": {
+        "type": "string"
+      },
+      "phonenorel": {
+        "type": "string"
+      },
+      "companyname": {
+        "type": "string"
+      },
+      "companyaddr": {
+        "type": "string"
+      },
+      "companycity": {
+        "type": "string"
+      },
+      "companyzip": {
+        "type": "string"
+      },
+      "companyphone": {
+        "type": "string"
+      },
+      "deedno": {
+        "type": "string"
+      },
+      "deeddate": {
+        "type": "string"
+      },
+      "corporatetype": {
+        "type": "string"
+      },
+      "jobid": {
+        "type": "integer"
+      },
+      "jobtitleid": {
+        "type": "integer"
+      },
+      "countryid": {
+        "type": "string"
+      },
+      "branchcode": {
+        "type": "string"
+      }
+    }
+  },
+  "loan_data": {
+    "type": "object",
+    "properties": {
+      "refno": {
+        "type": "string"
+      },
+      "objectvalue": {
+        "type": "string"
+      },
+      "principaltotal": {
+        "type": "string"
+      },
+      "tenor": {
+        "type": "integer"
+      },
+      "loantype": {
+        "type": "integer"
+      },
+      "effectiverate": {
+        "type": "string"
+      },
+      "installment": {
+        "type": "string"
+      },
+      "firstinstdate": {
+        "type": "string"
+      },
+      "admfee": {
+        "type": "string"
+      },
+      "inscode": {
+        "type": "string"
+      },
+      "inspremi": {
+        "type": "string"
+      },
+      "insonloan": {
+        "type": "string"
+      },
+      "installmenttype": {
+        "type": "integer"
+      },
+      "branchcode": {
+        "type": "integer"
+      },
+      "typeofuseid": {
+        "type": "integer"
+      },
+      "orientationofuseid": {
+        "type": "integer"
+      },
+      "debiturcatid": {
+        "type": "integer"
+      },
+      "portfoliocatid": {
+        "type": "string"
+      },
+      "credittypeid": {
+        "type": "integer"
+      },
+      "creditattributeid": {
+        "type": "integer"
+      },
+      "creditcategoryid": {
+        "type": "integer"
+      },
+      "fincat": {
+        "type": "integer"
+      },
+      "installfeeaccount": {
+        "type": "string"
+      }
+    }
+  },
+  "collateral_data": {
+    "type": "object",
+    "properties": {
+      "productcode": {
+        "type": "string"
+      },
+      "merkcode": {
+        "type": "string"
+      },
+      "modelcode": {
+        "type": "string"
+      },
+      "collateralno": {
+        "type": "string"
+      },
+      "collateraldate": {
+        "type": "string"
+      },
+      "collateraladdress": {
+        "type": "string"
+      },
+      "collateralcityid": {
+        "type": "integer"
+      },
+      "collateralname": {
+        "type": "string"
+      },
+      "collateralownerid": {
+        "type": "string"
+      },
+      "collateraldesctype": {
+        "type": "string"
+      },
+      "engineno": {
+        "type": "string"
+      },
+      "chassisno": {
+        "type": "string"
+      },
+      "collateralyear": {
+        "type": "integer"
+      },
+      "buildyear": {
+        "type": "integer"
+      },
+      "condition": {
+        "type": "integer"
+      },
+      "color": {
+        "type": "string"
+      },
+      "collateralkind": {
+        "type": "string"
+      },
+      "collateralpurpose": {
+        "type": "string"
+      },
+      "policeno": {
+        "type": "string"
+      },
+      "stnkexpired": {
+        "type": "string"
+      },
+      "surveydate": {
+        "type": "string"
+      },
+      "bindtypecode": {
+        "type": "string"
+      },
+      "collateraltypecode": {
+        "type": "integer"
+      },
+      "sbrankcode": {
+        "type": "string"
+      },
+      "collateralvalue": {
+        "type": "integer"
+      },
+      "dealercode": {
+        "type": "integer"
+      }
+    }
+  },
+  "installment_data": {
+    "type": "object",
+    "properties": {
+      "period": {
+        "type": "string"
+      },
+      "duedate": {
+        "type": "string"
+      },
+      "principal": {
+        "type": "string"
+      },
+      "interest": {
+        "type": "string"
+      },
+      "installfee": {
+        "type": "string"
+      }
+    }
+  },
+  "error_response": {
+    "type": "object",
+    "properties": {
+      "error": {
+        "description": "Error Message",
+        "type": "string"
+      },
+      "error_code": {
+        "description": "Xfers' error code XFEXXX",
+        "type": "string"
+      },
+      "error_handling": {
+        "description": "Instruction on how to handle error. Refer to Error Codes tag for more information.",
+        "type": "string"
+      }
+    }
+  }
+}
