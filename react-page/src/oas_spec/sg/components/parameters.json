@@ -1,0 +1,29 @@
+{
+  "X-XFERS-APP-API-KEY": {
+    "name": "X-XFERS-APP-API-KEY",
+    "in": "header",
+    "description": "Retrive this API key from the dashboard",
+    "required": false,
+    "schema": {
+      "type": "string"
+    }
+  },
+  "X-XFERS-USER-API-KEY": {
+    "name": "X-XFERS-USER-API-KEY",
+    "in": "header",
+    "description": "Retrive this API key from the dashboard",
+    "required": false,
+    "schema": {
+      "type": "string"
+    }
+  },
+  "user-api-token": {
+    "name": "X-XFERS-USER-API-KEY",
+    "in": "header",
+    "description": "This is your user's api token. You can retrieve this from the Get Token API.",
+    "required": false,
+    "schema": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,628 @@
+{
+  "create_loan": {
+    "value": {
+      "customer_data": {
+        "din": "string content",
+        "custtype": 1,
+        "fullname": "name01",
+        "custname": "name01",
+        "title": "sh",
+        "custaddress": "string content",
+        "custrt": "string content",
+        "custrw": "string content",
+        "custkel": "string content",
+        "custkec": "string content",
+        "custcity": "string content",
+        "custprov": "string content",
+        "custzip": "string content",
+        "custdati": "0102",
+        "idtype": 1,
+        "idnumber": "idnumber",
+        "idexpired": "2019-01-01",
+        "gender": 1,
+        "maritalstatus": 2,
+        "birthdate": "1980-01-04",
+        "birthplace": "bekasi",
+        "birthdati": "0102",
+        "worksince": "2014-01-01",
+        "employeests": 1,
+        "contractend": "2014-01-01",
+        "lasteducation": "0100",
+        "economycode": "011110",
+        "debiturcode": "907",
+        "mmn": "ibu kandung",
+        "npwp": "no npwp",
+        "homestatus": 1,
+        "livedsince": "2000-01-01",
+        "phonearea": "area",
+        "phoneno": "12323535",
+        "mobileno": "0878978979",
+        "dependent": 0,
+        "grossincome": 5000000,
+        "expenses": 1000000,
+        "sameidhomeaddr": 1,
+        "custaddresshome": "string content",
+        "custrthome": "string content",
+        "custrwhome": "string content",
+        "custkelhome": "string content",
+        "custkechome": "string content",
+        "custcityhome": "string content",
+        "custprovhome": "string content",
+        "custziphome": "string content",
+        "custdatihome": "0102",
+        "spousename": "string content",
+        "spousebirthdate": "1980-01-01",
+        "spousebirthplace": "string content",
+        "spouseidtype": 1,
+        "spouseidnumber": "string content",
+        "spousephoneno": "string content",
+        "spousemobileno": "string content",
+        "spouseoffice": "string content",
+        "spouseoffinephone": "string content",
+        "relativestype": 1,
+        "relativesname": "string content",
+        "custaddressrel": "string content",
+        "custrtrel": "string content",
+        "custrwrel": "string content",
+        "custkelrel": "string content",
+        "custkecrel": "string content",
+        "custcityrel": "string content",
+        "custprovrel": "string content",
+        "custziprel": "string content",
+        "phonenorel": "string content",
+        "companyname": "string content",
+        "companyaddr": "string content",
+        "companycity": "string content",
+        "companyzip": "string content",
+        "companyphone": "string content",
+        "deedno": "string content",
+        "deeddate": "2019-01-01",
+        "corporatetype": "string content",
+        "jobid": "002",
+        "jobtitleid": "50",
+        "countryid": "id",
+        "branchcode": "000"
+      },
+      "loan_data": {
+        "refno": "ref11",
+        "objectvalue": "10000000.0",
+        "principaltotal": "1000000.0",
+        "tenor": "1",
+        "loantype": 0,
+        "effectiverate": "12.0",
+        "installment": "1000000.0",
+        "firstinstdate": "2018-11-01",
+        "admfee": "0.0",
+        "inscode": "001",
+        "inspremi": "0.0",
+        "insonloan": "0.0",
+        "installmenttype": 1,
+        "branchcode": "000",
+        "typeofuseid": "89",
+        "orientationofuseid": "9",
+        "debiturcatid": "10",
+        "portfoliocatid": "string content",
+        "credittypeid": "20",
+        "creditattributeid": "20",
+        "creditcategoryid": "10",
+        "fincat": "000",
+        "installfeeaccount": "50000.0"
+      },
+      "collateral_data": {
+        "productcode": "C304",
+        "merkcode": "mrk",
+        "modelcode": "mdl",
+        "collateralno": "collno939854",
+        "collateraldate": "2018-01-01",
+        "collateraladdress": "string content",
+        "collateralcityid": "0102",
+        "collateralname": "collname",
+        "collateralownerid": "collid935790",
+        "collateraldesctype": "string content",
+        "engineno": "string content",
+        "chassisno": "string content",
+        "collateralyear": 2018,
+        "buildyear": 2018,
+        "condition": 1,
+        "color": "string content",
+        "collateralkind": "KTA01",
+        "collateralpurpose": "string content",
+        "policeno": "string",
+        "stnkexpired": "2030-01-01",
+        "surveydate": "2018-01-01",
+        "bindtypecode": "99",
+        "collateraltypecode": "250",
+        "sbrankcode": "string content",
+        "collateralvalue": 100000000,
+        "dealercode": "TK"
+      },
+      "installment_data": {
+        "period": "1.0",
+        "duedate": "2018-12-12",
+        "principal": "1000000.0",
+        "interest": "10000000.0",
+        "installfee": "50000.0"
+      }
+    }
+  },
+  "XFE1": {
+    "summary": "XFE1 - Server busy",
+    "value": {
+      "error": "string",
+      "error_code": "XFE1",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE2": {
+    "summary": "XFE2 - Access denied",
+    "value": {
+      "error": "string",
+      "error_code": "XFE2",
+      "error_handling": "Make sure you call the correct API or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE3": {
+    "summary": "XFE3 - Internal Error",
+    "value": {
+      "error": "string",
+      "error_code": "XFE3",
+      "error_handling": "Unexpected error. Try again later or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE4": {
+    "summary": "XFE4 - Authentication field empty",
+    "value": {
+      "error": "string",
+      "error_code": "XFE4",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE5": {
+    "summary": "XFE5 - Api key is invalid",
+    "value": {
+      "error": "string",
+      "error_code": "XFE5",
+      "error_handling": "Make sure you entered the correct API key or contact customer support at https://bit.ly/XfersSupport"
+    }
+  },
+  "XFE6": {
+    "summary": "XFE6 - Invalid signature",
+    "value": {
+      "error": "string",
+      "error_code": "XFE6",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE7": {
+    "summary": "XFE7 - Database error",
+    "value": {
+      "error": "string",
+      "error_code": "XFE7",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE8": {
+    "summary": "XFE8 - Cannot retrieve media",
+    "value": {
+      "error": "string",
+      "error_code": "XFE8",
+      "error_handling": "Cannot retrieve media. Please enter a new URL or try again later."
+    }
+  },
+  "XFE9": {
+    "summary": "XFE9 - ....",
+    "value": {
+      "error": "string",
+      "error_code": "XFE9",
+      "error_handling": "..."
+    }
+  },
+  "XFE10": {
+    "summary": "XFE10 - Invalid environment",
+    "value": {
+      "error": "string",
+      "error_code": "XFE10",
+      "error_handling": "Request not supported for this environment."
+    }
+  },
+  "XFE11": {
+    "summary": "XFE11 - Timeout",
+    "value": {
+      "error": "string",
+      "error_code": "XFE11",
+      "error_handling": "Please try again later."
+    }
+  },
+  "XFE12": {
+    "summary": "XFE12 - Invalid parameter",
+    "value": {
+      "error": "string",
+      "error_code": "XFE12",
+      "error_handling": "Make sure you entered the correct parameters."
+    }
+  },
+  "XFE13": {
+    "summary": "XFE13 - Record not found",
+    "value": {
+      "error": "string",
+      "error_code": "XFE13",
+      "error_handling": "Please check that you provided the correct API Key and the correct parameters."
+    }
+  },
+  "XFE14": {
+    "summary": "XFE14 - API only allowed for fully verified user",
+    "value": {
+      "error": "string",
+      "error_code": "XFE14",
+      "error_handling": "Please submit KYC data to get your account fully verified."
+    }
+  },
+  "XFE15": {
+    "summary": "XFE15 - Required parameter empty",
+    "value": {
+      "error": "string",
+      "error_code": "XFE15",
+      "error_handling": "Make sure you entered the correct required parameter."
+    }
+  },
+  "XFE16": {
+    "summary": "XFE16 - Invalid request",
+    "value": {
+      "error": "string",
+      "error_code": "XFE16",
+      "error_handling": "API request not supported. Make sure you entered the correct API key or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE101": {
+    "summary": "XFE101 - Not local number",
+    "value": {
+      "error": "string",
+      "error_code": "XFE101",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE102": {
+    "summary": "XFE102 - Entered value is less than minimum",
+    "value": {
+      "error": "string",
+      "error_code": "XFE102",
+      "error_handling": "Make sure you entered the correct number."
+    }
+  },
+  "XFE103": {
+    "summary": "XFE103 - ...",
+    "value": {
+      "error": "string",
+      "error_code": "XFE103",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE104": {
+    "summary": "XFE104 - Media provided too large",
+    "value": {
+      "error": "string",
+      "error_code": "XFE104",
+      "error_handling": "Media too big. Follow the guidelines in the response."
+    }
+  },
+  "XFE105": {
+    "summary": "XFE105 - Captcha error",
+    "value": {
+      "error": "string",
+      "error_code": "XFE1",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE106": {
+    "summary": "XFE106 - No auth_code provided",
+    "value": {
+      "error": "string",
+      "error_code": "XFE106",
+      "error_handling": "Enter either phone OTP or Google Auth OTP"
+    }
+  },
+  "XFE107": {
+    "summary": "XFE107 - Only enter one auth_code",
+    "value": {
+      "error": "string",
+      "error_code": "XFE107",
+      "error_handling": "Do not enter both OTP or Google Auth OTP. Only need to enter one."
+    }
+  },
+  "XFE108": {
+    "summary": "XFE108 - More user information required",
+    "value": {
+      "error": "string",
+      "error_code": "XFE108",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE109": {
+    "summary": "XFE109 - Invalid credentials",
+    "value": {
+      "error": "string",
+      "error_code": "XFE109",
+      "error_handling": "Make sure you entered the correct credentials."
+    }
+  },
+  "XFE110": {
+    "summary": "XFE110 - Cannot sign up twice",
+    "value": {
+      "error": "string",
+      "error_code": "XFE110",
+      "error_handling": "Please sign in instead"
+    }
+  },
+  "XFE111": {
+    "summary": "XFE1 - Duplicate credentials",
+    "value": {
+      "error": "string",
+      "error_code": "XFE111",
+      "error_handling": "Particulars already exist. Please make sure you entered the correct parameters."
+    }
+  },
+  "XFE112": {
+    "summary": "XFE112 - Repeat request",
+    "value": {
+      "error": "string",
+      "error_code": "XFE112",
+      "error_handling": "API request has already been made. Please follow the instructions in the response or call aother API."
+    }
+  },
+  "XFE201": {
+    "summary": "XFE201 - Not yet a merchant",
+    "value": {
+      "error": "string",
+      "error_code": "XFE201",
+      "error_handling": "Please verify your merchant or business account."
+    }
+  },
+  "XFE301": {
+    "summary": "XFE301 - Account locked",
+    "value": {
+      "error": "string",
+      "error_code": "XFE301",
+      "error_handling": "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE302": {
+    "summary": "XFE302 - Account deleted",
+    "value": {
+      "error": "string",
+      "error_code": "XFE302",
+      "error_handling": "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE303": {
+    "summary": "XFE303 - Account terminated",
+    "value": {
+      "error": "string",
+      "error_code": "XFE303",
+      "error_handling": "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE304": {
+    "summary": "XFE304- Account closed",
+    "value": {
+      "error": "string",
+      "error_code": "XFE304",
+      "error_handling": "Request not available. Please contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE305": {
+    "summary": "XFE305 - ....",
+    "value": {
+      "error": "string",
+      "error_code": "XFE305",
+      "error_handling": "..."
+    }
+  },
+  "XFE306": {
+    "summary": "XFE306 - ...",
+    "value": {
+      "error": "string",
+      "error_code": "XFE306",
+      "error_handling": "..."
+    }
+  },
+  "XFE307": {
+    "summary": "XFE307 - ...",
+    "value": {
+      "error": "string",
+      "error_code": "XFE307",
+      "error_handling": "..."
+    }
+  },
+  "XFE308": {
+    "summary": "XFE308 - ...",
+    "value": {
+      "error": "string",
+      "error_code": "XFE308",
+      "error_handling": "..."
+    }
+  },
+  "XFE309": {
+    "summary": "XFE309 - Cannot use same account",
+    "value": {
+      "error": "string",
+      "error_code": "XFE309",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE310": {
+    "summary": "XFE310 - Cannot use same account",
+    "value": {
+      "error": "string",
+      "error_code": "XFE310",
+      "error_handling": "Follow instructions in the response."
+    }
+  },
+  "XFE311": {
+    "summary": "XFE311 - Cannot be different wallet type",
+    "value": {
+      "error": "string",
+      "error_code": "XFE311",
+      "error_handling": "Follow instruction in response or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE312": {
+    "summary": "XFE312 - Conditions not met to close account",
+    "value": {
+      "error": "string",
+      "error_code": "XFE312",
+      "error_handling": "Invalid request to close account. Follow instruction in the response."
+    }
+  },
+  "XFE401": {
+    "summary": "XFE401 - Cannot refund charge",
+    "value": {
+      "error": "string",
+      "error_code": "XFE401",
+      "error_handling": "Invalid request. Please call another API or Contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE402": {
+    "summary": "XFE402 - Cannot use placeholder account",
+    "value": {
+      "error": "string",
+      "error_code": "XFE402",
+      "error_handling": "Follow instructions in response."
+    }
+  },
+  "XFE403": {
+    "summary": "XFE403 - ...",
+    "value": {
+      "error": "string",
+      "error_code": "XFE403",
+      "error_handling": "..."
+    }
+  },
+  "XFE404": {
+    "summary": "XFE404 - Forex not supported",
+    "value": {
+      "error": "string",
+      "error_code": "XFE404",
+      "error_handling": "Make sure you call the correct API or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE405": {
+    "summary": "XFE405 - Charge cannot be refunded",
+    "value": {
+      "error": "string",
+      "error_code": "XFE405",
+      "error_handling": "Only completed contract can be refunded."
+    }
+  },
+  "XFE406": {
+    "summary": "XFE406 - Cannot refund prepaid transaction",
+    "value": {
+      "error": "string",
+      "error_code": "XFE406",
+      "error_handling": "Please choose another transaction to refund."
+    }
+  },
+  "XFE407": {
+    "summary": "XFE407 - Conditions to charge card not met",
+    "value": {
+      "error": "string",
+      "error_code": "XFE407",
+      "error_handling": "Invalid request for this transaction. Make sure you entered the correct txn_id."
+    }
+  },
+  "XFE408": {
+    "summary": "XFE408 - Invalid charge request",
+    "value": {
+      "error": "string",
+      "error_code": "XFE408",
+      "error_handling": "Invalid request. Please follow instructions in response or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE409": {
+    "summary": "XFE409 - Order id exist",
+    "value": {
+      "error": "string",
+      "error_code": "XFE409",
+      "error_handling": "Please enter another order_id."
+    }
+  },
+  "XFE410": {
+    "summary": "XFE410 - Invalid application fee",
+    "value": {
+      "error": "string",
+      "error_code": "XFE410",
+      "error_handling": "Invalid request. Please make changes to the parameters as stated in the response."
+    }
+  },
+  "XFE501": {
+    "summary": "XFE501 - Expected Bank API error",
+    "value": {
+      "error": "string",
+      "error_code": "XFE501",
+      "error_handling": "Try again later or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE502": {
+    "summary": "XFE502 - Unexpected BANK API error",
+    "value": {
+      "error": "string",
+      "error_code": "XFE502",
+      "error_handling": "Try again later or contact customer support at https://bit.ly/XfersSupport."
+    }
+  },
+  "XFE503": {
+    "summary": "XFE503 - Failed name check",
+    "value": {
+      "error": "string",
+      "error_code": "XFE503",
+      "error_handling": "Bank account name and name provided have to be similar."
+    }
+  },
+  "XFE504": {
+    "summary": "XFE504 - Maximum number of bank account",
+    "value": {
+      "error": "string",
+      "error_code": "XFE504",
+      "error_handling": "Delete existing bank accounts."
+    }
+  },
+  "XFE505": {
+    "summary": "XFE505 - Bank abbrev provided invalid",
+    "value": {
+      "error": "string",
+      "error_code": "XFE505",
+      "error_handling": "Use GET {{base-api-url}}api/v3/banks to get the correct bank abbrev."
+    }
+  },
+  "XFE506": {
+    "summary": "XFE506 - Bank account already taken",
+    "value": {
+      "error": "string",
+      "error_code": "XFE506",
+      "error_handling": "Please use another bank account."
+    }
+  },
+  "XFE601": {
+    "summary": "XFE601 - Conditions to withdraw not met. Can be solved by changing amount",
+    "value": {
+      "error": "string",
+      "error_code": "XFE601",
+      "error_handling": "Your withdrawal does not meet the conditions required. Please follow the instructions in the response."
+    }
+  },
+  "XFE602": {
+    "summary": "XFE602 - Server busy",
+    "value": {
+      "error": "string",
+      "error_code": "XFE602",
+      "error_handling": "Your withdrawal exceeds the limit for the time period. Please change the amount or verify your account."
+    }
+  },
+  "XFE603": {
+    "summary": "XFE603 - Not allowed to carry out request",
+    "value": {
+      "error": "string",
+      "error_code": "XFE603",
+      "error_handling": "Invalid request. Please call another API or contact customer support at https://bit.ly/XfersSupport."
+    }
+  }
+}
