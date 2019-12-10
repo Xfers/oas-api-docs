@@ -21,5 +21,35 @@
   "externalDocs": {
     "description": "Find out more about Xfers",
     "url": "https://www.xfers.com"
-  }
+  },
+  "x-tagGroups": [{
+      "name": "User Management",
+      "tags": [
+        "Registration",
+        "Bank Account"
+      ]
+    },
+    {
+      "name": "Payments",
+      "tags": [
+        "Charge",
+        "Payout",
+        "Credit Card (Singapore)",
+        "Inter Wallet Payments (Coming Soon)",
+        "Direct Bank Transfer Payments (Coming Soon)",
+        "Withdraw",
+        "Intents"
+      ]
+    },
+    {
+      "name": "Appendix",
+      "tags": [
+        "Error Response",
+        "Pagination",
+        "Callback Configuration",
+        "Try it out with Postman",
+        "Testing"
+      ]
+    }
+  ]
 }
