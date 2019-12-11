@@ -1,10 +1,4 @@
 {
-  "Authorization": {
-    "type": "apiKey",
-    "name": "Authorization",
-    "in": "header",
-    "description": "You can retrieve this from the dashboard"
-  },
   "X-XFERS-APP-API-KEY": {
     "type": "apiKey",
     "name": "X-XFERS-APP-API-KEY",
@@ -20,7 +14,15 @@
   "user-api-token": {
     "type": "apiKey",
     "name": "X-XFERS-USER-API-KEY",
-    "in": "header",
+    "in": "query",
     "description": "Your user API token which you can retrieve from the get token API response."
+  },
+  "v4XfersAuth": {
+    "name": "v4XfersAuth",
+    "type": "http",
+    "scheme": "bearer",
+    "in": "header",
+    "bearerFormat": "XfersApiToken",
+    "description": "You can retrieve this from the dashboard. format: `Authorization: Bearer <xfers_api_token>`"
   }
 }

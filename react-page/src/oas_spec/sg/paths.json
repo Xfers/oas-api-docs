@@ -158,7 +158,7 @@
       "summary": "Submit KYC Data",
       "description": "To provide KYC data in order to change user from unverified status into fully verified status.  \n\nThe image/document provided us must be hosted in a URL then pass the URL to Xfers via this API.  \nMake sure data type for your image is jpeg / png.  \nMaximum size of the image/ document is 10 MB.  \n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.  In Indonesia, fully verified user will be backed by a savings account.\r\nThus, there are required parameters which are mother_maiden_name, id_front_url, selfie_2id_url.\r\nAdditional data will speed up the KYC process.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -422,7 +422,7 @@
       "summary": "Get User Info",
       "description": "The main usage of this API is to get the current user. One user can have multiple accounts, and the balance returned is the account tied to the current API token. \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -514,7 +514,7 @@
       "operationId": "getAccountInfo",
       "x-code-samples": [{
         "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n  --data \"\""
+        "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: Bearer {{user-api-token}}\" \\\r\n  --data \"\""
       }],
       "tags": [
         "User Account"
@@ -522,7 +522,7 @@
       "summary": "Get Account Info (Coming Soon)",
       "description": "This API displays the account information, including the storage limits.\n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
       "security": [{
-        "user-api-token": [
+        "v4XfersAuth": [
 
         ]
       }],
@@ -652,7 +652,7 @@
       "summary": "Mock KYC Verification",
       "description": "This API verifies the user with corresponding API KEY. This API can only be called from sandbox.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -686,7 +686,7 @@
       "summary": "Get Transaction History",
       "description": "This API displays a user’s transaction history. \n\n\nThis API displays a user’s transaction history.\n\nI.e. user’s transactions with other merchants will not be displayed.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -886,7 +886,7 @@
       "summary": "Get Transfer Info / Get Virtual Account Number",
       "description": "API to get bank account number to be shown to user.  \r\nPlease consult with us to get topup instruction template text to be shown.\r\n\r\nThe common usage of this API is to parse the transfer_info_array given by us and parse it and use the VA numbers of the bank you want\r\n\r\n#### For Virtual Account solution:  \r\nThis API is to get the Virtual Account Number to be displayed to the user\r\n\r\n#### For non Virtual Account solution:  \r\nThis API will show the bank account number to do top up.  \r\nPlease consult with us as this solution will require user to use some other identifier to detect the deposit.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -1918,11 +1918,9 @@
         "Direct Bank Transfer Payments (Coming Soon)"
       ],
       "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
-      "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+      "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction.",
       "security": [{
-        "Authorization": [
-
-        ]
+        "v4XfersAuth": []
       }],
       "requestBody": {
         "required": true,
@@ -2010,9 +2008,9 @@
         "Direct Bank Transfer Payments (Coming Soon)"
       ],
       "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
-      "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+      "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token.",
       "security": [{
-        "Authorization": [
+        "v4XfersAuth": [
 
         ]
       }],
@@ -2078,7 +2076,7 @@
       "summary": "Add Bank Account",
       "description": "This API will be used to attach a new bank account to a user.\nYou will be able to withdraw user's balance to this bank account.\nIn Indonesia Production, This API will return the detected_name as provided from the bank.\nThe account_holder_name you provided and detected_name needs to be similar (doesn't need to be 100% match).",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -2159,7 +2157,7 @@
       "summary": "List Bank Account",
       "description": "This will list all bank accounts belonging to the user.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -2200,7 +2198,7 @@
       "summary": "Update Bank Account",
       "description": "This request allows you to update an existing bank account record.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -2292,7 +2290,7 @@
       "summary": "Delete Bank Account",
       "description": "This request allows you to delete an existing bank account record.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -2344,7 +2342,7 @@
       "summary": "Create Withdrawal",
       "description": "Withdrawal Time varies upon country. \r\nFor Indonesia, withdrawal time is instantenous.\r\nFor Singapore, withdrawal time depends on whether it is an express withdrawal.\r\n\r\n#### Withdrawal on Behalf\r\nIf you wish to withdraw to a bank account not belonging to you, add in user_api_token in the params.\r\n\r\nBehind the scenes, Xfers does a payout of funds from your Xfers account to that user’s Xfers account, followed by a withdrawal. This is required for compliance purposes as we cannot directly withdraw funds to a bank account not belonging to you.\r\n\r\nTo clarify this:\r\n\r\nPlacing of xfers_api_token | Flow | Remark\r\n--------------- |  ----------- | -----\r\nmerchant's token in header, user's token in body| merchant's Xfers account -> user's Xfers account -> user's bank Account | We call this `Withdrawal on Behalf`\r\nuser's token in header, nothing in body| user's Xfers account -> user's bank Account | this is the usual usage\r\nmerchant's token in header, nothing in body| merchant's Xfers account -> merchant's bank Account | This is usually done via Xfers Dashboard\r\n",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -2457,7 +2455,7 @@
       "summary": "List Withdrawal Requests",
       "description": "This API will be used to get a list of the last 10 withdrawal requests.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -3625,7 +3623,7 @@
       "summary": "Get Withdrawal Request",
       "description": "This API will be used to get the current status of withdrawal request.\nIt is useful if you want to check with Xfers again about the status of your withdrawal request in case there is something wrong with the callback of the withdrawal request status.",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -3685,7 +3683,7 @@
       "summary": "Check Connection",
       "description": "Use this endpoint to check connection with our server",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -3723,7 +3721,7 @@
       "summary": "Get Mock OTP",
       "description": "Get a mock OTP. This is only usable in sandbox environment",
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
@@ -3771,7 +3769,7 @@
         "source": "curl --location --request PUT \"{base_url}/user/bank_account/withdrawal_requests/mock_result\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"status=completed\""
       }],
       "security": [{
-        "user-api-token": [
+        "X-XFERS-USER-API-KEY": [
 
         ]
       }],
