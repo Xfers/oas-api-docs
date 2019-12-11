@@ -193,7 +193,7 @@
   },
   "v4Error:4XX": {
     "content": {
-      "application/json": {
+      "application/vnd.api+json": {
         "schema": {
           "$ref": "#/components/schemas/jsonApi:errorResponse"
         }
