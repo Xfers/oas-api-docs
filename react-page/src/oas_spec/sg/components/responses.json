@@ -1,5 +1,5 @@
 {
-  "4XX": {
+  "v3Error:4XX": {
     "description": "List of possible errors",
     "content": {
       "application/json": {
@@ -187,6 +187,15 @@
           "XFE603": {
             "$ref": "#/components/examples/XFE603"
           }
+        }
+      }
+    }
+  },
+  "v4Error:4XX": {
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/jsonApi:errorResponse"
         }
       }
     }

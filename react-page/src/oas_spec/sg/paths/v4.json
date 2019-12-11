@@ -104,9 +104,6 @@
               }
             }
           }
-        },
-        "4XX": {
-          "$ref": "#/components/responses/4XX"
         }
       }
     }
@@ -196,7 +193,7 @@
           }
         },
         "4XX": {
-          "$ref": "#/components/responses/4XX"
+          "$ref": "#/components/responses/v4Error:4XX"
         }
       }
     }
@@ -262,7 +259,7 @@
           }
         },
         "4XX": {
-          "$ref": "#/components/responses/4XX"
+          "$ref": "#/components/responses/v4Error:4XX"
         }
       }
     }

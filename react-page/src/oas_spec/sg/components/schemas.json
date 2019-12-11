@@ -437,5 +437,31 @@
         "type": "string"
       }
     }
+  },
+  "jsonApi:errorResponse": {
+    "_comment": "https://jsonapi.org/format/#errors",
+    "type": "object",
+    "properties": {
+      "errors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Xfers' error code XFEXXX"
+            },
+            "title": {
+              "type": "string",
+              "description": "Error description summary"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Error details"
+            }
+          }
+        }
+      }
+    }
   }
 }
