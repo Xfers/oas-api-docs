@@ -76,7 +76,7 @@ class XfersRedoc extends Component {
       )
     }
 	}
-	
+
 	renderRedoc(isUrl){
 		if (isUrl) {
 			return(<RedocStandalone
@@ -117,7 +117,7 @@ class XfersRedoc extends Component {
 					<div className = "title-wrapper">
 						<h1
 						className="country-header-title"
-						>API V{this.props.apiVersion} documentation for {this.props.docName}</h1>
+						>{this.props.docName}</h1>
 					</div>
 					<DropdownCountry
 						{...this.props}
@@ -139,7 +139,6 @@ XfersRedoc.propTypes = {
     oasSpec: PropTypes.string.isRequired,
     isUrl: PropTypes.bool.isRequired,
     docName: PropTypes.string.isRequired,
-		apiVersion: PropTypes.number.isRequired,
 		dropDownOptions: PropTypes.array.isRequired,
 }
 

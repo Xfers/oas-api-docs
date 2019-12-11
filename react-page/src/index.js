@@ -20,8 +20,7 @@ const routing = (
 				{...props}
 				oasSpec={require('./oas_spec/Singapore.json')}
 				isUrl={false}
-				docName={"Singapore"}
-				apiVersion = {3}
+				docName={"API V3 documentation for Singapore"}
 				dropDownOptions = {
 					[
 						{
@@ -52,8 +51,7 @@ const routing = (
 				{...props}
 				oasSpec={require('./oas_spec/Indonesia.json')}
 				isUrl={false}
-				docName={"Indonesia"}
-				apiVersion = {3}
+				docName={"API V3 documentation for Indonesia"}
 				dropDownOptions = {
 					[
 						{
@@ -75,70 +73,6 @@ const routing = (
 								</span>
 							),
 							value: "/V3/Indonesia"
-						}
-					]
-				}
-				/>}
-			/>
-			<Route exact path="/V4/Singapore" render={(props) => <XfersRedoc
-				{...props}
-				oasSpec={'https://www.xfers.io/api/v4/swagger_doc'}
-				isUrl={true}
-				docName={"Singapore"}
-				apiVersion = {4}
-				dropDownOptions = {
-					[
-						{
-							key: "Singapore",
-							text: (
-								<span>
-									<Flag name="sg" />
-									SG
-								</span>
-							),
-							value: "/V4/Singapore"
-						},
-						{
-							key: "Indonesia",
-							text: (
-								<span>
-									<Flag name="id" />
-									ID
-								</span>
-							),
-							value: "/V4/Indonesia"
-						}
-					]
-				}
-				/>}
-			/>
-			<Route exact path="/V4/Indonesia" render={(props) => <XfersRedoc
-				{...props}
-				oasSpec={'https://id.xfers.com/api/v4/swagger_doc'}
-				isUrl={true}
-				docName={"Indonesia"}
-				apiVersion = {4}
-				dropDownOptions = {
-					[
-						{
-							key: "Singapore",
-							text: (
-								<span>
-									<Flag name="sg" />
-									SG
-								</span>
-							),
-							value: "/V4/Singapore"
-						},
-						{
-							key: "Indonesia",
-							text: (
-								<span>
-									<Flag name="id" />
-									ID
-								</span>
-							),
-							value: "/V4/Indonesia"
 						}
 					]
 				}
@@ -148,8 +82,7 @@ const routing = (
 				{...props}
 				oasSpec={require('./oas_spec/master-openapi.json')}
 				isUrl={false}
-				docName={"Master"}
-				apiVersion = {3}
+				docName={"API V3 documentation for Master"}
 				dropDownOptions = {
 					[
 						{
@@ -176,44 +109,11 @@ const routing = (
 				}
 				/>}
 			/>
-			<Route exact path="/V4/Localhost" render={(props) => <XfersRedoc
-				{...props}
-				oasSpec={'http://localhost:3000/api/v4/swagger_doc'}
-				isUrl={true}
-				docName={"Indonesia"}
-				apiVersion = {4}
-				dropDownOptions = {
-					[
-						{
-							key: "Singapore",
-							text: (
-								<span>
-									<Flag name="sg" />
-									SG
-								</span>
-							),
-							value: "/V4/Singapore"
-						},
-						{
-							key: "Indonesia",
-							text: (
-								<span>
-									<Flag name="id" />
-									ID
-								</span>
-							),
-							value: "/V4/Indonesia"
-						}
-					]
-				}
-				/>}
-			/>
 			<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
 				{...props}
 				oasSpec={require('./oas_spec/sg/index.js')}
 				isUrl={true}
-				docName={"Singapore"}
-				apiVersion = {4}
+				docName={"API documentation for Singapore"}
 				dropDownOptions = {
 					[
 						{
