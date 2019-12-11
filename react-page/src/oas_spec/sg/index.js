@@ -2,7 +2,10 @@ const combined = Object.assign(
     require("./base.json"),
     {
         tags: require("./tags.json"),
-        paths: require("./paths.json"),
+        paths: Object.assign(
+            require("./paths/v3.json"),
+            require("./paths/v4.json"),
+        ),
         components: {
             parameters: require("./components/parameters.json"),
             examples: require("./components/examples.json"),

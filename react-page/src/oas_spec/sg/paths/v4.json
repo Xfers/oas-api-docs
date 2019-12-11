@@ -1,0 +1,284 @@
+{
+  "/api/v4/accounts": {
+    "get": {
+      "operationId": "getAccountInfo",
+      "x-code-samples": [{
+        "lang": "Shell_curl",
+        "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: Bearer {{user-api-token}}\" \\\r\n  --data \"\""
+      }],
+      "tags": [
+        "User Account"
+      ],
+      "summary": "Get Account Info (Coming Soon)",
+      "description": "This API displays the account information, including the storage limits.",
+      "security": [{
+        "v4XfersAuth": [
+
+        ]
+      }],
+      "parameters": [{
+          "name": "wallet_id",
+          "in": "query",
+          "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              8
+            ]
+          }
+        },
+        {
+          "name": "include_limits",
+          "in": "query",
+          "description": "Whether you want the limits to be returned.",
+          "required": false,
+          "explode": true,
+          "schema": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "account_ioajisdjfos",
+                "object": "PersonalAccount",
+                "balance": "150.00",
+                "wallet_type": "Digital Goods Wallet",
+                "wallet_id": 2,
+                "limitations": {
+                  "max_storage_limit": "200.00",
+                  "max_storage_limit_remaining": "50.00",
+                  "charge_per_transaction_limit": "5000.00",
+                  "charge_rolling_yearly_limit": "30000.00",
+                  "charge_rolling_yearly_limit_remaining": "20000.00"
+                },
+                "currency": "sgd"
+              },
+              "schema": {
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the Account."
+                  },
+                  "object": {
+                    "type": "string",
+                    "description": "Type of the object. Subject to changes.",
+                    "enum": [
+                      "PersonalAccount",
+                      "SettlementAccount",
+                      "BusinessAccount"
+                    ]
+                  },
+                  "balance": {
+                    "type": "string",
+                    "description": "Account balance"
+                  },
+                  "wallet_type": {
+                    "type": "string",
+                    "description": "The Xfers wallet type name"
+                  },
+                  "wallet_id": {
+                    "type": "integer",
+                    "description": "The Xfers wallet type id"
+                  },
+                  "limitations": {
+                    "type": "object",
+                    "description": "Name-value pairs of the various limit amounts and the remaining limits."
+                  },
+                  "max_storage_limit": {
+                    "type": "string",
+                    "description": "Maximum amount you can store in this account."
+                  },
+                  "max_storage_limit_remaining": {
+                    "type": "string",
+                    "description": "How much storage limit is remaining for this account."
+                  },
+                  "charge_per_transaction_limit": {
+                    "type": "string",
+                    "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
+                  },
+                  "charge_rolling_yearly_limit": {
+                    "type": "string",
+                    "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
+                  },
+                  "charge_rolling_yearly_limit_remaining": {
+                    "type": "string",
+                    "description": "How much more you can charge for this account. (`/charges`)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/4XX"
+        }
+      }
+    }
+  },
+  "/api/v4/direct_bank_transfer_payments": {
+    "post": {
+      "operationId": "createDirectBankTransferPayment",
+      "x-code-samples": [{
+        "lang": "Shell_curl",
+        "source": "curl --location --request POST \"{base_url}/direct_bank_transfer_payments\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\""
+      }],
+      "tags": [
+        "Direct Bank Transfer Payments (Coming Soon)"
+      ],
+      "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
+      "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction.",
+      "security": [{
+        "v4XfersAuth": []
+      }],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "amount",
+                "external_id"
+              ],
+              "properties": {
+                "amount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Transaction Amount."
+                },
+                "external_id": {
+                  "type": "string",
+                  "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                }
+              }
+            },
+            "examples": {
+              "Request Body Example": {
+                "summary": "Request Body Example",
+                "value": {
+                  "amount": 3000.0,
+                  "external_id": "foo_bar_123"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                "object": "DirectBankTransferPayment",
+                "amount": "3000.00",
+                "external_id": "foo_bar_123",
+                "status": "created",
+                "created_at": "2019-04-12T07:10:50Z",
+                "data": {
+                  "topup_bank": {
+                    "bank_name_full": "United Overseas Bank",
+                    "bank_abbrev": "UOB",
+                    "bank_account_no": "877316208856"
+                  },
+                  "unique_topup_identifier": "XYZ123"
+                }
+              },
+              "schema": {
+                "properties": {
+                  "topup_bank": {
+                    "type": "object",
+                    "description": "The bank details for your customer to top up to."
+                  },
+                  "unique_topup_identifier": {
+                    "type": "string",
+                    "description": "Your customer should type this string in the comments field when making a bank transfer. This will be used to identify that the transfer is from him."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/4XX"
+        }
+      }
+    }
+  },
+  "/api/v4/direct_bank_transfer_payments/{id}": {
+    "get": {
+      "operationId": "getDirectBankTransferPayment",
+      "x-code-samples": [{
+        "lang": "Shell_curl",
+        "source": "curl --location --request GET \"{base_url}/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+      }],
+      "tags": [
+        "Direct Bank Transfer Payments (Coming Soon)"
+      ],
+      "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
+      "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token.",
+      "security": [{
+        "v4XfersAuth": [
+
+        ]
+      }],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "in": "query",
+                  "type": "string",
+                  "description": "Direct Bank Transfer Payment ID."
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                "object": "DirectBankTransferPayment",
+                "amount": "3000.00",
+                "external_id": "foo_bar_123",
+                "status": "completed",
+                "created_at": "2019-04-12T07:10:50Z",
+                "data": {
+                  "topup_bank": {
+                    "bank_name_full": "United Overseas Bank",
+                    "bank_abbrev": "UOB",
+                    "bank_account_no": "877316208856"
+                  },
+                  "unique_topup_identifier": "XYZ123"
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/4XX"
+        }
+      }
+    }
+  }
+}
