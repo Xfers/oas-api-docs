@@ -26,6 +26,7 @@
       "name": "User Management",
       "tags": [
         "Registration",
+        "User Account",
         "Bank Account"
       ]
     },
@@ -35,7 +36,6 @@
         "Charge",
         "Payout",
         "Credit Card (Singapore)",
-        "Inter Wallet Payments (Coming Soon)",
         "Direct Bank Transfer Payments (Coming Soon)",
         "Withdraw",
         "Intents"
@@ -44,11 +44,11 @@
     {
       "name": "Appendix",
       "tags": [
+        "Testing",
         "Error Response",
         "Pagination",
         "Callback Configuration",
-        "Try it out with Postman",
-        "Testing"
+        "Try it out with Postman"
       ]
     }
   ]
