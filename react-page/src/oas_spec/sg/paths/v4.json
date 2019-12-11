@@ -33,7 +33,7 @@
         "200": {
           "description": "Success",
           "content": {
-            "application/json": {
+            "application/vnd.api+json": {
               "example": {
                 "id": "account_ioajisdjfos",
                 "object": "PersonalAccount",
@@ -126,7 +126,7 @@
       "requestBody": {
         "required": true,
         "content": {
-          "application/json": {
+          "application/vnd.api+json": {
             "schema": {
               "required": [
                 "amount",
@@ -160,7 +160,7 @@
         "200": {
           "description": "Success",
           "content": {
-            "application/json": {
+            "application/vnd.api+json": {
               "example": {
                 "id": "contract_9b562994c4274d9993ba93c94619a8f6",
                 "object": "DirectBankTransferPayment",
@@ -218,7 +218,7 @@
       "requestBody": {
         "required": true,
         "content": {
-          "application/json": {
+          "application/vnd.api+json": {
             "schema": {
               "required": [
                 "id"
@@ -238,7 +238,7 @@
         "200": {
           "description": "Success",
           "content": {
-            "application/json": {
+            "application/vnd.api+json": {
               "example": {
                 "id": "contract_9b562994c4274d9993ba93c94619a8f6",
                 "object": "DirectBankTransferPayment",
