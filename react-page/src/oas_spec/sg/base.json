@@ -35,10 +35,10 @@
       "tags": [
         "Charge",
         "Payout",
-        "Credit Card (Singapore)",
-        "Direct Bank Transfer Payments (Coming Soon)",
         "Withdraw",
-        "Intents"
+        "Intents",
+        "Credit Card",
+        "Direct Bank Transfer Payments (Coming Soon)"
       ]
     },
     {

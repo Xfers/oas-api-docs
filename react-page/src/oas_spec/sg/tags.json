@@ -11,7 +11,7 @@
     "description": "API for Charges"
   },
   {
-    "name": "Credit Card (Singapore)",
+    "name": "Credit Card",
     "description": "Web SDK for Singapore Credit card\r\n\r\nhttps://github.com/Xfers/xfers-sdk/wiki/%5BWeb-Integration%5D-Xfers-Components#5-startcreditcardflow",
     "x-traitTag": true
   },
