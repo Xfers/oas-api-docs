@@ -16,21 +16,7 @@
 
         ]
       }],
-      "parameters": [{
-          "name": "wallet_id",
-          "in": "query",
-          "description": "Wallet ID of the Xfers wallet. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
-          "required": true,
-          "explode": true,
-          "schema": {
-            "type": "integer",
-            "enum": [
-              1,
-              2,
-              8
-            ]
-          }
-        },
+      "parameters": [
         {
           "name": "include_limits",
           "in": "query",
@@ -125,7 +111,7 @@
       }
     }
   },
-  "/api/v4/direct_bank_transfer_payments": {
+  "/api/v4/contracts/direct_bank_transfer_payments": {
     "post": {
       "operationId": "createDirectBankTransferPayment",
       "x-code-samples": [{
@@ -215,7 +201,7 @@
       }
     }
   },
-  "/api/v4/direct_bank_transfer_payments/{id}": {
+  "/api/v4/contracts/direct_bank_transfer_payments/{id}": {
     "get": {
       "operationId": "getDirectBankTransferPayment",
       "x-code-samples": [{
