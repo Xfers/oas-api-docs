@@ -48,5 +48,70 @@
         }
       }
     }
+  },
+  "DirectBankTransferContract": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Entity's unique identifier in Xfers"
+          },
+          "type": {
+            "type": "string",
+            "description": "Entity's type"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Entity's attributes",
+            "properties": {
+              "amount": {
+                "type": "float"
+              },
+              "status": {
+                "type": "string"
+              },
+              "external_id": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "description": "Time ISO8601"
+              },
+              "source_bank_transfer_info": {
+                "type": "object",
+                "properties": {
+                  "bank_name_full": {
+                    "type": "string"
+                  },
+                  "bank_abbrev": {
+                    "type": "string"
+                  },
+                  "bank_account_no": {
+                    "type": "string"
+                  }
+                }
+              },
+              "destination_bank_transfer_info": {
+                "type": "object",
+                "properties": {
+                  "bank_name_full": {
+                    "type": "string"
+                  },
+                  "bank_abbrev": {
+                    "type": "string"
+                  },
+                  "bank_account_no": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
