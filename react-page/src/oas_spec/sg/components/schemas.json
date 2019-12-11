@@ -438,6 +438,32 @@
       }
     }
   },
+  "jsonApi:singleDataResponse": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "$ref": "#/components/schemas/jsonApi:data"
+      }
+    }
+  },
+  "jsonApi:data": {
+    "_comment": "https://jsonapi.org/format/#document-resource-objects",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Entity's unique identifier in Xfers"
+      },
+      "type": {
+        "type": "string",
+        "description": "Entity's type"
+      },
+      "attributes": {
+        "type": "object",
+        "description": "Entity's attributes"
+      }
+    }
+  },
   "jsonApi:errorResponse": {
     "_comment": "https://jsonapi.org/format/#errors",
     "type": "object",
