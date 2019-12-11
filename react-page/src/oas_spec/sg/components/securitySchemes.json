@@ -22,7 +22,7 @@
     "type": "http",
     "scheme": "bearer",
     "in": "header",
-    "bearerFormat": "XfersApiToken",
-    "description": "You can retrieve this from the dashboard. format: `Authorization: Bearer <xfers_api_token>`"
+    "bearerFormat": "xfers_api_token",
+    "description": "You can retrieve this from the dashboard. For instance: \n\n```\n\nAuthorization: Bearer <xfers_api_token>\n\n```\n\n"
   }
 }
