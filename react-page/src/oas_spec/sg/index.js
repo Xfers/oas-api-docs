@@ -7,6 +7,7 @@ const combined = Object.assign(
             require("./paths/v4.json"),
         ),
         components: {
+            definitions: require("./components/definitions.json"), // api v4 schemas use this for now
             parameters: require("./components/parameters.json"),
             examples: require("./components/examples.json"),
             responses: require("./components/responses.json"),

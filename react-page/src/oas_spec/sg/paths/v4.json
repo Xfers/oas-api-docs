@@ -1,20 +1,18 @@
 {
   "/api/v4/accounts": {
     "get": {
-      "operationId": "getAccountInfo",
-      "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/accounts --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"Authorization: Bearer {{user-api-token}}\" \\\r\n  --data \"\""
-      }],
+      "operationId": "getApiV4AccountsId",
+      "summary": "Get Account Info (Coming Soon)",
+      "description": "This API displays the account information, including the storage limits.",
       "tags": [
         "User Account"
       ],
-      "summary": "Get Account Info (Coming Soon)",
-      "description": "This API displays the account information, including the storage limits.",
+      "x-code-samples": [{
+        "lang": "Shell",
+        "source": "curl --location --request GET \"$BASE_URL/accounts\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
+      }],
       "security": [{
-        "v4XfersAuth": [
-
-        ]
+        "v4XfersAuth": []
       }],
       "parameters": [
         {
@@ -34,73 +32,41 @@
           "description": "Success",
           "content": {
             "application/vnd.api+json": {
-              "example": {
-                "id": "account_ioajisdjfos",
-                "object": "PersonalAccount",
-                "balance": "150.00",
-                "wallet_type": "Digital Goods Wallet",
-                "wallet_id": 2,
-                "limitations": {
-                  "max_storage_limit": "200.00",
-                  "max_storage_limit_remaining": "50.00",
-                  "charge_per_transaction_limit": "5000.00",
-                  "charge_rolling_yearly_limit": "30000.00",
-                  "charge_rolling_yearly_limit_remaining": "20000.00"
+              "examples": {
+                "Limitations excluded": {
+                  "summary": "Limitations excluded",
+                  "value": {
+                    "data": {
+                      "id": "account_ioajisdjfos",
+                      "type": "PersonalAccount",
+                      "balance": "150.00",
+                      "currency": "sgd",
+                      "wallet_name": "Digital Goods Wallet"
+                    }
+                  }
                 },
-                "currency": "sgd"
-              },
-              "schema": {
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "ID of the Account."
-                  },
-                  "object": {
-                    "type": "string",
-                    "description": "Type of the object. Subject to changes.",
-                    "enum": [
-                      "PersonalAccount",
-                      "SettlementAccount",
-                      "BusinessAccount"
-                    ]
-                  },
-                  "balance": {
-                    "type": "string",
-                    "description": "Account balance"
-                  },
-                  "wallet_type": {
-                    "type": "string",
-                    "description": "The Xfers wallet type name"
-                  },
-                  "wallet_id": {
-                    "type": "integer",
-                    "description": "The Xfers wallet type id"
-                  },
-                  "limitations": {
-                    "type": "object",
-                    "description": "Name-value pairs of the various limit amounts and the remaining limits."
-                  },
-                  "max_storage_limit": {
-                    "type": "string",
-                    "description": "Maximum amount you can store in this account."
-                  },
-                  "max_storage_limit_remaining": {
-                    "type": "string",
-                    "description": "How much storage limit is remaining for this account."
-                  },
-                  "charge_per_transaction_limit": {
-                    "type": "string",
-                    "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
-                  },
-                  "charge_rolling_yearly_limit": {
-                    "type": "string",
-                    "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
-                  },
-                  "charge_rolling_yearly_limit_remaining": {
-                    "type": "string",
-                    "description": "How much more you can charge for this account. (`/charges`)"
+                "Limitations included": {
+                  "summary": "Limitations included",
+                  "value": {
+                    "data": {
+                      "id": "account_ioajisdjfos",
+                      "type": "PersonalAccount",
+                      "balance": "150.00",
+                      "currency": "sgd",
+                      "wallet_name": "Digital Goods Wallet",
+                      "limitations": {
+                        "credit_card_daily": {
+                          "used": 1200,
+                          "remaining": 800,
+                          "max": 2000
+                        }
+                      }
+                    }
                   }
                 }
+              },
+              "schema": {
+                "$ref": "#/components/definitions/Account"
               }
             }
           }

@@ -1,0 +1,52 @@
+{
+  "Account": {
+    "type": "object",
+    "properties": {
+      "data": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Entity's unique identifier in Xfers"
+          },
+          "type": {
+            "type": "string",
+            "description": "Entity's type"
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Entity's attributes",
+            "properties": {
+              "balance": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "wallet_name": {
+                "type": "string"
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "max": {
+                      "type": "float"
+                    },
+                    "used": {
+                      "type": "float"
+                    },
+                    "remaining": {
+                      "type": "float"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
