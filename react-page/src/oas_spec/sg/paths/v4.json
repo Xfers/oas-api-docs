@@ -143,7 +143,7 @@
     "get": {
       "operationId": "getDirectBankTransferPayment",
       "x-code-samples": [{
-        "lang": "Shell_curl",
+        "lang": "Shell",
         "source": "curl --location --request GET \"$BASE_URL/inter_wallet_payments/{id}\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
       }],
       "tags": [
