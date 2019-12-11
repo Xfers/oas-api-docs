@@ -66,7 +66,12 @@
                 }
               },
               "schema": {
-                "$ref": "#/components/definitions/Account"
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/definitions/DirectBankTransferContract"
+                  }
+                }
               }
             }
           }
@@ -79,7 +84,7 @@
       "operationId": "createDirectBankTransferPayment",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request POST \"$BASE_URL/direct_bank_transfer_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\" \\\r\n  --form \"amount=100\" \\\r\n  --form \"external_id=ref_20200101_0001\""
+        "source": "curl --location --request POST \"$BASE_URL/direct_bank_transfer_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\" \\\r\n  --form \"amount=100\" \\\r\n  --form \"external_id=ref_20200101_0001\" \\\r\n  --form \"source_bank_account_id=12345\""
       }],
       "tags": [
         "Direct Bank Transfer Payments (Coming Soon)"
@@ -94,7 +99,9 @@
           "name": "amount",
           "in": "query",
           "description": "Amount for doing the payment",
-          "type": "float",
+          "schema": {
+            "type": "float"
+          },
           "example": 100,
           "required": true
         },
@@ -102,8 +109,20 @@
           "name": "external_id",
           "in": "query",
           "description": "The unique reference id you used when the payment was created",
-          "type": "string",
+          "schema": {
+            "type": "string"
+          },
           "example": "ref_20200101_0001",
+          "required": true
+        },
+        {
+          "name": "source_bank_account_id",
+          "in": "query",
+          "description": "The bank account id you got from `/api/v3/user/bank_account`",
+          "schema": {
+            "type": "integer"
+          },
+          "example": "12345",
           "required": true
         }
       ],
@@ -128,7 +147,12 @@
                 }
               },
               "schema": {
-                "$ref": "#/components/definitions/DirectBankTransferContract"
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/definitions/DirectBankTransferContract"
+                  }
+                }
               }
             }
           }
@@ -137,19 +161,17 @@
           "$ref": "#/components/responses/v4Error:4XX"
         }
       }
-    }
-  },
-  "/api/v4/contracts/direct_bank_transfer_payments/{id}": {
+    },
     "get": {
-      "operationId": "getDirectBankTransferPayment",
+      "operationId": "listDirectBankTransferPayments",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request GET \"$BASE_URL/inter_wallet_payments/{id}\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
+        "source": "curl --location --request GET \"$BASE_URL/inter_wallet_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
       }],
       "tags": [
         "Direct Bank Transfer Payments (Coming Soon)"
       ],
-      "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
+      "summary": "List Direct Bank Transfer Payments (Coming Soon)",
       "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token.",
       "security": [{
         "v4XfersAuth": [
@@ -160,9 +182,10 @@
           "name": "external_id",
           "in": "query",
           "description": "The unique reference id you used when the payment was created",
-          "type": "string",
-          "example": "ref_20200101_0001",
-          "required": true
+          "schema": {
+            "type": "string"
+          },
+          "example": "ref_20200101_0001"
         }
       ],
       "responses": {
@@ -171,27 +194,38 @@
           "content": {
             "application/vnd.api+json": {
               "example": {
-                "data": {
-                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                  "type": "DirectBankTransferPayment",
-                  "amount": "3000.00",
-                  "external_id": "ref_20200101_0001",
-                  "status": "completed",
-                  "created_at": "2019-04-12T07:10:50Z",
-                  "source_bank_transfer_info": {
-                    "bank_name_full": "United Overseas Bank",
-                    "bank_abbrev": "UOB",
-                    "bank_account_no": "412366661234"
-                  },
-                  "destination_bank_transfer_info": {
-                    "bank_name_full": "CIMB Bank Berhad",
-                    "bank_abbrev": "CIMB_SVF_3611",
-                    "bank_account_no": "2000593611"
+                "data": [
+                  {
+                    "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                    "type": "DirectBankTransferPayment",
+                    "amount": "3000.00",
+                    "external_id": "ref_20200101_0001",
+                    "status": "completed",
+                    "created_at": "2019-04-12T07:10:50Z",
+                    "source_bank_transfer_info": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "412366661234"
+                    },
+                    "destination_bank_transfer_info": {
+                      "bank_name_full": "CIMB Bank Berhad",
+                      "bank_abbrev": "CIMB_SVF_3611",
+                      "bank_account_no": "2000593611"
+                    }
                   }
-                }
+                ]
               },
               "schema": {
-                "$ref": "#/components/definitions/DirectBankTransferContract"
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "$ref": "#/components/definitions/DirectBankTransferContract"
+                    }
+                  }
+                }
               }
             }
           }

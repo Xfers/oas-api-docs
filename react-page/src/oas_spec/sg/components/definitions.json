@@ -2,45 +2,40 @@
   "Account": {
     "type": "object",
     "properties": {
-      "data": {
+      "id": {
+        "type": "string",
+        "description": "Entity's unique identifier in Xfers"
+      },
+      "type": {
+        "type": "string",
+        "description": "Entity's type"
+      },
+      "attributes": {
         "type": "object",
+        "description": "Entity's attributes",
         "properties": {
-          "id": {
-            "type": "string",
-            "description": "Entity's unique identifier in Xfers"
+          "balance": {
+            "type": "string"
           },
-          "type": {
-            "type": "string",
-            "description": "Entity's type"
+          "currency": {
+            "type": "string"
           },
-          "attributes": {
-            "type": "object",
-            "description": "Entity's attributes",
-            "properties": {
-              "balance": {
-                "type": "string"
-              },
-              "currency": {
-                "type": "string"
-              },
-              "wallet_name": {
-                "type": "string"
-              },
-              "limitations": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "max": {
-                      "type": "float"
-                    },
-                    "used": {
-                      "type": "float"
-                    },
-                    "remaining": {
-                      "type": "float"
-                    }
-                  }
+          "wallet_name": {
+            "type": "string"
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "max": {
+                  "type": "float"
+                },
+                "used": {
+                  "type": "float"
+                },
+                "remaining": {
+                  "type": "float"
                 }
               }
             }
@@ -52,61 +47,56 @@
   "DirectBankTransferContract": {
     "type": "object",
     "properties": {
-      "data": {
+      "id": {
+        "type": "string",
+        "description": "Entity's unique identifier in Xfers"
+      },
+      "type": {
+        "type": "string",
+        "description": "Entity's type"
+      },
+      "attributes": {
         "type": "object",
+        "description": "Entity's attributes",
         "properties": {
-          "id": {
-            "type": "string",
-            "description": "Entity's unique identifier in Xfers"
+          "amount": {
+            "type": "float"
           },
-          "type": {
-            "type": "string",
-            "description": "Entity's type"
+          "status": {
+            "type": "string"
           },
-          "attributes": {
+          "external_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Time ISO8601"
+          },
+          "source_bank_transfer_info": {
             "type": "object",
-            "description": "Entity's attributes",
             "properties": {
-              "amount": {
-                "type": "float"
-              },
-              "status": {
+              "bank_name_full": {
                 "type": "string"
               },
-              "external_id": {
+              "bank_abbrev": {
                 "type": "string"
               },
-              "created_at": {
-                "type": "string",
-                "description": "Time ISO8601"
+              "bank_account_no": {
+                "type": "string"
+              }
+            }
+          },
+          "destination_bank_transfer_info": {
+            "type": "object",
+            "properties": {
+              "bank_name_full": {
+                "type": "string"
               },
-              "source_bank_transfer_info": {
-                "type": "object",
-                "properties": {
-                  "bank_name_full": {
-                    "type": "string"
-                  },
-                  "bank_abbrev": {
-                    "type": "string"
-                  },
-                  "bank_account_no": {
-                    "type": "string"
-                  }
-                }
+              "bank_abbrev": {
+                "type": "string"
               },
-              "destination_bank_transfer_info": {
-                "type": "object",
-                "properties": {
-                  "bank_name_full": {
-                    "type": "string"
-                  },
-                  "bank_abbrev": {
-                    "type": "string"
-                  },
-                  "bank_account_no": {
-                    "type": "string"
-                  }
-                }
+              "bank_account_no": {
+                "type": "string"
               }
             }
           }
