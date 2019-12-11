@@ -39,9 +39,11 @@
                     "data": {
                       "id": "account_ioajisdjfos",
                       "type": "PersonalAccount",
-                      "balance": "150.00",
-                      "currency": "sgd",
-                      "wallet_name": "Digital Goods Wallet"
+                      "attributes": {
+                        "balance": "150.00",
+                        "currency": "sgd",
+                        "wallet_name": "Digital Goods Wallet"
+                      }
                     }
                   }
                 },
@@ -51,14 +53,16 @@
                     "data": {
                       "id": "account_ioajisdjfos",
                       "type": "PersonalAccount",
-                      "balance": "150.00",
-                      "currency": "sgd",
-                      "wallet_name": "Digital Goods Wallet",
-                      "limitations": {
-                        "credit_card_daily": {
-                          "used": 1200,
-                          "remaining": 800,
-                          "max": 2000
+                      "attributes": {
+                        "balance": "150.00",
+                        "currency": "sgd",
+                        "wallet_name": "Digital Goods Wallet",
+                        "limitations": {
+                          "credit_card_daily": {
+                            "used": 1200,
+                            "remaining": 800,
+                            "max": 2000
+                          }
                         }
                       }
                     }
@@ -134,15 +138,17 @@
               "example": {
                 "data": {
                   "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                  "type": "DirectBankTransferPayment",
-                  "amount": "3000.00",
-                  "external_id": "ref_20200101_0001",
-                  "status": "processing",
-                  "created_at": "2019-04-12T07:10:50Z",
-                  "destination_bank_transfer_info": {
-                    "bank_name_full": "CIMB Bank Berhad",
-                    "bank_abbrev": "CIMB_SVF_3611",
-                    "bank_account_no": "2000593611"
+                  "type": "DirectBankTransferContract",
+                  "attributes": {
+                    "amount": "3000.00",
+                    "external_id": "ref_20200101_0001",
+                    "status": "processing",
+                    "created_at": "2019-04-12T07:10:50Z",
+                    "destination_bank_transfer_info": {
+                      "bank_name_full": "CIMB Bank Berhad",
+                      "bank_abbrev": "CIMB_SVF_3611",
+                      "bank_account_no": "2000593611"
+                    }
                   }
                 }
               },
@@ -197,20 +203,22 @@
                 "data": [
                   {
                     "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                    "type": "DirectBankTransferPayment",
-                    "amount": "3000.00",
-                    "external_id": "ref_20200101_0001",
-                    "status": "completed",
-                    "created_at": "2019-04-12T07:10:50Z",
-                    "source_bank_transfer_info": {
-                      "bank_name_full": "United Overseas Bank",
-                      "bank_abbrev": "UOB",
-                      "bank_account_no": "412366661234"
-                    },
-                    "destination_bank_transfer_info": {
-                      "bank_name_full": "CIMB Bank Berhad",
-                      "bank_abbrev": "CIMB_SVF_3611",
-                      "bank_account_no": "2000593611"
+                    "type": "DirectBankTransferContract",
+                    "attributes": {
+                      "amount": "3000.00",
+                      "external_id": "ref_20200101_0001",
+                      "status": "completed",
+                      "created_at": "2019-04-12T07:10:50Z",
+                      "source_bank_transfer_info": {
+                        "bank_name_full": "United Overseas Bank",
+                        "bank_abbrev": "UOB",
+                        "bank_account_no": "412366661234"
+                      },
+                      "destination_bank_transfer_info": {
+                        "bank_name_full": "CIMB Bank Berhad",
+                        "bank_abbrev": "CIMB_SVF_3611",
+                        "bank_account_no": "2000593611"
+                      }
                     }
                   }
                 ]
