@@ -14,49 +14,48 @@
       "security": [{
         "v4XfersAuth": []
       }],
-      "parameters": [
-        {
-          "name": "include_limits",
-          "in": "query",
-          "description": "Whether you want the limits to be returned.",
-          "required": false,
-          "explode": true,
-          "schema": {
-            "type": "boolean",
-            "default": false
+      "parameters": [{
+        "name": "fields",
+        "style": "deepObject",
+        "in": "query",
+        "description": "Refer to https://jsonapi.org/format/#fetching-sparse-fieldsets",
+        "allowReserved": true,
+        "required": false,
+        "explode": true,
+        "schema": {
+          "type": "object",
+          "example": {
+            "accounts": "balance,wallet_id,limitations"
           }
         }
-      ],
+      }],
       "responses": {
         "200": {
           "description": "Success",
           "content": {
             "application/vnd.api+json": {
               "examples": {
-                "Limitations excluded": {
-                  "summary": "Limitations excluded",
+                "Limitation excluded": {
+                  "summary": "fields[accounts]=balance,currency,wallet_name",
                   "value": {
-                    "data": {
-                      "id": "account_ioajisdjfos",
-                      "type": "PersonalAccount",
+                    "data": [{
+                      "id": "account_48831b3a93e84e9a8dac8a7e11f5659e",
+                      "type": "accounts",
                       "attributes": {
                         "balance": "150.00",
                         "currency": "sgd",
                         "wallet_name": "Digital Goods Wallet"
                       }
-                    }
+                    }]
                   }
                 },
                 "Limitations included": {
-                  "summary": "Limitations included",
+                  "summary": "fields[accounts]=limitations",
                   "value": {
-                    "data": {
-                      "id": "account_ioajisdjfos",
-                      "type": "PersonalAccount",
+                    "data": [{
+                      "id": "account_48831b3a93e84e9a8dac8a7e11f5659e",
+                      "type": "accounts",
                       "attributes": {
-                        "balance": "150.00",
-                        "currency": "sgd",
-                        "wallet_name": "Digital Goods Wallet",
                         "limitations": {
                           "credit_card_daily": {
                             "used": 1200,
@@ -65,7 +64,7 @@
                           }
                         }
                       }
-                    }
+                    }]
                   }
                 }
               },
@@ -73,7 +72,7 @@
                 "type": "object",
                 "properties": {
                   "data": {
-                    "$ref": "#/components/definitions/DirectBankTransferContract"
+                    "$ref": "#/components/definitions/Accounts"
                   }
                 }
               }
@@ -98,8 +97,7 @@
       "security": [{
         "v4XfersAuth": []
       }],
-      "parameters": [
-        {
+      "parameters": [{
           "name": "amount",
           "in": "query",
           "description": "Amount for doing the payment",
@@ -180,48 +178,43 @@
       "summary": "List Direct Bank Transfer Payments (Coming Soon)",
       "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token.",
       "security": [{
-        "v4XfersAuth": [
-        ]
+        "v4XfersAuth": []
       }],
-      "parameters": [
-        {
-          "name": "external_id",
-          "in": "query",
-          "description": "The unique reference id you used when the payment was created",
-          "schema": {
-            "type": "string"
-          },
-          "example": "ref_20200101_0001"
-        }
-      ],
+      "parameters": [{
+        "name": "external_id",
+        "in": "query",
+        "description": "The unique reference id you used when the payment was created",
+        "schema": {
+          "type": "string"
+        },
+        "example": "ref_20200101_0001"
+      }],
       "responses": {
         "200": {
           "description": "Success",
           "content": {
             "application/vnd.api+json": {
               "example": {
-                "data": [
-                  {
-                    "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                    "type": "DirectBankTransferContract",
-                    "attributes": {
-                      "amount": "3000.00",
-                      "external_id": "ref_20200101_0001",
-                      "status": "completed",
-                      "created_at": "2019-04-12T07:10:50Z",
-                      "source_bank_transfer_info": {
-                        "bank_name_full": "United Overseas Bank",
-                        "bank_abbrev": "UOB",
-                        "bank_account_no": "412366661234"
-                      },
-                      "destination_bank_transfer_info": {
-                        "bank_name_full": "CIMB Bank Berhad",
-                        "bank_abbrev": "CIMB_SVF_3611",
-                        "bank_account_no": "2000593611"
-                      }
+                "data": [{
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "type": "DirectBankTransferContract",
+                  "attributes": {
+                    "amount": "3000.00",
+                    "external_id": "ref_20200101_0001",
+                    "status": "completed",
+                    "created_at": "2019-04-12T07:10:50Z",
+                    "source_bank_transfer_info": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "412366661234"
+                    },
+                    "destination_bank_transfer_info": {
+                      "bank_name_full": "CIMB Bank Berhad",
+                      "bank_abbrev": "CIMB_SVF_3611",
+                      "bank_account_no": "2000593611"
                     }
                   }
-                ]
+                }]
               },
               "schema": {
                 "type": "object",
