@@ -83,7 +83,7 @@
       }
     }
   },
-  "/api/v4/contracts/direct_bank_transfer_payments": {
+  "/api/v4/direct_bank_transfer_payments": {
     "post": {
       "operationId": "createDirectBankTransferPayment",
       "x-code-samples": [{
