@@ -110,7 +110,7 @@
         {
           "name": "external_id",
           "in": "query",
-          "description": "The unique reference id you used when the payment was created",
+          "description": "The merchant's reference id",
           "schema": {
             "type": "string"
           },
@@ -118,14 +118,14 @@
           "required": true
         },
         {
-          "name": "source_bank_account_id",
+          "name": "callback_url",
           "in": "query",
-          "description": "The bank account id you got from `/api/v3/user/bank_account`",
+          "description": "Merchant's callback url for sending notification after payment success",
           "schema": {
-            "type": "integer"
+            "type": "string"
           },
-          "example": "12345",
-          "required": true
+          "example": "http://your-callback-url",
+          "required": false
         }
       ],
       "responses": {
@@ -136,17 +136,12 @@
               "example": {
                 "data": {
                   "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                  "type": "DirectBankTransferContract",
+                  "type": "direct_bank_transfer_payments",
                   "attributes": {
                     "amount": "3000.00",
                     "external_id": "ref_20200101_0001",
                     "status": "processing",
-                    "created_at": "2019-04-12T07:10:50Z",
-                    "destination_bank_transfer_info": {
-                      "bank_name_full": "CIMB Bank Berhad",
-                      "bank_abbrev": "CIMB_SVF_3611",
-                      "bank_account_no": "2000593611"
-                    }
+                    "created_at": "2020-01-02T15:33:45+08:00"
                   }
                 }
               },
@@ -180,15 +175,6 @@
       "security": [{
         "v4XfersAuth": []
       }],
-      "parameters": [{
-        "name": "external_id",
-        "in": "query",
-        "description": "The unique reference id you used when the payment was created",
-        "schema": {
-          "type": "string"
-        },
-        "example": "ref_20200101_0001"
-      }],
       "responses": {
         "200": {
           "description": "Success",
@@ -197,22 +183,12 @@
               "example": {
                 "data": [{
                   "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                  "type": "DirectBankTransferContract",
+                  "type": "direct_bank_transfer_payments",
                   "attributes": {
                     "amount": "3000.00",
                     "external_id": "ref_20200101_0001",
                     "status": "completed",
-                    "created_at": "2019-04-12T07:10:50Z",
-                    "source_bank_transfer_info": {
-                      "bank_name_full": "United Overseas Bank",
-                      "bank_abbrev": "UOB",
-                      "bank_account_no": "412366661234"
-                    },
-                    "destination_bank_transfer_info": {
-                      "bank_name_full": "CIMB Bank Berhad",
-                      "bank_abbrev": "CIMB_SVF_3611",
-                      "bank_account_no": "2000593611"
-                    }
+                    "created_at": "2019-04-12T07:10:50Z"
                   }
                 }]
               },

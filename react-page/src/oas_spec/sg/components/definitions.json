@@ -63,34 +63,6 @@
           "created_at": {
             "type": "string",
             "description": "Time ISO8601"
-          },
-          "source_bank_transfer_info": {
-            "type": "object",
-            "properties": {
-              "bank_name_full": {
-                "type": "string"
-              },
-              "bank_abbrev": {
-                "type": "string"
-              },
-              "bank_account_no": {
-                "type": "string"
-              }
-            }
-          },
-          "destination_bank_transfer_info": {
-            "type": "object",
-            "properties": {
-              "bank_name_full": {
-                "type": "string"
-              },
-              "bank_abbrev": {
-                "type": "string"
-              },
-              "bank_account_no": {
-                "type": "string"
-              }
-            }
           }
         }
       }
