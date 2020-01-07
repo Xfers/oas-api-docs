@@ -2149,12 +2149,12 @@
         "tags": [
           "Direct Bank Transfer Payments"
         ],
-        "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
-        "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "summary": "Create Direct Bank Transfer Payment",
+        "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization: Bearer <api_token>` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
         "security": [
           {
             "Authorization": [
-
+              "Bearer <api_token>"
             ]
           }
         ],
@@ -2181,19 +2181,40 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "object",
                 "required": [
-                  "amount",
-                  "external_id"
+                  "data"
                 ],
                 "properties": {
-                  "amount": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "Transaction Amount."
-                  },
-                  "external_id": {
-                    "type": "string",
-                    "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                  "data": {
+                    "type": "object",
+                    "required": ["type", "attributes"],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "default": "direct_bank_transfer_payments",
+                        "description": "Entity type"
+                      },
+                      "attributes": {
+                        "type": "object",
+                        "required": ["amount", "external_id"],
+                        "properties": {
+                          "amount": {
+                            "type": "number",
+                            "format": "float",
+                            "description": "Transaction Amount."
+                          },
+                          "external_id": {
+                            "type": "string",
+                            "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                          },
+                          "callback_url": {
+                            "type": "string",
+                            "description": "Callback url provided by merchant."
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               },
@@ -2201,8 +2222,14 @@
                 "Request Body Example": {
                   "summary": "Request Body Example",
                   "value": {
-                    "amount": 3000.00,
-                    "external_id": "foo_bar_123"
+                    "data": {
+                      "type": "direct_bank_transfer_payment",
+                      "attributes": {
+                        "amount": 3000.00,
+                        "external_id": "foo_bar_123",
+                        "callback_url": "https://wwww.example.com"
+                      }
+                    }
                   }
                 }
               }
@@ -2210,26 +2237,23 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json" : {
                 "example": {
-                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
-                  "object": "DirectBankTransferPayment",
-                  "amount": "3000.00",
-                  "external_id": "foo_bar_123",
-                  "status": "created",                  
-                  "created_at": "2019-04-12T07:10:50Z",
                   "data": {
-                    "topup_bank": {
-                      "bank_name_full": "United Overseas Bank",
-                      "bank_abbrev": "UOB",
-                      "bank_account_no": "877316208856"
-                    },
-                    "unique_topup_identifier": "XYZ123"                    
-                  }                  
-                },
+                      "id": "contract_8018d51862fc4fd382e1f80c9fe0429a",
+                      "type": "direct_bank_transfer_payments",
+                      "attributes": {
+                          "external_id": "order_doc_12345678933",
+                          "type": "DirectBankTransferContract",
+                          "amount": "3002.0",
+                          "status": "processing",
+                          "created_at": "2020-01-07T17:01:58+08:00"
+                      }
+                  }
+              },
                 "schema": {
                   "properties": {                    
                     "topup_bank" :{
@@ -2256,7 +2280,7 @@
         "operationId": "getDirectBankTransferPayment",
         "x-code-samples": [{
           "lang": "Shell_curl",
-          "source": "curl --location --request GET \"{base_url}\/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+          "source": "curl --location --request GET \"{base_url}\/direct_bank_transfer_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
         }],
         "tags": [
           "Direct Bank Transfer Payments"
