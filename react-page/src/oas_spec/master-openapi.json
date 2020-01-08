@@ -2160,19 +2160,11 @@
         "servers": [
           {
             "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v4"
+            "url": "https://www.xfers.io/api/v3"
           },
           {
             "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v4"
-          },
-          {
-            "description": "Indonesia Production",
-            "url": "https://id.xfers.com/api/v4"
-          },
-          {
-            "description": "Indonesia Sandbox for testing",
-            "url": "https://sandbox-id.xfers.com/api/v4"
+            "url": "https://sandbox.xfers.io/api/v3"
           }
         ],        
         "requestBody": {
