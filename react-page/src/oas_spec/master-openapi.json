@@ -2139,32 +2139,41 @@
         }
       }
     },
-    "/user/direct_bank_transfer_payments": {
+    "/direct_bank_transfer_payments": {
       "post": {
         "operationId": "createDirectBankTransferPayment",
         "x-code-samples": [{
           "lang": "Shell_curl",
-          "source": "curl --location --request POST \"{base_url}\/user\/direct_bank_transfer_payments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\""
+          "source": "curl --location --request POST \"{base_url}\/direct_bank_transfer_payments\" \\\r\n  --header \"Authorization: {{user-api-token}}\" \\\r\n--form \"amount=3000.00\" \\\r\n--form \"external_id=foo_bar_123\""
         }],
         "tags": [
           "Direct Bank Transfer Payments"
         ],
-        "summary": "Create Direct Bank Transfer Payment",
-        "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in X-XFERS-USER-API-KEY header should be your customer's API token.",
+        "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
+        "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
         "security": [
           {
-            "X-XFERS-USER-API-KEY": [
+            "Authorization": [
+
             ]
           }
         ],
         "servers": [
           {
             "description": "Singapore Production",
-            "url": "https://www.xfers.io/api/v3"
+            "url": "https://www.xfers.io/api/v4"
           },
           {
             "description": "Singapore Sandbox for testing",
-            "url": "https://sandbox.xfers.io/api/v3"
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
           }
         ],        
         "requestBody": {
@@ -2185,10 +2194,6 @@
                   "external_id": {
                     "type": "string",
                     "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
-                  },
-                  "callback_url": {
-                    "type": "string",
-                    "description": "Callback url provided by merchant."
                   }
                 }
               },
@@ -2196,9 +2201,8 @@
                 "Request Body Example": {
                   "summary": "Request Body Example",
                   "value": {
-                    "amount": 500.0,
-                    "external_id": "abc_xy1",
-                    "callback_url": "https://wwww.example.com/callbacks"
+                    "amount": 3000.00,
+                    "external_id": "foo_bar_123"
                   }
                 }
               }
@@ -2206,27 +2210,38 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "content": {
               "application/json" : {
                 "example": {
-                  "id": "contract_c184633a1d3d4d1aa6b49810795f6a65",
-                  "object": "DirectBankTransferContract",
-                  "status": "processing",
-                  "amount": "500.0",
-                  "total_amount": "500.0",
-                  "currency": "sgd",
-                  "notify_url": "https://wwww.example.com/callbacks",
-                  "wallet_name": "Digital Goods",
-                  "order_id": "abc_xy1",
-                  "description": null,
-                  "receipt_email": "antonio@coinbase.com",
-                  "expiration_date": null,
-                  "metadata": {
-                      "callback_url": "https://wwww.example.com/callbacks"
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "DirectBankTransferPayment",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "created",                  
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "data": {
+                    "topup_bank": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "877316208856"
+                    },
+                    "unique_topup_identifier": "XYZ123"                    
+                  }                  
+                },
+                "schema": {
+                  "properties": {                    
+                    "topup_bank" :{
+                      "type": "object",                      
+                      "description": "The bank details for your customer to top up to."
+                    },
+                    "unique_topup_identifier" :{
+                      "type": "string",                      
+                      "description": "Your customer should type this string in the comments field when making a bank transfer. This will be used to identify that the transfer is from him."
+                    }
                   }
-              }            
+                }                
               }
             }
           },
@@ -2236,6 +2251,92 @@
         }
       }
     },
+    "/direct_bank_transfer_payments/{id}": {
+      "get": {
+        "operationId": "getDirectBankTransferPayment",
+        "x-code-samples": [{
+          "lang": "Shell_curl",
+          "source": "curl --location --request GET \"{base_url}\/inter_wallet_payments/{id}\" \\\r\n  --header \"Authorization: {{user-api-token}}\""
+        }],
+        "tags": [
+          "Direct Bank Transfer Payments"
+        ],
+        "summary": "Get Direct Bank Transfer Payment (Coming Soon)",
+        "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token. \n\n Note that this API is on our newer `v4` endpoint instead of `v3`, so the authorization header is `Authorization` instead of `X-XFERS-USER-API-KEY`. The server URL is `api/v4` instead of `api/v3`.",
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ],
+        "servers": [
+          {
+            "description": "Singapore Production",
+            "url": "https://www.xfers.io/api/v4"
+          },
+          {
+            "description": "Singapore Sandbox for testing",
+            "url": "https://sandbox.xfers.io/api/v4"
+          },
+          {
+            "description": "Indonesia Production",
+            "url": "https://id.xfers.com/api/v4"
+          },
+          {
+            "description": "Indonesia Sandbox for testing",
+            "url": "https://sandbox-id.xfers.com/api/v4"
+          }
+        ],        
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "in": "query",
+                    "type": "string",
+                    "description": "Direct Bank Transfer Payment ID."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json" : {
+                "example": {
+                  "id": "contract_9b562994c4274d9993ba93c94619a8f6",
+                  "object": "DirectBankTransferPayment",
+                  "amount": "3000.00",
+                  "external_id": "foo_bar_123",
+                  "status": "completed",                  
+                  "created_at": "2019-04-12T07:10:50Z",
+                  "data": {
+                    "topup_bank": {
+                      "bank_name_full": "United Overseas Bank",
+                      "bank_abbrev": "UOB",
+                      "bank_account_no": "877316208856"
+                    },
+                    "unique_topup_identifier": "XYZ123"                    
+                  }                  
+                }                
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },      
     "/user/bank_account": {
       "post": {
         "operationId": "addBankAccount",
