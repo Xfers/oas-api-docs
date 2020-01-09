@@ -5,7 +5,7 @@
       "summary": "Get Account Info (Coming Soon)",
       "description": "This API displays the account information, including the storage limits.",
       "tags": [
-        "User Account"
+        "cutting_edge"
       ],
       "x-code-samples": [{
         "lang": "Shell",
