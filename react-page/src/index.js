@@ -15,12 +15,12 @@ const routing = (
 	>
 	<div>
 		<Switch>
-			<Route exact path="/" render={(props) => props.history.push(eval(`"V3/Singapore"`))} />
-			<Route exact path="/V3/Singapore" render={(props) => <XfersRedoc
+			<Route exact path="/" render={(props) => props.history.push(eval(`"Singapore"`))} />
+			<Route exact path="/Singapore" render={(props) => <XfersRedoc
 				{...props}
-				oasSpec={require('./oas_spec/Singapore.json')}
+				oasSpec={require('./oas_spec/sg/index.js')}
 				isUrl={false}
-				docName={"API V3 documentation for Singapore"}
+				docName={"API documentation for Singapore"}
 				dropDownOptions = {
 					[
 						{
@@ -31,7 +31,7 @@ const routing = (
 									SG
 								</span>
 							),
-							value: "/V3/Singapore"
+							value: "/Singapore"
 						},
 						{
 							key: "Indonesia",
@@ -62,7 +62,7 @@ const routing = (
 									SG
 								</span>
 							),
-							value: "/V3/Singapore"
+							value: "/Singapore"
 						},
 						{
 							key: "Indonesia",
@@ -93,7 +93,7 @@ const routing = (
 									SG
 								</span>
 							),
-							value: "/V3/Singapore"
+							value: "/Singapore"
 						},
 						{
 							key: "Indonesia",
@@ -105,27 +105,6 @@ const routing = (
 							),
 							value: "/V3/Indonesia"
 						}
-					]
-				}
-				/>}
-			/>
-			<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
-				{...props}
-				oasSpec={require('./oas_spec/sg/index.js')}
-				isUrl={true}
-				docName={"API documentation for Singapore"}
-				dropDownOptions = {
-					[
-						{
-							key: "Singapore",
-							text: (
-								<span>
-									<Flag name="sg" />
-									SG
-								</span>
-							),
-							value: "/sg/api/cutting-edge"
-						},
 					]
 				}
 				/>}
