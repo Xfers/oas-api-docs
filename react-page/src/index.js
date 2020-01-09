@@ -109,6 +109,14 @@ const routing = (
 				}
 				/>}
 			/>
+			<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
+				{...props}
+				oasSpec={require('./oas_spec/sg/index.js')}
+				isUrl={false}
+				docName={"API documentation for Singapore"}
+				dropDownOptions = {[]}
+				/>}
+			/>
 			<Route component={ErrorPage} />
 		</Switch>
 	</div>
