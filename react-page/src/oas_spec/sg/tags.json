@@ -20,10 +20,6 @@
     "description": "API for Payout"
   },
   {
-    "name": "Inter Wallet Payments (Coming Soon)",
-    "description": "Transferring between wallets belonging to the same user. Currently used as a way to transfer money out of your Settlement Wallet."
-  },
-  {
     "name": "Direct Bank Transfer Payments (Coming Soon)",
     "description": "API for Direct Bank Transfer Payments"
   },

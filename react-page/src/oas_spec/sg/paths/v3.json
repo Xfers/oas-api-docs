@@ -5,8 +5,8 @@
         "Registration"
       ],
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request POST \"{base_url}/authorize/signup_login\" \\\r\n  --header \"X-XFERS-APP-API-KEY: dS7zxQydn4PLxwNE3kuyb4pg6BsNWHE818D2wbhoavQ\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"phone_no\\\" : \\\"+6287785725657\\\", \\\"signature\\\" : \\\"5488737c67d790565a15a2dbc3c98bf778aac2c0\\\"}\""
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3/authorize/signup_login\" \\\r\n  --header \"X-XFERS-APP-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"phone_no\\\" : \\\"+6287785725657\\\", \\\"signature\\\" : \\\"5488737c67d790565a15a2dbc3c98bf778aac2c0\\\"}\""
       }],
       "operationId": "signUpLogin",
       "summary": "Sign Up Account/Trigger OTP",
@@ -64,8 +64,8 @@
         "Registration"
       ],
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_ur}/authorize/get_token?otp=541231&phone_no=%2B65XXXXXXXX&signature=bdc26373b3a78dd11dc840a1b7973f197cf34c91\" \\\r\n  --header \"X-XFERS-APP-API-KEY: {{app-api-key}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/authorize/get_token?otp=541231&phone_no=%2B65XXXXXXXX&signature=bdc26373b3a78dd11dc840a1b7973f197cf34c91\" \\\r\n  --header \"X-XFERS-APP-API-KEY: $APP_API_TOKEN\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\""
       }],
       "operationId": "getToken",
       "summary": "Get User API Token / Submit OTP",
@@ -152,8 +152,8 @@
         "Registration"
       ],
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request PUT \"{base_url}/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"mother_maiden_name\\\": \\\"Luna\\\", \\\"id_front_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\", \\\"selfie_2id_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\",\r\n\t\\\"callback_url\\\":\\\"https:/www.example.com/update\\\"}\r\n\r\n\""
+        "lang": "Shell",
+        "source": "curl --location --request PUT \"https://sandbox.xfers.io/api/v3/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"mother_maiden_name\\\": \\\"Luna\\\", \\\"id_front_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\", \\\"selfie_2id_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\",\r\n\t\\\"callback_url\\\":\\\"https:/www.example.com/update\\\"}\r\n\r\n\""
       }],
       "summary": "Submit KYC Data",
       "description": "To provide KYC data in order to change user from unverified status into fully verified status.  \n\nThe image/document provided us must be hosted in a URL then pass the URL to Xfers via this API.  \nMake sure data type for your image is jpeg / png.  \nMaximum size of the image/ document is 10 MB.  \n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.  In Indonesia, fully verified user will be backed by a savings account.\r\nThus, there are required parameters which are mother_maiden_name, id_front_url, selfie_2id_url.\r\nAdditional data will speed up the KYC process.",
@@ -413,8 +413,8 @@
     "get": {
       "operationId": "getUserInfo",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "tags": [
         "User Account"
@@ -520,8 +520,8 @@
       }],
       "operationId": "mockKYCVerification",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request PATCH \"{base_url}/user/verify\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
+        "lang": "Shell",
+        "source": "curl --location --request PATCH \"https://sandbox.xfers.io/api/v3/user/verify\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
       }],
       "summary": "Mock KYC Verification",
       "description": "This API verifies the user with corresponding API KEY. This API can only be called from sandbox.",
@@ -551,8 +551,8 @@
     "get": {
       "operationId": "getTransactionHistory",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/user/activities --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --data \"\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/user/activities --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  --data \"\""
       }],
       "tags": [
         "User Account"
@@ -751,8 +751,8 @@
     "get": {
       "operationId": "getTransferInfo",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "tags": [
         "User Account"
@@ -849,8 +849,8 @@
     "post": {
       "operationId": "createCharge",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request POST \"{base_url}/charges\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=10000\" \\\r\n  --form \"user_api_token={{user-api-token}}\" \\\r\n  --form \"order_id=Order_docs_12345\" \\\r\n  --form \"description=Testing for Documentation\" \\\r\n  --form \"notify_url=https://www.example.com/updates\" \\\r\n  --form \"meta_data=test metadata\""
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3/charges\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=10000\" \\\r\n  --form \"user_api_token=2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  --form \"order_id=Order_docs_12345\" \\\r\n  --form \"description=Testing for Documentation\" \\\r\n  --form \"notify_url=https://www.example.com/updates\" \\\r\n  --form \"meta_data=test metadata\""
       }],
       "tags": [
         "Charge"
@@ -1002,8 +1002,8 @@
     "get": {
       "operationId": "listCharge",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/charges?limit=1\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/charges?limit=1\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "tags": [
         "Charge"
@@ -1062,8 +1062,8 @@
     "post": {
       "operationId": "authorizeCharge",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/charges/<id>/authorize\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"auth_code\": \"512312\"}'"
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/charges/<id>/authorize\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\"auth_code\": \"512312\"}'"
       }],
       "tags": [
         "Charge"
@@ -1159,8 +1159,8 @@
     "post": {
       "operationId": "cancelCharge",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/charges/<CHARGE_ID>/cancel\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n  -X POST"
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/charges/<CHARGE_ID>/cancel\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n  -X POST"
       }],
       "tags": [
         "Charge"
@@ -1232,8 +1232,8 @@
     "get": {
       "operationId": "getCharge",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/charges/contract_7abf6bb130d44c02862982ff6022875d\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/charges/contract_7abf6bb130d44c02862982ff6022875d\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\""
       }],
       "tags": [
         "Charge"
@@ -1295,8 +1295,8 @@
     "post": {
       "operationId": "refundCharge",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request POST \"{base_url}/charges/%3Cid%3E/refunds\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --data \"\""
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3/charges/%3Cid%3E/refunds\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --data \"\""
       }],
       "tags": [
         "Charge"
@@ -1361,8 +1361,8 @@
     "post": {
       "operationId": "createPayout",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request POST \"{base_url}/payouts\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"user_api_token={{user-api-token}}\" \\\r\n  --form \"amount=15000.00\" \\\r\n  --form \"invoice_id=Order_docs_123\" \\\r\n  --form \"descriptions=Payment for Rent for July\""
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3/payouts\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"user_api_token=2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  --form \"amount=15000.00\" \\\r\n  --form \"invoice_id=Order_docs_123\" \\\r\n  --form \"descriptions=Payment for Rent for July\""
       }],
       "tags": [
         "Payout"
@@ -1485,8 +1485,8 @@
     "get": {
       "operationId": "listPayout",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/payouts?limit=1\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/payouts?limit=1\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "tags": [
         "Payout"
@@ -1544,8 +1544,8 @@
         "Payout"
       ],
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/payouts/contract_9b562994c4274d9993ba93c94619a8f6\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/payouts/contract_9b562994c4274d9993ba93c94619a8f6\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\""
       }],
       "summary": "Get Payout",
       "description": "Retrieves the details of a payout that has previously been created.\nSupply the unique payout ID that was returned from your previous request, and Xfers will return the corresponding payout information.",
@@ -1604,8 +1604,8 @@
     "post": {
       "operationId": "addBankAccount",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request POST \"{base_url}/user/bank_account\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"account_no\\\": \\\"1680366060\\\", \\\"bank\\\":\\\"BCA\\\"}\""
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3/user/bank_account\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"account_no\\\": \\\"1680366060\\\", \\\"bank\\\":\\\"BCA\\\"}\""
       }],
       "tags": [
         "Bank Account"
@@ -1685,8 +1685,8 @@
     "get": {
       "operationId": "listBankAcc",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/user/bank_account\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/user/bank_account\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\""
       }],
       "tags": [
         "Bank Account"
@@ -1726,8 +1726,8 @@
     "put": {
       "operationId": "updateBankAccount",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request PUT \"{base_url}/user/bank_account/649\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"account_no\\\": \\\"0393123432\\\", \\\"bank\\\":\\\"CIMB_NIAGA\\\", \\\"account_holder_name\\\": \\\"PROD ONLY\\\"}\""
+        "lang": "Shell",
+        "source": "curl --location --request PUT \"https://sandbox.xfers.io/api/v3/user/bank_account/649\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"account_no\\\": \\\"0393123432\\\", \\\"bank\\\":\\\"CIMB_NIAGA\\\", \\\"account_holder_name\\\": \\\"PROD ONLY\\\"}\""
       }],
       "tags": [
         "Bank Account"
@@ -1818,8 +1818,8 @@
     "delete": {
       "operationId": "deleteBankAccount",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request DELETE \"{base_url}/user/bank_account/175\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
+        "lang": "Shell",
+        "source": "curl --location --request DELETE \"https://sandbox.xfers.io/api/v3/user/bank_account/175\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
       }],
       "tags": [
         "Bank Account"
@@ -1870,8 +1870,8 @@
     "post": {
       "operationId": "createWithdrawal",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request POST \"{base_url}/user/bank_account/175/withdraw\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"amount\\\": \\\"120000.0\\\"}\""
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3/user/bank_account/175/withdraw\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"amount\\\": \\\"120000.0\\\"}\""
       }],
       "tags": [
         "Withdraw"
@@ -1983,8 +1983,8 @@
     "get": {
       "operationId": "listWithdrawalRequests",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/user/bank_account/withdrawal_requests/contract_51005437f4734be5b7e3a548b4fa7d0e\" \\\r\n  --header \"X-XFERS-USER-API-KEY: EB2e4nRxkoXUmDgydz22ZKBmtKon6mG89XK6stAtUF4\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/user/bank_account/withdrawal_requests/contract_51005437f4734be5b7e3a548b4fa7d0e\" \\\r\n  --header \"X-XFERS-USER-API-KEY: EB2e4nRxkoXUmDgydz22ZKBmtKon6mG89XK6stAtUF4\""
       }],
       "tags": [
         "Withdraw"
@@ -2028,8 +2028,8 @@
     "get": {
       "operationId": "getBankAbbrev",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/banks\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/banks\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "tags": [
         "Bank Account"
@@ -3151,8 +3151,8 @@
     "get": {
       "operationId": "getWithdrawal",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/user/bank_account/withdrawal_requests/contract_51005437f4734be5b7e3a548b4fa7d0e\" \\\r\n  --header \"X-XFERS-USER-API-KEY: EB2e4nRxkoXUmDgydz22ZKBmtKon6mG89XK6stAtUF4\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/user/bank_account/withdrawal_requests/contract_51005437f4734be5b7e3a548b4fa7d0e\" \\\r\n  --header \"X-XFERS-USER-API-KEY: EB2e4nRxkoXUmDgydz22ZKBmtKon6mG89XK6stAtUF4\""
       }],
       "tags": [
         "Withdraw"
@@ -3214,8 +3214,8 @@
       }],
       "operationId": "authorizeHello",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/authorize/hello\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/authorize/hello\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "summary": "Check Connection",
       "description": "Use this endpoint to check connection with our server",
@@ -3252,8 +3252,8 @@
       }],
       "operationId": "getMockOtp",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request GET \"{base_url}/authorize/get_mock_otp?phone_no=%252B6287785725657\" \\\r\n  --header \"X-XFERS-USER-API-KEY: dS7zxQydn4PLxwNE3kuyb4pg6BsNWHE818D2wbhoavQ\""
+        "lang": "Shell",
+        "source": "curl --location --request GET \"https://sandbox.xfers.io/api/v3/authorize/get_mock_otp?phone_no=%252B6287785725657\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "summary": "Get Mock OTP",
       "description": "Get a mock OTP. This is only usable in sandbox environment",
@@ -3302,8 +3302,8 @@
       "summary": "Mock Withdrawal Result",
       "description": "You need to wait for a few seconds after withdrawal creation to run this API. Currently only available in Indonesia",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl --location --request PUT \"{base_url}/user/bank_account/withdrawal_requests/mock_result\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"status=completed\""
+        "lang": "Shell",
+        "source": "curl --location --request PUT \"https://sandbox.xfers.io/api/v3/user/bank_account/withdrawal_requests/mock_result\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"status=completed\""
       }],
       "security": [{
         "X-XFERS-USER-API-KEY": [
@@ -3368,6 +3368,103 @@
       }
     }
   },
+  "/api/v3/user/direct_bank_transfer_payments": {
+    "post": {
+      "operationId": "createDirectBankTransferPayment",
+      "x-code-samples": [{
+        "lang": "Shell",
+        "source": "curl --location --request POST \"https://sandbox.xfers.io/api/v3\/user\/direct_bank_transfer_payments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\" \\\r\n  --form \"amount=3000.00\" \\\r\n  --form \"external_id=foo_bar_123\""
+      }],
+      "tags": [
+        "Direct Bank Transfer Payments (Coming Soon)"
+      ],
+      "summary": "Create Direct Bank Transfer Payment",
+      "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in X-XFERS-USER-API-KEY header should be your customer's API token.",
+      "security": [
+        {
+          "X-XFERS-USER-API-KEY": [
+          ]
+        }
+      ],
+      "servers": [
+        {
+          "description": "Singapore Production",
+          "url": "https://www.xfers.io/api/v3"
+        },
+        {
+          "description": "Singapore Sandbox for testing",
+          "url": "https://sandbox.xfers.io/api/v3"
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "amount",
+                "external_id"
+              ],
+              "properties": {
+                "amount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Transaction Amount."
+                },
+                "external_id": {
+                  "type": "string",
+                  "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
+                },
+                "callback_url": {
+                  "type": "string",
+                  "description": "Callback url provided by merchant."
+                }
+              }
+            },
+            "examples": {
+              "Request Body Example": {
+                "summary": "Request Body Example",
+                "value": {
+                  "amount": 500.0,
+                  "external_id": "abc_xy1",
+                  "callback_url": "https://wwww.example.com/callbacks"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Success",
+          "content": {
+            "application/json" : {
+              "example": {
+                "id": "contract_c184633a1d3d4d1aa6b49810795f6a65",
+                "object": "DirectBankTransferContract",
+                "status": "processing",
+                "amount": "500.0",
+                "total_amount": "500.0",
+                "currency": "sgd",
+                "notify_url": "https://wwww.example.com/callbacks",
+                "wallet_name": "Digital Goods",
+                "order_id": "abc_xy1",
+                "description": null,
+                "receipt_email": "antonio@coinbase.com",
+                "expiration_date": null,
+                "metadata": {
+                    "callback_url": "https://wwww.example.com/callbacks"
+                }
+            }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v4Error:4XX"
+        }
+      }
+    }
+  },
   "/api/v3/intents": {
     "post": {
       "operationId": "createIntent",
@@ -3377,8 +3474,8 @@
       "summary": "Create an Intent",
       "description": "The following request will allow you to create a intent for a transfer and register a callback notification once a transfer has be received or expired(all intents expires in 72 hours.)\r\n\r\nUser should be prompted to transfer  `unique_amount`  amount to the  `bank_account_no`  and  `bank_name`provided. Once the user deposits with  `unique_amount`, the full amount will be credited to his account.",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/intents\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n -H \"Content-Type: application/json\" \\\r\n  -d '{ \"amount\": \"5000\", \"currency\": \"SGD\", \"bank\": \"BCA\", \"request_id\" : \"AZ0001\", \"notify_url\" : \"https://mysite.com/topup_notification\"}'"
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/intents\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n -H \"Content-Type: application/json\" \\\r\n  -d '{ \"amount\": \"5000\", \"currency\": \"SGD\", \"bank\": \"BCA\", \"request_id\" : \"AZ0001\", \"notify_url\" : \"https://mysite.com/topup_notification\"}'"
       }],
       "security": [{
         "X-XFERS-USER-API-KEY": [
@@ -3487,8 +3584,8 @@
       "summary": "List Current Intent",
       "description": "Returns the current pending intent of the user. If multiple intents are created, only the last one is returned.\r\n\r\n`transfer_info_array`  is returned so you can display a list of all Xfers banks to transfer to.",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/intents\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/intents\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
       }],
       "security": [{
         "X-XFERS-USER-API-KEY": [
@@ -3564,8 +3661,8 @@
       "summary": "Cancel an Intent",
       "description": "Cancelling an intent that has been previously created but not yet completed.",
       "x-code-samples": [{
-        "lang": "Shell_curl",
-        "source": "curl \"{base_url}/intent/<INTENT_ID>/cancel\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n  -X POST"
+        "lang": "Shell",
+        "source": "curl \"https://sandbox.xfers.io/api/v3/intent/<INTENT_ID>/cancel\" \\\r\n  -H \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\"\r\n  -X POST"
       }],
       "security": [{
         "X-XFERS-USER-API-KEY": [

@@ -5,7 +5,7 @@
       "summary": "Get Account Info (Coming Soon)",
       "description": "This API displays the account information, including the storage limits.",
       "tags": [
-        "User Account"
+        "cutting_edge"
       ],
       "x-code-samples": [{
         "lang": "Shell",
@@ -90,7 +90,7 @@
         "source": "curl --location --request POST \"$BASE_URL/direct_bank_transfer_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\" \\\r\n  --form \"amount=100\" \\\r\n  --form \"external_id=ref_20200101_0001\" \\\r\n  --form \"source_bank_account_id=12345\""
       }],
       "tags": [
-        "Direct Bank Transfer Payments (Coming Soon)"
+        "cutting_edge"
       ],
       "summary": "Create Direct Bank Transfer Payment (Coming Soon)",
       "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in Authorization header should be your customer's API token.\n\n In the response, you will have information about the bank account to top up to. Show this information to your customer for them to make a bank transfer. They need to put the `unique_topup_identifier` in the comments field when doing a bank transfer for Xfers to identify that their transfer is for this transaction.",
@@ -168,7 +168,7 @@
         "source": "curl --location --request GET \"$BASE_URL/inter_wallet_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
       }],
       "tags": [
-        "Direct Bank Transfer Payments (Coming Soon)"
+        "cutting_edge"
       ],
       "summary": "List Direct Bank Transfer Payments (Coming Soon)",
       "description": "Retrive a previously created direct bank transfer payment. You can use this to check the status, whether it has been completed or still processing. The API token used in Authorization header should be your customer's API token.",
