@@ -3395,7 +3395,7 @@
           "description": "Singapore Sandbox for testing",
           "url": "https://sandbox.xfers.io/api/v3"
         }
-      ],        
+      ],
       "requestBody": {
         "required": true,
         "content": {
@@ -3455,7 +3455,7 @@
                 "metadata": {
                     "callback_url": "https://wwww.example.com/callbacks"
                 }
-            }            
+            }
             }
           }
         },
