@@ -1877,7 +1877,7 @@
         "Withdraw"
       ],
       "summary": "Create Withdrawal",
-      "description": "Withdrawal Time varies upon country. \r\nFor Indonesia, withdrawal time is instantenous.\r\nFor Singapore, withdrawal time depends on whether it is an express withdrawal.\r\n\r\n#### Withdrawal on Behalf\r\nIf you wish to withdraw to a bank account not belonging to you, add in user_api_token in the params.\r\n\r\nBehind the scenes, Xfers does a payout of funds from your Xfers account to that user’s Xfers account, followed by a withdrawal. This is required for compliance purposes as we cannot directly withdraw funds to a bank account not belonging to you.\r\n\r\nTo clarify this:\r\n\r\nPlacing of xfers_api_token | Flow | Remark\r\n--------------- |  ----------- | -----\r\nmerchant's token in header, user's token in body| merchant's Xfers account -> user's Xfers account -> user's bank Account | We call this `Withdrawal on Behalf`\r\nuser's token in header, nothing in body| user's Xfers account -> user's bank Account | this is the usual usage\r\nmerchant's token in header, nothing in body| merchant's Xfers account -> merchant's bank Account | This is usually done via Xfers Dashboard\r\n",
+      "description": "Withdrawal Time varies upon country. \r\nFor Indonesia, withdrawal time is instantaneous.\r\nFor Singapore, withdrawal time depends on whether it is an express withdrawal.\r\n\r\n#### Withdrawal on Behalf\r\nIf you wish to withdraw to a bank account that does not belong to you, add in user_api_token in the params.\r\n\r\nBehind the scenes, Xfers does a payout of funds from your Xfers account to that user’s Xfers account, followed by a withdrawal. This is required for compliance purposes as we cannot directly withdraw funds to a bank account that does not belong to you.\r\n\r\nTo clarify this:\r\n\r\nPlacing of xfers_api_token | Flow | Remark\r\n--------------- |  ----------- | -----\r\nmerchant's token in header, user's token in body| merchant's Xfers account -> user's Xfers account -> user's bank Account | We call this `Withdrawal on Behalf`\r\nuser's token in header, nothing in body| user's Xfers account -> user's bank Account | This is the standard Withdrawal usage\r\nmerchant's token in header, nothing in body| merchant's Xfers account -> merchant's bank Account | This is usually done via Xfers Dashboard\r\n",
       "security": [{
         "X-XFERS-USER-API-KEY": [
 
@@ -1911,18 +1911,6 @@
                 "idempotency_id": {
                   "type": "string",
                   "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia"
-                },
-                "from_wallet_id": {
-                  "type": "integer",
-                  "x-custom-params": [
-                    "Singapore"
-                  ],
-                  "description": "Only Singapore.\n\nWallet ID of the Xfers wallet to withdraw from.\n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
-                  "enum": [
-                    1,
-                    2,
-                    8
-                  ]
                 },
                 "express": {
                   "type": "boolean",
