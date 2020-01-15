@@ -3424,7 +3424,7 @@
                   "id": "contract_c211dfac6f0d46ac829efd008de9b7e8",
                   "idempotency_id": "940c3560-60bb-43f0-9f4a-5b161b11bf57",
                   "type": "Direct bank transfer",
-                  "status": "processing",
+                  "status": "completed",
                   "amount": "29.61",
                   "fees": "0.0",
                   "created_at": "2020-01-07T12:44:54+08:00"
