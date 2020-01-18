@@ -35,7 +35,7 @@
     },
     {
       "name": "Try it out with Postman",
-      "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n#### Xfers Postman Collection\r\n|Singapore|Indonesia|\r\n|--|--|\r\n|[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5fa6d37311e7bfc6ef2a)| [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/453dd7b670533289a719)|",
+      "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n#### Xfers Postman Collection\r\n|Singapore|Indonesia|\r\n|--|--|\r\n|[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/31253e7aa0ba90db9fc4)| [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/453dd7b670533289a719)|",
       "x-traitTag": true
     },
     {
