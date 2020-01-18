@@ -1727,7 +1727,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{XDD}}"
+										"value": ""
 									}
 								],
 								"url": {
@@ -1760,7 +1760,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{XDD}}"
+										"value": ""
 									}
 								],
 								"url": {
@@ -2072,7 +2072,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{XDD}}"
+										"value": ""
 									}
 								],
 								"url": {
@@ -2107,7 +2107,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{XDD}}"
+										"value": ""
 									}
 								],
 								"url": {
@@ -2958,7 +2958,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -2991,7 +2991,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3061,7 +3061,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3095,7 +3095,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3299,7 +3299,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3334,7 +3334,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3749,7 +3749,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3788,7 +3788,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3864,7 +3864,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3898,7 +3898,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -3950,11 +3950,13 @@
 										{
 											"key": "amount",
 											"value": "100",
+											"description": "Amount",
 											"type": "text"
 										},
 										{
 											"key": "external_id",
 											"value": "order_001",
+											"description": "Unique reference id from your side",
 											"type": "text"
 										},
 										{
@@ -3979,106 +3981,6 @@
 								"description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in X-XFERS-USER-API-KEY header should be your customer's API token."
 							},
 							"response": [
-								{
-									"name": "400 - Bad Request",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "amount",
-													"value": "-10",
-													"type": "text"
-												},
-												{
-													"key": "external_id",
-													"value": "order_001",
-													"type": "text"
-												},
-												{
-													"key": "callback_url",
-													"value": "https://yourserver.com/notify_direct_bank_transfer_callback",
-													"type": "text",
-													"disabled": true
-												}
-											]
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/v3/user/direct_bank_transfer_payments",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"v3",
-												"user",
-												"direct_bank_transfer_payments"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "X-Frame-Options",
-											"value": "SAMEORIGIN"
-										},
-										{
-											"key": "X-XSS-Protection",
-											"value": "1; mode=block"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										},
-										{
-											"key": "Access-Control-Request-Method",
-											"value": "*"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "Vary",
-											"value": "Accept-Encoding"
-										},
-										{
-											"key": "Content-Encoding",
-											"value": "gzip"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache"
-										},
-										{
-											"key": "X-Request-Id",
-											"value": "1f0ef8c8-1412-4e77-9018-6af18a28ca27"
-										},
-										{
-											"key": "X-Runtime",
-											"value": "4.259867"
-										},
-										{
-											"key": "Transfer-Encoding",
-											"value": "chunked"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"error\": \"Validation failed: Amount must be greater than 0, External key (order_id or invoice_id) has already been taken\"\n}"
-								},
 								{
 									"name": "200 - Success",
 									"originalRequest": {
@@ -4161,7 +4063,7 @@
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"1473c7a3fe1afae6b35abad0b47fd434\""
+											"value": "W/\"31320211bda4e19325bb42c9b3b2da12\""
 										},
 										{
 											"key": "Cache-Control",
@@ -4169,11 +4071,11 @@
 										},
 										{
 											"key": "X-Request-Id",
-											"value": "beed64c2-a21c-42ad-8882-6f33a67d8ca6"
+											"value": "9cb50e99-4e6d-43a8-9b00-daa6b2755ee0"
 										},
 										{
 											"key": "X-Runtime",
-											"value": "13.582975"
+											"value": "6.221077"
 										},
 										{
 											"key": "Transfer-Encoding",
@@ -4181,7 +4083,107 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"id\": \"contract_e42eb35c848346e58cd2c698f3315db3\",\n    \"object\": \"DirectBankTransferContract\",\n    \"status\": \"processing\",\n    \"amount\": \"100.0\",\n    \"total_amount\": \"100.0\",\n    \"currency\": \"sgd\",\n    \"notify_url\": null,\n    \"wallet_name\": \"Digital Goods\",\n    \"order_id\": \"order_001\",\n    \"description\": null,\n    \"receipt_email\": \"corey@xfers.com\",\n    \"expiration_date\": null,\n    \"metadata\": {}\n}"
+									"body": "{\n    \"id\": \"contract_177dd9bcc71e4bfbb25fa835e86ebe22\",\n    \"object\": \"DirectBankTransferContract\",\n    \"status\": \"processing\",\n    \"amount\": \"100.0\",\n    \"total_amount\": \"100.0\",\n    \"currency\": \"sgd\",\n    \"notify_url\": null,\n    \"wallet_name\": \"Digital Goods\",\n    \"order_id\": \"order_001\",\n    \"description\": null,\n    \"receipt_email\": \"corey@xfers.com\",\n    \"expiration_date\": null,\n    \"metadata\": {}\n}"
+								},
+								{
+									"name": "400 - Bad request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "amount",
+													"value": "-100",
+													"type": "text"
+												},
+												{
+													"key": "external_id",
+													"value": "order_002",
+													"type": "text"
+												},
+												{
+													"key": "callback_url",
+													"value": "https://yourserver.com/notify_direct_bank_transfer_callback",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/v3/user/direct_bank_transfer_payments",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"v3",
+												"user",
+												"direct_bank_transfer_payments"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Request-Method",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache"
+										},
+										{
+											"key": "X-Request-Id",
+											"value": "ba69d946-df50-4a40-97ef-bc39e20c6eb1"
+										},
+										{
+											"key": "X-Runtime",
+											"value": "3.191804"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"error\": \"Validation failed: Amount must be greater than 0\"\n}"
 								}
 							]
 						}
@@ -5154,7 +5156,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -5193,7 +5195,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -5899,7 +5901,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -5938,7 +5940,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -6015,7 +6017,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
@@ -6050,7 +6052,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
+												"value": ""
 											}
 										],
 										"url": {
