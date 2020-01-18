@@ -47,7 +47,7 @@
   },
   {
     "name": "Try it out with Postman",
-    "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n#### Xfers Postman Collection\r\n|Singapore|Indonesia|\r\n|--|--|\r\n|[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5fa6d37311e7bfc6ef2a)| [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/453dd7b670533289a719)|",
+    "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n4. Setup Your Environment Variables For Credentials [(Learn more)](https://learning.getpostman.com/docs/postman/variables-and-environments/variables/#environments-in-postman/)\r\n\r\n[![Run in Postman](https://run.pstmn.io/button.svg)](postman://app/collections/import/3235311-a3fa07b2-7555-45e6-8e82-55ef48e3ce46-SWLmZ5dS?referrer=https%3A%2F%2Fdocumenter.getpostman.com%2Fview%2F3235311%2FSWLmZ5dS%3Fversion%3Dlatest&versionTag=latest#?)",
     "x-traitTag": true
   },
   {
