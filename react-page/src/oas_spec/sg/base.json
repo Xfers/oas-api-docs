@@ -2,11 +2,11 @@
   "openapi": "3.0.0",
   "servers": [{
       "description": "Singapore Production",
-      "url": "https://www.xfers.io/"
+      "url": "https://www.xfers.io/api"
     },
     {
       "description": "Singapore Sandbox for testing",
-      "url": "https://sandbox.xfers.io/"
+      "url": "https://sandbox.xfers.io/api"
     }
   ],
   "info": {

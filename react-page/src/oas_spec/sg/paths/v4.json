@@ -1,5 +1,5 @@
 {
-  "/api/v4/accounts": {
+  "/v4/accounts": {
     "get": {
       "operationId": "getApiV4AccountsId",
       "summary": "Get Account Info (Coming Soon)",
@@ -9,7 +9,7 @@
       ],
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request GET \"$BASE_URL/accounts\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
+        "source": "curl --location --request GET \"$BASE_URL/v4/accounts\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $CUSTOMER_API_KEY\""
       }],
       "security": [{
         "v4XfersAuth": []
@@ -82,12 +82,12 @@
       }
     }
   },
-  "/api/v4/direct_bank_transfer_payments": {
+  "/v4/direct_bank_transfer_payments": {
     "post": {
       "operationId": "createDirectBankTransferPayment",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request POST \"$BASE_URL/direct_bank_transfer_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\" \\\r\n  --form \"amount=100\" \\\r\n  --form \"external_id=ref_20200101_0001\" \\\r\n  --form \"source_bank_account_id=12345\""
+        "source": "curl --location --request POST \"$BASE_URL/v4/direct_bank_transfer_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $CUSTOMER_API_KEY\" \\\r\n  --form \"amount=100\" \\\r\n  --form \"external_id=ref_20200101_0001\" \\\r\n  --form \"source_bank_account_id=12345\""
       }],
       "tags": [
         "cutting_edge"
@@ -165,7 +165,7 @@
       "operationId": "listDirectBankTransferPayments",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request GET \"$BASE_URL/inter_wallet_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $API_TOKEN\""
+        "source": "curl --location --request GET \"$BASE_URL/v4/inter_wallet_payments\" \\\r\n  --header \"Content-Type: application/vnd.api+json\" \\\r\n  --header \"Authorization: Bearer $CUSTOMER_API_KEY\""
       }],
       "tags": [
         "cutting_edge"
