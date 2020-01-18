@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "b7890b30-c8da-437b-87d6-8d46155589f9",
 		"name": "Xfers API - Singapore",
-		"description": "Welcome to Xfers' API documentation. You can find information on our API endpoint specific to your country.\n\nContact Support:\n Name: Contact us through our help desk",
+		"description": "Welcome to Xfers' API documentation. You can find information on our API endpoint specific to your country.\n\nContact us through our [help desk](https://bit.ly/XfersSupport)\n\n[Find out more about Xfers](https://www.xfers.com)\n\n---\n\nError responses\n===\nThe API categorises the various failures with Xfers' own error code. The body of the response will be JSON in the following format:\n\n```\nerror: \"string\"\nerror_code: \"string\"\nerror_handling: \"string\"\n```\n\nThe field `error` returns the error message that is specific to your request, `error_code` returns the category the error and `error_handling` returns the instruction on how to resolve the error.\n\n\nPagination\n===\n\nTo do pagination:\n1. Decide on number of entries per page (e.g. 100 for this example). Set the limit as this\n2. First page: Offset 0. The latest 100 entries, 1-100, will be returned.\n3. Second page: Offset 100. The next 100 entries, 101-200, will be returned.\n4. Third page: Offset 200. The next 100 entries, 201-300, will be returned.\nHence your offset should always be a multiple of limits.\n\n\nCallback configuration\n===\n\nFor certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\n- [Singapore](https://www.xfers.io/merchant_settings/callback_settings)\n- [Indonesia](https://id.xfers.com/merchant_settings/callback_settings)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -17,8 +17,7 @@
 							"script": {
 								"id": "5c984214-bf6e-4e29-b8e0-648826a20c09",
 								"exec": [
-									"params = {}",
-									"pm.request.body.formdata.each((p) => { params[p.key] = p.value })",
+									"params = request.data",
 									"",
 									"phoneNo = params[\"phone_no\"]",
 									"appSecretKey = pm.environment.get('MERCHANT_APP_SECRET')",
@@ -57,7 +56,12 @@
 									"description": "SHA1-hex of (phone_no + MERCHANT_APP_SECRET). More information on generating SHA1 here http://www.sha1-online.com/",
 									"type": "text"
 								}
-							]
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/v3/authorize/signup_login",
@@ -191,8 +195,7 @@
 							"script": {
 								"id": "11f3665a-5f73-410d-9aaa-7dbadca0cceb",
 								"exec": [
-									"params = {}",
-									"pm.request.body.formdata.each((p) => { params[p.key] = p.value })",
+									"params = request.data",
 									"",
 									"phoneNo = params[\"phone_no\"]",
 									"otp = params[\"otp\"]",
@@ -226,13 +229,13 @@
 								{
 									"key": "phone_no",
 									"value": "",
-									"description": "OTP from what user got",
+									"description": "User mobile no. It should follow International format.",
 									"type": "text"
 								},
 								{
 									"key": "otp",
 									"value": "",
-									"description": "User mobile no. It should follow International format.",
+									"description": "One Time password that the customer received",
 									"type": "text"
 								},
 								{
@@ -3951,7 +3954,7 @@
 										},
 										{
 											"key": "external_id",
-											"value": "order_002",
+											"value": "order_001",
 											"type": "text"
 										},
 										{
@@ -3977,15 +3980,14 @@
 							},
 							"response": [
 								{
-									"name": "400 - Bad request",
+									"name": "400 - Bad Request",
 									"originalRequest": {
 										"method": "POST",
 										"header": [
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}",
-												"type": "text"
+												"value": "{{CUSTOMER_API_KEY}}"
 											}
 										],
 										"body": {
@@ -3993,13 +3995,19 @@
 											"formdata": [
 												{
 													"key": "amount",
-													"value": "-100",
+													"value": "-10",
 													"type": "text"
 												},
 												{
 													"key": "external_id",
-													"value": "order_002",
+													"value": "order_001",
 													"type": "text"
+												},
+												{
+													"key": "callback_url",
+													"value": "https://yourserver.com/notify_direct_bank_transfer_callback",
+													"type": "text",
+													"disabled": true
 												}
 											]
 										},
@@ -4020,6 +4028,18 @@
 									"_postman_previewlanguage": "json",
 									"header": [
 										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
 											"key": "Access-Control-Allow-Origin",
 											"value": "*"
 										},
@@ -4028,60 +4048,36 @@
 											"value": "*"
 										},
 										{
-											"key": "Cache-Control",
-											"value": "no-cache"
-										},
-										{
-											"key": "Content-Encoding",
-											"value": "gzip"
-										},
-										{
 											"key": "Content-Type",
 											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "Date",
-											"value": "Sat, 18 Jan 2020 06:48:01 GMT"
-										},
-										{
-											"key": "Server",
-											"value": "nginx/1.13.12"
 										},
 										{
 											"key": "Vary",
 											"value": "Accept-Encoding"
 										},
 										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
+											"key": "Content-Encoding",
+											"value": "gzip"
 										},
 										{
-											"key": "X-Frame-Options",
-											"value": "SAMEORIGIN"
+											"key": "Cache-Control",
+											"value": "no-cache"
 										},
 										{
 											"key": "X-Request-Id",
-											"value": "3380c5b1-3b27-41a3-b56e-e73eaceb529d"
+											"value": "1f0ef8c8-1412-4e77-9018-6af18a28ca27"
 										},
 										{
 											"key": "X-Runtime",
-											"value": "0.097743"
+											"value": "4.259867"
 										},
 										{
-											"key": "X-XSS-Protection",
-											"value": "1; mode=block"
-										},
-										{
-											"key": "Content-Length",
-											"value": "196"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
+											"key": "Transfer-Encoding",
+											"value": "chunked"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"error\": \"Validation failed: Amount must be greater than 0\",\n    \"info\": \"Received Request: {\\\"amount\\\"=>\\\"-100\\\", \\\"external_id\\\"=>\\\"order_002\\\", \\\"controller\\\"=>\\\"api/v3/users\\\", \\\"action\\\"=>\\\"direct_bank_transfer_payments\\\"}\"\n}"
+									"body": "{\n    \"error\": \"Validation failed: Amount must be greater than 0, External key (order_id or invoice_id) has already been taken\"\n}"
 								},
 								{
 									"name": "200 - Success",
@@ -4091,8 +4087,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}",
-												"type": "text"
+												"value": "{{CUSTOMER_API_KEY}}"
 											}
 										],
 										"body": {
@@ -4107,6 +4102,12 @@
 													"key": "external_id",
 													"value": "order_001",
 													"type": "text"
+												},
+												{
+													"key": "callback_url",
+													"value": "https://yourserver.com/notify_direct_bank_transfer_callback",
+													"type": "text",
+													"disabled": true
 												}
 											]
 										},
@@ -4127,6 +4128,18 @@
 									"_postman_previewlanguage": "json",
 									"header": [
 										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
 											"key": "Access-Control-Allow-Origin",
 											"value": "*"
 										},
@@ -4135,68 +4148,40 @@
 											"value": "*"
 										},
 										{
-											"key": "Cache-Control",
-											"value": "max-age=0, private, must-revalidate"
-										},
-										{
-											"key": "Content-Encoding",
-											"value": "gzip"
-										},
-										{
 											"key": "Content-Type",
 											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "Date",
-											"value": "Sat, 18 Jan 2020 06:47:01 GMT"
-										},
-										{
-											"key": "ETag",
-											"value": "W/\"4136c26807ebc90385055c81e50fc85e\""
-										},
-										{
-											"key": "Server",
-											"value": "nginx/1.12.0"
-										},
-										{
-											"key": "Strict-Transport-Security",
-											"value": "max-age=31536000; includeSubDomains;"
 										},
 										{
 											"key": "Vary",
 											"value": "Accept-Encoding"
 										},
 										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
+											"key": "Content-Encoding",
+											"value": "gzip"
 										},
 										{
-											"key": "X-Frame-Options",
-											"value": "SAMEORIGIN"
+											"key": "ETag",
+											"value": "W/\"1473c7a3fe1afae6b35abad0b47fd434\""
+										},
+										{
+											"key": "Cache-Control",
+											"value": "max-age=0, private, must-revalidate"
 										},
 										{
 											"key": "X-Request-Id",
-											"value": "522f8423-46c0-4ad3-a71e-a5ee48bca66b"
+											"value": "beed64c2-a21c-42ad-8882-6f33a67d8ca6"
 										},
 										{
 											"key": "X-Runtime",
-											"value": "0.104730"
+											"value": "13.582975"
 										},
 										{
-											"key": "X-XSS-Protection",
-											"value": "1; mode=block"
-										},
-										{
-											"key": "Content-Length",
-											"value": "250"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
+											"key": "Transfer-Encoding",
+											"value": "chunked"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"id\": \"contract_b2bb9b580e964e999b8b93392b9fa69d\",\n    \"object\": \"DirectBankTransferContract\",\n    \"status\": \"processing\",\n    \"amount\": \"100.0\",\n    \"total_amount\": \"100.0\",\n    \"currency\": \"sgd\",\n    \"notify_url\": null,\n    \"wallet_name\": \"Digital Goods\",\n    \"order_id\": \"order_001\",\n    \"description\": null,\n    \"receipt_email\": \"playground@xfers.com\",\n    \"expiration_date\": null,\n    \"metadata\": {}\n}"
+									"body": "{\n    \"id\": \"contract_e42eb35c848346e58cd2c698f3315db3\",\n    \"object\": \"DirectBankTransferContract\",\n    \"status\": \"processing\",\n    \"amount\": \"100.0\",\n    \"total_amount\": \"100.0\",\n    \"currency\": \"sgd\",\n    \"notify_url\": null,\n    \"wallet_name\": \"Digital Goods\",\n    \"order_id\": \"order_001\",\n    \"description\": null,\n    \"receipt_email\": \"corey@xfers.com\",\n    \"expiration_date\": null,\n    \"metadata\": {}\n}"
 								}
 							]
 						}
@@ -6232,6 +6217,29 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Payment API endpoints",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "afd917ce-1809-42c9-a6cb-393c3f70b975",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac010602-757f-4c90-9e2c-5188cef0744b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
