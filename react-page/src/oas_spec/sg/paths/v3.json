@@ -3364,7 +3364,7 @@
         "source": "curl --location --request POST \"$BASE_URL/v3\/user\/direct_bank_transfer_payments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: $CUSTOMER_API_KEY\" \\\r\n  --form \"amount=3000.00\" \\\r\n  --form \"external_id=foo_bar_123\""
       }],
       "tags": [
-        "Direct Bank Transfer Payments (Coming Soon)"
+        "Direct Bank Transfer Payments"
       ],
       "summary": "Create Direct Bank Transfer Payment",
       "description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in X-XFERS-USER-API-KEY header should be your customer's API token.",
