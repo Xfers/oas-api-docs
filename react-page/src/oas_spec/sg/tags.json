@@ -47,7 +47,7 @@
   },
   {
     "name": "Try it out with Postman",
-    "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n4. Setup Your Environment Variables For Credentials [(Learn more)](https://learning.getpostman.com/docs/postman/variables-and-environments/variables/#environments-in-postman/)\r\n\r\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/31253e7aa0ba90db9fc4)",
+    "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n4. Setup Your Environment Variables For Credentials [(Learn more)](https://learning.getpostman.com/docs/postman/variables-and-environments/variables/#environments-in-postman/)\r\n\r\n[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/84e1dd9106f256d6cd07)",
     "x-traitTag": true
   },
   {

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "27ae7eb2-69f5-4ac0-93a9-c48b63696904",
+		"_postman_id": "b7890b30-c8da-437b-87d6-8d46155589f9",
 		"name": "Xfers API - Singapore",
 		"description": "Welcome to Xfers' API documentation. You can find information on our API endpoint specific to your country.\n\nContact Support:\n Name: Contact us through our help desk",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -17,8 +17,11 @@
 							"script": {
 								"id": "5c984214-bf6e-4e29-b8e0-648826a20c09",
 								"exec": [
-									"phoneNo = pm.environment.get('phoneNo')",
-									"appSecretKey = pm.environment.get('merchantAppSecret')",
+									"params = {}",
+									"pm.request.body.formdata.each((p) => { params[p.key] = p.value })",
+									"",
+									"phoneNo = params[\"phone_no\"]",
+									"appSecretKey = pm.environment.get('MERCHANT_APP_SECRET')",
 									"hash = CryptoJS.SHA1(phoneNo + appSecretKey).toString()",
 									"pm.environment.set('signature', hash)",
 									""
@@ -35,31 +38,31 @@
 						"header": [
 							{
 								"key": "X-XFERS-APP-API-KEY",
-								"value": "{{merchantAppKey}}",
+								"value": "{{MERCHANT_APP_KEY}}",
 								"description": "You can retrieve this from the dashboard"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded"
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "phone_no",
-									"value": "{{phoneNo}}"
+									"value": "",
+									"description": "User mobile no. It should follow International format.",
+									"type": "text"
 								},
 								{
 									"key": "signature",
-									"value": "{{signature}}"
+									"value": "{{signature}}",
+									"description": "SHA1-hex of (phone_no + MERCHANT_APP_SECRET). More information on generating SHA1 here http://www.sha1-online.com/",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/authorize/signup_login",
+							"raw": "{{BASE_URL}}/v3/authorize/signup_login",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -70,6 +73,60 @@
 						"description": "This API is used to start user registration by inputting phone number.\nAfter this API is called, an OTP SMS will be sent to that number.\n\nYou can re-trigger this API to re-send OTP to the same phone number after 1 minute.\n\nThis OTP will expire in 10 minutes.\nThe SMS format will be:\n```\n[XFERS] Your OTP is 123456. This is to set up payments for `merchant_name` . If this is not done by you, please report to http://bit.ly/XfersSupport\n```\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called `X-XFERS-APP-API-KEY`.\nYou will need `X-XFERS-APP-SECRET-KEY`  to generate signature in the request body.\n"
 					},
 					"response": [
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "You can retrieve this from the dashboard",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-APP-API-KEY",
+										"value": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "phone_no",
+											"value": "<string>"
+										},
+										{
+											"key": "signature",
+											"value": "<string>"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/authorize/signup_login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"authorize",
+										"signup_login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
 						{
 							"name": "Success",
 							"originalRequest": {
@@ -102,9 +159,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/authorize/signup_login",
+									"raw": "{{BASE_URL}}/authorize/signup_login",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"authorize",
@@ -123,60 +180,6 @@
 							],
 							"cookie": [],
 							"body": "{\n \"msg\": \"success\"\n}"
-						},
-						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"description": {
-											"content": "You can retrieve this from the dashboard",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-APP-API-KEY",
-										"value": ""
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "phone_no",
-											"value": "<string>"
-										},
-										{
-											"key": "signature",
-											"value": "<string>"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{baseUrl}}/authorize/signup_login",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"authorize",
-										"signup_login"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -188,9 +191,12 @@
 							"script": {
 								"id": "11f3665a-5f73-410d-9aaa-7dbadca0cceb",
 								"exec": [
-									"phoneNo = pm.environment.get('phoneNo')",
-									"otp = pm.environment.get('otp')",
-									"appSecretKey = pm.environment.get('merchantAppSecret')",
+									"params = {}",
+									"pm.request.body.formdata.each((p) => { params[p.key] = p.value })",
+									"",
+									"phoneNo = params[\"phone_no\"]",
+									"otp = params[\"otp\"]",
+									"appSecretKey = pm.environment.get('MERCHANT_APP_SECRET')",
 									"hash = CryptoJS.SHA1(phoneNo + otp + appSecretKey).toString()",
 									"pm.environment.set('signature', hash)",
 									""
@@ -199,6 +205,9 @@
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -207,101 +216,54 @@
 						"header": [
 							{
 								"key": "X-XFERS-APP-API-KEY",
-								"value": "{{merchantToken}}",
+								"value": "{{MERCHANT_APP_KEY}}",
 								"description": "You can retrieve this from the dashboard"
 							}
 						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone_no",
+									"value": "",
+									"description": "OTP from what user got",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "",
+									"description": "User mobile no. It should follow International format.",
+									"type": "text"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}",
+									"description": "SHA1-hex of (phone_no + OTP + MERCHANT_APP_SECRET). More information on generating SHA1 here http://www.sha1-online.com/",
+									"type": "text"
+								},
+								{
+									"key": "return_url",
+									"value": "<Endpoint>/api/v3/account_registration/completed",
+									"description": "Url that new user will be redirected after they completed Xfers account registration at `sign_up_url` provided.",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/authorize/get_token?otp={{otp}}&phone_no={{phoneNo}}&signature={{signature}}&return_url=<Endpoint>/api/v3/account_registration/completed",
+							"raw": "{{BASE_URL}}/v3/authorize/get_token",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
 								"authorize",
 								"get_token"
-							],
-							"query": [
-								{
-									"key": "otp",
-									"value": "{{otp}}",
-									"description": "User mobile no. It should follow International format."
-								},
-								{
-									"key": "phone_no",
-									"value": "{{phoneNo}}",
-									"description": "User mobile no. It should follow International format."
-								},
-								{
-									"key": "signature",
-									"value": "{{signature}}",
-									"description": "SHA1-hex of (phone_no + OTP + APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/"
-								},
-								{
-									"key": "return_url",
-									"value": "<Endpoint>/api/v3/account_registration/completed",
-									"description": "Url that new user will be redirected after they completed Xfers account registration at `sign_up_url` provided."
-								}
 							]
 						},
 						"description": "After user receives the OTP SMS, merchant's app should capture the OTP and pass it to Xfers via this API.\nThis API will finish the registration and returns user_api_token. user_api_token is used to control the user's account.\nYou should save the user_api_token for future usage. (to be put in the `X-XFERS-USER-API-KEY` in headers of other APIs)\n\nIt will also return a is_fully_verified if they already have an Xfers account and have completed our KYC process.\n\nThis API uses a pair of public key and secret key.\nThe header of this API uses public key called `X-XFERS-APP-API-KEY`. You will need `X-XFERS-APP-SECRET-KEY` to generate signature in the request body."
 					},
 					"response": [
-						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "You can retrieve this from the dashboard",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-APP-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/authorize/get_token?otp=<string>&phone_no=<string>&signature=<string>&return_url=<Endpoint>/api/v3/account_registration/completed",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"authorize",
-										"get_token"
-									],
-									"query": [
-										{
-											"key": "otp",
-											"value": "<string>"
-										},
-										{
-											"key": "phone_no",
-											"value": "<string>"
-										},
-										{
-											"key": "signature",
-											"value": "<string>"
-										},
-										{
-											"key": "return_url",
-											"value": "<Endpoint>/api/v3/account_registration/completed"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
 						{
 							"name": "Success",
 							"originalRequest": {
@@ -317,9 +279,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/authorize/get_token?otp=<string>&phone_no=<string>&signature=<string>&return_url=<Endpoint>/api/v3/account_registration/completed",
+									"raw": "{{BASE_URL}}/authorize/get_token?otp=<string>&phone_no=<string>&signature=<string>&return_url=<Endpoint>/api/v3/account_registration/completed",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"authorize",
@@ -356,73 +318,6 @@
 							],
 							"cookie": [],
 							"body": "{\n \"msg\": \"success\",\n \"id\": \"user_csn7v5lyn4a6\",\n \"user_api_token\": \"A-Bm4vmjmGyhRaMEoxqBGeoXCEQwJYksrTXc6-ypsyk\",\n \"currency\": \"idr\",\n \"is_fully_verified\": true\n}"
-						}
-					]
-				},
-				{
-					"name": "Check Connection",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
-								"description": "Your user API token which you can retrieve from the get token API response."
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/v3/authorize/hello",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v3",
-								"authorize",
-								"hello"
-							]
-						},
-						"description": "Use this endpoint to check connection with our server"
-					},
-					"response": [
-						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/authorize/hello",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"authorize",
-										"hello"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"msg\": \"Hello world\"\n}"
 						},
 						{
 							"name": "List of possible errors",
@@ -431,21 +326,39 @@
 								"header": [
 									{
 										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
+											"content": "You can retrieve this from the dashboard",
 											"type": "text/plain"
 										},
-										"key": "X-XFERS-USER-API-KEY",
+										"key": "X-XFERS-APP-API-KEY",
 										"value": ""
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/authorize/hello",
+									"raw": "{{BASE_URL}}/authorize/get_token?otp=<string>&phone_no=<string>&signature=<string>&return_url=<Endpoint>/api/v3/account_registration/completed",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"authorize",
-										"hello"
+										"get_token"
+									],
+									"query": [
+										{
+											"key": "otp",
+											"value": "<string>"
+										},
+										{
+											"key": "phone_no",
+											"value": "<string>"
+										},
+										{
+											"key": "signature",
+											"value": "<string>"
+										},
+										{
+											"key": "return_url",
+											"value": "<Endpoint>/api/v3/account_registration/completed"
+										}
 									]
 								}
 							},
@@ -464,7 +377,7 @@
 					]
 				},
 				{
-					"name": "Get Mock OTP",
+					"name": "Check Connection",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -473,31 +386,61 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/authorize/get_mock_otp?phone_no=<string>",
+							"raw": "{{BASE_URL}}/v3/authorize/hello",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
 								"authorize",
-								"get_mock_otp"
-							],
-							"query": [
-								{
-									"key": "phone_no",
-									"value": "<string>",
-									"description": "Phone Number. For international number, you can use ’%2B’ to replace the plus(’+’) sign. (i.e. use %2B6287785725657 instead of +6287785725657)"
-								}
+								"hello"
 							]
 						},
-						"description": "Get a mock OTP. This is only usable in sandbox environment"
+						"description": "Use this endpoint to check connection with our server"
 					},
 					"response": [
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/authorize/hello",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"authorize",
+										"hello"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
 						{
 							"name": "Success",
 							"originalRequest": {
@@ -513,9 +456,133 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/authorize/get_mock_otp?phone_no=<string>",
+									"raw": "{{BASE_URL}}/authorize/hello",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"authorize",
+										"hello"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"msg\": \"Hello world\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Mock OTP",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-XFERS-USER-API-KEY",
+								"value": "{{MERCHANT_APP_KEY}}",
+								"description": "Your merchant APP token."
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "phone_no",
+									"value": "",
+									"description": "Phone Number. For international number, you can use ’%2B’ to replace the plus(’+’) sign. (i.e. use %2B6287785725657 instead of +6287785725657)",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/v3/authorize/get_mock_otp",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v3",
+								"authorize",
+								"get_mock_otp"
+							]
+						},
+						"description": "Get a mock OTP. This is only usable in sandbox environment"
+					},
+					"response": [
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/authorize/get_mock_otp?phone_no=<string>",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"authorize",
+										"get_mock_otp"
+									],
+									"query": [
+										{
+											"key": "phone_no",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/authorize/get_mock_otp?phone_no=<string>",
+									"host": [
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"authorize",
@@ -540,49 +607,6 @@
 							],
 							"cookie": [],
 							"body": "{\n \"otp\": \"138558\"\n}"
-						},
-						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/authorize/get_mock_otp?phone_no=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"authorize",
-										"get_mock_otp"
-									],
-									"query": [
-										{
-											"key": "phone_no",
-											"value": "<string>"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				}
@@ -625,14 +649,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/user",
+							"raw": "{{BASE_URL}}/v3/user",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -642,42 +666,6 @@
 						"description": "The main usage of this API is to get the current user’s balance to be displayed to user when he checks his account.  \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`"
 					},
 					"response": [
-						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/user",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
 						{
 							"name": "Success",
 							"originalRequest": {
@@ -693,9 +681,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user",
+									"raw": "{{BASE_URL}}/user",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user"
@@ -713,6 +701,42 @@
 							],
 							"cookie": [],
 							"body": "{\n \"id\": \"user_gksj43jgzgqv\",\n \"available_balance\": \"2595750.79\",\n \"ledger_balance\": \"2595750.79\",\n \"bank_transfer_rates\": \"0.0\",\n \"bank_transfer_fees\": \"0.45\",\n \"first_name\": \"docs.xfers.io\",\n \"last_name\": \"testingaccount\",\n \"date_of_birth\": \"1990-11-09\",\n \"country_of_birth\": \"SG\",\n \"gender\": \"male\",\n \"email\": \"docs@xfers.com\",\n \"country\": \"sg\",\n \"state\": \"Singapore\",\n \"city\": \"Singapore\",\n \"nationality\": \"Singaporean\",\n \"address_line_1\": \"Blk 71 Ayer Rajah Cresent\",\n \"address_line_2\": \"#02-52\",\n \"postal_code\": \"541121\",\n \"nric_type\": \"\",\n \"identity_no\": \"S8117102G\",\n \"nric_issue_date\": \"\",\n \"phone_no\": \"+6281128125\",\n \"bank_accounts\": [\n  {\n   \"id\": 329,\n   \"account_no\": \"800006788912\",\n   \"account_holder_name\": \"Tian Wei\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"CIMB_NIAGA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 561,\n   \"account_no\": \"2480096820\",\n   \"account_holder_name\": null,\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  }\n ],\n \"annual_income\": \"\",\n \"id_front\": \"15357011921535007959147096578.jpg\",\n \"id_front_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_fronts/000/000/383/original/15357011921535007959147096578.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1540979796&Signature=JVrLUGZUtYhfhef4mNXD0L45X%2BA%3D\",\n \"selfie_2id\": \"15357011921535007959147096578.jpg\",\n \"selfie_2id_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_selfies/000/000/383/original/15357011921535007959147096578.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1540979796&Signature=UUMSRP%2FWw55PY23oCLBYF5moZ60%3D\",\n \"account_locked\": false,\n \"google_auth_enabled\": false,\n \"kyc_verified\": true,\n \"kyc_needed\": true,\n \"meta_data\": \"\",\n \"display_name\": \"XfersDocsTest\",\n \"avatar\": \"cardProfileDefault.png\",\n \"avatar_url\": \"cardProfileDefault.png\",\n \"is_guest\": false,\n \"is_trial\": true,\n \"place_of_birth\": null,\n \"blood_type\": null,\n \"rt_rw\": null,\n \"administrative_village\": null,\n \"district\": null,\n \"religion\": null,\n \"marital_status\": null,\n \"occupation\": null,\n \"mother_maiden_name\": \"Putras\"\n}"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -726,14 +750,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
+							"raw": "{{BASE_URL}}/v3/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -777,69 +801,6 @@
 					},
 					"response": [
 						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user",
-										"activities"
-									],
-									"query": [
-										{
-											"key": "limit",
-											"value": "50"
-										},
-										{
-											"key": "start_date",
-											"value": "1 month ago"
-										},
-										{
-											"key": "end_date",
-											"value": "Now"
-										},
-										{
-											"key": "offset",
-											"value": "<integer>"
-										},
-										{
-											"key": "type",
-											"value": "<string>"
-										},
-										{
-											"key": "status",
-											"value": "<string>"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "GET",
@@ -854,9 +815,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
+									"raw": "{{BASE_URL}}/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -901,73 +862,6 @@
 							],
 							"cookie": [],
 							"body": "{\n \"activities\": [\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:50:41+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_6453bc8bdd8641c8abf26c9fefefacd3\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"4pssAgcRvz5Px08o0LVicI18Ej8TKMGAVtBGchCF9r0\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:49:36+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_0deed17f4c7440b7bb6a205daf060ee8\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"73EBb7URAkcfcMteuZyXPusczumab78IwT2MuCiVaVw\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:48:52+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_40fdc298f5f14784ab139a5ad916ee9d\",\n   \"amount\": 1000000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"DiMU_TDoUFZGCaqOZfLEv1EbPqn_BkNSrfTlopHZl_0\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:47:36+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_446ea0427fe746cc81b9f136c5514759\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"fgCl2fVcKh-2ZW_5lleZVVLtlqiMhlljAG-bS_3yJPg\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:44:41+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_fd5117460c164784af661f1af726e4f1\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"RBOrTYTGDahomRv4o4_mjYIlk3kfUcx3YR0_5hmb4nc\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:44:18+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_e485bbeab296474390b941d3f40b6018\",\n   \"amount\": 1000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"DnB4s09v-SdRXWOw9v5ZqILm6NyoXzw9RR1VM7YKWZA\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-02-13T14:18:04+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_c327044b18744d2893f5e1d05d2d1fbb\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"5YaskT_YcqBV73LWPIfU56IQfALVAErOZCmf-e6lCT8\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-10-05T18:19:15+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_0252ff1bf4944859a1b0b8b908255f4e\",\n   \"amount\": 100,\n   \"status\": \"processing\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"FfNMyaL7lS_SQ3Y4q_HlT55TkTATclIGsy446V9oay8\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-10-05T18:18:04+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_9ec9e9aae7da4df7aefd03071c3cd1a1\",\n   \"amount\": 100000,\n   \"status\": \"processing\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"8t944mmbHZUDI4Ws04fPJ79xbshKLX6COlUgC2r7UTI\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:49:12+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"77234e141a42492c95c04df62a6c539a\",\n   \"invoice_id\": \"QUpveF_hqwloCmMuP3yGNKIoY3d_iKsGVKuhTetQQPc\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:47:20+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"796bde9bbec04369908db99ba4e68751\",\n   \"invoice_id\": \"C-hW0wugMoFI2iU4Y3eyTtk9iphoNL-DbQzKKKCwnt8\",\n   \"amount\": 12334,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:46:31+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"d6d91a8d7c0a4d0ebfc77f33bbd7bf1e\",\n   \"invoice_id\": \"Qmbxr8Q5Qkyrcp2Sp6xQU7GJYj1GobAt_fYKD0JVZOM\",\n   \"amount\": 10000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-08-16T11:11:49+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"83efbcbc76c5497f803ea82769ea2457\",\n   \"invoice_id\": \"ZNKwSb9Ajhs5dg0EKgGDwVYhBvZeSulTtnfzZIuh5_0\",\n   \"amount\": 100000000000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  }\n ],\n \"activities_returned\": 13,\n \"limit\": 50,\n \"offset\": 0,\n \"start_date\": \"2018-07-04T11:49:58+08:00 \",\n \"end_date\": \"2019-10-30T11:49:58+08:00\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Get Transfer Info / Get Virtual Account Number",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
-								"description": "Your user API token which you can retrieve from the get token API response."
-							}
-						],
-						"url": {
-							"raw": "{{baseUrl}}/v3/user/transfer_info",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"v3",
-								"user",
-								"transfer_info"
-							]
-						},
-						"description": "API to get bank account number to be shown to user.  \r\nPlease consult with us to get topup instruction template text to be shown.\r\n\r\nThe common usage of this API is to parse the transfer_info_array given by us and parse it and use the VA numbers of the bank you want\r\n\r\n#### For Virtual Account solution:  \r\nThis API is to get the Virtual Account Number to be displayed to the user\r\n\r\n#### For non Virtual Account solution:  \r\nThis API will show the bank account number to do top up.  \r\nPlease consult with us as this solution will require user to use some other identifier to detect the deposit."
-					},
-					"response": [
-						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/user/transfer_info",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user",
-										"transfer_info"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"bank_name_full\": \"Bank Permata\",\n \"bank_abbrev\": \"PERMATA\",\n \"bank_name_abbreviation\": \"PERMATA\",\n \"bank_account_no\": \"8773162088567819\",\n \"bank_payee_name\": \"PT Xfers Indonesia Teknologi\",\n \"bank_code\": \"013\",\n \"branch_code\": \"\",\n \"branch_area\": \"\",\n \"unique_id\": \"87785725657\",\n \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png\",\n \"transfer_info_array\": [\n  {\n   \"bank_name_full\": \"Bank Permata\",\n   \"bank_abbrev\": \"PERMATA\",\n   \"bank_name_abbreviation\": \"PERMATA\",\n   \"bank_account_no\": \"8773162088567819\",\n   \"bank_code\": \"013\",\n   \"branch_code\": \"\",\n   \"branch_area\": \"\",\n   \"unique_id\": \"87785725657\",\n   \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png\"\n  },\n  {\n   \"bank_name_full\": \"Bank Mandiri\",\n   \"bank_abbrev\": \"MANDIRI\",\n   \"bank_name_abbreviation\": \"MANDIRI\",\n   \"bank_account_no\": \"8830812088567819\",\n   \"bank_code\": \"008\",\n   \"branch_code\": \"\",\n   \"branch_area\": \"\",\n   \"unique_id\": \"87785725657\",\n   \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-mandiri-3c9030412a3deb3c41589344a9a7bf74a52ef8dd278834d400b917f35e1b3bf9.png\"\n  }\n ],\n \"wallet_name\": \"Xfers\"\n}"
 						},
 						{
 							"name": "List of possible errors",
@@ -984,13 +878,39 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/transfer_info",
+									"raw": "{{BASE_URL}}/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
-										"transfer_info"
+										"activities"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "50"
+										},
+										{
+											"key": "start_date",
+											"value": "1 month ago"
+										},
+										{
+											"key": "end_date",
+											"value": "Now"
+										},
+										{
+											"key": "offset",
+											"value": "<integer>"
+										},
+										{
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										}
 									]
 								}
 							},
@@ -1009,6 +929,110 @@
 					]
 				},
 				{
+					"name": "Get Transfer Info / Get Virtual Account Number",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-XFERS-USER-API-KEY",
+								"value": "{{CUSTOMER_API_KEY}}",
+								"description": "Your user API token which you can retrieve from the get token API response."
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/v3/user/transfer_info",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"v3",
+								"user",
+								"transfer_info"
+							]
+						},
+						"description": "API to get bank account number to be shown to user.  \r\nPlease consult with us to get topup instruction template text to be shown.\r\n\r\nThe common usage of this API is to parse the transfer_info_array given by us and parse it and use the VA numbers of the bank you want\r\n\r\n#### For Virtual Account solution:  \r\nThis API is to get the Virtual Account Number to be displayed to the user\r\n\r\n#### For non Virtual Account solution:  \r\nThis API will show the bank account number to do top up.  \r\nPlease consult with us as this solution will require user to use some other identifier to detect the deposit."
+					},
+					"response": [
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/user/transfer_info",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"transfer_info"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/user/transfer_info",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"transfer_info"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"bank_name_full\": \"Bank Permata\",\n \"bank_abbrev\": \"PERMATA\",\n \"bank_name_abbreviation\": \"PERMATA\",\n \"bank_account_no\": \"8773162088567819\",\n \"bank_payee_name\": \"PT Xfers Indonesia Teknologi\",\n \"bank_code\": \"013\",\n \"branch_code\": \"\",\n \"branch_area\": \"\",\n \"unique_id\": \"87785725657\",\n \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png\",\n \"transfer_info_array\": [\n  {\n   \"bank_name_full\": \"Bank Permata\",\n   \"bank_abbrev\": \"PERMATA\",\n   \"bank_name_abbreviation\": \"PERMATA\",\n   \"bank_account_no\": \"8773162088567819\",\n   \"bank_code\": \"013\",\n   \"branch_code\": \"\",\n   \"branch_area\": \"\",\n   \"unique_id\": \"87785725657\",\n   \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png\"\n  },\n  {\n   \"bank_name_full\": \"Bank Mandiri\",\n   \"bank_abbrev\": \"MANDIRI\",\n   \"bank_name_abbreviation\": \"MANDIRI\",\n   \"bank_account_no\": \"8830812088567819\",\n   \"bank_code\": \"008\",\n   \"branch_code\": \"\",\n   \"branch_area\": \"\",\n   \"unique_id\": \"87785725657\",\n   \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-mandiri-3c9030412a3deb3c41589344a9a7bf74a52ef8dd278834d400b917f35e1b3bf9.png\"\n  }\n ],\n \"wallet_name\": \"Xfers\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Submit KYC Data",
 					"request": {
 						"auth": {
@@ -1018,7 +1042,7 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							},
 							{
@@ -1148,9 +1172,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/user",
+							"raw": "{{BASE_URL}}/v3/user",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -1160,167 +1184,6 @@
 						"description": "To provide KYC data in order to change user from unverified status into fully verified status.  \n\nThe image/document provided us must be hosted in a URL then pass the URL to Xfers via this API.  \nMake sure data type for your image is jpeg / png.  \nMaximum size of the image/ document is 10 MB.  \n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.  In Indonesia, fully verified user will be backed by a savings account.\r\nThus, there are required parameters which are mother_maiden_name, id_front_url, selfie_2id_url.\r\nAdditional data will speed up the KYC process."
 					},
 					"response": [
-						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "id_front_url",
-											"value": "<string>"
-										},
-										{
-											"key": "selfie_2id_url",
-											"value": "<string>"
-										},
-										{
-											"key": "fullname",
-											"value": "<string>"
-										},
-										{
-											"key": "mother_maiden_name",
-											"value": "<string>"
-										},
-										{
-											"key": "first_name",
-											"value": "<string>"
-										},
-										{
-											"key": "last_name",
-											"value": "<string>"
-										},
-										{
-											"key": "email",
-											"value": "<string>"
-										},
-										{
-											"key": "date_of_birth",
-											"value": "<string>"
-										},
-										{
-											"key": "gender",
-											"value": "<string>"
-										},
-										{
-											"key": "address_line_1",
-											"value": "<string>"
-										},
-										{
-											"key": "address_line_2",
-											"value": "<string>"
-										},
-										{
-											"key": "nationality",
-											"value": "<string>"
-										},
-										{
-											"key": "postal_code",
-											"value": "<string>"
-										},
-										{
-											"key": "identity_no",
-											"value": "<string>"
-										},
-										{
-											"key": "country",
-											"value": "<string>"
-										},
-										{
-											"key": "city",
-											"value": "<string>"
-										},
-										{
-											"key": "annual_income",
-											"value": "<integer>"
-										},
-										{
-											"key": "id_back_url",
-											"value": "<string>"
-										},
-										{
-											"key": "proof_of_address_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_1_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_2_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_3_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_4_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_5_url",
-											"value": "<string>"
-										},
-										{
-											"key": "meta_data",
-											"value": "<string>"
-										},
-										{
-											"key": "place_of_birth",
-											"value": "<string>"
-										},
-										{
-											"key": "blood_type",
-											"value": "<string>"
-										},
-										{
-											"key": "marital_status",
-											"value": "<string>"
-										},
-										{
-											"key": "callback_url",
-											"value": "<string>"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{baseUrl}}/user",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"user"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
 						{
 							"name": "Success",
 							"originalRequest": {
@@ -1461,9 +1324,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/user",
+									"raw": "{{BASE_URL}}/user",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user"
@@ -1481,6 +1344,167 @@
 							],
 							"cookie": [],
 							"body": "{\n \"available_balance\": \"0.32\",\n \"ledger_balance\": \"0.32\",\n \"bank_transfer_rates\": \"0.0\",\n \"bank_transfer_fees\": \"0.45\",\n \"first_name\": \"Winston\",\n \"last_name\": \"Andersen\",\n \"date_of_birth\": \"1986-02-27\",\n \"country_of_birth\": \"\",\n \"gender\": \"male\",\n \"email\": \"winston@xfers.com\",\n \"country\": \"id\",\n \"nationality\": \"Indonesian\",\n \"address_line_1\": \"Blk 712 loyang Avenue 5\",\n \"address_line_2\": \"#01-41\",\n \"postal_code\": \"340712\",\n \"nric_type\": \"\",\n \"identity_no\": \"317201180894005\",\n \"nric_issue_date\": \"\",\n \"phone_no\": \"+6287785725657\",\n \"bank_accounts\": [\n  {\n   \"id\": 69,\n   \"account_no\": \"1150006390175\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 175,\n   \"account_no\": \"1680366060\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 177,\n   \"account_no\": \"1150006390175\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"MANDIRI\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 207,\n   \"account_no\": \"1234567890\",\n   \"account_holder_name\": \"Some Name\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  }\n ],\n \"annual_income\": \"\",\n \"id_front\": \"15332940588453-a-blue-sky-with-white-clouds-pv.jpg\",\n \"id_front_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_fronts/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=eBPUqBc0tCwmmpbKu5HmISLBiaQ%3D\",\n \"selfie_2id\": \"15332940588453-a-blue-sky-with-white-clouds-pv.jpg\",\n \"selfie_2id_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_selfies/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=cK6icTFvQC6XSOPMfLSMjZ1ZVlo%3D\",\n \"account_locked\": false,\n \"kyc_verified\": true,\n \"meta_data\": \"\",\n \"place_of_birth\": null,\n \"blood_type\": null,\n \"rt_rw\": null,\n \"administrative_village\": null,\n \"district\": null,\n \"religion\": null,\n \"marital_status\": null,\n \"occupation\": null,\n \"mother_maiden_name\": \"Luna\"\n}"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id_front_url",
+											"value": "<string>"
+										},
+										{
+											"key": "selfie_2id_url",
+											"value": "<string>"
+										},
+										{
+											"key": "fullname",
+											"value": "<string>"
+										},
+										{
+											"key": "mother_maiden_name",
+											"value": "<string>"
+										},
+										{
+											"key": "first_name",
+											"value": "<string>"
+										},
+										{
+											"key": "last_name",
+											"value": "<string>"
+										},
+										{
+											"key": "email",
+											"value": "<string>"
+										},
+										{
+											"key": "date_of_birth",
+											"value": "<string>"
+										},
+										{
+											"key": "gender",
+											"value": "<string>"
+										},
+										{
+											"key": "address_line_1",
+											"value": "<string>"
+										},
+										{
+											"key": "address_line_2",
+											"value": "<string>"
+										},
+										{
+											"key": "nationality",
+											"value": "<string>"
+										},
+										{
+											"key": "postal_code",
+											"value": "<string>"
+										},
+										{
+											"key": "identity_no",
+											"value": "<string>"
+										},
+										{
+											"key": "country",
+											"value": "<string>"
+										},
+										{
+											"key": "city",
+											"value": "<string>"
+										},
+										{
+											"key": "annual_income",
+											"value": "<integer>"
+										},
+										{
+											"key": "id_back_url",
+											"value": "<string>"
+										},
+										{
+											"key": "proof_of_address_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_1_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_2_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_3_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_4_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_5_url",
+											"value": "<string>"
+										},
+										{
+											"key": "meta_data",
+											"value": "<string>"
+										},
+										{
+											"key": "place_of_birth",
+											"value": "<string>"
+										},
+										{
+											"key": "blood_type",
+											"value": "<string>"
+										},
+										{
+											"key": "marital_status",
+											"value": "<string>"
+										},
+										{
+											"key": "callback_url",
+											"value": "<string>"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -1565,14 +1589,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/user/verify",
+							"raw": "{{BASE_URL}}/v3/user/verify",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -1598,9 +1622,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/verify",
+									"raw": "{{BASE_URL}}/user/verify",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -1635,9 +1659,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/verify",
+									"raw": "{{BASE_URL}}/user/verify",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -1675,14 +1699,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{merchantToken}}",
+								"value": "{{MERCHANT_APP_KEY}}",
 								"description": "You can retrieve this from the dashboard"
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/merchant",
+							"raw": "{{BASE_URL}}/v3/merchant",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -1704,9 +1728,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/merchant",
+									"raw": "{{BASE_URL}}/merchant",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"merchant"
@@ -1737,9 +1761,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/merchant",
+									"raw": "{{BASE_URL}}/merchant",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"merchant"
@@ -1770,7 +1794,7 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{merchantToken}}",
+								"value": "{{MERCHANT_APP_KEY}}",
 								"description": "You can retrieve this from the dashboard"
 							},
 							{
@@ -1783,9 +1807,9 @@
 							"raw": "{\n    \"business_id\": \"<string>\",\n    \"business_position\": \"<string>\",\n    \"business_name\": \"<string>\",\n    \"business_type\": \"<string>\",\n    \"business_address_line_1\": \"<string>\",\n    \"business_address_line_2\": \"<string>\",\n    \"business_postal_code\": \"<string>\",\n    \"business_telephone\": \"<string>\",\n    \"bizfile_document\": \"<string>\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/merchant",
+							"raw": "{{BASE_URL}}/v3/merchant",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -1796,47 +1820,6 @@
 					},
 					"response": [
 						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"description": "You can retrieve this from the dashboard",
-										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"business_id\": \"<string>\",\n    \"business_position\": \"<string>\",\n    \"business_name\": \"<string>\",\n    \"business_type\": \"<string>\",\n    \"business_address_line_1\": \"<string>\",\n    \"business_address_line_2\": \"<string>\",\n    \"business_postal_code\": \"<string>\",\n    \"business_telephone\": \"<string>\",\n    \"bizfile_document\": \"<string>\"\n}"
-								},
-								"url": {
-									"raw": "{{baseUrl}}/merchant",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"merchant"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "PUT",
@@ -1844,7 +1827,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									},
 									{
 										"key": "Content-Type",
@@ -1856,9 +1839,9 @@
 									"raw": "{\n    \"business_id\": \"<string>\",\n    \"business_position\": \"<string>\",\n    \"business_name\": \"<string>\",\n    \"business_type\": \"<string>\",\n    \"business_address_line_1\": \"<string>\",\n    \"business_address_line_2\": \"<string>\",\n    \"business_postal_code\": \"<string>\",\n    \"business_telephone\": \"<string>\",\n    \"bizfile_document\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/merchant",
+									"raw": "{{BASE_URL}}/merchant",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"merchant"
@@ -1876,6 +1859,47 @@
 							],
 							"cookie": [],
 							"body": "{\n \"business_id\": \"53348831Z\",\n \"business_name\": \"Alpha Events\",\n \"business_type\": \"Private Company\",\n \"business_position\": \"Director\",\n \"business_address_line_1\": \"78 Lucky Plaza\",\n \"business_address_line_2\": \"#14-39\",\n \"business_postal_code\": \"938884\",\n \"business_telephone\": \"+6583994012\",\n \"bizfile_document\": \"BIZFILE.pdf\",\n \"business_verified\": false,\n \"shareholders\": [\n  {\n   \"firstName\": \"Samson\",\n   \"lastName\": \"Leo\",\n   \"nricNumber\": \"S8781203Q\",\n   \"dateOfBirth\": \"19/02/1987\",\n   \"nationality\": \"Singaporean\",\n   \"address1\": \"Blk 600 Elias Road\",\n   \"address2\": \"#09-123\",\n   \"postalCode\": \"510600\",\n   \"phoneNumber\": \"+6583004848\",\n   \"businessType\": \"Private Company\",\n   \"businessPosition\": \"Director\"\n  }\n ]\n}"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "You can retrieve this from the dashboard",
+										"key": "X-XFERS-USER-API-KEY",
+										"value": "{{CUSTOMER_API_KEY}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"business_id\": \"<string>\",\n    \"business_position\": \"<string>\",\n    \"business_name\": \"<string>\",\n    \"business_type\": \"<string>\",\n    \"business_address_line_1\": \"<string>\",\n    \"business_address_line_2\": \"<string>\",\n    \"business_postal_code\": \"<string>\",\n    \"business_telephone\": \"<string>\",\n    \"bizfile_document\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/merchant",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"merchant"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -1889,7 +1913,7 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{merchantToken}}",
+								"value": "{{MERCHANT_APP_KEY}}",
 								"description": "You can retrieve this from the dashboard"
 							},
 							{
@@ -1902,9 +1926,9 @@
 							"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"nricNumber\": \"<string>\",\n    \"dateOfBirth\": \"<string>\",\n    \"nationality\": \"<string>\",\n    \"address1\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"businessType\": \"<string>\",\n    \"businessPosition\": \"<string>\",\n    \"tempor64\": false\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/merchant/share-holder",
+							"raw": "{{BASE_URL}}/v3/merchant/share-holder",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -1923,7 +1947,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									},
 									{
 										"key": "Content-Type",
@@ -1935,9 +1959,9 @@
 									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"nricNumber\": \"<string>\",\n    \"dateOfBirth\": \"<string>\",\n    \"nationality\": \"<string>\",\n    \"address1\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"businessType\": \"<string>\",\n    \"businessPosition\": \"<string>\",\n    \"tempor64\": false\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/merchant/share-holder",
+									"raw": "{{BASE_URL}}/merchant/share-holder",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"merchant",
@@ -1965,7 +1989,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									},
 									{
 										"key": "Content-Type",
@@ -1977,9 +2001,9 @@
 									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"nricNumber\": \"<string>\",\n    \"dateOfBirth\": \"<string>\",\n    \"nationality\": \"<string>\",\n    \"address1\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"businessType\": \"<string>\",\n    \"businessPosition\": \"<string>\",\n    \"tempor64\": false\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/merchant/share-holder",
+									"raw": "{{BASE_URL}}/merchant/share-holder",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"merchant",
@@ -2011,14 +2035,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{merchantToken}}",
+								"value": "{{MERCHANT_APP_KEY}}",
 								"description": "You can retrieve this from the dashboard"
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/merchant/share-holder/:shareholder_nric_number",
+							"raw": "{{BASE_URL}}/v3/merchant/share-holder/:shareholder_nric_number",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -2038,41 +2062,6 @@
 					},
 					"response": [
 						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"description": "You can retrieve this from the dashboard",
-										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{XDD}}"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/merchant/share-holder/<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"merchant",
-										"share-holder",
-										"<string>"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"business_id\": \"53348831Z\",\n \"business_name\": \"Alpha Events\",\n \"business_type\": \"Private Company\",\n \"business_position\": \"Director\",\n \"business_address_line_1\": \"78 Lucky Plaza\",\n \"business_address_line_2\": \"#14-39\",\n \"business_postal_code\": \"938884\",\n \"business_telephone\": \"+6583994012\",\n \"bizfile_document\": \"BIZFILE.pdf\",\n \"business_verified\": false,\n \"shareholders\": []\n}"
-						},
-						{
 							"name": "List of possible errors",
 							"originalRequest": {
 								"method": "DELETE",
@@ -2084,9 +2073,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/merchant/share-holder/<string>",
+									"raw": "{{BASE_URL}}/merchant/share-holder/<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"merchant",
@@ -2106,6 +2095,41 @@
 							],
 							"cookie": [],
 							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "You can retrieve this from the dashboard",
+										"key": "X-XFERS-USER-API-KEY",
+										"value": "{{XDD}}"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/merchant/share-holder/<string>",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"merchant",
+										"share-holder",
+										"<string>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"business_id\": \"53348831Z\",\n \"business_name\": \"Alpha Events\",\n \"business_type\": \"Private Company\",\n \"business_position\": \"Director\",\n \"business_address_line_1\": \"78 Lucky Plaza\",\n \"business_address_line_2\": \"#14-39\",\n \"business_postal_code\": \"938884\",\n \"business_telephone\": \"+6583994012\",\n \"bizfile_document\": \"BIZFILE.pdf\",\n \"business_verified\": false,\n \"shareholders\": []\n}"
 						}
 					]
 				}
@@ -2125,7 +2149,7 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							},
 							{
@@ -2138,9 +2162,9 @@
 							"raw": "{\n    \"account_no\": \"0393123432\",\n    \"bank\": \"DBS\",\n    \"account_holder_name\": \"Tian Wei\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/user/bank_account",
+							"raw": "{{BASE_URL}}/v3/user/bank_account",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -2174,9 +2198,9 @@
 									"raw": "{\n    \"account_no\": \"0393123432\",\n    \"bank\": \"DBS\",\n    \"account_holder_name\": \"Tian Wei\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account",
+									"raw": "{{BASE_URL}}/user/bank_account",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2219,9 +2243,9 @@
 									"raw": "{\n    \"account_no\": \"0393123432\",\n    \"bank\": \"DBS\",\n    \"account_holder_name\": \"Tian Wei\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account",
+									"raw": "{{BASE_URL}}/user/bank_account",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2253,14 +2277,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/user/bank_account",
+							"raw": "{{BASE_URL}}/v3/user/bank_account",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -2286,9 +2310,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account?usage=<string>",
+									"raw": "{{BASE_URL}}/user/bank_account?usage=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2329,9 +2353,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account?usage=<string>",
+									"raw": "{{BASE_URL}}/user/bank_account?usage=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2369,7 +2393,7 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							},
 							{
@@ -2395,9 +2419,9 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/v3/user/bank_account/:bank_account_id",
+							"raw": "{{BASE_URL}}/v3/user/bank_account/:bank_account_id",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -2452,9 +2476,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account/<string>",
+									"raw": "{{BASE_URL}}/user/bank_account/<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2511,9 +2535,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account/<string>",
+									"raw": "{{BASE_URL}}/user/bank_account/<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2546,14 +2570,14 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "Your user API token which you can retrieve from the get token API response."
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/user/bank_account/:bank_account_id",
+							"raw": "{{BASE_URL}}/v3/user/bank_account/:bank_account_id",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -2587,9 +2611,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account/<string>",
+									"raw": "{{BASE_URL}}/user/bank_account/<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2625,9 +2649,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/user/bank_account/<string>",
+									"raw": "{{BASE_URL}}/user/bank_account/<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"user",
@@ -2660,7 +2684,7 @@
 						"header": [
 							{
 								"key": "X-XFERS-USER-API-KEY",
-								"value": "{{customerToken}}",
+								"value": "{{CUSTOMER_API_KEY}}",
 								"description": "You can retrieve this from the dashboard"
 							},
 							{
@@ -2670,9 +2694,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/v3/banks",
+							"raw": "{{BASE_URL}}/v3/banks",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"v3",
@@ -2690,7 +2714,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									},
 									{
 										"description": {
@@ -2702,9 +2726,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/banks",
+									"raw": "{{BASE_URL}}/v3/banks",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -2732,7 +2756,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									},
 									{
 										"description": {
@@ -2744,9 +2768,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/banks",
+									"raw": "{{BASE_URL}}/v3/banks",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -2787,7 +2811,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -2800,9 +2824,9 @@
 									"raw": "{\n    \"amount\": 10000,\n    \"user_api_token\": \"user-api-key\",\n    \"order_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\",\n    \"notify_url\": \"https://www.example.com/updates\",\n    \"meta_data\": \"test metadata\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/charges",
+									"raw": "{{BASE_URL}}/v3/charges",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -2813,14 +2837,14 @@
 							},
 							"response": [
 								{
-									"name": "Success",
+									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "POST",
 										"header": [
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -2832,9 +2856,50 @@
 											"raw": "{\n    \"amount\": 10000,\n    \"user_api_token\": \"user-api-key\",\n    \"order_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\",\n    \"notify_url\": \"https://www.example.com/updates\",\n    \"meta_data\": \"test metadata\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/charges",
+											"raw": "{{BASE_URL}}/charges",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"amount\": 10000,\n    \"user_api_token\": \"user-api-key\",\n    \"order_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\",\n    \"notify_url\": \"https://www.example.com/updates\",\n    \"meta_data\": \"test metadata\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/charges",
+											"host": [
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges"
@@ -2852,30 +2917,51 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"contract_7abf6bb130d44c02862982ff6022875d\",\n \"object\": \"Sobatku::TransferContract\",\n \"status\": \"processing\",\n \"amount\": \"10000.0\",\n \"total_amount\": \"10000.0\",\n \"currency\": \"idr\",\n \"fee_amount\": \"100.0\",\n \"notify_url\": \"https://www.example.com/updates\",\n \"wallet_name\": \"General Wallet\",\n \"order_id\": \"Order_docs_12345\",\n \"description\": \"Testing for Documentation\",\n \"receipt_email\": \"winston@xfers.com\",\n \"metadata\": {\n  \"callback_url\": \"https://www.example.com/updates\",\n  \"merchant_metadata\": \"test metadata\"\n }\n}"
+								}
+							]
+						},
+						{
+							"name": "List all Charge",
+							"request": {
+								"auth": {
+									"type": "noauth"
 								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-XFERS-USER-API-KEY",
+										"value": "{{CUSTOMER_API_KEY}}",
+										"description": "You can retrieve this from the dashboard"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/v3/charges",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"v3",
+										"charges"
+									]
+								},
+								"description": "Returns a list of charges you’ve previously created. The charges are returned in sorted order, with the most recent charges appearing first."
+							},
+							"response": [
 								{
 									"name": "List of possible errors",
 									"originalRequest": {
-										"method": "POST",
+										"method": "GET",
 										"header": [
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
+												"value": "{{XDD}}"
 											}
 										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"amount\": 10000,\n    \"user_api_token\": \"user-api-key\",\n    \"order_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\",\n    \"notify_url\": \"https://www.example.com/updates\",\n    \"meta_data\": \"test metadata\"\n}"
-										},
 										"url": {
-											"raw": "{{baseUrl}}/charges",
+											"raw": "{{BASE_URL}}/charges",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges"
@@ -2893,36 +2979,7 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								}
-							]
-						},
-						{
-							"name": "List all Charge",
-							"request": {
-								"auth": {
-									"type": "noauth"
 								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
-										"description": "You can retrieve this from the dashboard"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/v3/charges",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"v3",
-										"charges"
-									]
-								},
-								"description": "Returns a list of charges you’ve previously created. The charges are returned in sorted order, with the most recent charges appearing first."
-							},
-							"response": [
 								{
 									"name": "Success",
 									"originalRequest": {
@@ -2935,9 +2992,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/charges",
+											"raw": "{{BASE_URL}}/charges",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges"
@@ -2955,39 +3012,6 @@
 									],
 									"cookie": [],
 									"body": "[\n {\n  \"id\": \"contract_b840cc9fc5a359c22ed2ccef3427aacd\",\n  \"object\": \"TransferContract\",\n  \"checkout_url\": \"https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd\",\n  \"notify_url\": \"https://mysite.com/payment_notification\",\n  \"return_url\": \"https://mysite.com/return\",\n  \"cancel_url\": \"https://mysite.com/cancel\",\n  \"amount\": \"9.99\",\n  \"currency\": \"SGD\",\n  \"order_id\": \"A012312\",\n  \"description\": \"Carousell user - Konsolidate\",\n  \"receipt_email\": \"\",\n  \"total_amount\": \"12.49\",\n  \"fee_amount\": \"0.12\",\n  \"status\": \"completed\",\n  \"metadata\": {\n   \"firstname\": \"Tianwei\",\n   \"lastname\": \"Liu\"\n  },\n  \"transfer_info\": {\n   \"bank_name_full\": \"United Overseas Bank\",\n   \"bank_name_abbreviation\": \"UOB\",\n   \"bank_account_no\": \"123456789\",\n   \"bank_code\": \"7375\",\n   \"swift_code\": \"UOVBSGSGXXX\",\n   \"unique_id\": \"89898989\",\n   \"outstanding_amount\": \"0\"\n  }\n }\n]"
-								},
-								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/charges",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"charges"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -3001,14 +3025,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/charges/:id",
+									"raw": "{{BASE_URL}}/v3/charges/:id",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3038,9 +3062,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/charges/<string>",
+											"raw": "{{BASE_URL}}/charges/<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges",
@@ -3072,9 +3096,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/charges/<string>",
+											"raw": "{{BASE_URL}}/charges/<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges",
@@ -3106,7 +3130,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -3119,9 +3143,9 @@
 									"raw": "{\n    \"auth_code\": \"<string>\",\n    \"google_auth_code\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/charges/:id/authorize",
+									"raw": "{{BASE_URL}}/v3/charges/:id/authorize",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3141,49 +3165,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"auth_code\": \"<string>\",\n    \"google_auth_code\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/charges/<string>/authorize",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"charges",
-												"<string>",
-												"authorize"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -3191,7 +3172,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -3203,9 +3184,9 @@
 											"raw": "{\n    \"auth_code\": \"<string>\",\n    \"google_auth_code\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/charges/<string>/authorize",
+											"raw": "{{BASE_URL}}/charges/<string>/authorize",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges",
@@ -3225,6 +3206,49 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"contract_b840cc9fc5a359c22ed2ccef3427aacd\",\n \"object\": \"TransferContract\",\n \"checkout_url\": \"https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd\",\n \"notify_url\": \"https://mysite.com/payment_notification\",\n \"return_url\": \"https://mysite.com/return\",\n \"cancel_url\": \"https://mysite.com/cancel\",\n \"amount\": \"9.99\",\n \"currency\": \"SGD\",\n \"order_id\": \"A012312\",\n \"description\": \"Carousell user - Konsolidate\",\n \"receipt_email\": \"\",\n \"total_amount\": \"12.49\",\n \"fee_amount\": \"0.12\",\n \"status\": \"accepted\",\n \"metadata\": {\n  \"firstname\": \"Tianwei\",\n  \"lastname\": \"Liu\"\n },\n \"transfer_info\": {\n  \"bank_name_full\": \"United Overseas Bank\",\n  \"bank_name_abbreviation\": \"UOB\",\n  \"bank_account_no\": \"123456789\",\n  \"bank_code\": \"7375\",\n  \"swift_code\": \"UOVBSGSGXXX\",\n  \"unique_id\": \"89898989\",\n  \"outstanding_amount\": \"0\"\n }\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"auth_code\": \"<string>\",\n    \"google_auth_code\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/charges/<string>/authorize",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges",
+												"<string>",
+												"authorize"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -3238,14 +3262,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/charges/:id/cancel",
+									"raw": "{{BASE_URL}}/v3/charges/:id/cancel",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3265,41 +3289,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/charges/<string>/cancel",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"charges",
-												"<string>",
-												"cancel"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -3311,9 +3300,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/charges/<string>/cancel",
+											"raw": "{{BASE_URL}}/charges/<string>/cancel",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges",
@@ -3333,6 +3322,41 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"contract_b840cc9fc5a359c22ed2ccef3427aacd\",\n \"object\": \"PendingTransferContract\",\n \"checkout_url\": \"https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd\",\n \"notify_url\": \"https://mysite.com/payment_notification\",\n \"return_url\": \"https://mysite.com/return\",\n \"cancel_url\": \"https://mysite.com/cancel\",\n \"amount\": \"9.99\",\n \"currency\": \"SGD\",\n \"order_id\": \"A012312\",\n \"description\": \"Carousell user - Konsolidate\",\n \"receipt_email\": \"\",\n \"total_amount\": \"12.49\",\n \"fee_amount\": \"0.12\",\n \"status\": \"cancelled\",\n \"metadata\": {\n  \"firstname\": \"Tianwei\",\n  \"lastname\": \"Liu\"\n },\n \"transfer_info\": {\n  \"bank_name_full\": \"United Overseas Bank\",\n  \"bank_name_abbreviation\": \"UOB\",\n  \"bank_account_no\": \"123456789\",\n  \"bank_code\": \"7375\",\n  \"swift_code\": \"UOVBSGSGXXX\",\n  \"unique_id\": \"89898989\",\n  \"outstanding_amount\": \"0\"\n }\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{XDD}}"
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/charges/<string>/cancel",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges",
+												"<string>",
+												"cancel"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -3346,7 +3370,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -3356,9 +3380,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/charges/:id/refunds",
+									"raw": "{{BASE_URL}}/v3/charges/:id/refunds",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3385,7 +3409,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"description": {
@@ -3397,9 +3421,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/charges/<string>/refunds",
+											"raw": "{{BASE_URL}}/charges/<string>/refunds",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges",
@@ -3428,7 +3452,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"description": {
@@ -3440,9 +3464,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/charges/<string>/refunds",
+											"raw": "{{BASE_URL}}/charges/<string>/refunds",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"charges",
@@ -3553,7 +3577,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{merchantToken}}",
+										"value": "{{MERCHANT_APP_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
@@ -3562,7 +3586,7 @@
 									"formdata": [
 										{
 											"key": "user_api_token",
-											"value": "{{customerToken}}",
+											"value": "{{CUSTOMER_API_KEY}}",
 											"type": "text"
 										},
 										{
@@ -3584,9 +3608,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/payouts",
+									"raw": "{{BASE_URL}}/v3/payouts",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3604,7 +3628,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -3616,9 +3640,9 @@
 											"raw": "{\n    \"user_api_token\": \"user-api-key\",\n    \"amount\": 10000,\n    \"invocie_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/payouts",
+											"raw": "{{BASE_URL}}/payouts",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"payouts"
@@ -3645,7 +3669,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -3657,9 +3681,9 @@
 											"raw": "{\n    \"user_api_token\": \"user-api-key\",\n    \"amount\": 10000,\n    \"invocie_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/payouts",
+											"raw": "{{BASE_URL}}/payouts",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"payouts"
@@ -3690,14 +3714,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{merchantToken}}",
+										"value": "{{MERCHANT_APP_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/payouts?limit=10",
+									"raw": "{{BASE_URL}}/v3/payouts?limit=10",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3726,9 +3750,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/payouts?limit=10",
+											"raw": "{{BASE_URL}}/payouts?limit=10",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"payouts"
@@ -3765,9 +3789,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/payouts?limit=10",
+											"raw": "{{BASE_URL}}/payouts?limit=10",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"payouts"
@@ -3804,14 +3828,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{merchantToken}}",
+										"value": "{{MERCHANT_APP_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/payouts/:id",
+									"raw": "{{BASE_URL}}/v3/payouts/:id",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3830,40 +3854,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/payouts/<string>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"payouts",
-												"<string>"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"contract_9b562994c4274d9993ba93c94619a8f6\",\n \"recipient\": \"winston@xfers.com\",\n \"metadata\": {\n  \"merchant_metadata\": \"\"\n },\n \"invoice_id\": \"Order_docs_123\",\n \"descriptions\": \"Payment for Rent for July\",\n \"process_type\": \"normal\",\n \"amount\": \"15000.0\",\n \"currency\": \"idr\",\n \"bank\": null,\n \"bank_account_no\": null,\n \"created_date\": \"2019-04-12T07:10:50Z\",\n \"completed_date\": \"2019-04-12T07:11:22Z\",\n \"status\": \"completed\",\n \"wallet_id\": 1,\n \"wallet_name\": \"General Wallet\",\n \"balance\": \"102969900.0\",\n \"fee_amount\": \"0.0\"\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "GET",
@@ -3875,9 +3865,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/payouts/<string>",
+											"raw": "{{BASE_URL}}/payouts/<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"payouts",
@@ -3896,6 +3886,40 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{XDD}}"
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/payouts/<string>",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"payouts",
+												"<string>"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"contract_9b562994c4274d9993ba93c94619a8f6\",\n \"recipient\": \"winston@xfers.com\",\n \"metadata\": {\n  \"merchant_metadata\": \"\"\n },\n \"invoice_id\": \"Order_docs_123\",\n \"descriptions\": \"Payment for Rent for July\",\n \"process_type\": \"normal\",\n \"amount\": \"15000.0\",\n \"currency\": \"idr\",\n \"bank\": null,\n \"bank_account_no\": null,\n \"created_date\": \"2019-04-12T07:10:50Z\",\n \"completed_date\": \"2019-04-12T07:11:22Z\",\n \"status\": \"completed\",\n \"wallet_id\": 1,\n \"wallet_name\": \"General Wallet\",\n \"balance\": \"102969900.0\",\n \"fee_amount\": \"0.0\"\n}"
 								}
 							]
 						}
@@ -3914,7 +3938,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									}
 								],
 								"body": {
@@ -3922,7 +3946,7 @@
 									"formdata": [
 										{
 											"key": "amount",
-											"value": "-100",
+											"value": "100",
 											"type": "text"
 										},
 										{
@@ -3939,9 +3963,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/user/direct_bank_transfer_payments",
+									"raw": "{{BASE_URL}}/v3/user/direct_bank_transfer_payments",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -3953,6 +3977,113 @@
 							},
 							"response": [
 								{
+									"name": "400 - Bad request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "amount",
+													"value": "-100",
+													"type": "text"
+												},
+												{
+													"key": "external_id",
+													"value": "order_002",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/v3/user/direct_bank_transfer_payments",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"v3",
+												"user",
+												"direct_bank_transfer_payments"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Request-Method",
+											"value": "*"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 18 Jan 2020 06:48:01 GMT"
+										},
+										{
+											"key": "Server",
+											"value": "nginx/1.13.12"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-Request-Id",
+											"value": "3380c5b1-3b27-41a3-b56e-e73eaceb529d"
+										},
+										{
+											"key": "X-Runtime",
+											"value": "0.097743"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Content-Length",
+											"value": "196"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"error\": \"Validation failed: Amount must be greater than 0\",\n    \"info\": \"Received Request: {\\\"amount\\\"=>\\\"-100\\\", \\\"external_id\\\"=>\\\"order_002\\\", \\\"controller\\\"=>\\\"api/v3/users\\\", \\\"action\\\"=>\\\"direct_bank_transfer_payments\\\"}\"\n}"
+								},
+								{
 									"name": "200 - Success",
 									"originalRequest": {
 										"method": "POST",
@@ -3960,7 +4091,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}",
+												"value": "{{CUSTOMER_API_KEY}}",
 												"type": "text"
 											}
 										],
@@ -3980,9 +4111,9 @@
 											]
 										},
 										"url": {
-											"raw": "{{baseUrl}}/v3/user/direct_bank_transfer_payments",
+											"raw": "{{BASE_URL}}/v3/user/direct_bank_transfer_payments",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"v3",
@@ -4066,113 +4197,6 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"id\": \"contract_b2bb9b580e964e999b8b93392b9fa69d\",\n    \"object\": \"DirectBankTransferContract\",\n    \"status\": \"processing\",\n    \"amount\": \"100.0\",\n    \"total_amount\": \"100.0\",\n    \"currency\": \"sgd\",\n    \"notify_url\": null,\n    \"wallet_name\": \"Digital Goods\",\n    \"order_id\": \"order_001\",\n    \"description\": null,\n    \"receipt_email\": \"playground@xfers.com\",\n    \"expiration_date\": null,\n    \"metadata\": {}\n}"
-								},
-								{
-									"name": "400 - Bad request",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "formdata",
-											"formdata": [
-												{
-													"key": "amount",
-													"value": "-100",
-													"type": "text"
-												},
-												{
-													"key": "external_id",
-													"value": "order_002",
-													"type": "text"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{baseUrl}}/v3/user/direct_bank_transfer_payments",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"v3",
-												"user",
-												"direct_bank_transfer_payments"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										},
-										{
-											"key": "Access-Control-Request-Method",
-											"value": "*"
-										},
-										{
-											"key": "Cache-Control",
-											"value": "no-cache"
-										},
-										{
-											"key": "Content-Encoding",
-											"value": "gzip"
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "Date",
-											"value": "Sat, 18 Jan 2020 06:48:01 GMT"
-										},
-										{
-											"key": "Server",
-											"value": "nginx/1.13.12"
-										},
-										{
-											"key": "Vary",
-											"value": "Accept-Encoding"
-										},
-										{
-											"key": "X-Content-Type-Options",
-											"value": "nosniff"
-										},
-										{
-											"key": "X-Frame-Options",
-											"value": "SAMEORIGIN"
-										},
-										{
-											"key": "X-Request-Id",
-											"value": "3380c5b1-3b27-41a3-b56e-e73eaceb529d"
-										},
-										{
-											"key": "X-Runtime",
-											"value": "0.097743"
-										},
-										{
-											"key": "X-XSS-Protection",
-											"value": "1; mode=block"
-										},
-										{
-											"key": "Content-Length",
-											"value": "196"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
-										}
-									],
-									"cookie": [],
-									"body": "{\n    \"error\": \"Validation failed: Amount must be greater than 0\",\n    \"info\": \"Received Request: {\\\"amount\\\"=>\\\"-100\\\", \\\"external_id\\\"=>\\\"order_002\\\", \\\"controller\\\"=>\\\"api/v3/users\\\", \\\"action\\\"=>\\\"direct_bank_transfer_payments\\\"}\"\n}"
 								}
 							]
 						}
@@ -4193,7 +4217,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "Your user API token which you can retrieve from the get token API response."
 									},
 									{
@@ -4219,9 +4243,9 @@
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/user/bank_account/:bank_account_id/withdraw",
+									"raw": "{{BASE_URL}}/v3/user/bank_account/:bank_account_id/withdraw",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -4273,9 +4297,9 @@
 											]
 										},
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/<string>/withdraw",
+											"raw": "{{BASE_URL}}/user/bank_account/<string>/withdraw",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4329,9 +4353,9 @@
 											]
 										},
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/<string>/withdraw",
+											"raw": "{{BASE_URL}}/user/bank_account/<string>/withdraw",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4366,7 +4390,7 @@
 									{
 										"description": "Your user API token which you can retrieve from the get token API response.",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{merchantToken}}"
+										"value": "{{MERCHANT_APP_KEY}}"
 									}
 								],
 								"body": {
@@ -4384,15 +4408,15 @@
 										},
 										{
 											"key": "user_api_token",
-											"value": "{{customerToken}}",
+											"value": "{{CUSTOMER_API_KEY}}",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/user/bank_account/:bank_account_id/withdraw",
+									"raw": "{{BASE_URL}}/v3/user/bank_account/:bank_account_id/withdraw",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -4413,6 +4437,62 @@
 							},
 							"response": [
 								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": {
+													"content": "Your user API token which you can retrieve from the get token API response.",
+													"type": "text/plain"
+												},
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "amount",
+													"value": "1200000"
+												},
+												{
+													"key": "idempotency_id",
+													"value": "Order_1234"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/user/bank_account/<string>/withdraw",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"bank_account",
+												"<string>",
+												"withdraw"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -4444,9 +4524,9 @@
 											]
 										},
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/<string>/withdraw",
+											"raw": "{{BASE_URL}}/user/bank_account/<string>/withdraw",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4467,62 +4547,6 @@
 									],
 									"cookie": [],
 									"body": "{\n \"available_balance\": 68596,\n \"ledger_balance\": 68596,\n \"withdrawal_request\": {\n  \"id\": \"contract_d3b5b84ba7814eb28ed4f9845d65e53a\",\n  \"idempotency_id\": \"Order_12346\",\n  \"type\": \"Sobatku/withdrawal\",\n  \"status\": \"pending\",\n  \"amount\": \"110000.0\",\n  \"fees\": \"0.0\",\n  \"account_no\": \"1680366060\",\n  \"bank_abbrev\": \"BCA\",\n  \"express\": true,\n  \"value_date\": null,\n  \"failure_reason\": null,\n  \"created_at\": \"2018-12-05T11:15:37+07:00\"\n }\n}"
-								},
-								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": {
-													"content": "Your user API token which you can retrieve from the get token API response.",
-													"type": "text/plain"
-												},
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/x-www-form-urlencoded"
-											}
-										],
-										"body": {
-											"mode": "urlencoded",
-											"urlencoded": [
-												{
-													"key": "amount",
-													"value": "1200000"
-												},
-												{
-													"key": "idempotency_id",
-													"value": "Order_1234"
-												}
-											]
-										},
-										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/<string>/withdraw",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"user",
-												"bank_account",
-												"<string>",
-												"withdraw"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -4536,14 +4560,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "Your user API token which you can retrieve from the get token API response."
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/user/bank_account/withdrawal_requests",
+									"raw": "{{BASE_URL}}/v3/user/bank_account/withdrawal_requests",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -4555,44 +4579,6 @@
 								"description": "This API will be used to get a list of the last 10 withdrawal requests."
 							},
 							"response": [
-								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": {
-													"content": "Your user API token which you can retrieve from the get token API response.",
-													"type": "text/plain"
-												},
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/withdrawal_requests",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"user",
-												"bank_account",
-												"withdrawal_requests"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
 								{
 									"name": "Success",
 									"originalRequest": {
@@ -4608,9 +4594,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/withdrawal_requests",
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4630,6 +4616,44 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"contract_51005437f4734be5b7e3a548b4fa7d0e\",\n \"idempotency_id\": \"Order_1234\",\n \"type\": \"Sobatku/withdrawal on behalf\",\n \"status\": \"pending\",\n \"amount\": \"120000.0\",\n \"fees\": \"0.0\",\n \"account_no\": \"1680366060\",\n \"bank_abbrev\": \"BCA\",\n \"express\": true,\n \"value_date\": null,\n \"failure_reason\": null,\n \"created_at\": \"2018-11-06T10:43:29+07:00\"\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": {
+													"content": "Your user API token which you can retrieve from the get token API response.",
+													"type": "text/plain"
+												},
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"bank_account",
+												"withdrawal_requests"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -4643,14 +4667,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "Your user API token which you can retrieve from the get token API response."
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/user/bank_account/withdrawal_requests/:withdrawal_request_id",
+									"raw": "{{BASE_URL}}/v3/user/bank_account/withdrawal_requests/:withdrawal_request_id",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -4671,45 +4695,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": {
-													"content": "Your user API token which you can retrieve from the get token API response.",
-													"type": "text/plain"
-												},
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/withdrawal_requests/<string>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"user",
-												"bank_account",
-												"withdrawal_requests",
-												"<string>"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"contract_51005437f4734be5b7e3a548b4fa7d0e\",\n \"idempotency_id\": \"Order_1234\",\n \"type\": \"Sobatku/withdrawal on behalf\",\n \"status\": \"pending\",\n \"amount\": \"120000.0\",\n \"fees\": \"0.0\",\n \"account_no\": \"1680366060\",\n \"bank_abbrev\": \"BCA\",\n \"express\": true,\n \"value_date\": null,\n \"failure_reason\": null,\n \"created_at\": \"2018-11-06T10:43:29+07:00\"\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "GET",
@@ -4724,9 +4709,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/withdrawal_requests/<string>",
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests/<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4747,6 +4732,45 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": {
+													"content": "Your user API token which you can retrieve from the get token API response.",
+													"type": "text/plain"
+												},
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests/<string>",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"bank_account",
+												"withdrawal_requests",
+												"<string>"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"contract_51005437f4734be5b7e3a548b4fa7d0e\",\n \"idempotency_id\": \"Order_1234\",\n \"type\": \"Sobatku/withdrawal on behalf\",\n \"status\": \"pending\",\n \"amount\": \"120000.0\",\n \"fees\": \"0.0\",\n \"account_no\": \"1680366060\",\n \"bank_abbrev\": \"BCA\",\n \"express\": true,\n \"value_date\": null,\n \"failure_reason\": null,\n \"created_at\": \"2018-11-06T10:43:29+07:00\"\n}"
 								}
 							]
 						},
@@ -4831,7 +4855,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "Your user API token which you can retrieve from the get token API response."
 									},
 									{
@@ -4844,9 +4868,9 @@
 									"raw": "{\n    \"status\": \"<string>\",\n    \"idempotency_id\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/user/bank_account/withdrawal_requests/mock_result",
+									"raw": "{{BASE_URL}}/v3/user/bank_account/withdrawal_requests/mock_result",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -4882,9 +4906,9 @@
 											"raw": "{\n    \"status\": \"<string>\",\n    \"idempotency_id\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/withdrawal_requests/mock_result",
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests/mock_result",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4929,9 +4953,9 @@
 											"raw": "{\n    \"status\": \"<string>\",\n    \"idempotency_id\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/user/bank_account/withdrawal_requests/mock_result",
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests/mock_result",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"user",
@@ -4995,7 +5019,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -5008,9 +5032,9 @@
 									"raw": "{\n    \"user_api_token\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/cards",
+									"raw": "{{BASE_URL}}/v3/cards",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5028,7 +5052,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5040,9 +5064,9 @@
 											"raw": "{\n    \"user_api_token\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/cards",
+											"raw": "{{BASE_URL}}/cards",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards"
@@ -5069,7 +5093,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5081,9 +5105,9 @@
 											"raw": "{\n    \"user_api_token\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/cards",
+											"raw": "{{BASE_URL}}/cards",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards"
@@ -5114,14 +5138,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/cards?user_api_token=<string>",
+									"raw": "{{BASE_URL}}/v3/cards?user_api_token=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5149,9 +5173,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/cards?user_api_token=<string>",
+											"raw": "{{BASE_URL}}/cards?user_api_token=<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards"
@@ -5188,9 +5212,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/cards?user_api_token=<string>",
+											"raw": "{{BASE_URL}}/cards?user_api_token=<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards"
@@ -5227,7 +5251,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -5240,9 +5264,9 @@
 									"raw": "{\n    \"txn_id\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/credit_card_charges/charge_card_guest",
+									"raw": "{{BASE_URL}}/v3/credit_card_charges/charge_card_guest",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5254,48 +5278,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"txn_id\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/credit_card_charges/charge_card_guest",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"credit_card_charges",
-												"charge_card_guest"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"success\": true,\n \"return_url\": \"https://www.yoursite.com\"\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "POST",
@@ -5303,7 +5285,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5315,9 +5297,9 @@
 											"raw": "{\n    \"txn_id\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/credit_card_charges/charge_card_guest",
+											"raw": "{{BASE_URL}}/credit_card_charges/charge_card_guest",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"credit_card_charges",
@@ -5336,6 +5318,48 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"txn_id\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/credit_card_charges/charge_card_guest",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"credit_card_charges",
+												"charge_card_guest"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"success\": true,\n \"return_url\": \"https://www.yoursite.com\"\n}"
 								}
 							]
 						},
@@ -5349,7 +5373,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -5362,9 +5386,9 @@
 									"raw": "{\n    \"txn_id\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/credit_card_charges/charge_card",
+									"raw": "{{BASE_URL}}/v3/credit_card_charges/charge_card",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5376,48 +5400,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"txn_id\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/credit_card_charges/charge_card",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"credit_card_charges",
-												"charge_card"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -5425,7 +5407,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5437,9 +5419,9 @@
 											"raw": "{\n    \"txn_id\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/credit_card_charges/charge_card",
+											"raw": "{{BASE_URL}}/credit_card_charges/charge_card",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"credit_card_charges",
@@ -5458,6 +5440,48 @@
 									],
 									"cookie": [],
 									"body": "{\n \"success\": true,\n \"return_url\": \"https://www.yoursite.com\"\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"txn_id\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/credit_card_charges/charge_card",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"credit_card_charges",
+												"charge_card"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -5471,7 +5495,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -5484,9 +5508,9 @@
 									"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/cards/:card_id/set_default",
+									"raw": "{{BASE_URL}}/v3/cards/:card_id/set_default",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5506,49 +5530,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/cards/<string>/set_default",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"cards",
-												"<string>",
-												"set_default"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -5556,7 +5537,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5568,9 +5549,9 @@
 											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/cards/<string>/set_default",
+											"raw": "{{BASE_URL}}/cards/<string>/set_default",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards",
@@ -5590,6 +5571,49 @@
 									],
 									"cookie": [],
 									"body": "{\n \"card_id\": \"card_197O8yI7jGeCrIKDeI6SexB6\",\n \"last_4\": \"4242\",\n \"card_type\": \"Visa\",\n \"card_country\": \"US\",\n \"exp_yr\": \"2022\",\n \"exp_month\": \"3\",\n \"is_default\": true\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/cards/<string>/set_default",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"cards",
+												"<string>",
+												"set_default"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -5603,7 +5627,7 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									},
 									{
@@ -5616,9 +5640,9 @@
 									"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/cards/:card_id",
+									"raw": "{{BASE_URL}}/v3/cards/:card_id",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5644,7 +5668,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5656,9 +5680,9 @@
 											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/cards/<string>",
+											"raw": "{{BASE_URL}}/cards/<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards",
@@ -5686,7 +5710,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5698,9 +5722,9 @@
 											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/cards/<string>",
+											"raw": "{{BASE_URL}}/cards/<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"cards",
@@ -5740,7 +5764,7 @@
 									{
 										"description": "You can retrieve this from the dashboard",
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}"
+										"value": "{{CUSTOMER_API_KEY}}"
 									},
 									{
 										"key": "Content-Type",
@@ -5752,9 +5776,9 @@
 									"raw": "{\n    \"amount\": \"<float>\",\n    \"currency\": \"<string>\",\n    \"request_id\": \"<string>\",\n    \"bank\": \"<string>\",\n    \"notify_url\": \"<string>\",\n    \"disable_va\": \"false\"\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/v3/intents",
+									"raw": "{{BASE_URL}}/v3/intents",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5772,7 +5796,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5784,9 +5808,9 @@
 											"raw": "{\n    \"amount\": \"<float>\",\n    \"currency\": \"<string>\",\n    \"request_id\": \"<string>\",\n    \"bank\": \"<string>\",\n    \"notify_url\": \"<string>\",\n    \"disable_va\": \"false\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/intents",
+											"raw": "{{BASE_URL}}/intents",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"intents"
@@ -5813,7 +5837,7 @@
 											{
 												"description": "You can retrieve this from the dashboard",
 												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{customerToken}}"
+												"value": "{{CUSTOMER_API_KEY}}"
 											},
 											{
 												"key": "Content-Type",
@@ -5825,9 +5849,9 @@
 											"raw": "{\n    \"amount\": \"<float>\",\n    \"currency\": \"<string>\",\n    \"request_id\": \"<string>\",\n    \"bank\": \"<string>\",\n    \"notify_url\": \"<string>\",\n    \"disable_va\": \"false\"\n}"
 										},
 										"url": {
-											"raw": "{{baseUrl}}/intents",
+											"raw": "{{BASE_URL}}/intents",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"intents"
@@ -5858,14 +5882,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/intents?disable_va=<string>",
+									"raw": "{{BASE_URL}}/v3/intents?disable_va=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5894,9 +5918,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/intents?disable_va=<string>",
+											"raw": "{{BASE_URL}}/intents?disable_va=<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"intents"
@@ -5933,9 +5957,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/intents?disable_va=<string>",
+											"raw": "{{BASE_URL}}/intents?disable_va=<string>",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"intents"
@@ -5972,14 +5996,14 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{customerToken}}",
+										"value": "{{CUSTOMER_API_KEY}}",
 										"description": "You can retrieve this from the dashboard"
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/v3/intents/:intent_id/cancel",
+									"raw": "{{BASE_URL}}/v3/intents/:intent_id/cancel",
 									"host": [
-										"{{baseUrl}}"
+										"{{BASE_URL}}"
 									],
 									"path": [
 										"v3",
@@ -5999,41 +6023,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{XDD}}"
-											}
-										],
-										"url": {
-											"raw": "{{baseUrl}}/intents/<string>/cancel",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"intents",
-												"<string>",
-												"cancel"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -6045,9 +6034,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/intents/<string>/cancel",
+											"raw": "{{BASE_URL}}/intents/<string>/cancel",
 											"host": [
-												"{{baseUrl}}"
+												"{{BASE_URL}}"
 											],
 											"path": [
 												"intents",
@@ -6067,6 +6056,41 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"6f5f85859a51cd08c8ae113412bb72c8\",\n \"request_id\": \"AZ0001\",\n \"amount\": \"5000\",\n \"currency\": \"IDR\",\n \"amount_to_transfer\": \"4999\",\n \"bank_name\": \"Bank Central Asia\",\n \"bank_abbrev\": \"BCA\",\n \"account_name\": \"Xveria Media Indonesia\",\n \"bank_account_no\": \"0124121241\",\n \"notify_url\": \"https://mysite.com/topup_notification\",\n \"expiration_date\": \"2016-09-09T17:55:51Z\",\n \"status\": \"pending\"\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{XDD}}"
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/intents/<string>/cancel",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"intents",
+												"<string>",
+												"cancel"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -6237,9 +6261,27 @@
 	],
 	"variable": [
 		{
-			"id": "f9dc932b-7732-4145-a98e-9b90aba9e5af",
-			"key": "baseUrl",
+			"id": "067ab4ff-0b38-43ba-aea4-ea8b8ed2d6fc",
+			"key": "BASE_URL",
 			"value": "https://sandbox.xfers.io/api",
+			"type": "string"
+		},
+		{
+			"id": "0cb0c1a8-151c-4d0a-b6aa-bb4db718fb40",
+			"key": "MERCHANT_APP_KEY",
+			"value": "<merchant app key>",
+			"type": "string"
+		},
+		{
+			"id": "27f07a42-c2f3-4473-b03a-229e03c53a42",
+			"key": "MERCHANT_APP_SECRET",
+			"value": "<merchant app secret>",
+			"type": "string"
+		},
+		{
+			"id": "720efb6c-365a-433e-82ae-fe9cd9bf02fc",
+			"key": "CUSTOMER_API_KEY",
+			"value": "<customer api key>",
 			"type": "string"
 		}
 	],
