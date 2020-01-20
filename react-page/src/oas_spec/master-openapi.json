@@ -1191,14 +1191,15 @@
                     "phone": "+6282421424",
                     "processed_at": "2019-08-30 20:02:06 +0700",
                     "userToken": "fa3c4afdce0b48ea63f8e648f296c8ff6db41d93976d994a94329390d88dcaa5",
-                    "status": "registered",
+                    "status": "verified",
                     "identity":{
                       "nama": "Aldo Sanjoto",
                       "nik": "1234567890123456",
                       "tanggalLahir": "1997-08-30",
                       "tempatLahir": "Jakarta"
                     }
-                  }
+                  },
+                  "message": "Data has been verified"
                 }
               }
             }
@@ -1238,7 +1239,7 @@
                     "example": "some random.pdf"
                   },
                   "doc_type": {
-                    "description": "Can only be Serial or Parallel",
+                    "description": "Can only be Serial or Parallel. \n 1. Serial: the signing or reviewing process will be based on the order of recipients. \n 2. Parallel: signer or reviewer can sign the document without having to wait for a previous one.",
                     "type": "string",
                     "example": "Serial"
                   },
