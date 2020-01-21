@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b7890b30-c8da-437b-87d6-8d46155589f9",
+		"_postman_id": "bbff699f-d884-4648-bc53-b802a70e13ed",
 		"name": "Xfers API - Singapore",
 		"description": "Welcome to Xfers' API documentation. You can find information on our API endpoint specific to your country.\n\nContact us through our [help desk](https://bit.ly/XfersSupport)\n\n[Find out more about Xfers](https://www.xfers.com)\n\n---\n\nError responses\n===\nThe API categorises the various failures with Xfers' own error code. The body of the response will be JSON in the following format:\n\n```\nerror: \"string\"\nerror_code: \"string\"\nerror_handling: \"string\"\n```\n\nThe field `error` returns the error message that is specific to your request, `error_code` returns the category the error and `error_handling` returns the instruction on how to resolve the error.\n\n\nPagination\n===\n\nTo do pagination:\n1. Decide on number of entries per page (e.g. 100 for this example). Set the limit as this\n2. First page: Offset 0. The latest 100 entries, 1-100, will be returned.\n3. Second page: Offset 100. The next 100 entries, 101-200, will be returned.\n4. Third page: Offset 200. The next 100 entries, 201-300, will be returned.\nHence your offset should always be a multiple of limits.\n\n\nCallback configuration\n===\n\nFor certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\n- [Singapore](https://www.xfers.io/merchant_settings/callback_settings)\n- [Indonesia](https://id.xfers.com/merchant_settings/callback_settings)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -78,60 +78,6 @@
 					},
 					"response": [
 						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"description": {
-											"content": "You can retrieve this from the dashboard",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-APP-API-KEY",
-										"value": ""
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "phone_no",
-											"value": "<string>"
-										},
-										{
-											"key": "signature",
-											"value": "<string>"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/authorize/signup_login",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"authorize",
-										"signup_login"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "POST",
@@ -184,6 +130,60 @@
 							],
 							"cookie": [],
 							"body": "{\n \"msg\": \"success\"\n}"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "You can retrieve this from the dashboard",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-APP-API-KEY",
+										"value": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "phone_no",
+											"value": "<string>"
+										},
+										{
+											"key": "signature",
+											"value": "<string>"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/authorize/signup_login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"authorize",
+										"signup_login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -804,69 +804,6 @@
 					},
 					"response": [
 						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"activities"
-									],
-									"query": [
-										{
-											"key": "limit",
-											"value": "50"
-										},
-										{
-											"key": "start_date",
-											"value": "1 month ago"
-										},
-										{
-											"key": "end_date",
-											"value": "Now"
-										},
-										{
-											"key": "offset",
-											"value": "<integer>"
-										},
-										{
-											"key": "type",
-											"value": "<string>"
-										},
-										{
-											"key": "status",
-											"value": "<string>"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"activities\": [\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:50:41+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_6453bc8bdd8641c8abf26c9fefefacd3\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"4pssAgcRvz5Px08o0LVicI18Ej8TKMGAVtBGchCF9r0\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:49:36+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_0deed17f4c7440b7bb6a205daf060ee8\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"73EBb7URAkcfcMteuZyXPusczumab78IwT2MuCiVaVw\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:48:52+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_40fdc298f5f14784ab139a5ad916ee9d\",\n   \"amount\": 1000000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"DiMU_TDoUFZGCaqOZfLEv1EbPqn_BkNSrfTlopHZl_0\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:47:36+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_446ea0427fe746cc81b9f136c5514759\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"fgCl2fVcKh-2ZW_5lleZVVLtlqiMhlljAG-bS_3yJPg\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:44:41+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_fd5117460c164784af661f1af726e4f1\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"RBOrTYTGDahomRv4o4_mjYIlk3kfUcx3YR0_5hmb4nc\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:44:18+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_e485bbeab296474390b941d3f40b6018\",\n   \"amount\": 1000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"DnB4s09v-SdRXWOw9v5ZqILm6NyoXzw9RR1VM7YKWZA\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-02-13T14:18:04+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_c327044b18744d2893f5e1d05d2d1fbb\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"5YaskT_YcqBV73LWPIfU56IQfALVAErOZCmf-e6lCT8\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-10-05T18:19:15+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_0252ff1bf4944859a1b0b8b908255f4e\",\n   \"amount\": 100,\n   \"status\": \"processing\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"FfNMyaL7lS_SQ3Y4q_HlT55TkTATclIGsy446V9oay8\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-10-05T18:18:04+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_9ec9e9aae7da4df7aefd03071c3cd1a1\",\n   \"amount\": 100000,\n   \"status\": \"processing\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"8t944mmbHZUDI4Ws04fPJ79xbshKLX6COlUgC2r7UTI\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:49:12+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"77234e141a42492c95c04df62a6c539a\",\n   \"invoice_id\": \"QUpveF_hqwloCmMuP3yGNKIoY3d_iKsGVKuhTetQQPc\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:47:20+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"796bde9bbec04369908db99ba4e68751\",\n   \"invoice_id\": \"C-hW0wugMoFI2iU4Y3eyTtk9iphoNL-DbQzKKKCwnt8\",\n   \"amount\": 12334,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:46:31+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"d6d91a8d7c0a4d0ebfc77f33bbd7bf1e\",\n   \"invoice_id\": \"Qmbxr8Q5Qkyrcp2Sp6xQU7GJYj1GobAt_fYKD0JVZOM\",\n   \"amount\": 10000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-08-16T11:11:49+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"83efbcbc76c5497f803ea82769ea2457\",\n   \"invoice_id\": \"ZNKwSb9Ajhs5dg0EKgGDwVYhBvZeSulTtnfzZIuh5_0\",\n   \"amount\": 100000000000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  }\n ],\n \"activities_returned\": 13,\n \"limit\": 50,\n \"offset\": 0,\n \"start_date\": \"2018-07-04T11:49:58+08:00 \",\n \"end_date\": \"2019-10-30T11:49:58+08:00\"\n}"
-						},
-						{
 							"name": "List of possible errors",
 							"originalRequest": {
 								"method": "GET",
@@ -928,6 +865,69 @@
 							],
 							"cookie": [],
 							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/user/activities?limit=50&start_date=1 month ago&end_date=Now&offset=<integer>&type=<string>&status=<string>",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"activities"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "50"
+										},
+										{
+											"key": "start_date",
+											"value": "1 month ago"
+										},
+										{
+											"key": "end_date",
+											"value": "Now"
+										},
+										{
+											"key": "offset",
+											"value": "<integer>"
+										},
+										{
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"activities\": [\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:50:41+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_6453bc8bdd8641c8abf26c9fefefacd3\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"4pssAgcRvz5Px08o0LVicI18Ej8TKMGAVtBGchCF9r0\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:49:36+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_0deed17f4c7440b7bb6a205daf060ee8\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"73EBb7URAkcfcMteuZyXPusczumab78IwT2MuCiVaVw\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:48:52+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_40fdc298f5f14784ab139a5ad916ee9d\",\n   \"amount\": 1000000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"DiMU_TDoUFZGCaqOZfLEv1EbPqn_BkNSrfTlopHZl_0\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:47:36+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_446ea0427fe746cc81b9f136c5514759\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"fgCl2fVcKh-2ZW_5lleZVVLtlqiMhlljAG-bS_3yJPg\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:44:41+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_fd5117460c164784af661f1af726e4f1\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"RBOrTYTGDahomRv4o4_mjYIlk3kfUcx3YR0_5hmb4nc\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-04-02T17:44:18+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_e485bbeab296474390b941d3f40b6018\",\n   \"amount\": 1000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"DnB4s09v-SdRXWOw9v5ZqILm6NyoXzw9RR1VM7YKWZA\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2019-02-13T14:18:04+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_c327044b18744d2893f5e1d05d2d1fbb\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"5YaskT_YcqBV73LWPIfU56IQfALVAErOZCmf-e6lCT8\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-10-05T18:19:15+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_0252ff1bf4944859a1b0b8b908255f4e\",\n   \"amount\": 100,\n   \"status\": \"processing\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"FfNMyaL7lS_SQ3Y4q_HlT55TkTATclIGsy446V9oay8\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-10-05T18:18:04+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"contract_9ec9e9aae7da4df7aefd03071c3cd1a1\",\n   \"amount\": 100000,\n   \"status\": \"processing\",\n   \"type\": \"Deposit\",\n   \"metadata\": {\n    \"origin_name\": \"System -TM-\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"\"\n   },\n   \"external_id\": \"8t944mmbHZUDI4Ws04fPJ79xbshKLX6COlUgC2r7UTI\"\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:49:12+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"77234e141a42492c95c04df62a6c539a\",\n   \"invoice_id\": \"QUpveF_hqwloCmMuP3yGNKIoY3d_iKsGVKuhTetQQPc\",\n   \"amount\": 100000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:47:20+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"796bde9bbec04369908db99ba4e68751\",\n   \"invoice_id\": \"C-hW0wugMoFI2iU4Y3eyTtk9iphoNL-DbQzKKKCwnt8\",\n   \"amount\": 12334,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-12-14T17:46:31+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"d6d91a8d7c0a4d0ebfc77f33bbd7bf1e\",\n   \"invoice_id\": \"Qmbxr8Q5Qkyrcp2Sp6xQU7GJYj1GobAt_fYKD0JVZOM\",\n   \"amount\": 10000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  },\n  {\n   \"fee\": 0,\n   \"created_at\": \"2018-08-16T11:11:49+07:00\",\n   \"wallet_name\": \"General Wallet\",\n   \"id\": \"83efbcbc76c5497f803ea82769ea2457\",\n   \"invoice_id\": \"ZNKwSb9Ajhs5dg0EKgGDwVYhBvZeSulTtnfzZIuh5_0\",\n   \"amount\": 100000000000,\n   \"status\": \"completed\",\n   \"type\": \"Payout\",\n   \"metadata\": {\n    \"origin_name\": \"admin+faspay_va\",\n    \"destination_name\": \"Karina\",\n    \"description\": \"paid via faspay_virtual_account\"\n   }\n  }\n ],\n \"activities_returned\": 13,\n \"limit\": 50,\n \"offset\": 0,\n \"start_date\": \"2018-07-04T11:49:58+08:00 \",\n \"end_date\": \"2019-10-30T11:49:58+08:00\"\n}"
 						}
 					]
 				},
@@ -1188,167 +1188,6 @@
 					},
 					"response": [
 						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "id_front_url",
-											"value": "<string>"
-										},
-										{
-											"key": "selfie_2id_url",
-											"value": "<string>"
-										},
-										{
-											"key": "fullname",
-											"value": "<string>"
-										},
-										{
-											"key": "mother_maiden_name",
-											"value": "<string>"
-										},
-										{
-											"key": "first_name",
-											"value": "<string>"
-										},
-										{
-											"key": "last_name",
-											"value": "<string>"
-										},
-										{
-											"key": "email",
-											"value": "<string>"
-										},
-										{
-											"key": "date_of_birth",
-											"value": "<string>"
-										},
-										{
-											"key": "gender",
-											"value": "<string>"
-										},
-										{
-											"key": "address_line_1",
-											"value": "<string>"
-										},
-										{
-											"key": "address_line_2",
-											"value": "<string>"
-										},
-										{
-											"key": "nationality",
-											"value": "<string>"
-										},
-										{
-											"key": "postal_code",
-											"value": "<string>"
-										},
-										{
-											"key": "identity_no",
-											"value": "<string>"
-										},
-										{
-											"key": "country",
-											"value": "<string>"
-										},
-										{
-											"key": "city",
-											"value": "<string>"
-										},
-										{
-											"key": "annual_income",
-											"value": "<integer>"
-										},
-										{
-											"key": "id_back_url",
-											"value": "<string>"
-										},
-										{
-											"key": "proof_of_address_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_1_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_2_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_3_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_4_url",
-											"value": "<string>"
-										},
-										{
-											"key": "support_document_5_url",
-											"value": "<string>"
-										},
-										{
-											"key": "meta_data",
-											"value": "<string>"
-										},
-										{
-											"key": "place_of_birth",
-											"value": "<string>"
-										},
-										{
-											"key": "blood_type",
-											"value": "<string>"
-										},
-										{
-											"key": "marital_status",
-											"value": "<string>"
-										},
-										{
-											"key": "callback_url",
-											"value": "<string>"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"available_balance\": \"0.32\",\n \"ledger_balance\": \"0.32\",\n \"bank_transfer_rates\": \"0.0\",\n \"bank_transfer_fees\": \"0.45\",\n \"first_name\": \"Winston\",\n \"last_name\": \"Andersen\",\n \"date_of_birth\": \"1986-02-27\",\n \"country_of_birth\": \"\",\n \"gender\": \"male\",\n \"email\": \"winston@xfers.com\",\n \"country\": \"id\",\n \"nationality\": \"Indonesian\",\n \"address_line_1\": \"Blk 712 loyang Avenue 5\",\n \"address_line_2\": \"#01-41\",\n \"postal_code\": \"340712\",\n \"nric_type\": \"\",\n \"identity_no\": \"317201180894005\",\n \"nric_issue_date\": \"\",\n \"phone_no\": \"+6287785725657\",\n \"bank_accounts\": [\n  {\n   \"id\": 69,\n   \"account_no\": \"1150006390175\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 175,\n   \"account_no\": \"1680366060\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 177,\n   \"account_no\": \"1150006390175\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"MANDIRI\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 207,\n   \"account_no\": \"1234567890\",\n   \"account_holder_name\": \"Some Name\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  }\n ],\n \"annual_income\": \"\",\n \"id_front\": \"15332940588453-a-blue-sky-with-white-clouds-pv.jpg\",\n \"id_front_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_fronts/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=eBPUqBc0tCwmmpbKu5HmISLBiaQ%3D\",\n \"selfie_2id\": \"15332940588453-a-blue-sky-with-white-clouds-pv.jpg\",\n \"selfie_2id_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_selfies/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=cK6icTFvQC6XSOPMfLSMjZ1ZVlo%3D\",\n \"account_locked\": false,\n \"kyc_verified\": true,\n \"meta_data\": \"\",\n \"place_of_birth\": null,\n \"blood_type\": null,\n \"rt_rw\": null,\n \"administrative_village\": null,\n \"district\": null,\n \"religion\": null,\n \"marital_status\": null,\n \"occupation\": null,\n \"mother_maiden_name\": \"Luna\"\n}"
-						},
-						{
 							"name": "List of possible errors",
 							"originalRequest": {
 								"method": "PUT",
@@ -1508,6 +1347,167 @@
 							],
 							"cookie": [],
 							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id_front_url",
+											"value": "<string>"
+										},
+										{
+											"key": "selfie_2id_url",
+											"value": "<string>"
+										},
+										{
+											"key": "fullname",
+											"value": "<string>"
+										},
+										{
+											"key": "mother_maiden_name",
+											"value": "<string>"
+										},
+										{
+											"key": "first_name",
+											"value": "<string>"
+										},
+										{
+											"key": "last_name",
+											"value": "<string>"
+										},
+										{
+											"key": "email",
+											"value": "<string>"
+										},
+										{
+											"key": "date_of_birth",
+											"value": "<string>"
+										},
+										{
+											"key": "gender",
+											"value": "<string>"
+										},
+										{
+											"key": "address_line_1",
+											"value": "<string>"
+										},
+										{
+											"key": "address_line_2",
+											"value": "<string>"
+										},
+										{
+											"key": "nationality",
+											"value": "<string>"
+										},
+										{
+											"key": "postal_code",
+											"value": "<string>"
+										},
+										{
+											"key": "identity_no",
+											"value": "<string>"
+										},
+										{
+											"key": "country",
+											"value": "<string>"
+										},
+										{
+											"key": "city",
+											"value": "<string>"
+										},
+										{
+											"key": "annual_income",
+											"value": "<integer>"
+										},
+										{
+											"key": "id_back_url",
+											"value": "<string>"
+										},
+										{
+											"key": "proof_of_address_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_1_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_2_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_3_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_4_url",
+											"value": "<string>"
+										},
+										{
+											"key": "support_document_5_url",
+											"value": "<string>"
+										},
+										{
+											"key": "meta_data",
+											"value": "<string>"
+										},
+										{
+											"key": "place_of_birth",
+											"value": "<string>"
+										},
+										{
+											"key": "blood_type",
+											"value": "<string>"
+										},
+										{
+											"key": "marital_status",
+											"value": "<string>"
+										},
+										{
+											"key": "callback_url",
+											"value": "<string>"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"available_balance\": \"0.32\",\n \"ledger_balance\": \"0.32\",\n \"bank_transfer_rates\": \"0.0\",\n \"bank_transfer_fees\": \"0.45\",\n \"first_name\": \"Winston\",\n \"last_name\": \"Andersen\",\n \"date_of_birth\": \"1986-02-27\",\n \"country_of_birth\": \"\",\n \"gender\": \"male\",\n \"email\": \"winston@xfers.com\",\n \"country\": \"id\",\n \"nationality\": \"Indonesian\",\n \"address_line_1\": \"Blk 712 loyang Avenue 5\",\n \"address_line_2\": \"#01-41\",\n \"postal_code\": \"340712\",\n \"nric_type\": \"\",\n \"identity_no\": \"317201180894005\",\n \"nric_issue_date\": \"\",\n \"phone_no\": \"+6287785725657\",\n \"bank_accounts\": [\n  {\n   \"id\": 69,\n   \"account_no\": \"1150006390175\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 175,\n   \"account_no\": \"1680366060\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 177,\n   \"account_no\": \"1150006390175\",\n   \"account_holder_name\": \"PROD ONLY\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"MANDIRI\",\n   \"usage\": \"all\"\n  },\n  {\n   \"id\": 207,\n   \"account_no\": \"1234567890\",\n   \"account_holder_name\": \"Some Name\",\n   \"detected_name\": \"PROD ONLY\",\n   \"verification_status\": \"pending\",\n   \"verified\": true,\n   \"bank_abbrev\": \"BCA\",\n   \"usage\": \"all\"\n  }\n ],\n \"annual_income\": \"\",\n \"id_front\": \"15332940588453-a-blue-sky-with-white-clouds-pv.jpg\",\n \"id_front_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_fronts/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=eBPUqBc0tCwmmpbKu5HmISLBiaQ%3D\",\n \"selfie_2id\": \"15332940588453-a-blue-sky-with-white-clouds-pv.jpg\",\n \"selfie_2id_url\": \"https://sandbox-xfers-id.s3-ap-southeast-1.amazonaws.com/users/nric_selfies/000/000/374/original/15332940588453-a-blue-sky-with-white-clouds-pv.jpg?AWSAccessKeyId=AKIAJQ3UR7B3U4NXLBNA&Expires=1533297752&Signature=cK6icTFvQC6XSOPMfLSMjZ1ZVlo%3D\",\n \"account_locked\": false,\n \"kyc_verified\": true,\n \"meta_data\": \"\",\n \"place_of_birth\": null,\n \"blood_type\": null,\n \"rt_rw\": null,\n \"administrative_village\": null,\n \"district\": null,\n \"religion\": null,\n \"marital_status\": null,\n \"occupation\": null,\n \"mother_maiden_name\": \"Luna\"\n}"
 						}
 					]
 				},
@@ -1720,39 +1720,6 @@
 					},
 					"response": [
 						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": "You can retrieve this from the dashboard",
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/merchant",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"merchant"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "GET",
@@ -1784,6 +1751,39 @@
 							],
 							"cookie": [],
 							"body": "{\n \"business_id\": \"53348831Z\",\n \"business_name\": \"Alpha Events\",\n \"business_type\": \"Private Company\",\n \"business_position\": \"Director\",\n \"business_address_line_1\": \"78 Lucky Plaza\",\n \"business_address_line_2\": \"#14-39\",\n \"business_postal_code\": \"938884\",\n \"business_telephone\": \"+6583994012\",\n \"bizfile_document\": \"BIZFILE.pdf\",\n \"business_verified\": false,\n \"shareholders\": [\n  {\n   \"firstName\": \"Samson\",\n   \"lastName\": \"Leo\",\n   \"nricNumber\": \"S8781203Q\",\n   \"dateOfBirth\": \"19/02/1987\",\n   \"nationality\": \"Singaporean\",\n   \"address1\": \"Blk 600 Elias Road\",\n   \"address2\": \"#09-123\",\n   \"postalCode\": \"510600\",\n   \"phoneNumber\": \"+6583004848\",\n   \"businessType\": \"Private Company\",\n   \"businessPosition\": \"Director\"\n  }\n ]\n}"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "You can retrieve this from the dashboard",
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/merchant",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"merchant"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -1823,47 +1823,6 @@
 					},
 					"response": [
 						{
-							"name": "Success",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"description": "You can retrieve this from the dashboard",
-										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{CUSTOMER_API_KEY}}"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"business_id\": \"<string>\",\n    \"business_position\": \"<string>\",\n    \"business_name\": \"<string>\",\n    \"business_type\": \"<string>\",\n    \"business_address_line_1\": \"<string>\",\n    \"business_address_line_2\": \"<string>\",\n    \"business_postal_code\": \"<string>\",\n    \"business_telephone\": \"<string>\",\n    \"bizfile_document\": \"<string>\"\n}"
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/merchant",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"merchant"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"business_id\": \"53348831Z\",\n \"business_name\": \"Alpha Events\",\n \"business_type\": \"Private Company\",\n \"business_position\": \"Director\",\n \"business_address_line_1\": \"78 Lucky Plaza\",\n \"business_address_line_2\": \"#14-39\",\n \"business_postal_code\": \"938884\",\n \"business_telephone\": \"+6583994012\",\n \"bizfile_document\": \"BIZFILE.pdf\",\n \"business_verified\": false,\n \"shareholders\": [\n  {\n   \"firstName\": \"Samson\",\n   \"lastName\": \"Leo\",\n   \"nricNumber\": \"S8781203Q\",\n   \"dateOfBirth\": \"19/02/1987\",\n   \"nationality\": \"Singaporean\",\n   \"address1\": \"Blk 600 Elias Road\",\n   \"address2\": \"#09-123\",\n   \"postalCode\": \"510600\",\n   \"phoneNumber\": \"+6583004848\",\n   \"businessType\": \"Private Company\",\n   \"businessPosition\": \"Director\"\n  }\n ]\n}"
-						},
-						{
 							"name": "List of possible errors",
 							"originalRequest": {
 								"method": "PUT",
@@ -1903,6 +1862,47 @@
 							],
 							"cookie": [],
 							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": "You can retrieve this from the dashboard",
+										"key": "X-XFERS-USER-API-KEY",
+										"value": "{{CUSTOMER_API_KEY}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"business_id\": \"<string>\",\n    \"business_position\": \"<string>\",\n    \"business_name\": \"<string>\",\n    \"business_type\": \"<string>\",\n    \"business_address_line_1\": \"<string>\",\n    \"business_address_line_2\": \"<string>\",\n    \"business_postal_code\": \"<string>\",\n    \"business_telephone\": \"<string>\",\n    \"bizfile_document\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/merchant",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"merchant"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"business_id\": \"53348831Z\",\n \"business_name\": \"Alpha Events\",\n \"business_type\": \"Private Company\",\n \"business_position\": \"Director\",\n \"business_address_line_1\": \"78 Lucky Plaza\",\n \"business_address_line_2\": \"#14-39\",\n \"business_postal_code\": \"938884\",\n \"business_telephone\": \"+6583994012\",\n \"bizfile_document\": \"BIZFILE.pdf\",\n \"business_verified\": false,\n \"shareholders\": [\n  {\n   \"firstName\": \"Samson\",\n   \"lastName\": \"Leo\",\n   \"nricNumber\": \"S8781203Q\",\n   \"dateOfBirth\": \"19/02/1987\",\n   \"nationality\": \"Singaporean\",\n   \"address1\": \"Blk 600 Elias Road\",\n   \"address2\": \"#09-123\",\n   \"postalCode\": \"510600\",\n   \"phoneNumber\": \"+6583004848\",\n   \"businessType\": \"Private Company\",\n   \"businessPosition\": \"Director\"\n  }\n ]\n}"
 						}
 					]
 				},
@@ -2444,65 +2444,6 @@
 					},
 					"response": [
 						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"description": {
-											"content": "Your user API token which you can retrieve from the get token API response.",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": ""
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded"
-									}
-								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "account_no",
-											"value": "0393123432"
-										},
-										{
-											"key": "bank",
-											"value": "DBS"
-										},
-										{
-											"key": "account_holder_name",
-											"value": "Tian Wei"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/bank_account/<string>",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"bank_account",
-										"<string>"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "PUT",
@@ -2560,6 +2501,65 @@
 							],
 							"cookie": [],
 							"body": "[\n {\n  \"id\": 175,\n  \"account_no\": \"1680366060\",\n  \"account_holder_name\": \"PROD ONLY\",\n  \"detected_name\": \"PROD ONLY\",\n  \"verification_status\": \"pending\",\n  \"verified\": true,\n  \"bank_abbrev\": \"BCA\",\n  \"usage\": \"all\"\n }\n]"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": {
+											"content": "Your user API token which you can retrieve from the get token API response.",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": ""
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "account_no",
+											"value": "0393123432"
+										},
+										{
+											"key": "bank",
+											"value": "DBS"
+										},
+										{
+											"key": "account_holder_name",
+											"value": "Tian Wei"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/user/bank_account/<string>",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"bank_account",
+										"<string>"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				},
@@ -2710,48 +2710,6 @@
 					},
 					"response": [
 						{
-							"name": "List of possible errors",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"description": "You can retrieve this from the dashboard",
-										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{CUSTOMER_API_KEY}}"
-									},
-									{
-										"description": {
-											"content": "Retrive this API key from the dashboard",
-											"type": "text/plain"
-										},
-										"key": "X-XFERS-USER-API-KEY",
-										"value": "<string>"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/v3/banks",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"v3",
-										"banks"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-						},
-						{
 							"name": "Success",
 							"originalRequest": {
 								"method": "GET",
@@ -2792,6 +2750,48 @@
 							],
 							"cookie": [],
 							"body": "[\n {\n  \"name\": \"Bank Central Asia\",\n  \"abbreviation\": \"BCA\",\n  \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-bca-181848fa16527e50b887013cf0cb7b90ae7b89181cf2a49b563d2a9c99cf42ee.png\",\n  \"bank_code\": \"014\",\n  \"swift_code\": \"CENAIDJA\"\n },\n {\n  \"name\": \"Bank Mandiri\",\n  \"abbreviation\": \"MANDIRI\",\n  \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-mandiri-3c9030412a3deb3c41589344a9a7bf74a52ef8dd278834d400b917f35e1b3bf9.png\",\n  \"bank_code\": \"008\",\n  \"swift_code\": \"BMRIIDJA\"\n },\n {\n  \"name\": \"Bank Negara Indonesia\",\n  \"abbreviation\": \"BNI\",\n  \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-bni-dbb77bff33ad2bcd69f45600e4e53593a8bde8ce947175e055163b9f908898fb.png\",\n  \"bank_code\": \"009\",\n  \"swift_code\": \"BNINIDJA\"\n },\n {\n  \"name\": \"Bank Permata\",\n  \"abbreviation\": \"PERMATA\",\n  \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png\",\n  \"bank_code\": \"013\",\n  \"swift_code\": \"BBBAIDJA\"\n },\n {\n  \"name\": \"Bank Rakyat Indonesia\",\n  \"abbreviation\": \"BRI\",\n  \"img_src\": \"https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-bri-84ffad390f2ab1033df3254d47ef61b6ed47f73495503eb8d0a8eb82c36966a4.png\",\n  \"bank_code\": \"002\",\n  \"swift_code\": \"BRINIDJA359\"\n },\n {\n  \"name\": \"CIMB Niaga Bank\",\n  \"abbreviation\": \"CIMB_NIAGA\",\n  \"img_src\": null,\n  \"bank_code\": \"022\",\n  \"swift_code\": \"BNIAIDJA\"\n },\n {\n  \"name\": \"Bank Danamon\",\n  \"abbreviation\": \"DANAMON\",\n  \"img_src\": null,\n  \"bank_code\": \"011\",\n  \"swift_code\": \"BDINIDJA\"\n },\n {\n  \"name\": \"Bank Panin\",\n  \"abbreviation\": \"PANIN\",\n  \"img_src\": null,\n  \"bank_code\": \"019\",\n  \"swift_code\": \"PINBIDJA\"\n },\n {\n  \"name\": \"Bank Maybank\",\n  \"abbreviation\": \"BII\",\n  \"img_src\": null,\n  \"bank_code\": \"016\",\n  \"swift_code\": \"MBBEIDJA\"\n },\n {\n  \"name\": \"Anglomas International Bank\",\n  \"abbreviation\": \"ANGLOMAS\",\n  \"img_src\": null,\n  \"bank_code\": \"531\",\n  \"swift_code\": \"LOMAIDJ1\"\n },\n {\n  \"name\": \"Bangkok Bank\",\n  \"abbreviation\": \"BANGKOK\",\n  \"img_src\": null,\n  \"bank_code\": \"040\",\n  \"swift_code\": \"BKKBIDJA\"\n },\n {\n  \"name\": \"Bank Agris\",\n  \"abbreviation\": \"AGRIS\",\n  \"img_src\": null,\n  \"bank_code\": \"945\",\n  \"swift_code\": \"FINBIDJA\"\n },\n {\n  \"name\": \"Sinarmas\",\n  \"abbreviation\": \"SINARMAS\",\n  \"img_src\": null,\n  \"bank_code\": \"153\",\n  \"swift_code\": \"SBJKIDJA\"\n },\n {\n  \"name\": \"Bank Agroniaga\",\n  \"abbreviation\": \"AGRONIAGA\",\n  \"img_src\": null,\n  \"bank_code\": \"494\",\n  \"swift_code\": \"AGTBIDJA\"\n },\n {\n  \"name\": \"Bank Andara\",\n  \"abbreviation\": \"ANDARA\",\n  \"img_src\": null,\n  \"bank_code\": \"466\",\n  \"swift_code\": \"RIPAIDJ1\"\n },\n {\n  \"name\": \"Bank Antar Daerah\",\n  \"abbreviation\": \"ANTAR_DAERAH\",\n  \"img_src\": null,\n  \"bank_code\": \"088\",\n  \"swift_code\": \"ANTDIDJD\"\n },\n {\n  \"name\": \"Bank ANZ Indonesia\",\n  \"abbreviation\": \"ANZ\",\n  \"img_src\": null,\n  \"bank_code\": \"061\",\n  \"swift_code\": \"ANZBIDJX\"\n },\n {\n  \"name\": \"Bank Artha Graha International\",\n  \"abbreviation\": \"ARTHA\",\n  \"img_src\": null,\n  \"bank_code\": \"037\",\n  \"swift_code\": \"ARTGIDJA\"\n },\n {\n  \"name\": \"Bank Artos Indonesia\",\n  \"abbreviation\": \"ARTOS\",\n  \"img_src\": null,\n  \"bank_code\": \"542\",\n  \"swift_code\": \"ATOSIDJ1\"\n },\n {\n  \"name\": \"Bank Bisnis Internasional\",\n  \"abbreviation\": \"BISNIS\",\n  \"img_src\": null,\n  \"bank_code\": \"459\",\n  \"swift_code\": \"BUSTIDJ1\"\n },\n {\n  \"name\": \"Bank BJB\",\n  \"abbreviation\": \"BJB\",\n  \"img_src\": null,\n  \"bank_code\": \"110\",\n  \"swift_code\": \"PDJBIDJA\"\n },\n {\n  \"name\": \"Bank BNP Paribas\",\n  \"abbreviation\": \"BNP\",\n  \"img_src\": null,\n  \"bank_code\": \"057\",\n  \"swift_code\": \"BNPAIDJA\"\n },\n {\n  \"name\": \"Bank Bukopin\",\n  \"abbreviation\": \"BUKOPIN\",\n  \"img_src\": null,\n  \"bank_code\": \"441\",\n  \"swift_code\": \"BBUKIDJA\"\n },\n {\n  \"name\": \"Bank Bumi Arta\",\n  \"abbreviation\": \"BUMI_ARTA\",\n  \"img_src\": null,\n  \"bank_code\": \"076\",\n  \"swift_code\": \"BBAIIDJA\"\n },\n {\n  \"name\": \"Bank Capital Indonesia\",\n  \"abbreviation\": \"CAPITAL\",\n  \"img_src\": null,\n  \"bank_code\": \"054\",\n  \"swift_code\": \"CRLYIDJA\"\n },\n {\n  \"name\": \"Bank Central Asia (BCA) Syariah\",\n  \"abbreviation\": \"BCA_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"536\",\n  \"swift_code\": \"UIBAIDJ1\"\n },\n {\n  \"name\": \"Bank Chinatrust Indonesia\",\n  \"abbreviation\": \"CHINATRUST\",\n  \"img_src\": null,\n  \"bank_code\": \"949\",\n  \"swift_code\": \"CTCBIDJA\"\n },\n {\n  \"name\": \"Bank CIMB Niaga UUS\",\n  \"abbreviation\": \"CIMB_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"022\",\n  \"swift_code\": \"SYNAIDJ1\"\n },\n {\n  \"name\": \"Bank Commonwealth\",\n  \"abbreviation\": \"COMMONWEALTH\",\n  \"img_src\": null,\n  \"bank_code\": \"950\",\n  \"swift_code\": \"BICNIDJA\"\n },\n {\n  \"name\": \"Bank Danamon UUS\",\n  \"abbreviation\": \"DANAMON_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"771\",\n  \"swift_code\": \"SYBDIDJ1\"\n },\n {\n  \"name\": \"Bank DBS Indonesia\",\n  \"abbreviation\": \"DBS\",\n  \"img_src\": null,\n  \"bank_code\": \"046\",\n  \"swift_code\": \"DBSBIDJA\"\n },\n {\n  \"name\": \"Bank Dinar Indonesia\",\n  \"abbreviation\": \"DINAR_INDONESIA\",\n  \"img_src\": null,\n  \"bank_code\": \"526\",\n  \"swift_code\": \"LMANIDJ1\"\n },\n {\n  \"name\": \"Bank DKI\",\n  \"abbreviation\": \"DKI\",\n  \"img_src\": null,\n  \"bank_code\": \"111\",\n  \"swift_code\": \"BDKIIDJ1\"\n },\n {\n  \"name\": \"Bank DKI UUS\",\n  \"abbreviation\": \"DKI_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"778\",\n  \"swift_code\": \"SYDKIDJ1\"\n },\n {\n  \"name\": \"Bank Ekonomi Raharja\",\n  \"abbreviation\": \"EKONOMI_RAHARJA\",\n  \"img_src\": null,\n  \"bank_code\": \"087\",\n  \"swift_code\": \"EKONIDJA\"\n },\n {\n  \"name\": \"Bank Fama International\",\n  \"abbreviation\": \"FAMA\",\n  \"img_src\": null,\n  \"bank_code\": \"562\",\n  \"swift_code\": \"FAMAIDJ1\"\n },\n {\n  \"name\": \"Bank Ganesha\",\n  \"abbreviation\": \"GANESHA\",\n  \"img_src\": null,\n  \"bank_code\": \"161\",\n  \"swift_code\": \"GNESIDJA\"\n },\n {\n  \"name\": \"Bank Hana\",\n  \"abbreviation\": \"HANA\",\n  \"img_src\": null,\n  \"bank_code\": \"484\",\n  \"swift_code\": \"HNBNIDJA\"\n },\n {\n  \"name\": \"Bank Harda Internasional\",\n  \"abbreviation\": \"HARDA_INTERNASIONAL\",\n  \"img_src\": null,\n  \"bank_code\": \"567\",\n  \"swift_code\": \"HRDAIDJ1\"\n },\n {\n  \"name\": \"Bank Himpunan Saudara 1906\",\n  \"abbreviation\": \"HIMPUNAN_SAUDARA\",\n  \"img_src\": null,\n  \"bank_code\": \"212\",\n  \"swift_code\": \"BSDRIDJA\"\n },\n {\n  \"name\": \"Bank ICBC Indonesia\",\n  \"abbreviation\": \"ICBC\",\n  \"img_src\": null,\n  \"bank_code\": \"164\",\n  \"swift_code\": \"ICBKIDJA\"\n },\n {\n  \"name\": \"Bank Ina Perdana\",\n  \"abbreviation\": \"INA_PERDANA\",\n  \"img_src\": null,\n  \"bank_code\": \"513\",\n  \"swift_code\": \"INPBIDJ1\"\n },\n {\n  \"name\": \"Bank Index Selindo\",\n  \"abbreviation\": \"INDEX_SELINDO\",\n  \"img_src\": null,\n  \"bank_code\": \"555\",\n  \"swift_code\": \"BIDXIDJA\"\n },\n {\n  \"name\": \"Bank Jasa Jakarta\",\n  \"abbreviation\": \"JASA_JAKARTA\",\n  \"img_src\": null,\n  \"bank_code\": \"472\",\n  \"swift_code\": \"JSABIDJ1\"\n },\n {\n  \"name\": \"Bank Kesejahteraan Ekonomi\",\n  \"abbreviation\": \"KESEJAHTERAAN_EKONOMI\",\n  \"img_src\": null,\n  \"bank_code\": \"535\",\n  \"swift_code\": \"KSEBIDJ1\"\n },\n {\n  \"name\": \"Bank Maspion Indonesia\",\n  \"abbreviation\": \"MASPION\",\n  \"img_src\": null,\n  \"bank_code\": \"157\",\n  \"swift_code\": \"MASDIDJ1\"\n },\n {\n  \"name\": \"Bank Mayapada International\",\n  \"abbreviation\": \"MAYAPADA\",\n  \"img_src\": null,\n  \"bank_code\": \"097\",\n  \"swift_code\": \"MAYAIDJA\"\n },\n {\n  \"name\": \"Bank Maybank Syariah Indonesia\",\n  \"abbreviation\": \"MAYBANK_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"947\",\n  \"swift_code\": \"MBBEIDJA\"\n },\n {\n  \"name\": \"Bank Mayora\",\n  \"abbreviation\": \"MAYORA\",\n  \"img_src\": null,\n  \"bank_code\": \"553\",\n  \"swift_code\": \"YORAIDJ1\"\n },\n {\n  \"name\": \"Bank Mega\",\n  \"abbreviation\": \"MEGA\",\n  \"img_src\": null,\n  \"bank_code\": \"426\",\n  \"swift_code\": \"MEGAIDJA\"\n },\n {\n  \"name\": \"Bank Mestika Dharma\",\n  \"abbreviation\": \"MESTIKA_DHARMA\",\n  \"img_src\": null,\n  \"bank_code\": \"151\",\n  \"swift_code\": \"MEDHIDS1\"\n },\n {\n  \"name\": \"Bank Metro Express\",\n  \"abbreviation\": \"METRO_EXPRESS\",\n  \"img_src\": null,\n  \"bank_code\": \"152\",\n  \"swift_code\": \"MEEKIDJ1\"\n },\n {\n  \"name\": \"Bank Mizuho Indonesia\",\n  \"abbreviation\": \"MIZUHO\",\n  \"img_src\": null,\n  \"bank_code\": \"048\",\n  \"swift_code\": \"MHCCIDJA\"\n },\n {\n  \"name\": \"Bank MNC Internasional\",\n  \"abbreviation\": \"MNC_INTERNASIONAL\",\n  \"img_src\": null,\n  \"bank_code\": \"485\",\n  \"swift_code\": \"BUMIIDJA\"\n },\n {\n  \"name\": \"Bank Muamalat Indonesia\",\n  \"abbreviation\": \"MUAMALAT\",\n  \"img_src\": null,\n  \"bank_code\": \"147\",\n  \"swift_code\": \"MUABIDJA\"\n },\n {\n  \"name\": \"Bank Multi Arta Sentosa\",\n  \"abbreviation\": \"MULTI_ARTA_SENTOSA\",\n  \"img_src\": null,\n  \"bank_code\": \"548\",\n  \"swift_code\": \"MASBIDJ1\"\n },\n {\n  \"name\": \"Bank Mutiara\",\n  \"abbreviation\": \"MUTIARA\",\n  \"img_src\": null,\n  \"bank_code\": \"095\",\n  \"swift_code\": \"CICTIDJA\"\n },\n {\n  \"name\": \"Bank Nationalnobu\",\n  \"abbreviation\": \"NATIONALNOBU\",\n  \"img_src\": null,\n  \"bank_code\": \"503\",\n  \"swift_code\": \"LFIBIDJ1\"\n },\n {\n  \"name\": \"Bank Nusantara Parahyangan\",\n  \"abbreviation\": \"NUSANTARA_PARAHYANGAN\",\n  \"img_src\": null,\n  \"bank_code\": \"145\",\n  \"swift_code\": \"NUPAIDJ6\"\n },\n {\n  \"name\": \"Bank OCBC NISP\",\n  \"abbreviation\": \"OCBC\",\n  \"img_src\": null,\n  \"bank_code\": \"028\",\n  \"swift_code\": \"NISPIDJA\"\n },\n {\n  \"name\": \"Bank OCBC NISP UUS\",\n  \"abbreviation\": \"OCBC_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"028\",\n  \"swift_code\": \"SYONIDJ1\"\n },\n {\n  \"name\": \"Bank of America Merill-Lynch\",\n  \"abbreviation\": \"BAML\",\n  \"img_src\": null,\n  \"bank_code\": \"033\",\n  \"swift_code\": \"BOFAID2X\"\n },\n {\n  \"name\": \"Bank of China (BOC)\",\n  \"abbreviation\": \"BOC\",\n  \"img_src\": null,\n  \"bank_code\": \"069\",\n  \"swift_code\": \"BKCHIDJA\"\n },\n {\n  \"name\": \"Bank of India Indonesia\",\n  \"abbreviation\": \"INDIA\",\n  \"img_src\": null,\n  \"bank_code\": \"146\",\n  \"swift_code\": \"BKIDIDJA\"\n },\n {\n  \"name\": \"Bank of Tokyo Mitsubishi UFJ\",\n  \"abbreviation\": \"TOKYO\",\n  \"img_src\": null,\n  \"bank_code\": \"042\",\n  \"swift_code\": \"BOTKJPJT\"\n },\n {\n  \"name\": \"Bank Panin Syariah\",\n  \"abbreviation\": \"PANIN_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"517\",\n  \"swift_code\": \"ARFAIDJ1\"\n },\n {\n  \"name\": \"Bank Permata UUS\",\n  \"abbreviation\": \"PERMATA_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"784\",\n  \"swift_code\": \"SYBBIDJ1\"\n },\n {\n  \"name\": \"Bank Pundi Indonesia\",\n  \"abbreviation\": \"PUNDI_INDONESIA\",\n  \"img_src\": null,\n  \"bank_code\": \"558\",\n  \"swift_code\": \"EKSTIDJ1\"\n },\n {\n  \"name\": \"Bank QNB Kesawan\",\n  \"abbreviation\": \"QNB_KESAWAN\",\n  \"img_src\": null,\n  \"bank_code\": \"167\",\n  \"swift_code\": \"AWANIDJA\"\n },\n {\n  \"name\": \"Bank Rabobank International Indonesia\",\n  \"abbreviation\": \"RABOBANK\",\n  \"img_src\": null,\n  \"bank_code\": \"089\",\n  \"swift_code\": \"RABOIDJA\"\n },\n {\n  \"name\": \"Bank Resona Perdania\",\n  \"abbreviation\": \"RESONA\",\n  \"img_src\": null,\n  \"bank_code\": \"047\",\n  \"swift_code\": \"BPIAIDJA\"\n },\n {\n  \"name\": \"Bank Royal Indonesia\",\n  \"abbreviation\": \"ROYAL\",\n  \"img_src\": null,\n  \"bank_code\": \"501\",\n  \"swift_code\": \"ROYBIDJ1\"\n },\n {\n  \"name\": \"Bank Sahabat Purba Danarta\",\n  \"abbreviation\": \"SAHABAT_PURBA_DANARTA\",\n  \"img_src\": null,\n  \"bank_code\": \"547\",\n  \"swift_code\": \"PUBAIDJ1\"\n },\n {\n  \"name\": \"Bank Sahabat Sampoerna\",\n  \"abbreviation\": \"SAHABAT_SAMPOERNA\",\n  \"img_src\": null,\n  \"bank_code\": \"523\",\n  \"swift_code\": \"BDIPIDJ1\"\n },\n {\n  \"name\": \"Bank SBI Indonesia\",\n  \"abbreviation\": \"SBI_INDONESIA\",\n  \"img_src\": null,\n  \"bank_code\": \"498\",\n  \"swift_code\": \"IDMOIDJ1\"\n },\n {\n  \"name\": \"Bank Sinar Harapan Bali\",\n  \"abbreviation\": \"SINAR_HARAPAN_BALI\",\n  \"img_src\": null,\n  \"bank_code\": \"564\",\n  \"swift_code\": \"SIHBIDJ1\"\n },\n {\n  \"name\": \"Bank Sumitomo Mitsui Indonesia\",\n  \"abbreviation\": \"MITSUI\",\n  \"img_src\": null,\n  \"bank_code\": \"045\",\n  \"swift_code\": \"SUNIIDJA\"\n },\n {\n  \"name\": \"Bank Syariah BRI\",\n  \"abbreviation\": \"BRI_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"422\",\n  \"swift_code\": \"DJARIDJ1\"\n },\n {\n  \"name\": \"Bank Syariah Bukopin\",\n  \"abbreviation\": \"BUKOPIN_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"774\",\n  \"swift_code\": \"SDOBIDJ1\"\n },\n {\n  \"name\": \"Bank Syariah Mandiri\",\n  \"abbreviation\": \"MANDIRI_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"451\",\n  \"swift_code\": \"BSMDIDJA\"\n },\n {\n  \"name\": \"Bank Syariah Mega\",\n  \"abbreviation\": \"MEGA_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"506\",\n  \"swift_code\": \"BUTGIDJ1\"\n },\n {\n  \"name\": \"Bank Tabungan Negara (BTN)\",\n  \"abbreviation\": \"BTN\",\n  \"img_src\": null,\n  \"bank_code\": \"200\",\n  \"swift_code\": \"BTANIDJA\"\n },\n {\n  \"name\": \"Bank Tabungan Negara (BTN) UUS\",\n  \"abbreviation\": \"BTN_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"200\",\n  \"swift_code\": \"SYBTIDJ1\"\n },\n {\n  \"name\": \"Bank Tabungan Pensiunan Nasional\",\n  \"abbreviation\": \"TABUNGAN_PENSIUNAN_NASIONAL\",\n  \"img_src\": null,\n  \"bank_code\": \"213\",\n  \"swift_code\": \"TAPEIDJ1\"\n },\n {\n  \"name\": \"Bank Tabungan Pensiunan Nasional UUS\",\n  \"abbreviation\": \"TABUNGAN_PENSIUNAN_NASIONAL_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"213\",\n  \"swift_code\": \"SYTPIDJ1\"\n },\n {\n  \"name\": \"Bank UOB Indonesia\",\n  \"abbreviation\": \"UOB\",\n  \"img_src\": null,\n  \"bank_code\": \"023\",\n  \"swift_code\": \"BBIJIDJA\"\n },\n {\n  \"name\": \"Bank Victoria Internasional\",\n  \"abbreviation\": \"VICTORIA_INTERNASIONAL\",\n  \"img_src\": null,\n  \"bank_code\": \"566\",\n  \"swift_code\": \"VICTIDJ1\"\n },\n {\n  \"name\": \"Bank Victoria Syariah\",\n  \"abbreviation\": \"VICTORIA_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"405\",\n  \"swift_code\": \"SWAGIDJ1\"\n },\n {\n  \"name\": \"Bank Windu Kentjana Int\",\n  \"abbreviation\": \"WINDU\",\n  \"img_src\": null,\n  \"bank_code\": \"036\",\n  \"swift_code\": \"MCORIDJA\"\n },\n {\n  \"name\": \"Bank Woori Indonesia\",\n  \"abbreviation\": \"WOORI\",\n  \"img_src\": null,\n  \"bank_code\": \"068\",\n  \"swift_code\": \"HVBKIDJA\"\n },\n {\n  \"name\": \"Bank Yudha Bhakti\",\n  \"abbreviation\": \"YUDHA_BHAKTI\",\n  \"img_src\": null,\n  \"bank_code\": \"490\",\n  \"swift_code\": \"YUDBIDJ1\"\n },\n {\n  \"name\": \"BPD Aceh\",\n  \"abbreviation\": \"ACEH\",\n  \"img_src\": null,\n  \"bank_code\": \"116\",\n  \"swift_code\": \"PDACIDJ1\"\n },\n {\n  \"name\": \"BPD Aceh UUS\",\n  \"abbreviation\": \"ACEH_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"116\",\n  \"swift_code\": \"SYACIDJ1\"\n },\n {\n  \"name\": \"BPD Bali\",\n  \"abbreviation\": \"BALI\",\n  \"img_src\": null,\n  \"bank_code\": \"129\",\n  \"swift_code\": \"ABALIDBS\"\n },\n {\n  \"name\": \"BPD Bengkulu\",\n  \"abbreviation\": \"BENGKULU\",\n  \"img_src\": null,\n  \"bank_code\": \"133\",\n  \"swift_code\": \"PDBKIDJ1\"\n },\n {\n  \"name\": \"Bank Pembangunan Daerah (BPD DIY)\",\n  \"abbreviation\": \"BPD_DIY\",\n  \"img_src\": null,\n  \"bank_code\": \"112\",\n  \"swift_code\": \"PDYKIDJ1\"\n },\n {\n  \"name\": \"Bank Pembangunan Daerah (BPD DIY) Syariah\",\n  \"abbreviation\": \"BPD_DIY_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"112\",\n  \"swift_code\": \"SYYKIDJ1\"\n },\n {\n  \"name\": \"BPD Jambi\",\n  \"abbreviation\": \"JAMBI\",\n  \"img_src\": null,\n  \"bank_code\": \"115\",\n  \"swift_code\": \"PDJMIDJ1\"\n },\n {\n  \"name\": \"BPD Jambi UUS\",\n  \"abbreviation\": \"JAMBI_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"115\",\n  \"swift_code\": \"SYJMIDJ1\"\n },\n {\n  \"name\": \"BPD Jawa Tengah\",\n  \"abbreviation\": \"JAWA_TENGAH\",\n  \"img_src\": null,\n  \"bank_code\": \"113\",\n  \"swift_code\": \"PDJGIDJ1\"\n },\n {\n  \"name\": \"BPD Jawa Tengah UUS\",\n  \"abbreviation\": \"JAWA_TENGAH_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"113\",\n  \"swift_code\": \"SYJGIDJ1\"\n },\n {\n  \"name\": \"BPD Jawa Timur\",\n  \"abbreviation\": \"JAWA_TIMUR\",\n  \"img_src\": null,\n  \"bank_code\": \"114\",\n  \"swift_code\": \"PDJTIDJ1\"\n },\n {\n  \"name\": \"BPD Jawa Timur UUS\",\n  \"abbreviation\": \"JAWA_TIMUR_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"114\",\n  \"swift_code\": \"SYJTIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Barat\",\n  \"abbreviation\": \"KALIMANTAN_BARAT\",\n  \"img_src\": null,\n  \"bank_code\": \"123\",\n  \"swift_code\": \"PDKBIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Barat UUS\",\n  \"abbreviation\": \"KALIMANTAN_BARAT_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"123\",\n  \"swift_code\": \"SYKBIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Selatan\",\n  \"abbreviation\": \"KALIMANTAN_SELATAN\",\n  \"img_src\": null,\n  \"bank_code\": \"122\",\n  \"swift_code\": \"PDKSIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Selatan UUS\",\n  \"abbreviation\": \"KALIMANTAN_SELATAN_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"122\",\n  \"swift_code\": \"SYKSIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Tengah\",\n  \"abbreviation\": \"KALIMANTAN_TENGAH\",\n  \"img_src\": null,\n  \"bank_code\": \"125\",\n  \"swift_code\": \"PDKGIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Timur\",\n  \"abbreviation\": \"KALIMANTAN_TIMUR\",\n  \"img_src\": null,\n  \"bank_code\": \"124\",\n  \"swift_code\": \"PDKTIDJ1\"\n },\n {\n  \"name\": \"BPD Kalimantan Timur UUS\",\n  \"abbreviation\": \"KALIMANTAN_TIMUR_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"124\",\n  \"swift_code\": \"SYKTIDJ1\"\n },\n {\n  \"name\": \"BPD Lampung\",\n  \"abbreviation\": \"LAMPUNG\",\n  \"img_src\": null,\n  \"bank_code\": \"121\",\n  \"swift_code\": \"PDLPIDJ1\"\n },\n {\n  \"name\": \"BPD Maluku\",\n  \"abbreviation\": \"MALUKU\",\n  \"img_src\": null,\n  \"bank_code\": \"131\",\n  \"swift_code\": \"PDMLIDJ1\"\n },\n {\n  \"name\": \"BPD Nusa Tenggara Barat\",\n  \"abbreviation\": \"NUSA_TENGGARA_BARAT\",\n  \"img_src\": null,\n  \"bank_code\": \"128\",\n  \"swift_code\": \"PDNBIDJ1\"\n },\n {\n  \"name\": \"BPD Nusa Tenggara Barat UUS\",\n  \"abbreviation\": \"NUSA_TENGGARA_BARAT_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"128\",\n  \"swift_code\": \"SYNBIDJ1\"\n },\n {\n  \"name\": \"BPD Nusa Tenggara Timur\",\n  \"abbreviation\": \"NUSA_TENGGARA_TIMUR\",\n  \"img_src\": null,\n  \"bank_code\": \"130\",\n  \"swift_code\": \"PDNTIDJ1\"\n },\n {\n  \"name\": \"BPD Papua\",\n  \"abbreviation\": \"PAPUA\",\n  \"img_src\": null,\n  \"bank_code\": \"132\",\n  \"swift_code\": \"PDIJIDJ1\"\n },\n {\n  \"name\": \"BPD Riau Dan Kepri\",\n  \"abbreviation\": \"RIAU_DAN_KEPRI\",\n  \"img_src\": null,\n  \"bank_code\": \"119\",\n  \"swift_code\": \"PDRIIDJA\"\n },\n {\n  \"name\": \"BPD Riau Dan Kepri UUS\",\n  \"abbreviation\": \"RIAU_DAN_KEPRI_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"119\",\n  \"swift_code\": \"SYRIIDJ1\"\n },\n {\n  \"name\": \"BPD Sulawesi Tengah\",\n  \"abbreviation\": \"SULAWESI\",\n  \"img_src\": null,\n  \"bank_code\": \"134\",\n  \"swift_code\": \"PDWGIDJ1\"\n },\n {\n  \"name\": \"BPD Sulawesi Tenggara\",\n  \"abbreviation\": \"SULAWESI_TENGGARA\",\n  \"img_src\": null,\n  \"bank_code\": \"135\",\n  \"swift_code\": \"PDWRIDJ1\"\n },\n {\n  \"name\": \"BPD Sulselbar\",\n  \"abbreviation\": \"SULSELBAR\",\n  \"img_src\": null,\n  \"bank_code\": \"126\",\n  \"swift_code\": \"PDWSIDJ1\"\n },\n {\n  \"name\": \"BPD Sulselbar UUS\",\n  \"abbreviation\": \"SULSELBAR_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"126\",\n  \"swift_code\": \"SYWSIDJ1\"\n },\n {\n  \"name\": \"BPD Sulut\",\n  \"abbreviation\": \"SULUT\",\n  \"img_src\": null,\n  \"bank_code\": \"127\",\n  \"swift_code\": \"PDWUIDJ1\"\n },\n {\n  \"name\": \"BPD Sumatera Barat\",\n  \"abbreviation\": \"SUMATERA_BARAT\",\n  \"img_src\": null,\n  \"bank_code\": \"118\",\n  \"swift_code\": \"PDSBIDJ1\"\n },\n {\n  \"name\": \"BPD Sumatera Barat UUS\",\n  \"abbreviation\": \"SUMATERA_BARAT_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"118\",\n  \"swift_code\": \"SYSBIDJ1\"\n },\n {\n  \"name\": \"BPD Sumsel Dan Babel\",\n  \"abbreviation\": \"SUMSEL_DAN_BABEL\",\n  \"img_src\": null,\n  \"bank_code\": \"120\",\n  \"swift_code\": \"BSSPIDSP\"\n },\n {\n  \"name\": \"BPD Sumsel Dan Babel UUS\",\n  \"abbreviation\": \"SUMSEL_DAN_BABEL_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"120\",\n  \"swift_code\": \"SYSSIDJ1\"\n },\n {\n  \"name\": \"BPD Sumut\",\n  \"abbreviation\": \"SUMUT\",\n  \"img_src\": null,\n  \"bank_code\": \"117\",\n  \"swift_code\": \"PDSUIDJ1\"\n },\n {\n  \"name\": \"BPD Sumut UUS\",\n  \"abbreviation\": \"SUMUT_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"117\",\n  \"swift_code\": \"SYSUIDJ1\"\n },\n {\n  \"name\": \"Centratama Nasional Bank\",\n  \"abbreviation\": \"CENTRATAMA\",\n  \"img_src\": null,\n  \"bank_code\": \"559\",\n  \"swift_code\": \"CNBAIDJ1\"\n },\n {\n  \"name\": \"Citibank\",\n  \"abbreviation\": \"CITIBANK\",\n  \"img_src\": null,\n  \"bank_code\": \"031\",\n  \"swift_code\": \"CITIIDJX\"\n },\n {\n  \"name\": \"Deutsche Bank\",\n  \"abbreviation\": \"DEUTSCHE\",\n  \"img_src\": null,\n  \"bank_code\": \"067\",\n  \"swift_code\": \"DEUTIDJA\"\n },\n {\n  \"name\": \"Hongkong and Shanghai Bank Corporation (HSBC)\",\n  \"abbreviation\": \"HSBC\",\n  \"img_src\": null,\n  \"bank_code\": \"041\",\n  \"swift_code\": \"HSBCIDJA\"\n },\n {\n  \"name\": \"Hongkong and Shanghai Bank Corporation (HSBC) UUS\",\n  \"abbreviation\": \"HSBC_UUS\",\n  \"img_src\": null,\n  \"bank_code\": \"041\",\n  \"swift_code\": \"SYHSIDJ1\"\n },\n {\n  \"name\": \"JP Morgan Chase Bank\",\n  \"abbreviation\": \"JPMORGAN\",\n  \"img_src\": null,\n  \"bank_code\": \"032\",\n  \"swift_code\": \"CHASIDJX\"\n },\n {\n  \"name\": \"Prima Master Bank\",\n  \"abbreviation\": \"PRIMA_MASTER\",\n  \"img_src\": null,\n  \"bank_code\": \"520\",\n  \"swift_code\": \"PMASIDJ1\"\n },\n {\n  \"name\": \"Royal Bank of Scotland (RBS)\",\n  \"abbreviation\": \"PRIMA_MASTER\",\n  \"img_src\": null,\n  \"bank_code\": \"052\",\n  \"swift_code\": \"ABNAIDJA\"\n },\n {\n  \"name\": \"Standard Charted Bank\",\n  \"abbreviation\": \"STANDARD_CHARTERED\",\n  \"img_src\": null,\n  \"bank_code\": \"050\",\n  \"swift_code\": \"SCBLIDJX\"\n },\n {\n  \"name\": \"Bank Mitra Niaga\",\n  \"abbreviation\": \"MITRA_NIAGA\",\n  \"img_src\": null,\n  \"bank_code\": \"491\",\n  \"swift_code\": \"MGABIDJ1\"\n },\n {\n  \"name\": \"Bank Ekspor Indonesia\",\n  \"abbreviation\": \"EKSPOR_INDONESIA\",\n  \"img_src\": null,\n  \"bank_code\": \"003\",\n  \"swift_code\": \"BEXIIDJA\"\n },\n {\n  \"name\": \"Bank Arta Niaga Kencana\",\n  \"abbreviation\": \"ARTA_NIAGA_KENCANA\",\n  \"img_src\": null,\n  \"bank_code\": \"020\",\n  \"swift_code\": \"ARNKIDJ1\"\n },\n {\n  \"name\": \"Bank BJB Syariah\",\n  \"abbreviation\": \"BJB_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"425\",\n  \"swift_code\": \"PDJBIDJA\"\n },\n {\n  \"name\": \"Bank BNI Syariah\",\n  \"abbreviation\": \"BNI_SYR\",\n  \"img_src\": null,\n  \"bank_code\": \"009\",\n  \"swift_code\": \"SYNIIDJ1\"\n }\n]"
+						},
+						{
+							"name": "List of possible errors",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "You can retrieve this from the dashboard",
+										"key": "X-XFERS-USER-API-KEY",
+										"value": "{{CUSTOMER_API_KEY}}"
+									},
+									{
+										"description": {
+											"content": "Retrive this API key from the dashboard",
+											"type": "text/plain"
+										},
+										"key": "X-XFERS-USER-API-KEY",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/v3/banks",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"v3",
+										"banks"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 						}
 					]
 				}
@@ -2814,17 +2814,46 @@
 								"header": [
 									{
 										"key": "X-XFERS-USER-API-KEY",
-										"value": "{{CUSTOMER_API_KEY}}",
+										"value": "{{MERCHANT_APP_KEY}}",
 										"description": "You can retrieve this from the dashboard"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
 									}
 								],
 								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"amount\": 10000,\n    \"user_api_token\": \"user-api-key\",\n    \"order_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\",\n    \"notify_url\": \"https://www.example.com/updates\",\n    \"meta_data\": \"test metadata\"\n}"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "amount",
+											"value": "5000",
+											"type": "text"
+										},
+										{
+											"key": "user_api_token",
+											"value": "{{CUSTOMER_API_KEY}}",
+											"type": "text"
+										},
+										{
+											"key": "order_id",
+											"value": "order_111",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Testing",
+											"type": "text"
+										},
+										{
+											"key": "notify_url",
+											"value": "https://yourserver.com/notify_charge_callback",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "debit_only",
+											"value": "true",
+											"type": "text",
+											"disabled": true
+										}
+									]
 								},
 								"url": {
 									"raw": "{{BASE_URL}}/v3/charges",
@@ -2951,39 +2980,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{BASE_URL}}/charges",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"charges"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "GET",
@@ -3015,6 +3011,39 @@
 									],
 									"cookie": [],
 									"body": "[\n {\n  \"id\": \"contract_b840cc9fc5a359c22ed2ccef3427aacd\",\n  \"object\": \"TransferContract\",\n  \"checkout_url\": \"https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd\",\n  \"notify_url\": \"https://mysite.com/payment_notification\",\n  \"return_url\": \"https://mysite.com/return\",\n  \"cancel_url\": \"https://mysite.com/cancel\",\n  \"amount\": \"9.99\",\n  \"currency\": \"SGD\",\n  \"order_id\": \"A012312\",\n  \"description\": \"Carousell user - Konsolidate\",\n  \"receipt_email\": \"\",\n  \"total_amount\": \"12.49\",\n  \"fee_amount\": \"0.12\",\n  \"status\": \"completed\",\n  \"metadata\": {\n   \"firstname\": \"Tianwei\",\n   \"lastname\": \"Liu\"\n  },\n  \"transfer_info\": {\n   \"bank_name_full\": \"United Overseas Bank\",\n   \"bank_name_abbreviation\": \"UOB\",\n   \"bank_account_no\": \"123456789\",\n   \"bank_code\": \"7375\",\n   \"swift_code\": \"UOVBSGSGXXX\",\n   \"unique_id\": \"89898989\",\n   \"outstanding_amount\": \"0\"\n  }\n }\n]"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/charges",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -3054,40 +3083,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{BASE_URL}}/charges/<string>",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"charges",
-												"<string>"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "GET",
@@ -3120,6 +3115,40 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"contract_7abf6bb130d44c02862982ff6022875d\",\n \"object\": \"Sobatku::TransferContract\",\n \"status\": \"completed\",\n \"amount\": \"10000.0\",\n \"total_amount\": \"10000.0\",\n \"currency\": \"idr\",\n \"fee_amount\": \"100.0\",\n \"notify_url\": \"https://www.example.com/updates\",\n \"wallet_name\": \"General Wallet\",\n \"order_id\": \"Order_docs_12345\",\n \"description\": \"Testing for Documentation\",\n \"receipt_email\": \"winston@xfers.com\",\n \"metadata\": {\n  \"callback_url\": \"https://www.example.com/updates\",\n  \"merchant_metadata\": \"test metadata\"\n }\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/charges/<string>",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges",
+												"<string>"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -3292,41 +3321,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{BASE_URL}}/charges/<string>/cancel",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"charges",
-												"<string>",
-												"cancel"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"contract_b840cc9fc5a359c22ed2ccef3427aacd\",\n \"object\": \"PendingTransferContract\",\n \"checkout_url\": \"https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd\",\n \"notify_url\": \"https://mysite.com/payment_notification\",\n \"return_url\": \"https://mysite.com/return\",\n \"cancel_url\": \"https://mysite.com/cancel\",\n \"amount\": \"9.99\",\n \"currency\": \"SGD\",\n \"order_id\": \"A012312\",\n \"description\": \"Carousell user - Konsolidate\",\n \"receipt_email\": \"\",\n \"total_amount\": \"12.49\",\n \"fee_amount\": \"0.12\",\n \"status\": \"cancelled\",\n \"metadata\": {\n  \"firstname\": \"Tianwei\",\n  \"lastname\": \"Liu\"\n },\n \"transfer_info\": {\n  \"bank_name_full\": \"United Overseas Bank\",\n  \"bank_name_abbreviation\": \"UOB\",\n  \"bank_account_no\": \"123456789\",\n  \"bank_code\": \"7375\",\n  \"swift_code\": \"UOVBSGSGXXX\",\n  \"unique_id\": \"89898989\",\n  \"outstanding_amount\": \"0\"\n }\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "POST",
@@ -3360,6 +3354,41 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/charges/<string>/cancel",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges",
+												"<string>",
+												"cancel"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"contract_b840cc9fc5a359c22ed2ccef3427aacd\",\n \"object\": \"PendingTransferContract\",\n \"checkout_url\": \"https://sandbox.xfers.io/checkout_transaction/b840cc9fc5a359c22ed2ccef3427aacd\",\n \"notify_url\": \"https://mysite.com/payment_notification\",\n \"return_url\": \"https://mysite.com/return\",\n \"cancel_url\": \"https://mysite.com/cancel\",\n \"amount\": \"9.99\",\n \"currency\": \"SGD\",\n \"order_id\": \"A012312\",\n \"description\": \"Carousell user - Konsolidate\",\n \"receipt_email\": \"\",\n \"total_amount\": \"12.49\",\n \"fee_amount\": \"0.12\",\n \"status\": \"cancelled\",\n \"metadata\": {\n  \"firstname\": \"Tianwei\",\n  \"lastname\": \"Liu\"\n },\n \"transfer_info\": {\n  \"bank_name_full\": \"United Overseas Bank\",\n  \"bank_name_abbreviation\": \"UOB\",\n  \"bank_account_no\": \"123456789\",\n  \"bank_code\": \"7375\",\n  \"swift_code\": \"UOVBSGSGXXX\",\n  \"unique_id\": \"89898989\",\n  \"outstanding_amount\": \"0\"\n }\n}"
 								}
 							]
 						},
@@ -3405,49 +3434,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}"
-											},
-											{
-												"description": {
-													"content": "Retrive this API key from the dashboard",
-													"type": "text/plain"
-												},
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "<string>"
-											}
-										],
-										"url": {
-											"raw": "{{BASE_URL}}/charges/<string>/refunds",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"charges",
-												"<string>",
-												"refunds"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"contract_7abf6bb130d44c02862982ff6022875d\",\n \"object\": \"Sobatku::TransferContract\",\n \"status\": \"completed\",\n \"amount\": \"10000.0\",\n \"total_amount\": \"10000.0\",\n \"currency\": \"idr\",\n \"fee_amount\": \"100.0\",\n \"notify_url\": \"https://www.example.com/updates\",\n \"wallet_name\": \"General Wallet\",\n \"order_id\": \"Order_docs_12345\",\n \"description\": \"Testing for Documentation\",\n \"receipt_email\": \"winston@xfers.com\",\n \"metadata\": {\n  \"callback_url\": \"https://www.example.com/updates\",\n  \"merchant_metadata\": \"test metadata\"\n }\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "POST",
@@ -3489,6 +3475,49 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"description": {
+													"content": "Retrive this API key from the dashboard",
+													"type": "text/plain"
+												},
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/charges/<string>/refunds",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"charges",
+												"<string>",
+												"refunds"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"contract_7abf6bb130d44c02862982ff6022875d\",\n \"object\": \"Sobatku::TransferContract\",\n \"status\": \"completed\",\n \"amount\": \"10000.0\",\n \"total_amount\": \"10000.0\",\n \"currency\": \"idr\",\n \"fee_amount\": \"100.0\",\n \"notify_url\": \"https://www.example.com/updates\",\n \"wallet_name\": \"General Wallet\",\n \"order_id\": \"Order_docs_12345\",\n \"description\": \"Testing for Documentation\",\n \"receipt_email\": \"winston@xfers.com\",\n \"metadata\": {\n  \"callback_url\": \"https://www.example.com/updates\",\n  \"merchant_metadata\": \"test metadata\"\n }\n}"
 								}
 							]
 						},
@@ -3598,7 +3627,7 @@
 											"type": "text"
 										},
 										{
-											"key": "invocie_id",
+											"key": "invoice_id",
 											"value": "Order_docs_12345",
 											"type": "text"
 										},
@@ -3623,47 +3652,6 @@
 								"description": "The following API will allow you to move money from merchant's account to user's account.\nIn header X-XFERS-USER-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).\nAlternatively, You can also make a peer to peer transfer using this API by putting the sender's token in X-XFERS-USER-API-KEY in the header and putting the receiver's token in user_api_token in the body"
 							},
 							"response": [
-								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"user_api_token\": \"user-api-key\",\n    \"amount\": 10000,\n    \"invocie_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\"\n}"
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/payouts",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"payouts"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"contract_9b562994c4274d9993ba93c94619a8f6\",\n \"recipient\": \"winston@xfers.com\",\n \"metadata\": {\n  \"merchant_metadata\": \"\"\n },\n \"invoice_id\": \"Order_docs_123\",\n \"descriptions\": \"Payment for Rent for July\",\n \"process_type\": \"normal\",\n \"amount\": \"15000.0\",\n \"currency\": \"idr\",\n \"bank\": null,\n \"bank_account_no\": null,\n \"created_date\": \"2019-04-12T07:10:50Z\",\n \"completed_date\": null,\n \"status\": \"processing\",\n \"wallet_id\": 1,\n \"wallet_name\": \"General Wallet\",\n \"balance\": \"102969900.0\",\n \"fee_amount\": \"0.0\"\n}"
-								},
 								{
 									"name": "List of possible errors",
 									"originalRequest": {
@@ -3704,6 +3692,47 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"user_api_token\": \"user-api-key\",\n    \"amount\": 10000,\n    \"invocie_id\": \"Order_docs_12345\",\n    \"description\": \"Testing for Documentation\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/payouts",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"payouts"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"contract_9b562994c4274d9993ba93c94619a8f6\",\n \"recipient\": \"winston@xfers.com\",\n \"metadata\": {\n  \"merchant_metadata\": \"\"\n },\n \"invoice_id\": \"Order_docs_123\",\n \"descriptions\": \"Payment for Rent for July\",\n \"process_type\": \"normal\",\n \"amount\": \"15000.0\",\n \"currency\": \"idr\",\n \"bank\": null,\n \"bank_account_no\": null,\n \"created_date\": \"2019-04-12T07:10:50Z\",\n \"completed_date\": null,\n \"status\": \"processing\",\n \"wallet_id\": 1,\n \"wallet_name\": \"General Wallet\",\n \"balance\": \"102969900.0\",\n \"fee_amount\": \"0.0\"\n}"
 								}
 							]
 						},
@@ -4567,44 +4596,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": {
-													"content": "Your user API token which you can retrieve from the get token API response.",
-													"type": "text/plain"
-												},
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"user",
-												"bank_account",
-												"withdrawal_requests"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"id\": \"contract_51005437f4734be5b7e3a548b4fa7d0e\",\n \"idempotency_id\": \"Order_1234\",\n \"type\": \"Sobatku/withdrawal on behalf\",\n \"status\": \"pending\",\n \"amount\": \"120000.0\",\n \"fees\": \"0.0\",\n \"account_no\": \"1680366060\",\n \"bank_abbrev\": \"BCA\",\n \"express\": true,\n \"value_date\": null,\n \"failure_reason\": null,\n \"created_at\": \"2018-11-06T10:43:29+07:00\"\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "GET",
@@ -4641,6 +4632,44 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": {
+													"content": "Your user API token which you can retrieve from the get token API response.",
+													"type": "text/plain"
+												},
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/user/bank_account/withdrawal_requests",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"user",
+												"bank_account",
+												"withdrawal_requests"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"id\": \"contract_51005437f4734be5b7e3a548b4fa7d0e\",\n \"idempotency_id\": \"Order_1234\",\n \"type\": \"Sobatku/withdrawal on behalf\",\n \"status\": \"pending\",\n \"amount\": \"120000.0\",\n \"fees\": \"0.0\",\n \"account_no\": \"1680366060\",\n \"bank_abbrev\": \"BCA\",\n \"express\": true,\n \"value_date\": null,\n \"failure_reason\": null,\n \"created_at\": \"2018-11-06T10:43:29+07:00\"\n}"
 								}
 							]
 						},
@@ -5265,48 +5294,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"txn_id\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/credit_card_charges/charge_card_guest",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"credit_card_charges",
-												"charge_card_guest"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "POST",
@@ -5347,6 +5334,48 @@
 									],
 									"cookie": [],
 									"body": "{\n \"success\": true,\n \"return_url\": \"https://www.yoursite.com\"\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"txn_id\": \"<string>\",\n    \"credit_card_token\": \"<string>\",\n    \"first6\": \"<string>\",\n    \"last4\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/credit_card_charges/charge_card_guest",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"credit_card_charges",
+												"charge_card_guest"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
@@ -5387,48 +5416,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"txn_id\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/credit_card_charges/charge_card",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"credit_card_charges",
-												"charge_card"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"success\": true,\n \"return_url\": \"https://www.yoursite.com\"\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "POST",
@@ -5469,6 +5456,48 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"txn_id\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/credit_card_charges/charge_card",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"credit_card_charges",
+												"charge_card"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"success\": true,\n \"return_url\": \"https://www.yoursite.com\"\n}"
 								}
 							]
 						},
@@ -5517,49 +5546,6 @@
 							},
 							"response": [
 								{
-									"name": "Success",
-									"originalRequest": {
-										"method": "POST",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": "{{CUSTOMER_API_KEY}}"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
-										},
-										"url": {
-											"raw": "{{BASE_URL}}/cards/<string>/set_default",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"cards",
-												"<string>",
-												"set_default"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"card_id\": \"card_197O8yI7jGeCrIKDeI6SexB6\",\n \"last_4\": \"4242\",\n \"card_type\": \"Visa\",\n \"card_country\": \"US\",\n \"exp_yr\": \"2022\",\n \"exp_month\": \"3\",\n \"is_default\": true\n}"
-								},
-								{
 									"name": "List of possible errors",
 									"originalRequest": {
 										"method": "POST",
@@ -5601,6 +5587,49 @@
 									],
 									"cookie": [],
 									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": "{{CUSTOMER_API_KEY}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"user_api_token\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/cards/<string>/set_default",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"cards",
+												"<string>",
+												"set_default"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"card_id\": \"card_197O8yI7jGeCrIKDeI6SexB6\",\n \"last_4\": \"4242\",\n \"card_type\": \"Visa\",\n \"card_country\": \"US\",\n \"exp_yr\": \"2022\",\n \"exp_month\": \"3\",\n \"is_default\": true\n}"
 								}
 							]
 						},
@@ -5894,45 +5923,6 @@
 							},
 							"response": [
 								{
-									"name": "List of possible errors",
-									"originalRequest": {
-										"method": "GET",
-										"header": [
-											{
-												"description": "You can retrieve this from the dashboard",
-												"key": "X-XFERS-USER-API-KEY",
-												"value": ""
-											}
-										],
-										"url": {
-											"raw": "{{BASE_URL}}/intents?disable_va=<string>",
-											"host": [
-												"{{BASE_URL}}"
-											],
-											"path": [
-												"intents"
-											],
-											"query": [
-												{
-													"key": "disable_va",
-													"value": "<string>"
-												}
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
-								},
-								{
 									"name": "Success",
 									"originalRequest": {
 										"method": "GET",
@@ -5970,6 +5960,45 @@
 									],
 									"cookie": [],
 									"body": "{\n \"id\": \"a975f036cb4b43f3b2d1ff90040ec292\",\n \"request_id\": \"AI1001\",\n \"amount\": \"30000.0\",\n \"currency\": \"IDR\",\n \"unique_amount\": \"29999\",\n \"bank_abbrev\": \"MANDIRI\",\n \"bank_name\": \"Bank Mandiri\",\n \"account_name\": \"PT Media Indonusa\",\n \"bank_account_no\": \"8855845678901235\",\n \"notify_url\": \"https://mysite.com/topup_notification\",\n \"expiration_date\": \"2017-06-01T07:46:40Z\",\n \"status\": \"pending\",\n \"transfer_info_array\": [\n  {\n   \"bank_name_full\": \"Bank Central Asia\",\n   \"bank_name_abbreviation\": \"BCA\",\n   \"bank_account_no\": \"1063003003\",\n   \"bank_code\": \"\",\n   \"branch_code\": \"\",\n   \"branch_area\": \"\",\n   \"unique_id\": \"97266867\",\n   \"img_src\": \"https://www.xfers.io/images/bankLogos/bank-logo-bca.png\"\n  },\n  {\n   \"bank_name_full\": \"Bank Mandiri\",\n   \"bank_name_abbreviation\": \"MANDIRI\",\n   \"bank_account_no\": \"8855845678901235\",\n   \"bank_code\": \"\",\n   \"branch_code\": \"\",\n   \"branch_area\": \"\",\n   \"unique_id\": \"97266867\",\n   \"img_src\": \"https://www.xfers.io/images/bankLogos/bank-logo-mandiri.png\"\n  }\n ]\n}"
+								},
+								{
+									"name": "List of possible errors",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "You can retrieve this from the dashboard",
+												"key": "X-XFERS-USER-API-KEY",
+												"value": ""
+											}
+										],
+										"url": {
+											"raw": "{{BASE_URL}}/intents?disable_va=<string>",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"intents"
+											],
+											"query": [
+												{
+													"key": "disable_va",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"error\": \"string\",\n \"error_code\": \"XFE1\",\n \"error_handling\": \"Follow instructions in the response.\"\n}"
 								}
 							]
 						},
