@@ -856,9 +856,9 @@
         "Charge"
       ],
       "summary": "Create Charge",
-      "description": "The following API will allow you to move money from user's account to merchant's account.  \r\n\r\nIn header X-XFERS-USER-API-KEY, You need to put `merchant's` api key. (As found in Dashboard > Settings > API Tokens).  \r\nIn the user_api_token in the body, You need to put `user's` api key. (As received from get_user_token API).",
+      "description": "The following API will allow you to move money from user's account to merchant's account.  \r\n\r\nIn header X-XFERS-APP-API-KEY, You need to put `merchant's` api key. (As found in Dashboard > Settings > API Tokens).  \r\nIn the user_api_token in the body, You need to put `user's` api key. (As received from get_user_token API).",
       "security": [{
-        "X-XFERS-USER-API-KEY": [
+        "X-XFERS-APP-API-KEY": [
 
         ]
       }],
@@ -1368,9 +1368,9 @@
         "Payout"
       ],
       "summary": "Create Payout",
-      "description": "The following API will allow you to move money from merchant's account to user's account.\nIn header X-XFERS-USER-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).\nAlternatively, You can also make a peer to peer transfer using this API by putting the sender's token in X-XFERS-USER-API-KEY in the header and putting the receiver's token in user_api_token in the body",
+      "description": "The following API will allow you to move money from merchant's account to user's account.\nIn header X-XFERS-APP-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).\nAlternatively, You can also make a peer to peer transfer using this API by putting the sender's token in X-XFERS-USER-API-KEY in the header and putting the receiver's token in user_api_token in the body",
       "security": [{
-        "X-XFERS-USER-API-KEY": [
+        "X-XFERS-APP-API-KEY": [
 
         ]
       }],
@@ -3246,7 +3246,7 @@
       "summary": "Get Mock OTP",
       "description": "Get a mock OTP. This is only usable in sandbox environment",
       "security": [{
-        "X-XFERS-USER-API-KEY": [
+        "X-XFERS-APP-API-KEY": [
 
         ]
       }],
