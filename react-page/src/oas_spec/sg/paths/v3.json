@@ -850,7 +850,7 @@
       "operationId": "createCharge",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request POST \"$BASE_URL/v3/charges\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=10000\" \\\r\n  --form \"user_api_token=$CUSTOMER_API_KEY\" \\\r\n  --form \"order_id=Order_docs_12345\" \\\r\n  --form \"description=Testing for Documentation\" \\\r\n  --form \"notify_url=https://www.example.com/updates\" \\\r\n  --form \"meta_data=test metadata\""
+        "source": "curl --location --request POST \"$BASE_URL/v3/charges\" \\\r\n  --header \"X-XFERS-APP-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=10000\" \\\r\n  --form \"user_api_token=$CUSTOMER_API_KEY\" \\\r\n  --form \"order_id=Order_docs_12345\" \\\r\n  --form \"description=Testing for Documentation\" \\\r\n  --form \"notify_url=https://www.example.com/updates\" \\\r\n  --form \"meta_data=test metadata\""
       }],
       "tags": [
         "Charge"
@@ -1361,7 +1361,7 @@
       "operationId": "createPayout",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request POST \"$BASE_URL/v3/payouts\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"user_api_token=$CUSTOMER_API_KEY\" \\\r\n  --form \"amount=15000.00\" \\\r\n  --form \"invoice_id=Order_docs_123\" \\\r\n  --form \"descriptions=Payment for Rent for July\""
+        "source": "curl --location --request POST \"$BASE_URL/v3/payouts\" \\\r\n  --header \"X-XFERS-APP-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"user_api_token=$CUSTOMER_API_KEY\" \\\r\n  --form \"amount=15000.00\" \\\r\n  --form \"invoice_id=Order_docs_123\" \\\r\n  --form \"descriptions=Payment for Rent for July\""
       }],
       "tags": [
         "Payout"
@@ -3239,7 +3239,7 @@
       "operationId": "getMockOtp",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request GET \"$BASE_URL/v3/authorize/get_mock_otp?phone_no=%252B6287785725657\" \\\r\n  --header \"X-XFERS-USER-API-KEY: $CUSTOMER_API_KEY\""
+        "source": "curl --location --request GET \"$BASE_URL/v3/authorize/get_mock_otp?phone_no=%252B6287785725657\" \\\r\n  --header \"X-XFERS-APP-API-KEY: $CUSTOMER_API_KEY\""
       }],
       "summary": "Get Mock OTP",
       "description": "Get a mock OTP. This is only usable in sandbox environment",
