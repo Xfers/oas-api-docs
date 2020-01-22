@@ -856,11 +856,10 @@
         "Charge"
       ],
       "summary": "Create Charge",
-      "description": "The following API will allow you to move money from user's account to merchant's account.  \r\n\r\nIn header X-XFERS-APP-API-KEY, You need to put `merchant's` api key. (As found in Dashboard > Settings > API Tokens).  \r\nIn the user_api_token in the body, You need to put `user's` api key. (As received from get_user_token API).",
+      "description": "The following API will allow you to move money from user's account to merchant's account.",
       "security": [{
-        "X-XFERS-APP-API-KEY": [
-
-        ]
+        "X-XFERS-APP-API-KEY": [],
+        "user-api-token": []
       }],
       "requestBody": {
         "required": true,
@@ -1368,11 +1367,10 @@
         "Payout"
       ],
       "summary": "Create Payout",
-      "description": "The following API will allow you to move money from merchant's account to user's account.\nIn header X-XFERS-APP-API-KEY, You need to put merchant's api key. (As found in Dashboard > Settings > API Tokens).\nIn the user_api_token in the body, You need to put user's api key. (As received from get_user_token API).\n",
+      "description": "The following API will allow you to move money from merchant's account to user's account.",
       "security": [{
-        "X-XFERS-APP-API-KEY": [
-
-        ]
+        "X-XFERS-APP-API-KEY": [],
+        "user-api-token": []
       }],
       "requestBody": {
         "required": true,
