@@ -850,7 +850,7 @@
       "operationId": "createCharge",
       "x-code-samples": [{
         "lang": "Shell",
-        "source": "curl --location --request POST \"$BASE_URL/v3/charges\" \\\r\n  --header \"X-XFERS-APP-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=10000\" \\\r\n  --form \"user_api_token=$CUSTOMER_API_KEY\" \\\r\n  --form \"order_id=Order_docs_12345\" \\\r\n  --form \"description=Testing for Documentation\" \\\r\n  --form \"notify_url=https://www.example.com/updates\" \\\r\n  --form \"meta_data=test metadata\""
+        "source": "curl --location --request POST \"$BASE_URL/v3/charges\" \\\r\n  --header \"X-XFERS-USER-API-KEY: $CUSTOMER_API_KEY\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=10000\" \\\r\n  --form \"order_id=Order_docs_12345\" \\\r\n  --form \"description=Testing for Documentation\" \\\r\n  --form \"notify_url=https://www.example.com/updates\" \\\r\n  --form \"meta_data=test metadata\""
       }],
       "tags": [
         "Charge"
@@ -858,8 +858,7 @@
       "summary": "Create Charge",
       "description": "The following API will allow you to move money from user's account to merchant's account.",
       "security": [{
-        "X-XFERS-APP-API-KEY": [],
-        "user-api-token": []
+        "X-XFERS-USER-API-KEY": []
       }],
       "requestBody": {
         "required": true,
@@ -871,10 +870,6 @@
                   "type": "number",
                   "format": "float",
                   "description": "Transaction Amount."
-                },
-                "user_api_token": {
-                  "type": "string",
-                  "description": "This is your user's api token. You can retrieve this from the Get Token API."
                 },
                 "order_id": {
                   "type": "string",
@@ -956,7 +951,6 @@
                 "summary": "Request Body Example",
                 "value": {
                   "amount": 10000,
-                  "user_api_token": "user-api-key",
                   "order_id": "Order_docs_12345",
                   "description": "Testing for Documentation",
                   "notify_url": "https://www.example.com/updates",
