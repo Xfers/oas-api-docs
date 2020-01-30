@@ -3,7 +3,7 @@
     - "/authorize/signup_login"
     - "/authorize/get_token"
     - "/user"
-    - "/accounts"    
+    - "/accounts"
     - "/user/verify"
     - "/user/activities"
     - "/user/transfer_info"
@@ -17,7 +17,7 @@
     - "/inter_wallet_payments"
     - "/inter_wallet_payments/{id}"
     - "/direct_bank_transfer_payments"
-    - "/direct_bank_transfer_payments/{id}"    
+    - "/direct_bank_transfer_payments/{id}"
     - "/user/bank_account"
     - "/user/bank_account/{bank_account_id}"
     - "/user/bank_account/{bank_account_id}/withdraw"
@@ -31,6 +31,8 @@
     - "/user/bank_account/withdrawal_requests/mock_result"
     - "/intents*"
     - "/notify_intent_callback"
+    - "/sandbox/reject_user"
+    - "/sandbox/mock_user_with_ocr"
 
 :Indonesia:
   :paths:
@@ -38,7 +40,7 @@
     - "/authorize/private_wallet"
     - "/authorize/get_token"
     - "/user"
-    - "/accounts"        
+    - "/accounts"
     - "/user/activities"
     - "/user/transfer_info"
     - "/esignatures_registration"
@@ -77,6 +79,8 @@
     - "/authorize/get_mock_otp"
     - "/user/verify"
     - "/user/bank_account/withdrawal_requests/mock_result"
+    - "/sandbox/reject_user"
+    - "/sandbox/mock_user_with_ocr"
 #:doc-name:
 #  :paths:
 #    - "/pathABC"

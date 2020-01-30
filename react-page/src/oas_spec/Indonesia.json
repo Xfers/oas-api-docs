@@ -35,7 +35,7 @@
     },
     {
       "name": "Try it out with Postman",
-      "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n#### Xfers Postman Collection\r\n|Singapore|Indonesia|\r\n|--|--|\r\n|[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/31253e7aa0ba90db9fc4)| [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/453dd7b670533289a719)|",
+      "description": "You can test our API with postman collection.\r\n\r\n#### Prerequisite  \r\n1. Download Postman App [here](https://www.getpostman.com/downloads/).\r\n2. Create a Postman account.\r\n3. Download the Postman Collection that suits your needs.\r\n\r\n#### Xfers Postman Collection\r\n|Singapore|Indonesia|\r\n|--|--|\r\n|[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5fa6d37311e7bfc6ef2a)| [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/453dd7b670533289a719)|",
       "x-traitTag": true
     },
     {
@@ -4415,6 +4415,117 @@
                     "express": true,
                     "value_date": null,
                     "created_at": "2018-11-01T17:48:42+07:00"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/sandbox/reject_user": {
+      "post": {
+        "tags": [
+          "Testing"
+        ],
+        "operationId": "mockKYCRejection",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request POST \"{base_url}/sandbox/reject_user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
+          }
+        ],
+        "summary": "Mock KYC Rejection",
+        "description": "This API rejects the user with corresponding API KEY. This API can only be called from sandbox.",
+        "security": [
+          {
+            "user-api-token": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "verification_status": "rejected"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          }
+        }
+      }
+    },
+    "/sandbox/mock_user_with_ocr": {
+      "post": {
+        "tags": [
+          "Testing"
+        ],
+        "operationId": "mockUserWithOCR",
+        "x-code-samples": [
+          {
+            "lang": "Shell_curl",
+            "source": "curl --location --request POST \"{base_url}/sandbox/mock_user_with_ocr\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-APP-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"{\\\"email\\\": \\\"081234567891@xfers.io\\\", \\\"facial_recognition_percentage\\\": 70.2, \\\"ktp_ocr_valid\\\": true}\r\n\r\n\""
+          }
+        ],
+        "summary": "Mock User with OCR",
+        "description": "This API mocks a user creation with OCR and FR data. This API can only be called from sandbox.",
+        "security": [
+          {
+            "X-XFERS-APP-API-KEY": [
+
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "email": "081234567891@xfers.io",
+                  "ocr_results": [
+                    {
+                      "id": 139901,
+                      "user_id": 1659930,
+                      "tag": "selfie",
+                      "result": "{\"face_similarity\":\"70.2\"}"
+                    },
+                    {
+                      "id": 139902,
+                      "user_id": 1659930,
+                      "tag": "id_front",
+                      "result": "{\"province\":\"PROVINSI JAWA BARAT\",\"city\":\"KABUPATEN SUKABUMI\",\"nik\":\"3202210702960001\",\"name\":\"RAMDAN FEBRIANSYAH\",\"birth_place\":\"SUKABUMI\",\"birth_date\":\"07-02-1996\",\"gender\":\"LAKI-LAKI\",\"address\":\"KP CIRANJII\",\"rtrw\":\"002/003\",\"sub_district\":\"MEKARJAYA\",\"district\":\"JAMPANG KULON\",\"religion\":\"ISLAM\",\"stats\":\"BELUM KAWIN\",\"job\":\"BELUMTIDAK BEKERJA\",\"nationality\":\"WNI\",\"blood_type\":\"O\"}"
+                    }
+                  ],
+                  "user_api_token": {
+                    "id": 2483701,
+                    "token_hash": "ps4igKCfMPQxRz74dToANcMvuv4npFPAg5FXEmzNTFE",
+                    "secret_hash": "bjtjZZJnGzJ86UKBp76y3uY6iNTAPMVoPo2HjToRX-U",
+                    "token_type": "V2",
+                    "user_id": 1659930,
+                    "version": 3,
+                    "enabled": true,
+                    "last_used": null,
+                    "created_at": "2020-01-27T07:52:18.000Z",
+                    "updated_at": "2020-01-27T07:52:18.538Z",
+                    "connect_token_id": 2108325,
+                    "is_kyc_host": false,
+                    "xfers_api_access_template_id": 2,
+                    "old_token_type": null,
+                    "connect_verification_tiers": 7,
+                    "wallet_id": 1,
+                    "allow_negative_balance": false,
+                    "user_wallet_id": null,
+                    "account_id": 1749950
                   }
                 }
               }
