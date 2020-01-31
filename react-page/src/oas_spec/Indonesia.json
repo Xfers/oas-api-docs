@@ -4485,6 +4485,44 @@
             ]
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "email",
+                  "facial_recognition_percentage",
+                  "ktp_ocr_valid"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email address."
+                  },
+                  "facial_recognition_percentage": {
+                    "type": "integer",
+                    "description": "Facial recognition mock similarity percentage."
+                  },
+                  "ktp_ocr_valid": {
+                    "type": "boolean",
+                    "description": "Set if KTP OCR data is valid/invalid."
+                  }
+                }
+              },
+              "examples": {
+                "Request Body Example": {
+                  "summary": "Request Body Example",
+                  "value": {
+                    "email": "081234567891@xfers.com",
+                    "facial_recognition_percentage": 70.2,
+                    "ktp_ocr_valid": true
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
