@@ -396,6 +396,9 @@
                   },
                   "mother_maiden_name": {
                     "type": "string",
+                    "x-custom-params": [
+                      "Indonesia"
+                    ],
                     "description": "Name of Mother"
                   },
                   "first_name": {
@@ -438,10 +441,6 @@
                     "type": "string",
                     "description": "Account holder national identity number or, KTP number of Indonesian."
                   },
-                  "nric_type": {
-                    "type": "string",
-                    "description": "Optional. Account holder's identity type. Allowable values: nric, fin, passport."
-                  },
                   "country": {
                     "type": "string",
                     "description": "Account holder country of residence."
@@ -454,14 +453,6 @@
                     "type": "integer",
                     "description": "Annual income of user in the local currency (SGD/IDR)"
                   },
-                  "id_back_url": {
-                    "type": "string",
-                    "description": "URL storing the back of the user id card"
-                  },
-                  "proof_of_address_url": {
-                    "type": "string",
-                    "description": "URL storing the proof of address"
-                  },
                   "meta_data": {
                     "type": "string",
                     "description": "Addtional data like Jumio info dump."
@@ -472,6 +463,9 @@
                   },
                   "blood_type": {
                     "type": "string",
+                    "x-custom-params": [
+                      "Indonesia"
+                    ],
                     "description": " Account holder’s blood type, without rhesus. Possible values: ‘A’, ‘B’, 'AB’, or 'O’"
                   },
                   "rt": {
@@ -518,6 +512,9 @@
                   },
                   "marital_status": {
                     "type": "string",
+                    "x-custom-params": [
+                      "Indonesia"
+                    ],
                     "description": "Only Indonesia. Account holder’s marital status according to his/her KTP. Possible Values: 'Belum Kawin’, 'Kawin’, 'Janda’, or 'Duda’"
                   },
                   "occupation": {

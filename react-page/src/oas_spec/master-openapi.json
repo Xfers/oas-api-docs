@@ -396,6 +396,7 @@
                   },
                   "mother_maiden_name": {
                     "type": "string",
+                    "x-custom-params" : ["Indonesia"],
                     "description": "Name of Mother"
                   },
                   "first_name": {
@@ -440,6 +441,7 @@
                   },
                   "nric_type": {
                     "type": "string",
+                    "x-custom-params" : ["Singapore"],
                     "description": "Optional. Account holder's identity type. Allowable values: nric, fin, passport."
                   },
                   "country": {
@@ -456,10 +458,12 @@
                   },
                   "id_back_url": {
                     "type": "string",
+                    "x-custom-params" : ["Singapore"],
                     "description": "URL storing the back of the user id card"
                   },
                   "proof_of_address_url": {
                     "type": "string",
+                    "x-custom-params" : ["Singapore"],
                     "description": "URL storing the proof of address"
                   },
                   "support_document_1_url": {
@@ -497,6 +501,7 @@
                   },
                   "blood_type": {
                     "type": "string",
+                    "x-custom-params" : ["Indonesia"],
                     "description": " Account holder’s blood type, without rhesus. Possible values: ‘A’, ‘B’, 'AB’, or 'O’"
                   },
                   "rt": {
@@ -531,6 +536,7 @@
                   },
                   "marital_status": {
                     "type": "string",
+                    "x-custom-params" : ["Indonesia"],
                     "description": "Only Indonesia. Account holder’s marital status according to his/her KTP. Possible Values: 'Belum Kawin’, 'Kawin’, 'Janda’, or 'Duda’"
                   },
                   "occupation": {
