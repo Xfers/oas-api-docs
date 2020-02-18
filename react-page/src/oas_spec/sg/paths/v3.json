@@ -242,6 +242,10 @@
                   "type": "string",
                   "description": "Account holder national identity number or, KTP number of Indonesian."
                 },
+                "nric_type": {
+                  "type": "string",
+                  "description": "Optional. Account holder's identity type. Allowable values: nric, fin, passport."
+                },
                 "country": {
                   "type": "string",
                   "description": "Account holder country of residence."
