@@ -70,7 +70,7 @@
     {
       "name": "Direct Bank Transfer Payments",
       "description": "API for Direct Bank Transfer Payments"
-    },
+    },    
     {
       "name": "Bank Account",
       "description": "API to manage Bank Account"
@@ -106,8 +106,8 @@
     {
       "name": "Callback Configuration",
       "description": "For certain endpoints you might want to receive callbacks when the transaction becomes completed. You can configure them at the dashboard:\n\nSingapore: `https://www.xfers.io/merchant_settings/callback_settings`\n\nIndonesia: `https://id.xfers.com/merchant_settings/callback_settings`",
-      "x-traitTag" : true
-    },
+      "x-traitTag" : true      
+    },    
     {
       "name": "Pagination",
       "description": "To do pagination:\r\n\r\n1.  Decide on number of entries per page (e.g. 100 for this example). Set the limit as this\r\n2.  First page: Offset 0. The latest 100 entries, 1-100, will be returned.\r\n3.  Second page: Offset 100. The next 100 entries, 101-200, will be returned.\r\n4.  Third page: Offset 200. The next 100 entries, 201-300, will be returned.\r\n\r\nHence your offset should always be a multiple of limits.",
@@ -437,10 +437,6 @@
                   "identity_no": {
                     "type": "string",
                     "description": "Account holder national identity number or, KTP number of Indonesian."
-                  },
-                  "nric_type": {
-                    "type": "string",
-                    "description": "Optional. Account holder's identity type. Allowable values: nric, fin, passport."
                   },
                   "country": {
                     "type": "string",
@@ -779,7 +775,7 @@
               "type": "boolean",
               "default": false
             }
-          }
+          }          
         ],
         "servers": [
           {
@@ -813,11 +809,11 @@
                   "limitations": {
                     "max_storage_limit": "200.00",
                     "max_storage_limit_remaining": "50.00",
-                    "charge_per_transaction_limit" : "5000.00",
+                    "charge_per_transaction_limit" : "5000.00",                    
                     "charge_rolling_yearly_limit" : "30000.00",
                     "charge_rolling_yearly_limit_remaining" : "20000.00"
                   },
-                  "currency": "sgd"
+                  "currency": "sgd"                  
                 },
                 "schema": {
                   "properties": {
@@ -826,48 +822,48 @@
                       "description": "ID of the Account."
                     },
                     "object" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Type of the object. Subject to changes.",
                       "enum": ["PersonalAccount","SettlementAccount","BusinessAccount"]
                     },
                     "balance": {
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Account balance"
                     },
                     "wallet_type": {
-                      "type": "string",
+                      "type": "string",                      
                       "description": "The Xfers wallet type name"
                     },
                     "wallet_id": {
-                      "type": "integer",
+                      "type": "integer",                      
                       "description": "The Xfers wallet type id"
-                    },
+                    },                    
                     "limitations" :{
-                      "type": "object",
+                      "type": "object",                      
                       "description": "Name-value pairs of the various limit amounts and the remaining limits."
                     },
                     "max_storage_limit" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Maximum amount you can store in this account."
                     },
                     "max_storage_limit_remaining" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "How much storage limit is remaining for this account."
                     },
                     "charge_per_transaction_limit" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Maximum amount you can Charge per transaction.  (`/charges`)"
-                    },
+                    },                    
                     "charge_rolling_yearly_limit" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Maximum amount you can Charge in a rolling year, 365-days window.  (`/charges`)"
                     },
                     "charge_rolling_yearly_limit_remaining" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "How much more you can charge for this account. (`/charges`)"
-                    }
+                    }                                                                                              
                   }
-                }
+                }                
               }
             }
           },
@@ -876,7 +872,7 @@
           }
         }
       }
-    },
+    },    
     "/user/activities": {
       "get": {
         "operationId": "getTransactionHistory",
@@ -952,7 +948,7 @@
             "schema": {
               "enum": ["Charge","Payout","Deposit","Withdrawal"],
               "type": "string",
-              "default": "All types included"
+              "default": "All types included"              
             }
           }
         ],
@@ -1018,7 +1014,7 @@
                           "metadata": {
                               "description": "Xfers - CIMB"
                           }
-                      }
+                      }        
                   ],
                   "activities_returned": 10,
                   "limit": 10,
@@ -1033,29 +1029,29 @@
                       "description": "ID of the Charge/Payout/Withdrawal/Payout. You can use this ID to query Charges and Payouts."
                     },
                     "type" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Transaction type. Charge and Payout are named as 'Transfer', because they are internal transfers between two xfers accounts.",
                       "enum": ["Transfer","Deposit","Withdrawal"]
                     },
                     "order_id": {
-                      "type": "string",
+                      "type": "string",                      
                       "description": "If it is a charge, it will have a order_id"
                     },
                     "invoice_id": {
-                      "type": "string",
+                      "type": "string",                      
                       "description": "If it is a payout, it will have a invoice_id"
                     },
                     "amount" :{
-                      "type": "float",
+                      "type": "float",                      
                       "description": "If money going out of account, negative. If coming in, positive. Note that only a completed Charge will actually deduct money. For example, if a Charge is expired/accepted/pending/unclaimed, no money will actually flow in/out of the wallet, even though there is a amount displayed."
                     }, "fee" :{
-                      "type": "float",
+                      "type": "float",                      
                       "description": "Fee charged by Xfers for the transaction, if any. Will be 0 if no fees"
                     }, "metadata" :{
-                      "type": "object",
+                      "type": "object",                      
                       "description": "Shows additional information about a transaction"
                     }, "activities_returned" :{
-                      "type": "integer",
+                      "type": "integer",                      
                       "description": "Number of activities returned. If activities returned is less than the limit, this is the final page."
                     }
                   }
@@ -2166,7 +2162,7 @@
             "description": "Indonesia Sandbox for testing",
             "url": "https://sandbox-id.xfers.com/api/v4"
           }
-        ],
+        ],        
         "requestBody": {
           "required": true,
           "content": {
@@ -2191,12 +2187,12 @@
                   "from_wallet_id": {
                     "type": "integer",
                     "description": "Wallet ID of the Xfers wallet to transfer from. Can only choose Settlement Wallet for now. \n\n`8`: Settlement Wallet",
-                    "enum": [8]
+                    "enum": [8]                    
                   },
                   "to_wallet_id": {
                     "type": "integer",
                     "description": "Wallet ID of the Xfers wallet to transfer to. \n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet",
-                    "enum": [1, 2]
+                    "enum": [1, 2]                    
                   }
                 }
               },
@@ -2207,7 +2203,7 @@
                     "amount": 3000.00,
                     "external_id": "foo_bar_123",
                     "from_wallet_id": 8,
-                    "to_wallet_id": 1
+                    "to_wallet_id": 1                    
                   }
                 }
               }
@@ -2224,7 +2220,7 @@
                   "object": "InterWallet",
                   "amount": "3000.00",
                   "external_id": "foo_bar_123",
-                  "status": "processing",
+                  "status": "processing",                  
                   "created_at": "2019-04-12T07:10:50Z",
                   "source": {
                     "id": "account_00002",
@@ -2288,7 +2284,7 @@
             "description": "Indonesia Sandbox for testing",
             "url": "https://sandbox-id.xfers.com/api/v4"
           }
-        ],
+        ],        
         "requestBody": {
           "required": true,
           "content": {
@@ -2318,7 +2314,7 @@
                   "object": "InterWallet",
                   "amount": "3000.00",
                   "external_id": "foo_bar_123",
-                  "status": "completed",
+                  "status": "completed",                  
                   "created_at": "2019-04-12T07:10:50Z",
                   "source": {
                     "id": "account_00002",
@@ -2382,7 +2378,7 @@
             "description": "Indonesia Sandbox for testing",
             "url": "https://sandbox-id.xfers.com/api/v4"
           }
-        ],
+        ],        
         "requestBody": {
           "required": true,
           "content": {
@@ -2426,7 +2422,7 @@
                   "object": "DirectBankTransferPayment",
                   "amount": "3000.00",
                   "external_id": "foo_bar_123",
-                  "status": "created",
+                  "status": "created",                  
                   "created_at": "2019-04-12T07:10:50Z",
                   "data": {
                     "topup_bank": {
@@ -2434,21 +2430,21 @@
                       "bank_abbrev": "UOB",
                       "bank_account_no": "877316208856"
                     },
-                    "unique_topup_identifier": "XYZ123"
-                  }
+                    "unique_topup_identifier": "XYZ123"                    
+                  }                  
                 },
                 "schema": {
-                  "properties": {
+                  "properties": {                    
                     "topup_bank" :{
-                      "type": "object",
+                      "type": "object",                      
                       "description": "The bank details for your customer to top up to."
                     },
                     "unique_topup_identifier" :{
-                      "type": "string",
+                      "type": "string",                      
                       "description": "Your customer should type this string in the comments field when making a bank transfer. This will be used to identify that the transfer is from him."
                     }
                   }
-                }
+                }                
               }
             }
           },
@@ -2494,7 +2490,7 @@
             "description": "Indonesia Sandbox for testing",
             "url": "https://sandbox-id.xfers.com/api/v4"
           }
-        ],
+        ],        
         "requestBody": {
           "required": true,
           "content": {
@@ -2524,7 +2520,7 @@
                   "object": "DirectBankTransferPayment",
                   "amount": "3000.00",
                   "external_id": "foo_bar_123",
-                  "status": "completed",
+                  "status": "completed",                  
                   "created_at": "2019-04-12T07:10:50Z",
                   "data": {
                     "topup_bank": {
@@ -2532,9 +2528,9 @@
                       "bank_abbrev": "UOB",
                       "bank_account_no": "877316208856"
                     },
-                    "unique_topup_identifier": "XYZ123"
-                  }
-                }
+                    "unique_topup_identifier": "XYZ123"                    
+                  }                  
+                }                
               }
             }
           },
@@ -2543,7 +2539,7 @@
           }
         }
       }
-    },
+    },      
     "/user/bank_account": {
       "post": {
         "operationId": "addBankAccount",
@@ -2878,9 +2874,9 @@
                   },
                   "from_wallet_id": {
                     "type": "integer",
-                    "x-custom-params" : ["Singapore"],
+                    "x-custom-params" : ["Singapore"],                    
                     "description": "Only Singapore.\n\nWallet ID of the Xfers wallet to withdraw from.\n\n`1`: General Wallet\n\n`2`: Digital Goods Wallet\n\n`8`: Settlement Wallet",
-                    "enum": [1, 2, 8]
+                    "enum": [1, 2, 8]                    
                   },
                   "express": {
                     "type": "boolean",
