@@ -899,6 +899,10 @@
                   "type": "string",
                   "description": "URL Xfers will redirect customer to on completion of Xfers checkout."
                 },
+                "debit_only": {
+                  "type": "boolean",
+                  "description": "When this is true, this charge will attempt to debit from users existing balance/card on file. Status returned will be “completed” on successful debit or “cancelled” when there insufficient funds / valid card on file in user wallet."
+                },
                 "card_only": {
                   "type": "string",
                   "x-custom-params": [
