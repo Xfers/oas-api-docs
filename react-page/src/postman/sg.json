@@ -4007,7 +4007,7 @@
 										"direct_bank_transfer_payments"
 									]
 								},
-								"description": "The following API will allow you to make a Direct Bank Transfer Payment. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in X-XFERS-USER-API-KEY header should be your customer's API token."
+								"description": "The following API will allow you to make a Direct Bank Transfer Payment request. Using Direct Bank Transfer has the advantage of having higher transaction limits as compared to normal Charge which uses your wallet balance (`/charges`). The API token used in `X-XFERS-USER-API-KEY` header should be your customer's API token.\r\n \r\nMerchants need to create a Direct Bank Transfer Payment request first. After receiving successful response from above API, please follow instruction in http://docs.xfers.io/Singapore#operation/getTransferInfo to get bank account details."
 							},
 							"response": [
 								{
