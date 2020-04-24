@@ -7,6 +7,10 @@
     "description": "Manage User and Accounts"
   },
   {
+    "name": "E-signature",
+    "description": "API for e-signature"
+  },
+  {
     "name": "Charge",
     "description": "API for Charges"
   },
@@ -30,6 +34,18 @@
   {
     "name": "Withdraw",
     "description": "API for Withdrawal"
+  },
+  {
+    "name": "Loans",
+    "description": "Loans Management"
+  },
+  {
+    "name": "Disbursements",
+    "description": "API for Disbursement"
+  },
+  {
+    "name": "Repayments",
+    "description": "API for Repayment"
   },
   {
     "name": "Intents",

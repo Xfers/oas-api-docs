@@ -3,8 +3,7 @@ const combined = Object.assign(
     {
         tags: require("./tags.json"),
         paths: Object.assign(
-            require("./paths/v3.json"),
-            require("./paths/v4.json"),
+            require("./paths/v3.json")
         ),
         components: {
             definitions: require("./components/definitions.json"), // api v4 schemas use this for now

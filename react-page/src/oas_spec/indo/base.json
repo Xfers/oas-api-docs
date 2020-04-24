@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.0",
   "servers": [{
-      "description": "Singapore Production",
-      "url": "https://www.xfers.io/api"
+      "description": "Indonesia Production",
+      "url": "https://id.xfers.com/api/v3"
     },
     {
-      "description": "Singapore Sandbox for testing",
-      "url": "https://sandbox.xfers.io/api"
+      "description": "Indonesia Sandbox for testing",
+      "url": "https://sandbox-id.xfers.com/api/v3"
     }
   ],
   "info": {
@@ -20,7 +20,7 @@
   },
   "externalDocs": {
     "description": "Find out more about Xfers",
-    "url": "https://www.xfers.com"
+    "url": "https://id.xfers.com"
   },
   "x-tagGroups": [{
       "name": "User Management",
