@@ -3765,5 +3765,218 @@
         }
       }
     }
+  },
+  "/esignatures_registration": {
+    "post": {
+      "operationId": "esignaturesRegistration",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/esignatures_registration\" \\\r\n  --header \"X-XFERS-USER-API-KEY: hrazKrhmzxM9fz7Si4Ps15-xNiAHsiXxncGAuqVNwSo\""
+        }
+      ],
+      "tags": [
+        "E-signature"
+      ],
+      "summary": "Sign Up E-signature  Account",
+      "description": "API to register user account for esignatures.",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "code": 201,
+                "data": {
+                  "privyId": "KE5757",
+                  "email": "mail@xfers.com",
+                  "phone": "+6282421424",
+                  "processed_at": "2019-08-30 20:02:06 +0700",
+                  "userToken": "fa3c4afdce0b48ea63f8e648f296c8ff6db41d93976d994a94329390d88dcaa5",
+                  "status": "verified",
+                  "identity": {
+                    "nama": "Aldo Sanjoto",
+                    "nik": "1234567890123456",
+                    "tanggalLahir": "1997-08-30",
+                    "tempatLahir": "Jakarta"
+                  }
+                },
+                "message": "Data has been verified"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/esignatures_upload_document": {
+    "post": {
+      "operationId": "esignaturesUploadDocument",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/esignatures_upload_document\" \\\r\n  --header \"X-XFERS-USER-API-KEY: hrazKrhmzxM9fz7Si4Ps15-xNiAHsiXxncGAuqVNwSo\" \\\r\n  --form \"doc_type=Serial\" \\\r\n  --form \"document_title=Test\" \\\r\n  --form \"document=your_path\""
+        }
+      ],
+      "tags": [
+        "E-signature"
+      ],
+      "summary": "Upload document for E-signature",
+      "description": "API to upload document e-signature",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "properties": {
+                "document": {
+                  "description": "Document to be signed. Must be in pdf format with maximum size of 20MB",
+                  "type": "File",
+                  "example": "some random.pdf"
+                },
+                "doc_type": {
+                  "description": "Can only be Serial or Parallel. \n 1. Serial: the signing or reviewing process will be based on the order of recipients. \n 2. Parallel: signer or reviewer can sign the document without having to wait for a previous one.",
+                  "type": "string",
+                  "example": "Serial"
+                },
+                "document_title": {
+                  "description": "The title of the document",
+                  "type": "string",
+                  "example": "Contract document"
+                }
+              },
+              "required": [
+                "document",
+                "doc_type",
+                "document_title"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "code": 201,
+                "data": {
+                  "docToken": "4e6e915f361c7bea9d81f1dc0c7ef7d2c306b37e21d3979d7229c82b29d80282",
+                  "urlDocument": "https://sign-sandbox.privy.id/doc/4e6e915f361c7bea9d81f1dc0c7ef7d2c306b37e21d3979d7229c82b29d80282",
+                  "recipients": [
+                    {
+                      "privyId": "KE7575",
+                      "type": "Signer",
+                      "enterpriseToken": "41bc84b42c8543daf448d893c255be1dbdcc722e"
+                    },
+                    {
+                      "privyId": "TES001",
+                      "type": "Signer",
+                      "enterpriseToken": null
+                    }
+                  ]
+                },
+                "message": "Document successfully upload and shared"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/esignatures_check_status": {
+    "get": {
+      "operationId": "esignaturesCheckStatus",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request GET \"{base_url}/esignatures_check_status\" \\\r\n  --header \"X-XFERS-USER-API-KEY: hrazKrhmzxM9fz7Si4Ps15-xNiAHsiXxncGAuqVNwSo\" \\\r\n  --form \"doc_token=bb5e12c77438f60da1f2ab6e566c5aeb6d03561bec3e5d588f7e240e4c164120\""
+        }
+      ],
+      "tags": [
+        "E-signature"
+      ],
+      "summary": "Check status for E-signature",
+      "description": "API to check e-signature document status",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "properties": {
+                "doc_token": {
+                  "description": "Document token that's retrieved after uploading document",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "doc_token"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "code": 200,
+                "data": {
+                  "docToken": "bb5e12c77438f60da1f2ab6e566c5aeb6d03561bec3e5d588f7e240e4c164120",
+                  "recipients": [
+                    {
+                      "privyId": "AB1234",
+                      "type": "Reviewer",
+                      "signatoryStatus": "Completed"
+                    },
+                    {
+                      "privyId": "DE2345",
+                      "type": "Signer",
+                      "signatoryStatus": "In Progress"
+                    }
+                  ],
+                  "documentStatus": "In Progress",
+                  "urlDocument": "https://sign-sandbox.privy.id/doc/bb5e12c77438f60da1f2ab6e566c5aeb6d03561bec3e5d588f7e240e4c164120"
+                },
+                "message": "Successfully get a status document"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
   }
 }
