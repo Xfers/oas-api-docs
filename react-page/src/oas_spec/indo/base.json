@@ -37,7 +37,12 @@
         "Charge",
         "Payout",
         "Withdraw",
-        "Intents",
+        "Intents"
+      ]
+    },
+    {
+      "name": "Loans",
+      "tags": [
         "Loans",
         "Disbursements",
         "Repayments"
