@@ -58,6 +58,104 @@
       }
     }
   },
+  "/v3/authorize/private_wallet": {
+    "post": {
+      "operationId": "privateWallet",
+      "x-code-samples": [
+        {
+          "lang": "Shell",
+          "source": "curl --location --request POST \"{base_url}/api/v3/authorize/private_wallet\" \\\r\n  --header \"X-XFERS-APP-API-KEY: TjETqu8GsJPGgbxEN85jw8cBcEFs8p6HqsQ3dEcDgDw\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"phone_no\\\" : \\\"+6287785725657\\\", \\\"signature\\\" : \\\"0218525f26d5d248d2ca835036dac2f3ecef3c85\\\"}\""
+        }
+      ],
+      "tags": [
+        "Registration"
+      ],
+      "summary": "Register Account",
+      "description": "This API is used to start private ledger registration by inputting phone number.\n\n This API uses a pair of public key and secret key.\n\nThe header of this API uses public key called `X-XFERS-APP-API-KEY`. You will need `X-XFERS-APP-SECRET-KEY` to generate signature in the request body.\n\nPlease make use of Pre-request Script to test this API in postman",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": [
+
+          ]
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "properties": {
+                "phone_no": {
+                  "description": "User mobile no. It should follow International format.",
+                  "type": "string",
+                  "example": "+6287785725657"
+                },
+                "signature": {
+                  "description": "SHA1-hex of (phone_no + X-XFERS-APP_SECRET_KEY). More information on generating SHA1 here http://www.sha1-online.com/",
+                  "type": "string",
+                  "example": "5488737c67d790565a15a2dbc3c98bf778aac2c0"
+                }
+              },
+              "required": [
+                "phone_no",
+                "signature"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "description": "List of possible errors",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/error_response"
+              },
+              "examples": {
+                "Missing Api Key": {
+                  "summary": "Missing API KEY in header",
+                  "value": {
+                    "error": "Missing API KEY in header"
+                  }
+                },
+                "Invalid Api Key": {
+                  "summary": "Invalid API KEY",
+                  "value": {
+                    "error": "Invalid API KEY"
+                  }
+                },
+                "Invalid signature": {
+                  "summary": "Invalid api_key/signature",
+                  "value": {
+                    "error": "Invalid api_key/signature"
+                  }
+                },
+                "Invalid phone no provided": {
+                  "summary": "Invalid phone no provided",
+                  "value": {
+                    "error": "Invalid phone no provided.",
+                    "error_code": "XFE12",
+                    "error_handling": "Make sure you entered the correct parameters."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "/v3/authorize/get_token": {
     "get": {
       "tags": [
@@ -151,17 +249,21 @@
       "tags": [
         "Registration"
       ],
-      "x-code-samples": [{
-        "lang": "Shell",
-        "source": "curl --location --request PUT \"$BASE_URL/v3/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: $CUSTOMER_API_KEY\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"mother_maiden_name\\\": \\\"Luna\\\", \\\"id_front_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\", \\\"selfie_2id_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\",\r\n\t\\\"callback_url\\\":\\\"https:/www.example.com/update\\\"}\r\n\r\n\""
-      }],
+      "x-code-samples": [
+        {
+          "lang": "Shell",
+          "source": "curl --location --request PUT \"{base_url}/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: Qh9fors4WmjTfeisB9qEAdsAzEXgeHVQF3-NsE5yi-c\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"mother_maiden_name\\\": \\\"Luna\\\", \\\"id_front_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\", \\\"selfie_2id_url\\\": \\\"http://res.freestockphotos.biz/pictures/8/8453-a-blue-sky-with-white-clouds-pv.jpg\\\",\r\n\t\\\"callback_url\\\":\\\"https:/www.example.com/update\\\"}\r\n\r\n\""
+        }
+      ],
       "summary": "Submit KYC Data",
       "description": "To provide KYC data in order to change user from unverified status into fully verified status.  \n\nThe image/document provided us must be hosted in a URL then pass the URL to Xfers via this API.  \nMake sure data type for your image is jpeg / png.  \nMaximum size of the image/ document is 10 MB.  \n\nAfter this data is sent, we will do some verifications on our side and may take some time before user gets fully verified.  In Indonesia, fully verified user will be backed by a savings account.\r\nThus, there are required parameters which are mother_maiden_name, id_front_url, selfie_2id_url.\r\nAdditional data will speed up the KYC process.",
-      "security": [{
-        "X-XFERS-USER-API-KEY": [
+      "security": [
+        {
+          "user-api-token": [
 
-        ]
-      }],
+          ]
+        }
+      ],
       "requestBody": {
         "required": true,
         "content": {
@@ -242,10 +344,6 @@
                   "type": "string",
                   "description": "Account holder national identity number or, KTP number of Indonesian."
                 },
-                "nric_type": {
-                  "type": "string",
-                  "description": "Optional. Account holder's identity type. Allowable values: nric, fin, passport."
-                },
                 "country": {
                   "type": "string",
                   "description": "Account holder country of residence."
@@ -266,41 +364,6 @@
                   "type": "string",
                   "description": "URL storing the proof of address"
                 },
-                "support_document_1_url": {
-                  "type": "string",
-                  "x-custom-params": [
-                    "Singapore"
-                  ],
-                  "description": "URL storing the image/pdf of support documents like proof of user income"
-                },
-                "support_document_2_url": {
-                  "type": "string",
-                  "x-custom-params": [
-                    "Singapore"
-                  ],
-                  "description": "URL storing the image/pdf of support documents like proof of user income"
-                },
-                "support_document_3_url": {
-                  "type": "string",
-                  "x-custom-params": [
-                    "Singapore"
-                  ],
-                  "description": "URL storing the image/pdf of support documents like proof of user income"
-                },
-                "support_document_4_url": {
-                  "type": "string",
-                  "x-custom-params": [
-                    "Singapore"
-                  ],
-                  "description": "URL storing the image/pdf of support documents like proof of user income"
-                },
-                "support_document_5_url": {
-                  "type": "string",
-                  "x-custom-params": [
-                    "Singapore"
-                  ],
-                  "description": "URL storing the image/pdf of support documents like proof of user income"
-                },
                 "meta_data": {
                   "type": "string",
                   "description": "Addtional data like Jumio info dump."
@@ -313,11 +376,76 @@
                   "type": "string",
                   "description": " Account holder’s blood type, without rhesus. Possible values: ‘A’, ‘B’, 'AB’, or 'O’"
                 },
+                "rt": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Only Indonesia. Account holder’s RT according to his/her KTP. Leading zero is optional."
+                },
+                "rw": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Account holder’s RW according to his/her KTP. Leading zero is optional."
+                },
+                "administrative_village": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Account holder’s administrative_village address. In KTP, it is called Kelurahan or Desa."
+                },
+                "state": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Account holder’s state of residence. In KTP, it is called Provinsi."
+                },
+                "district": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Only Indonesia. Account holder’s district address. In KTP, it is called Kecamatan."
+                },
+                "religion": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Only Indonesia. Account holder’s religion according to his/her KTP. Possible Values: 'Islam’, 'Katholik’, 'Kristen Protestan’, 'Hindu’, 'Budha’, 'Kong Hu Cu’, or 'Aliran Kepercayaan’"
+                },
                 "marital_status": {
                   "type": "string",
                   "description": "Only Indonesia. Account holder’s marital status according to his/her KTP. Possible Values: 'Belum Kawin’, 'Kawin’, 'Janda’, or 'Duda’"
+                },
+                "occupation": {
+                  "type": "string",
+                  "x-custom-params": [
+                    "Indonesia"
+                  ],
+                  "description": "Only Indonesia. Account holder’s occupation according to his/her KTP."
                 }
-              }
+              },
+              "required": [
+                "id_front_url",
+                "selfie_2id_url",
+                "full_name",
+                "identity_no",
+                "gender",
+                "mother_maiden_name",
+                "date_of_birth",
+                "place_of_birth",
+                "marital_status",
+                "occupation",
+                "city",
+                "state",
+                "postal_code",
+                "address_line_1"
+              ]
             }
           }
         }
@@ -347,7 +475,8 @@
                 "identity_no": "317201180894005",
                 "nric_issue_date": "",
                 "phone_no": "+6287785725657",
-                "bank_accounts": [{
+                "bank_accounts": [
+                  {
                     "id": 69,
                     "account_no": "1150006390175",
                     "account_holder_name": "PROD ONLY",
@@ -416,20 +545,24 @@
     },
     "get": {
       "operationId": "getUserInfo",
-      "x-code-samples": [{
-        "lang": "Shell",
-        "source": "curl --location --request GET \"$BASE_URL/v3/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: $CUSTOMER_API_KEY\""
-      }],
+      "x-code-samples": [
+        {
+          "lang": "Shell",
+          "source": "curl --location --request GET \"{base_url}/user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: 2zsujd47H3-UmsxDL784beVnYbxCYCzL4psSbwZ_Ngk\""
+        }
+      ],
       "tags": [
         "User Account"
       ],
       "summary": "Get User Info",
       "description": "The main usage of this API is to get the current user. One user can have multiple accounts, and the balance returned is the account tied to the current API token. \r\nYou can also use this API to check various data of the user such as first_name, last_name.\r\n\r\nDescription of some notable response\r\n\r\nKey | Value | Description \r\n--------------- |  ----------- | -----\r\nkyc_status | fully_verified | current_kyc_status of user, enum of `not_submitted`, `in_process`, `rejected`, `fully_verified`",
-      "security": [{
-        "X-XFERS-USER-API-KEY": [
+      "security": [
+        {
+          "user-api-token": [
 
-        ]
-      }],
+          ]
+        }
+      ],
       "responses": {
         "200": {
           "description": "Success",
@@ -458,7 +591,8 @@
                 "identity_no": "S8117102G",
                 "nric_issue_date": "",
                 "phone_no": "+6281128125",
-                "bank_accounts": [{
+                "bank_accounts": [
+                  {
                     "id": 329,
                     "account_no": "800006788912",
                     "account_holder_name": "Tian Wei",
@@ -3771,7 +3905,7 @@
       "operationId": "esignaturesRegistration",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/esignatures_registration\" \\\r\n  --header \"X-XFERS-USER-API-KEY: hrazKrhmzxM9fz7Si4Ps15-xNiAHsiXxncGAuqVNwSo\""
         }
       ],
@@ -3824,7 +3958,7 @@
       "operationId": "esignaturesUploadDocument",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/esignatures_upload_document\" \\\r\n  --header \"X-XFERS-USER-API-KEY: hrazKrhmzxM9fz7Si4Ps15-xNiAHsiXxncGAuqVNwSo\" \\\r\n  --form \"doc_type=Serial\" \\\r\n  --form \"document_title=Test\" \\\r\n  --form \"document=your_path\""
         }
       ],
@@ -3910,7 +4044,7 @@
       "operationId": "esignaturesCheckStatus",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/esignatures_check_status\" \\\r\n  --header \"X-XFERS-USER-API-KEY: hrazKrhmzxM9fz7Si4Ps15-xNiAHsiXxncGAuqVNwSo\" \\\r\n  --form \"doc_token=bb5e12c77438f60da1f2ab6e566c5aeb6d03561bec3e5d588f7e240e4c164120\""
         }
       ],
@@ -3989,7 +4123,7 @@
       "description": "Creating a Loan. We will pass this loan asynchronously and give callback after complete.",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\r\n\t\\\"customer_data\\\": {\r\n\t\t\\\"refnocustid\\\": \\\"refnocustid2\\\",\r\n\t\t\\\"din\\\": \\\"string content\\\",\r\n\t\t\\\"custtype\\\": 1,\r\n\t\t\\\"fullname\\\": \\\"name01\\\",\r\n\t\t\\\"custname\\\": \\\"name01\\\",\r\n\t\t\\\"title\\\": \\\"sh\\\",\r\n\t\t\\\"custaddress\\\": \\\"string content\\\",\r\n\t\t\\\"custrt\\\": \\\"string content\\\",\r\n\t\t\\\"custrw\\\": \\\"string content\\\",\r\n\t\t\\\"custkel\\\": \\\"string content\\\",\r\n\t\t\\\"custkec\\\": \\\"string content\\\",\r\n\t\t\\\"custcity\\\": \\\"string content\\\",\r\n\t\t\\\"custprov\\\": \\\"string content\\\",\r\n\t\t\\\"custzip\\\": \\\"string content\\\",\r\n\t\t\\\"custdati\\\": \\\"0102\\\",\r\n\t\t\\\"idtype\\\": 1,\r\n\t\t\\\"idnumber\\\": \\\"idnumber\\\",\r\n\t\t\\\"idexpired\\\": \\\"2019-01-01\\\",\r\n\t\t\\\"gender\\\": 1,\r\n\t\t\\\"maritalstatus\\\": 2,\r\n\t\t\\\"birthdate\\\": \\\"1980-01-04\\\",\r\n\t\t\\\"birthplace\\\": \\\"bekasi\\\",\r\n\t\t\\\"birthdati\\\": \\\"0102\\\",\r\n\t\t\\\"worksince\\\": \\\"2014-01-01\\\",\r\n\t\t\\\"employeests\\\": 1,\r\n\t\t\\\"contractend\\\": \\\"2014-01-01\\\",\r\n\t\t\\\"lasteducation\\\": \\\"0100\\\",\r\n\t\t\\\"economycode\\\": \\\"011110\\\",\r\n\t\t\\\"debiturcode\\\": \\\"907\\\",\r\n\t\t\\\"mmn\\\": \\\"ibu kandung\\\",\r\n\t\t\\\"npwp\\\": \\\"no npwp\\\",\r\n\t\t\\\"homestatus\\\": 1,\r\n\t\t\\\"livedsince\\\": \\\"2000-01-01\\\",\r\n\t\t\\\"phonearea\\\": \\\"area\\\",\r\n\t\t\\\"phoneno\\\": \\\"12323535\\\",\r\n\t\t\\\"mobileno\\\": \\\"0878978979\\\",\r\n\t\t\\\"dependent\\\": 0,\r\n\t\t\\\"grossincome\\\": 5000000,\r\n\t\t\\\"expenses\\\": 1000000,\r\n\t\t\\\"sameidhomeaddr\\\": 1,\r\n\t\t\\\"custaddresshome\\\": \\\"string content\\\",\r\n\t\t\\\"custrthome\\\": \\\"string content\\\",\r\n\t\t\\\"custrwhome\\\": \\\"string content\\\",\r\n\t\t\\\"custkelhome\\\": \\\"string content\\\",\r\n\t\t\\\"custkechome\\\": \\\"string content\\\",\r\n\t\t\\\"custcityhome\\\": \\\"string content\\\",\r\n\t\t\\\"custprovhome\\\": \\\"string content\\\",\r\n\t\t\\\"custziphome\\\": \\\"string content\\\",\r\n\t\t\\\"custdatihome\\\": \\\"0102\\\",\r\n\t\t\\\"spousename\\\": \\\"string content\\\",\r\n\t\t\\\"spousebirthdate\\\": \\\"1980-01-01\\\",\r\n\t\t\\\"spousebirthplace\\\": \\\"string content\\\",\r\n\t\t\\\"spouseidtype\\\": 1,\r\n\t\t\\\"spouseidnumber\\\": \\\"string content\\\",\r\n\t\t\\\"spousephoneno\\\": \\\"string content\\\",\r\n\t\t\\\"spousemobileno\\\": \\\"string content\\\",\r\n\t\t\\\"spouseoffice\\\": \\\"string content\\\",\r\n\t\t\\\"spouseoffinephone\\\": \\\"string content\\\",\r\n\t\t\\\"relativestype\\\": 1,\r\n\t\t\\\"relativesname\\\": \\\"string content\\\",\r\n\t\t\\\"custaddressrel\\\": \\\"string content\\\",\r\n\t\t\\\"custrtrel\\\": \\\"string content\\\",\r\n\t\t\\\"custrwrel\\\": \\\"string content\\\",\r\n\t\t\\\"custkelrel\\\": \\\"string content\\\",\r\n\t\t\\\"custkecrel\\\": \\\"string content\\\",\r\n\t\t\\\"custcityrel\\\": \\\"string content\\\",\r\n\t\t\\\"custprovrel\\\": \\\"string content\\\",\r\n\t\t\\\"custziprel\\\": \\\"string content\\\",\r\n\t\t\\\"phonenorel\\\": \\\"string content\\\",\r\n\t\t\\\"companyname\\\": \\\"string content\\\",\r\n\t\t\\\"companyaddr\\\": \\\"string content\\\",\r\n\t\t\\\"companycity\\\": \\\"string content\\\",\r\n\t\t\\\"companyzip\\\": \\\"string content\\\",\r\n\t\t\\\"companyphone\\\": \\\"string content\\\",\r\n\t\t\\\"deedno\\\": \\\"string content\\\",\r\n\t\t\\\"deeddate\\\": \\\"2019-01-01\\\",\r\n\t\t\\\"corporatetype\\\": \\\"string content\\\",\r\n\t\t\\\"jobid\\\": \\\"002\\\",\r\n\t\t\\\"jobtitleid\\\": \\\"50\\\",\r\n\t\t\\\"countryid\\\": \\\"id\\\",\r\n\t\t\\\"branchcode\\\": \\\"000\\\"\r\n\t},\r\n\t\\\"loan_data\\\": {\r\n\t\t\\\"refno\\\": \\\"ref05\\\",\r\n\t\t\\\"objectvalue\\\": \\\"100000000.0\\\",\r\n\t\t\\\"principaltotal\\\": \\\"80000000.0\\\",\r\n\t\t\\\"tenor\\\": \\\"1.0\\\",\r\n\t\t\\\"loantype\\\": 0,\r\n\t\t\\\"effectiverate\\\": \\\"12.0\\\",\r\n\t\t\\\"installment\\\": \\\"1000000.0\\\",\r\n\t\t\\\"firstinstdate\\\": \\\"2018-11-01\\\",\r\n\t\t\\\"admfee\\\": \\\"0.0\\\",\r\n\t\t\\\"inscode\\\": \\\"001\\\",\r\n\t\t\\\"inspremi\\\": \\\"0.0\\\",\r\n\t\t\\\"insonloan\\\": \\\"0.0\\\",\r\n\t\t\\\"installmenttype\\\": 1,\r\n\t\t\\\"branchcode\\\": \\\"000\\\",\r\n\t\t\\\"typeofuseid\\\": \\\"string content\\\",\r\n\t\t\\\"orientationofuseid\\\": \\\"string content\\\",\r\n\t\t\\\"debiturcatid\\\": \\\"string content\\\",\r\n\t\t\\\"portfoliocatid\\\": \\\"string content\\\",\r\n\t\t\\\"credittypeid\\\": \\\"string content\\\",\r\n\t\t\\\"creditattributeid\\\": \\\"string content\\\",\r\n\t\t\\\"creditcategoryid\\\": \\\"string content\\\",\r\n\t\t\\\"fincat\\\": \\\"gen\\\",\r\n\t\t\\\"refnocustid\\\": \\\"\\\",\r\n\t\t\\\"installfeeaccount\\\": \\\"50000.0\\\"\r\n\t},\r\n\t\\\"collateral_data\\\": {\r\n\t\t\\\"productcode\\\": \\\"000\\\",\r\n\t\t\\\"merkcode\\\": \\\"mrk\\\",\r\n\t\t\\\"modelcode\\\": \\\"mdl\\\",\r\n\t\t\\\"collateralno\\\": \\\"collno939854\\\",\r\n\t\t\\\"collateraldate\\\": \\\"2018-01-01\\\",\r\n\t\t\\\"collateraladdress\\\": \\\"string content\\\",\r\n\t\t\\\"collateralcityid\\\": \\\"0102\\\",\r\n\t\t\\\"collateralname\\\": \\\"collname\\\",\r\n\t\t\\\"collateralownerid\\\": \\\"collid935790\\\",\r\n\t\t\\\"collateraldesctype\\\": \\\"string content\\\",\r\n\t\t\\\"engineno\\\": \\\"string content\\\",\r\n\t\t\\\"chassisno\\\": \\\"string content\\\",\r\n\t\t\\\"collateralyear\\\": 2018,\r\n\t\t\\\"buildyear\\\": 2018,\r\n\t\t\\\"condition\\\": 1,\r\n\t\t\\\"color\\\": \\\"string content\\\",\r\n\t\t\\\"collateralkind\\\": \\\"string content\\\",\r\n\t\t\\\"collateralpurpose\\\": \\\"string content\\\",\r\n\t\t\\\"policeno\\\": \\\"string\\\",\r\n\t\t\\\"stnkexpired\\\": \\\"2018-01-01\\\",\r\n\t\t\\\"surveydate\\\": \\\"2018-01-01\\\",\r\n\t\t\\\"bindtypecode\\\": \\\"2018-01-01\\\",\r\n\t\t\\\"collateraltypecode\\\": \\\"string content\\\",\r\n\t\t\\\"sbrankcode\\\": \\\"string content\\\",\r\n\t\t\\\"collateralvalue\\\": 100000000,\r\n\t\t\\\"refno\\\": \\\"\\\",\r\n\t\t\\\"dealercode\\\": \\\"\\\"\r\n\t},\r\n\t\\\"installment_data\\\": {\r\n\t\t\\\"period\\\": \\\"1.0\\\",\r\n\t\t\\\"duedate\\\": \\\"2018-12-12\\\",\r\n\t\t\\\"principal\\\": \\\"10000000.0\\\",\r\n\t\t\\\"interest\\\": \\\"10000000.0\\\",\r\n\t\t\\\"installfee\\\": \\\"50000.0\\\",\r\n\t\t\\\"interestpaid\\\": \\\"1.0\\\",\r\n\t\t\\\"paiddate\\\": \\\"2019-01-01\\\",\r\n\t\t\\\"paidsts\\\": \\\"1.0\\\",\r\n\t\t\\\"paidtxndate\\\": \\\"2019-01-01\\\",\r\n\t\t\\\"penaltypaid\\\": \\\"1.0\\\",\r\n\t\t\\\"principalpaid\\\": \\\"1.0\\\",\r\n\t\t\\\"refno\\\": \\\"\\\"\r\n\t}\r\n}\""
         }
       ],
@@ -4117,7 +4251,7 @@
       "description": "Get the Detail of a Loan Request Given The id of a its loan.\r\n\r\nAvailable Status:\r\ncreated -> after customer just created the loan to us\r\nloan_request_processing -> after we called sampoerna loan API and no callback yet\r\nloan_request_approved -> after we just received sampoerna callback and it is approved\r\nloan_request_rejected -> after we just received sampoerna callback and it is rejected\r\nwithdrawal_on_behalf_processing -> after they call our WOB API, WOB still in pending state\r\nwithdrawal_on_behalf_completed -> after they call our WOB API, WOB still in completed state\r\nwithdrawal_on_behalf_failed -> after they call our WOB API, WOB in bank_rejected, they need to retry or this is final state\r\ndisbursement_report_processing -> after customer call our disbursement report API\r\ndisbursement_report_completed -> after we just call sampoerna disbursement API and completed\r\ndisbursement_report_failed-> after we just call sampoerna disbursement API and failed",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/loans/loan_f42b12c52f9b46ef82f617f04ce7ec2f\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -4167,7 +4301,7 @@
       ],
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans/reconciliations\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-key}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --data \"page=1&per_page=10&from=2015-01-26&to=2020-01-30\""
         }
       ],
@@ -4370,7 +4504,7 @@
       ],
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans/loan_457d2959cff448a1951c589f8c841946/disbursement_reports\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -4474,7 +4608,7 @@
       ],
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
         }
       ],
@@ -4564,7 +4698,7 @@
       ],
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -4614,7 +4748,7 @@
       ],
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
         }
       ],
@@ -4704,7 +4838,7 @@
       ],
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -4863,7 +4997,7 @@
       "description": "This API is used to get the current status of the loan disbursement (in the form of a withdrawal contract), in case the callback of the disbursement status is unclear.",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/authorize/signup_login\" \\\r\n  --header \"X-XFERS-APP-API-KEY: dS7zxQydn4PLxwNE3kuyb4pg6BsNWHE818D2wbhoavQ\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"phone_no\\\" : \\\"+6287785725657\\\", \\\"signature\\\" : \\\"5488737c67d790565a15a2dbc3c98bf778aac2c0\\\"}\""
         }
       ],
@@ -4923,7 +5057,7 @@
       "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans/%3Cloan_id%3E/repayments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --form \"amount=1000.50\" \\\r\n  --form \"collection_fee=10.50\""
         }
       ],
@@ -5016,7 +5150,7 @@
       "description": "Get the Details of a repayment given a loan id",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/loans/loan_c4f036668cf64d13a87beb8f15d12443/repayments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -5272,7 +5406,7 @@
       "operationId": "getRepayment",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/loans/loan_c4f036668cf64d13a87beb8f15d12443/repayments/loan_repayment_115f754273a940179a97ff3dd50c5b43\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -5364,7 +5498,7 @@
       "description": "Get Outstanding Repayments. Response of this reconciliation request will be in callback.",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request GET \"{base_url}/loans/loan_c4f036668cf64d13a87beb8f15d12443/repayments\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
         }
       ],
@@ -5557,7 +5691,7 @@
       "description": "Mock the Status so you can change its status and get its callback",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans_mock/loan_457d2959cff448a1951c589f8c841946/mocks\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --form \"status=loan_request_approved\""
         }
       ],
@@ -5645,7 +5779,7 @@
       "description": "Mock the Repayment Status so you can change its status and get its callback",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/loans_mock/loan_457d2959cff448a1951c589f8c841946/repayments/loan_repayment_ab442a2957a2468f9df4c6fe9f6b40f6/mock\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --form \"status=completed\""
         }
       ],
@@ -5752,7 +5886,7 @@
       "operationId": "mockKYCRejection",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/sandbox/reject_user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
         }
       ],
@@ -5790,7 +5924,7 @@
       "operationId": "mockUserWithOCR",
       "x-code-samples": [
         {
-          "lang": "Shell_curl",
+          "lang": "Shell",
           "source": "curl --location --request POST \"{base_url}/sandbox/mock_user_with_ocr\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-APP-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"{\\\"email\\\": \\\"081234567891@xfers.io\\\", \\\"facial_recognition_percentage\\\": 70.2, \\\"ktp_ocr_valid\\\": true}\r\n\r\n\""
         }
       ],
