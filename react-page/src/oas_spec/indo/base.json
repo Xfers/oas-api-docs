@@ -2,11 +2,11 @@
   "openapi": "3.0.0",
   "servers": [{
       "description": "Indonesia Production",
-      "url": "https://id.xfers.com/api/v3"
+      "url": "https://id.xfers.com/api"
     },
     {
       "description": "Indonesia Sandbox for testing",
-      "url": "https://sandbox-id.xfers.com/api/v3"
+      "url": "https://sandbox-id.xfers.com/api"
     }
   ],
   "info": {

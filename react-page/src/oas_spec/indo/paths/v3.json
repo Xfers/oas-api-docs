@@ -3900,7 +3900,7 @@
       }
     }
   },
-  "/esignatures_registration": {
+  "/v3/esignatures_registration": {
     "post": {
       "operationId": "esignaturesRegistration",
       "x-code-samples": [
@@ -3953,7 +3953,7 @@
       }
     }
   },
-  "/esignatures_upload_document": {
+  "/v3/esignatures_upload_document": {
     "post": {
       "operationId": "esignaturesUploadDocument",
       "x-code-samples": [
@@ -4039,7 +4039,7 @@
       }
     }
   },
-  "/esignatures_check_status": {
+  "/v3/esignatures_check_status": {
     "get": {
       "operationId": "esignaturesCheckStatus",
       "x-code-samples": [
@@ -4113,7 +4113,7 @@
       }
     }
   },
-  "/loans": {
+  "/v3/loans": {
     "post": {
       "operationId": "createLoan",
       "tags": [
@@ -4187,7 +4187,7 @@
       }
     }
   },
-  "/notify_loan_callback": {
+  "/v3/notify_loan_callback": {
     "post": {
       "operationId": "loanNotification",
       "description": "After you set up your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_request_approved), we will send you the callback with the following parameters",
@@ -4241,7 +4241,7 @@
       }
     }
   },
-  "/loans/{id}": {
+  "/v3/loans/{id}": {
     "get": {
       "operationId": "getLoan",
       "tags": [
@@ -4293,7 +4293,7 @@
       }
     }
   },
-  "/loans/reconciliations": {
+  "/v3/loans/reconciliations": {
     "post": {
       "operationId": "loansRecon",
       "tags": [
@@ -4496,7 +4496,7 @@
       }
     }
   },
-  "/loans/{id}/disbursement_reports": {
+  "/v3/loans/{id}/disbursement_reports": {
     "post": {
       "operationId": "createDisbursementReport",
       "tags": [
@@ -4546,7 +4546,7 @@
       }
     }
   },
-  "/notify_disbursement_report_callback": {
+  "/v3/notify_disbursement_report_callback": {
     "post": {
       "operationId": "disbursementReportNotification",
       "description": "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_disbursement_report_completed)",
@@ -4600,7 +4600,7 @@
       }
     }
   },
-  "/loans/{loan_id}/disbursements": {
+  "/v3/loans/{loan_id}/disbursements": {
     "post": {
       "operationId": "createLoanDisbursement",
       "tags": [
@@ -4740,147 +4740,7 @@
       }
     }
   },
-  "/loans/{loan_id}/disbursements": {
-    "post": {
-      "operationId": "createLoanDisbursement",
-      "tags": [
-        "Disbursements"
-      ],
-      "x-code-samples": [
-        {
-          "lang": "Shell",
-          "source": "curl --location --request POST \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
-        }
-      ],
-      "summary": "Create Loan Disbursement",
-      "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
-      "security": [
-        {
-          "user-api-token": [
-
-          ]
-        }
-      ],
-      "parameters": [
-        {
-          "name": "loan_id",
-          "in": "path",
-          "description": "Loan ID. You can find this from the response when you create loan.",
-          "required": true,
-          "explode": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "requestBody": {
-        "required": true,
-        "content": {
-          "application/x-www-form-urlencoded": {
-            "schema": {
-              "required": [
-                "bank_account_id",
-                "amount",
-                "idempotency_id"
-              ],
-              "properties": {
-                "bank_account_id": {
-                  "type": "string",
-                  "description": " User Bank Account id"
-                },
-                "amount": {
-                  "type": "string",
-                  "description": "Transaction Amount"
-                },
-                "idempotency_id": {
-                  "type": "string",
-                  "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia."
-                },
-                "user_api_token": {
-                  "type": "string",
-                  "description": "Use this param if you want to withdraw to another user’s bank account instead of your own. This is your user API token which you can retrieve from the get token API response"
-                }
-              }
-            },
-            "examples": {
-              "Request Body Example": {
-                "summary": "Request Body Example",
-                "value": {
-                  "bank_account_id": "12345678",
-                  "amount": "120000.0",
-                  "idempotency_id": "Order_1234"
-                }
-              }
-            }
-          }
-        }
-      },
-      "responses": {
-        "200": {
-          "description": "Success",
-          "content": {
-            "application/json": {
-              "example": {
-                "msg": "success"
-              }
-            }
-          }
-        },
-        "4XX": {
-          "$ref": "#/components/responses/v3Error:4XX"
-        }
-      }
-    },
-    "get": {
-      "operationId": "listLoanDisbursement",
-      "tags": [
-        "Disbursements"
-      ],
-      "x-code-samples": [
-        {
-          "lang": "Shell",
-          "source": "curl --location --request GET \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
-        }
-      ],
-      "summary": "List Loan Disbursement",
-      "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
-      "security": [
-        {
-          "user-api-token": [
-
-          ]
-        }
-      ],
-      "parameters": [
-        {
-          "name": "loan_id",
-          "in": "path",
-          "description": "Loan ID. You can find this from the response when you create loan.",
-          "required": true,
-          "explode": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Success",
-          "content": {
-            "application/json": {
-              "example": {
-                "msg": "success"
-              }
-            }
-          }
-        },
-        "4XX": {
-          "$ref": "#/components/responses/v3Error:4XX"
-        }
-      }
-    }
-  },
-  "/notify_loan_disbursement_callback": {
+  "/v3/notify_loan_disbursement_callback": {
     "post": {
       "operationId": "loanDisbursementNotification",
       "description": "This is Xfers' callback request to your server to notify loan disbursement status",
@@ -4987,7 +4847,7 @@
       }
     }
   },
-  "/loans/{loan_id}/disbursements/{id}": {
+  "/v3/loans/{loan_id}/disbursements/{id}": {
     "get": {
       "operationId": "getLoanDisbursement",
       "tags": [
@@ -5047,7 +4907,7 @@
       }
     }
   },
-  "/loans/{loan_id}/repayments": {
+  "/v3/loans/{loan_id}/repayments": {
     "post": {
       "operationId": "createRepayment",
       "tags": [
@@ -5401,7 +5261,7 @@
       }
     }
   },
-  "/loans/{loan_id}/repayments/{loan_repayment_id}": {
+  "/v3/loans/{loan_id}/repayments/{loan_repayment_id}": {
     "get": {
       "operationId": "getRepayment",
       "x-code-samples": [
@@ -5488,7 +5348,7 @@
       }
     }
   },
-  "/loans/repayments/reconciliations": {
+  "/v3/loans/repayments/reconciliations": {
     "post": {
       "operationId": "repaymentRecon",
       "tags": [
@@ -5681,7 +5541,7 @@
       }
     }
   },
-  "/loans_mock/{id}/mocks": {
+  "/v3/loans_mock/{id}/mocks": {
     "post": {
       "operationId": "mockLoanStatus",
       "tags": [
@@ -5769,7 +5629,7 @@
       }
     }
   },
-  "/loans_mock/{id}/repayments/{repayment_id}/mocks": {
+  "/v3/loans_mock/{id}/repayments/{repayment_id}/mocks": {
     "post": {
       "operationId": "mockLoanRepaymentStatus",
       "tags": [
@@ -5878,7 +5738,7 @@
       }
     }
   },
-  "/sandbox/reject_user": {
+  "/v3/sandbox/reject_user": {
     "post": {
       "tags": [
         "Testing"
@@ -5916,7 +5776,7 @@
       }
     }
   },
-  "/sandbox/mock_user_with_ocr": {
+  "/v3/sandbox/mock_user_with_ocr": {
     "post": {
       "tags": [
         "Testing"
