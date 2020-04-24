@@ -38,7 +38,8 @@
         "Payout",
         "Withdraw",
         "Intents",
-        "Loans"
+        "Loans",
+        "Disbursements"
       ]
     },
     {

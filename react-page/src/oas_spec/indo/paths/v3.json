@@ -4361,5 +4361,556 @@
         }
       }
     }
+  },
+  "/loans/{id}/disbursement_reports": {
+    "post": {
+      "operationId": "createDisbursementReport",
+      "tags": [
+        "Disbursements"
+      ],
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/loans/loan_457d2959cff448a1951c589f8c841946/disbursement_reports\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
+        }
+      ],
+      "summary": "Create Disbursement Report",
+      "description": "Create a disbursement report to complete a loan disbursement process. We will pass this loan asynchronously and give callback after complete",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Loan ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/notify_disbursement_report_callback": {
+    "post": {
+      "operationId": "disbursementReportNotification",
+      "description": "After you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings (loan_disbursement_report_completed)",
+      "summary": "Disbursement Report Notification Callback",
+      "tags": [
+        "Disbursements"
+      ],
+      "security": [
+
+      ],
+      "servers": [
+        {
+          "url": "http://yourserver.com",
+          "description": "This is your endpoint you set in the dashboard or notify_url"
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "description": "the loan id as provided",
+                  "type": "string",
+                  "format": "loan_XXX",
+                  "example": "loan_dfghjkiuyfdcbnmjhgfc"
+                },
+                "status": {
+                  "description": "the latest status after callback",
+                  "type": "string",
+                  "enum": [
+                    "disbursement_report_completed",
+                    "disbursement_report_failed"
+                  ],
+                  "example": "disbursement_report_completed"
+                },
+                "failure_reason": {
+                  "description": "failure reason as given from the bank , only exist on `disbursement_report_failed`",
+                  "type": "string",
+                  "example": "some error JSON"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Your server returns this code if it accepts the callback"
+        }
+      }
+    }
+  },
+  "/loans/{loan_id}/disbursements": {
+    "post": {
+      "operationId": "createLoanDisbursement",
+      "tags": [
+        "Disbursements"
+      ],
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
+        }
+      ],
+      "summary": "Create Loan Disbursement",
+      "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "loan_id",
+          "in": "path",
+          "description": "Loan ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "required": [
+                "bank_account_id",
+                "amount",
+                "idempotency_id"
+              ],
+              "properties": {
+                "bank_account_id": {
+                  "type": "string",
+                  "description": " User Bank Account id"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Transaction Amount"
+                },
+                "idempotency_id": {
+                  "type": "string",
+                  "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia."
+                },
+                "user_api_token": {
+                  "type": "string",
+                  "description": "Use this param if you want to withdraw to another user’s bank account instead of your own. This is your user API token which you can retrieve from the get token API response"
+                }
+              }
+            },
+            "examples": {
+              "Request Body Example": {
+                "summary": "Request Body Example",
+                "value": {
+                  "bank_account_id": "12345678",
+                  "amount": "120000.0",
+                  "idempotency_id": "Order_1234"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    },
+    "get": {
+      "operationId": "listLoanDisbursement",
+      "tags": [
+        "Disbursements"
+      ],
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request GET \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
+        }
+      ],
+      "summary": "List Loan Disbursement",
+      "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "loan_id",
+          "in": "path",
+          "description": "Loan ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/loans/{loan_id}/disbursements": {
+    "post": {
+      "operationId": "createLoanDisbursement",
+      "tags": [
+        "Disbursements"
+      ],
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --header \"Content-Type: application/x-www-form-urlencoded\" \\\r\n  --form \"bank_account_id=12345678\" \\\r\n  --form \"amount=120000.0\" \\\r\n  --form \"idempotency_id=Order_1234\" \\\r\n  --form \"user_api_token={{user-api-token}}\""
+        }
+      ],
+      "summary": "Create Loan Disbursement",
+      "description": "Note: Disbursement and Withdrawal will be used synonymously. Disbursement is instantenous.\nDisbursement (Withdrawal on Behalf)\nIf you wish to disburse to a bank account not belonging to you, add in user_api_token in the params.\nDisbursement (a.k.a Withdrawal) notification\nAfter you setup your callback url in {{base-api-url}}/merchant_settings/callback_settings, we will send you the callback with the following parameter when the withdrawal is completed or failed. You need to acknowledge the callback by responding with a HTTP 200 status when succesfully processed.\nWe will send completed callback after we have confirmed with the bank that the money has been sent.",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "loan_id",
+          "in": "path",
+          "description": "Loan ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "required": [
+                "bank_account_id",
+                "amount",
+                "idempotency_id"
+              ],
+              "properties": {
+                "bank_account_id": {
+                  "type": "string",
+                  "description": " User Bank Account id"
+                },
+                "amount": {
+                  "type": "string",
+                  "description": "Transaction Amount"
+                },
+                "idempotency_id": {
+                  "type": "string",
+                  "description": "Unique ref no provided by you to prevent double transaction, this cannot be repeated, Currently only activated for Indonesia."
+                },
+                "user_api_token": {
+                  "type": "string",
+                  "description": "Use this param if you want to withdraw to another user’s bank account instead of your own. This is your user API token which you can retrieve from the get token API response"
+                }
+              }
+            },
+            "examples": {
+              "Request Body Example": {
+                "summary": "Request Body Example",
+                "value": {
+                  "bank_account_id": "12345678",
+                  "amount": "120000.0",
+                  "idempotency_id": "Order_1234"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    },
+    "get": {
+      "operationId": "listLoanDisbursement",
+      "tags": [
+        "Disbursements"
+      ],
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request GET \"{base_url}/loans/%3Cloan_id%3E/disbursements\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\""
+        }
+      ],
+      "summary": "List Loan Disbursement",
+      "description": "This API will be used to get a list of the last 10 withdrawal requests associated with the loan",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "loan_id",
+          "in": "path",
+          "description": "Loan ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/notify_loan_disbursement_callback": {
+    "post": {
+      "operationId": "loanDisbursementNotification",
+      "description": "This is Xfers' callback request to your server to notify loan disbursement status",
+      "summary": "Loan Disbursement Notification",
+      "tags": [
+        "Disbursements"
+      ],
+      "security": [
+
+      ],
+      "servers": [
+        {
+          "url": "http://yourserver.com",
+          "description": "This is your endpoint you set in the dashboard or notify_url"
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "description": "Xfers Generated Unique Key",
+                  "type": "string",
+                  "example": "contract_dd5a6b83"
+                },
+                "idempotency_id": {
+                  "description": "The key you put in the withdrawal request",
+                  "type": "string",
+                  "example": "AZ0001"
+                },
+                "type": {
+                  "description": "Status of repayment",
+                  "type": "string",
+                  "enum": [
+                    "success",
+                    "failed"
+                  ],
+                  "example": "completed"
+                },
+                "status": {
+                  "description": "Status of transaction",
+                  "type": "string",
+                  "enum": [
+                    "completed",
+                    "failed"
+                  ],
+                  "example": "Sample Error Message"
+                },
+                "amount": {
+                  "description": "Withdrawal amount",
+                  "type": "string",
+                  "example": "125000"
+                },
+                "fees": {
+                  "description": "Withdrawal Fee",
+                  "type": "string",
+                  "example": "0"
+                },
+                "account_no": {
+                  "description": "bank account number of withdrawal",
+                  "type": "string",
+                  "example": "0393123432"
+                },
+                "bank_abbrev": {
+                  "description": "bank abbreviation of withdrawal",
+                  "type": "string",
+                  "example": "BNI"
+                },
+                "express": {
+                  "description": "Express/normal withdrawal",
+                  "type": "string",
+                  "example": "true"
+                },
+                "value_date": {
+                  "description": "Date of withdrawal completed as provided by partner bank. Will only available for `\"completed\"` status",
+                  "type": "string",
+                  "example": "2019-02-15"
+                },
+                "failure_reason": {
+                  "description": "Reason for failure as provided by partner bank. Will only available for `\"failed\"` status",
+                  "type": "string",
+                  "example": "Request tidak dapat diproses - BusinessException IB-1009 (Mohon maaf transaksi tidak dapat dilakukan. Ulangi beberapa saat lagi.)"
+                },
+                "arrival": {
+                  "description": "arrival",
+                  "type": "string",
+                  "example": "15 Feb 2019 - 4:04 PM"
+                },
+                "created_at": {
+                  "description": "Created at",
+                  "type": "string",
+                  "example": "2019-02-15T16:00:02+07:00"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Your server returns this code if it accepts the callback"
+        }
+      }
+    }
+  },
+  "/loans/{loan_id}/disbursements/{id}": {
+    "get": {
+      "operationId": "getLoanDisbursement",
+      "tags": [
+        "Disbursements"
+      ],
+      "summary": "Get Loan Disbursement",
+      "description": "This API is used to get the current status of the loan disbursement (in the form of a withdrawal contract), in case the callback of the disbursement status is unclear.",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/authorize/signup_login\" \\\r\n  --header \"X-XFERS-APP-API-KEY: dS7zxQydn4PLxwNE3kuyb4pg6BsNWHE818D2wbhoavQ\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --data \"{\\\"phone_no\\\" : \\\"+6287785725657\\\", \\\"signature\\\" : \\\"5488737c67d790565a15a2dbc3c98bf778aac2c0\\\"}\""
+        }
+      ],
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "loan_id",
+          "in": "path",
+          "description": "Loan ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Disbursement ID. You can find this from the response when you create loan.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "msg": "success"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
   }
 }
