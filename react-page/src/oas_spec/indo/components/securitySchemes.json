@@ -1,0 +1,28 @@
+{
+  "X-XFERS-APP-API-KEY": {
+    "type": "apiKey",
+    "name": "X-XFERS-APP-API-KEY",
+    "in": "header",
+    "description": "You can retrieve this from your merchant's dashboard"
+  },
+  "X-XFERS-USER-API-KEY": {
+    "type": "apiKey",
+    "name": "X-XFERS-USER-API-KEY",
+    "in": "header",
+    "description": "You can retrieve this by using [get_token API](http://localhost:3000/sg/api/cutting-edge#operation/getToken)"
+  },
+  "user-api-token": {
+    "type": "apiKey",
+    "name": "X-XFERS-USER-API-KEY",
+    "in": "query",
+    "description": "You can retrieve this by using [get_token API](http://localhost:3000/sg/api/cutting-edge#operation/getToken)"
+  },
+  "v4XfersAuth": {
+    "name": "v4XfersAuth",
+    "type": "http",
+    "scheme": "bearer",
+    "in": "header",
+    "bearerFormat": "xfers_api_token",
+    "description": "You can retrieve this from the dashboard. For instance: \n\n```\n\nAuthorization: Bearer <xfers_api_token>\n\n```\n\n"
+  }
+}

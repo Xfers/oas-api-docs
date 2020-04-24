@@ -1,0 +1,71 @@
+{
+  "Accounts": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Entity's unique identifier in Xfers"
+        },
+        "type": {
+          "type": "string",
+          "description": "Entity's type"
+        },
+        "attributes": {
+          "type": "object",
+          "description": "Entity's attributes",
+          "properties": {
+            "balance": {
+              "type": "string"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "wallet_name": {
+              "type": "string"
+            },
+            "wallet_id": {
+              "type": "integer"
+            },
+            "limitations": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  },
+  "DirectBankTransferContract": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Entity's unique identifier in Xfers"
+      },
+      "type": {
+        "type": "string",
+        "description": "Entity's type"
+      },
+      "attributes": {
+        "type": "object",
+        "description": "Entity's attributes",
+        "properties": {
+          "amount": {
+            "type": "float"
+          },
+          "status": {
+            "type": "string"
+          },
+          "external_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Time ISO8601"
+          }
+        }
+      }
+    }
+  }
+}
