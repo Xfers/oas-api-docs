@@ -5546,5 +5546,351 @@
         }
       }
     }
+  },
+  "/loans_mock/{id}/mocks": {
+    "post": {
+      "operationId": "mockLoanStatus",
+      "tags": [
+        "Testing"
+      ],
+      "summary": "Mock Loan Status",
+      "description": "Mock the Status so you can change its status and get its callback",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/loans_mock/loan_457d2959cff448a1951c589f8c841946/mocks\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --form \"status=loan_request_approved\""
+        }
+      ],
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "ID of the loan you want to request mock status.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "loan_request_approved",
+                    "loan_request_rejected",
+                    "disbursement_report_completed",
+                    "disbursement_report_failed"
+                  ],
+                  "description": "Mock loan status"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "available_balance": 308446,
+                "ledger_balance": 308446,
+                "withdrawal_request": {
+                  "id": "contract_78a3e9bbae474e5ab6fffad8e609f716",
+                  "idempotency_id": "Order_1234",
+                  "type": "Sobatku/withdrawal",
+                  "status": "completed",
+                  "amount": "120000.0",
+                  "fees": "0.0",
+                  "account_no": "1680366060",
+                  "bank_abbrev": "BCA",
+                  "express": true,
+                  "value_date": null,
+                  "created_at": "2018-11-01T17:48:42+07:00"
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/loans_mock/{id}/repayments/{repayment_id}/mocks": {
+    "post": {
+      "operationId": "mockLoanRepaymentStatus",
+      "tags": [
+        "Testing"
+      ],
+      "summary": "Mock Loan Repayment Status",
+      "description": "Mock the Repayment Status so you can change its status and get its callback",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/loans_mock/loan_457d2959cff448a1951c589f8c841946/repayments/loan_repayment_ab442a2957a2468f9df4c6fe9f6b40f6/mock\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-USER-API-KEY: {{user-api-token}}\" \\\r\n  --form \"status=completed\""
+        }
+      ],
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "ID of the loan you want to request mock status.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "repayment_id",
+          "in": "path",
+          "description": "ID of the loan repayment you want to request mock status.",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "completed"
+                  ],
+                  "description": "Mock loan repayment status"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "loan_id": "loan_abcdefghi_123",
+                "id": "loan_repayment_d2bb1cf12f0c43acb2ac13a06de858f2",
+                "status": "completed",
+                "amount": "100000.0",
+                "collection_fee": "0.0",
+                "idempotency_id": "2c4c17c4-ec8b-4267-963f-28bc40ebc41a",
+                "created_at": "2019-09-19 05:24:32 UTC",
+                "partner_bank_response": {
+                  "success": true,
+                  "refno": "ref05",
+                  "accno": "TK001.7",
+                  "accountname": "NAMA AKUN",
+                  "period": "6",
+                  "duedate": "2012-12-12",
+                  "installment": "16646000.0",
+                  "installfeeaccount": "0.0",
+                  "dpd": "238",
+                  "osprincipal": "389113770.0",
+                  "osinterest": "123754230.0",
+                  "ostotal": "512868000.0",
+                  "overdueprincipal": "80148138.0",
+                  "overdueinterest": "49861862.0",
+                  "overduetotal": "130010000.0",
+                  "penalty": "12118288.0",
+                  "overdueinstallfee": "0.0",
+                  "totaloverdueandpenalty": "142128288.0",
+                  "failurereason": null,
+                  "paymentid": "1.31"
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/sandbox/reject_user": {
+    "post": {
+      "tags": [
+        "Testing"
+      ],
+      "operationId": "mockKYCRejection",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/sandbox/reject_user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
+        }
+      ],
+      "summary": "Mock KYC Rejection",
+      "description": "This API rejects the user with corresponding API KEY. This API can only be called from sandbox.",
+      "security": [
+        {
+          "user-api-token": [
+
+          ]
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "verification_status": "rejected"
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  },
+  "/sandbox/mock_user_with_ocr": {
+    "post": {
+      "tags": [
+        "Testing"
+      ],
+      "operationId": "mockUserWithOCR",
+      "x-code-samples": [
+        {
+          "lang": "Shell_curl",
+          "source": "curl --location --request POST \"{base_url}/sandbox/mock_user_with_ocr\" \\\r\n  --header \"Content-Type: application/json\" \\\r\n  --header \"X-XFERS-APP-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"{\\\"email\\\": \\\"081234567891@xfers.io\\\", \\\"facial_recognition_percentage\\\": 70.2, \\\"ktp_ocr_valid\\\": true}\r\n\r\n\""
+        }
+      ],
+      "summary": "Mock User with OCR",
+      "description": "This API mocks a user creation with OCR and FR data. This API can only be called from sandbox.",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": [
+
+          ]
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "email",
+                "facial_recognition_percentage",
+                "ktp_ocr_valid"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "User's email address."
+                },
+                "facial_recognition_percentage": {
+                  "type": "integer",
+                  "description": "Facial recognition mock similarity percentage."
+                },
+                "ktp_ocr_valid": {
+                  "type": "boolean",
+                  "description": "Set if KTP OCR data is valid/invalid."
+                }
+              }
+            },
+            "examples": {
+              "Request Body Example": {
+                "summary": "Request Body Example",
+                "value": {
+                  "email": "081234567891@xfers.com",
+                  "facial_recognition_percentage": 70.2,
+                  "ktp_ocr_valid": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "081234567891@xfers.io",
+                "ocr_results": [
+                  {
+                    "id": 139901,
+                    "user_id": 1659930,
+                    "tag": "selfie",
+                    "result": "{\"face_similarity\":\"70.2\"}"
+                  },
+                  {
+                    "id": 139902,
+                    "user_id": 1659930,
+                    "tag": "id_front",
+                    "result": "{\"province\":\"PROVINSI JAWA BARAT\",\"city\":\"KABUPATEN SUKABUMI\",\"nik\":\"3202210702960001\",\"name\":\"RAMDAN FEBRIANSYAH\",\"birth_place\":\"SUKABUMI\",\"birth_date\":\"07-02-1996\",\"gender\":\"LAKI-LAKI\",\"address\":\"KP CIRANJII\",\"rtrw\":\"002/003\",\"sub_district\":\"MEKARJAYA\",\"district\":\"JAMPANG KULON\",\"religion\":\"ISLAM\",\"stats\":\"BELUM KAWIN\",\"job\":\"BELUMTIDAK BEKERJA\",\"nationality\":\"WNI\",\"blood_type\":\"O\"}"
+                  }
+                ],
+                "user_api_token": {
+                  "id": 2483701,
+                  "token_hash": "ps4igKCfMPQxRz74dToANcMvuv4npFPAg5FXEmzNTFE",
+                  "secret_hash": "bjtjZZJnGzJ86UKBp76y3uY6iNTAPMVoPo2HjToRX-U",
+                  "token_type": "V2",
+                  "user_id": 1659930,
+                  "version": 3,
+                  "enabled": true,
+                  "last_used": null,
+                  "created_at": "2020-01-27T07:52:18.000Z",
+                  "updated_at": "2020-01-27T07:52:18.538Z",
+                  "connect_token_id": 2108325,
+                  "is_kyc_host": false,
+                  "xfers_api_access_template_id": 2,
+                  "old_token_type": null,
+                  "connect_verification_tiers": 7,
+                  "wallet_id": 1,
+                  "allow_negative_balance": false,
+                  "user_wallet_id": null,
+                  "account_id": 1749950
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
   }
 }
