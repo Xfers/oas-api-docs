@@ -1,0 +1,203 @@
+{
+  "v3Error:4XX": {
+    "description": "List of possible errors",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "#/components/schemas/error_response"
+        },
+        "examples": {
+          "XFE1": {
+            "$ref": "#/components/examples/XFE1"
+          },
+          "XFE2": {
+            "$ref": "#/components/examples/XFE2"
+          },
+          "XFE3": {
+            "$ref": "#/components/examples/XFE3"
+          },
+          "XFE4": {
+            "$ref": "#/components/examples/XFE4"
+          },
+          "XFE5": {
+            "$ref": "#/components/examples/XFE5"
+          },
+          "XFE6": {
+            "$ref": "#/components/examples/XFE6"
+          },
+          "XFE7": {
+            "$ref": "#/components/examples/XFE7"
+          },
+          "XFE8": {
+            "$ref": "#/components/examples/XFE8"
+          },
+          "XFE9": {
+            "$ref": "#/components/examples/XFE9"
+          },
+          "XFE10": {
+            "$ref": "#/components/examples/XFE10"
+          },
+          "XFE11": {
+            "$ref": "#/components/examples/XFE11"
+          },
+          "XFE12": {
+            "$ref": "#/components/examples/XFE12"
+          },
+          "XFE13": {
+            "$ref": "#/components/examples/XFE13"
+          },
+          "XFE14": {
+            "$ref": "#/components/examples/XFE14"
+          },
+          "XFE15": {
+            "$ref": "#/components/examples/XFE15"
+          },
+          "XFE16": {
+            "$ref": "#/components/examples/XFE16"
+          },
+          "XFE101": {
+            "$ref": "#/components/examples/XFE101"
+          },
+          "XFE102": {
+            "$ref": "#/components/examples/XFE102"
+          },
+          "XFE103": {
+            "$ref": "#/components/examples/XFE103"
+          },
+          "XFE104": {
+            "$ref": "#/components/examples/XFE104"
+          },
+          "XFE105": {
+            "$ref": "#/components/examples/XFE105"
+          },
+          "XFE106": {
+            "$ref": "#/components/examples/XFE106"
+          },
+          "XFE107": {
+            "$ref": "#/components/examples/XFE107"
+          },
+          "XFE108": {
+            "$ref": "#/components/examples/XFE108"
+          },
+          "XFE109": {
+            "$ref": "#/components/examples/XFE109"
+          },
+          "XFE110": {
+            "$ref": "#/components/examples/XFE110"
+          },
+          "XFE111": {
+            "$ref": "#/components/examples/XFE111"
+          },
+          "XFE112": {
+            "$ref": "#/components/examples/XFE112"
+          },
+          "XFE201": {
+            "$ref": "#/components/examples/XFE201"
+          },
+          "XFE301": {
+            "$ref": "#/components/examples/XFE301"
+          },
+          "XFE302": {
+            "$ref": "#/components/examples/XFE302"
+          },
+          "XFE303": {
+            "$ref": "#/components/examples/XFE303"
+          },
+          "XFE304": {
+            "$ref": "#/components/examples/XFE304"
+          },
+          "XFE305": {
+            "$ref": "#/components/examples/XFE305"
+          },
+          "XFE306": {
+            "$ref": "#/components/examples/XFE306"
+          },
+          "XFE307": {
+            "$ref": "#/components/examples/XFE307"
+          },
+          "XFE308": {
+            "$ref": "#/components/examples/XFE308"
+          },
+          "XFE309": {
+            "$ref": "#/components/examples/XFE309"
+          },
+          "XFE310": {
+            "$ref": "#/components/examples/XFE310"
+          },
+          "XFE311": {
+            "$ref": "#/components/examples/XFE311"
+          },
+          "XFE312": {
+            "$ref": "#/components/examples/XFE312"
+          },
+          "XFE401": {
+            "$ref": "#/components/examples/XFE401"
+          },
+          "XFE402": {
+            "$ref": "#/components/examples/XFE402"
+          },
+          "XFE403": {
+            "$ref": "#/components/examples/XFE403"
+          },
+          "XFE404": {
+            "$ref": "#/components/examples/XFE404"
+          },
+          "XFE405": {
+            "$ref": "#/components/examples/XFE405"
+          },
+          "XFE406": {
+            "$ref": "#/components/examples/XFE406"
+          },
+          "XFE407": {
+            "$ref": "#/components/examples/XFE407"
+          },
+          "XFE408": {
+            "$ref": "#/components/examples/XFE408"
+          },
+          "XFE409": {
+            "$ref": "#/components/examples/XFE409"
+          },
+          "XFE410": {
+            "$ref": "#/components/examples/XFE410"
+          },
+          "XFE501": {
+            "$ref": "#/components/examples/XFE501"
+          },
+          "XFE502": {
+            "$ref": "#/components/examples/XFE502"
+          },
+          "XFE503": {
+            "$ref": "#/components/examples/XFE503"
+          },
+          "XFE504": {
+            "$ref": "#/components/examples/XFE504"
+          },
+          "XFE505": {
+            "$ref": "#/components/examples/XFE505"
+          },
+          "XFE506": {
+            "$ref": "#/components/examples/XFE506"
+          },
+          "XFE601": {
+            "$ref": "#/components/examples/XFE601"
+          },
+          "XFE602": {
+            "$ref": "#/components/examples/XFE602"
+          },
+          "XFE603": {
+            "$ref": "#/components/examples/XFE603"
+          }
+        }
+      }
+    }
+  },
+  "v4Error:4XX": {
+    "content": {
+      "application/vnd.api+json": {
+        "schema": {
+          "$ref": "#/components/schemas/jsonApi:errorResponse"
+        }
+      }
+    }
+  }
+}
