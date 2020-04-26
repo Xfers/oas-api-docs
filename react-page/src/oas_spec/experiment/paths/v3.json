@@ -1,0 +1,123 @@
+{
+  "/v3/payment/va_bank_transfer": {
+    "post": {
+      "tags": [
+        "Payment Methods"
+      ],
+      "operationId": "payment/va_bank_transfer",
+      "summary": "Virtual Account Bank Transfer",
+      "description": "@Irfan",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "amount": {
+                  "description": "Amount properties",
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description:": "Amount value",
+                      "type": "float",
+                      "example": 10000.00
+                    },
+                    "currency": {
+                      "description:": "Amount currency",
+                      "type": "string",
+                      "example": "IDR"
+                    }
+                  }
+                },
+                "destination_account_id": {
+                  "description": "You can get from XXXX",
+                  "type": "string",
+                  "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+                },
+                "reference_id": {
+                  "description": "Your order's reference id",
+                  "type": "string",
+                  "example": "ORDER_0001"
+                },
+                "settings": {
+                  "description": "Data for specific payment method",
+                  "type": "object",
+                  "properties": {
+                    "virtual_account_type": {
+                      "description": "`fixed` (tied to invoice) / `non_fixed` (tied to customer)",
+                      "type": "string",
+                      "enum": ["fixed", "non_fixed"],
+                      "example": "non_fixed"
+                    },
+                    "customer_id": {
+                      "description": "If using non_fixed type, you should specify the `customer_id`",
+                      "type": "string",
+                      "example": "customer_111"
+                    },
+                    "merchant_callback_url": {
+                      "description": "When destination received the money, we will callback to this URL",
+                      "type": "string",
+                      "example": "http://myshop.com/payment_callback"
+                    }
+                  }
+                },
+                "description": {
+                  "description": "Order description",
+                  "type": "string",
+                  "example": "This is the first order"
+                },
+                "merchant_metadata": {
+                  "description": "You can easily associate the payment to your system by this field. Total characters should be < 100",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "amount",
+                "destination_account_id",
+                "reference_id",
+                "settings"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "transfer_info": {
+                  "bank_code": "BRI",
+                  "account_holder_name": "Xfers Pte Ltd.",
+                  "account_no": "202000120472913",
+                  "amount": 10000.00
+                },
+                "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                "object": "BankTransferContract",
+                "status": "processing",
+                "amount": 10000.00,
+                "currency": "idr",
+                "description": "This is the first order",
+                "merchant_metadata": {},
+                "settings": {
+                  "virtual_account_type": "non_fixed",
+                  "customer_id": "customer_111",
+                  "merchant_callback_url": "http://myshop.com/payment_callback"
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      }
+    }
+  }
+}

@@ -109,6 +109,14 @@ const routing = (
 				}
 				/>}
 			/>
+			<Route exact path="/experiment" render={(props) => <XfersRedoc
+				{...props}
+				oasSpec={require('./oas_spec/experiment/index.js')}
+				isUrl={false}
+				docName={"Experiment"}
+				dropDownOptions = {[]}
+				/>}
+			/>
 			<Route exact path="/V3/Master" render={(props) => <XfersRedoc
 				{...props}
 				oasSpec={require('./oas_spec/master-openapi.json')}
