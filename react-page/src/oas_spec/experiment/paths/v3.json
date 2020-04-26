@@ -66,7 +66,7 @@
                       "example": "customer_111"
                     },
                     "merchant_callback_url": {
-                      "description": "When destination received the money, we will callback to this URL",
+                      "description": "When destination received the payment, we will callback to this URL",
                       "type": "string",
                       "example": "http://myshop.com/payment_callback"
                     }
@@ -99,7 +99,7 @@
             "application/json": {
               "example": {
                 "transfer_info": {
-                  "bank_code": "BRI",
+                  "bank_code": "BSS",
                   "account_holder_name": "Xfers Pte Ltd.",
                   "account_no": "202000120472913",
                   "amount": 10000.00
@@ -123,6 +123,48 @@
         },
         "4XX": {
           "$ref": "#/components/responses/v3Error:4XX"
+        }
+      },
+      "callbacks": {
+        "completed": {
+          "$request.body.settings.merchant_callback_url": {
+            "post": {
+              "summary": "Callback when received payment",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "transfer_info": {
+                        "bank_code": "BSS",
+                        "account_holder_name": "Xfers Pte Ltd.",
+                        "account_no": "202000120472913",
+                        "amount": 10000.00
+                      },
+                      "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                      "object": "BankTransferContract",
+                      "status": "completed",
+                      "amount": 10000.00,
+                      "currency": "idr",
+                      "description": "This is the first order",
+                      "merchant_metadata": {},
+                      "settings": {
+                        "bank_code": "BSS",
+                        "virtual_account_type": "non_fixed",
+                        "customer_id": "customer_111",
+                        "merchant_callback_url": "http://myshop.com/payment_callback"
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -183,7 +225,7 @@
                       "example": "BSS"
                     },
                     "merchant_callback_url": {
-                      "description": "When destination received the money, we will callback to this URL",
+                      "description": "When destination received the payment, we will callback to this URL",
                       "type": "string",
                       "example": "http://myshop.com/payment_callback"
                     }
@@ -229,8 +271,7 @@
                 "description": "This is the first order",
                 "merchant_metadata": {},
                 "settings": {
-                  "virtual_account_type": "non_fixed",
-                  "customer_id": "customer_111",
+                  "bank_code": "BSS",
                   "merchant_callback_url": "http://myshop.com/payment_callback"
                 }
               }
@@ -239,6 +280,46 @@
         },
         "4XX": {
           "$ref": "#/components/responses/v3Error:4XX"
+        }
+      },
+      "callbacks": {
+        "completed": {
+          "$request.body.settings.merchant_callback_url": {
+            "post": {
+              "summary": "Callback when received payment",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "transfer_info": {
+                        "bank_code": "BSS",
+                        "account_holder_name": "Xfers Pte Ltd.",
+                        "account_no": "202000120472913",
+                        "amount": 10123.45
+                      },
+                      "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                      "object": "BankTransferContract",
+                      "status": "completed",
+                      "amount": 10000.00,
+                      "currency": "idr",
+                      "description": "This is the first order",
+                      "merchant_metadata": {},
+                      "settings": {
+                        "bank_code": "BSS",
+                        "merchant_callback_url": "http://myshop.com/payment_callback"
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
         }
       }
     }
