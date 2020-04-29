@@ -55,15 +55,20 @@
                       "example": "BSS"
                     },
                     "virtual_account_type": {
-                      "description": "`fixed` (tied to invoice) / `non_fixed` (tied to customer)",
+                      "description": "NCS / FOM / FCS / FCM",
                       "type": "string",
-                      "enum": ["fixed", "non_fixed"],
-                      "example": "non_fixed"
+                      "enum": ["NCS", "FOM", "FCS", "FCM"],
+                      "example": "FOM"
                     },
                     "customer_id": {
-                      "description": "If using non_fixed type, you should specify the `customer_id`",
+                      "description": "If using FOM, you should specify the `customer_id`",
                       "type": "string",
                       "example": "customer_111"
+                    },
+                    "fuck": {
+                      "description": "Display name",
+                      "type": "string",
+                      "example": "Binance Pte Ltd."
                     },
                     "merchant_callback_url": {
                       "description": "When destination received the payment, we will callback to this URL",

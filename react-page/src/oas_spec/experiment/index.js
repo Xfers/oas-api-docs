@@ -2,7 +2,8 @@ const combined = Object.assign(
     require("./base.json"),
     {
         paths: Object.assign(
-            require("./paths/v3.json")
+            require("./paths/direct_payment/bank_transfer.json"),
+            require("./paths/payment_collector/fixed_virtual_account.json"),
         ),
         components: {
             definitions: require("../indo/components/definitions.json"), // api v4 schemas use this for now
