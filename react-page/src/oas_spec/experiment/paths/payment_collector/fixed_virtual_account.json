@@ -1,11 +1,14 @@
 {
+  "comment": "Get list of transactions",
+  "comment": "Show one of the transactions",
+  "comment": "create if no exist and get <=----",
+  "comment": "Patch (update)",
   "/v3/payment_collector/fixed_virtual_account": {
     "post": {
       "tags": [
         "Fixed Virtual Account"
       ],
-      "operationId": "payment_collector/fixed_virtual_account",
-      "summary": "Fixed Virtual Account Registration",
+      "summary": "Fixed Virtual Account registration or retrieval",
       "description": "@Irfan",
       "security": [
         {
@@ -42,20 +45,10 @@
                       ],
                       "example": "BSS"
                     },
-                    "expiration_time": {
-                      "description": "Time iso8601",
-                      "type": "string",
-                      "example": "2020-04-29T09:52:37+07:00"
-                    },
                     "display_name": {
                       "description": "Display name on ATM",
                       "type": "string",
                       "example": "My Shop 1"
-                    },
-                    "merchant_callback_url": {
-                      "description": "When destination received the payment, we will callback to this URL",
-                      "type": "string",
-                      "example": "http://myshop.com/payment_callback"
                     }
                   }
                 }
@@ -71,25 +64,44 @@
       },
       "responses": {
         "200": {
-          "description": "Success",
+          "description": "Retrieved sucessfully",
           "content": {
             "application/json": {
               "example": {
                 "transfer_info": {
                   "bank_code": "BSS",
                   "type": "virtual_account",
-                  "account_holder_name": "Xfers Pte Ltd.",
-                  "account_no": "202000120472913",
-                  "amount": 10000.00
+                  "account_holder_name": "My Shop 1",
+                  "account_no": "202000120472913"
                 },
                 "id": "va_7abf6bb130d44c02862982ff6022875d",
                 "object": "VirtualAccountAssigment",
                 "status": "active",
                 "settings": {
                   "bank_code": "BSS",
-                  "expiration_time": "2020-04-29T09:52:37+08:00",
-                  "display_name": "My Shop 1",
-                  "merchant_callback_url": "http://myshop.com/payment_callback"
+                  "display_name": "My Shop 1"
+                }
+              }
+            }
+          }
+        },
+        "201": {
+          "description": "Created successfully",
+          "content": {
+            "application/json": {
+              "example": {
+                "transfer_info": {
+                  "bank_code": "BSS",
+                  "type": "virtual_account",
+                  "account_holder_name": "My Shop 1",
+                  "account_no": "202000120472913"
+                },
+                "id": "va_7abf6bb130d44c02862982ff6022875d",
+                "object": "VirtualAccountAssigment",
+                "status": "active",
+                "settings": {
+                  "bank_code": "BSS",
+                  "display_name": "My Shop 1"
                 }
               }
             }
@@ -100,8 +112,44 @@
         }
       },
       "callbacks": {
-        "completed": {
-          "$request.body.settings.merchant_callback_url": {
+        "payment_validation": {
+          "$settings.payment_collector.fixed_virtual_account.payment_validation_callback_url": {
+            "post": {
+              "summary": "Callback when we need validation check",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "example": {
+                      "transfer_info": {
+                        "transfer_info": {
+                          "bank_code": "BSS",
+                          "type": "virtual_account",
+                          "account_holder_name": "My Shop 1",
+                          "account_no": "202000120472913"
+                        },
+                        "id": "va_7abf6bb130d44c02862982ff6022875d",
+                        "object": "VirtualAccountAssigment",
+                        "status": "active",
+                        "settings": {
+                          "bank_code": "BSS",
+                          "display_name": "My Shop 1"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
+        },
+        "payment_received": {
+          "$settings.payment_collector.payment_recieved_callback_url": {
             "post": {
               "summary": "Callback when received payment",
               "requestBody": {
@@ -133,6 +181,79 @@
               }
             }
           }
+        }
+      }
+    }
+  },
+  "/v3/payment_collector/fixed_virtual_account/{id}": {
+    "put": {
+      "summary": "Update Fixed Virtual Account",
+      "tags": [
+        "Fixed Virtual Account"
+      ],
+      "parameters": [{
+        "name": "id",
+        "in": "path",
+        "description": "The ID of the virtual account. You can retrieve this from the response of Fixed Virtual Account Registration",
+        "required": true,
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "example": "va_7abf6bb130d44c02862982ff6022875d"
+        }
+      }],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "settings": {
+                  "description": "Data for specific payment method",
+                  "type": "object",
+                  "properties": {
+                    "display_name": {
+                      "description": "Display name on ATM",
+                      "type": "string",
+                      "example": "My Shop 1"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "destination_account_id",
+                "reference_id",
+                "settings"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Updated sucessfully",
+          "content": {
+            "application/json": {
+              "example": {
+                "transfer_info": {
+                  "bank_code": "BSS",
+                  "type": "virtual_account",
+                  "account_holder_name": "My Shop 1",
+                  "account_no": "202000120472913"
+                },
+                "id": "va_7abf6bb130d44c02862982ff6022875d",
+                "object": "VirtualAccountAssigment",
+                "status": "active",
+                "settings": {
+                  "bank_code": "BSS",
+                  "display_name": "My Shop 1"
+                }
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
         }
       }
     }
