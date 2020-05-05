@@ -1,8 +1,4 @@
 {
-  "comment": "Get list of transactions",
-  "comment": "Show one of the transactions",
-  "comment": "create if no exist and get <=----",
-  "comment": "Patch (update)",
   "/v3/payment_collector/fixed_virtual_account": {
     "post": {
       "tags": [

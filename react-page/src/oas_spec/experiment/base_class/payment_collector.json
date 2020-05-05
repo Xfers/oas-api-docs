@@ -1,0 +1,24 @@
+{
+  "schemas": {
+    "RequestBody": {
+      "properties": {
+        "settings": {},
+        "destination_account_id": {
+          "description": "You can get from XXXX",
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+        },
+        "reference_id": {
+          "description": "Your order's reference id",
+          "type": "string",
+          "example": "ORDER_0001"
+        }
+      },
+      "required": [
+        "destination_account_id",
+        "reference_id",
+        "settings"
+      ]
+    }
+  }
+}

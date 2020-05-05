@@ -25,14 +25,9 @@
   },
   "x-tagGroups": [
     {
-      "name": "Payment History",
-      "tags": [
-        "Direct Payment History"
-      ]
-    },
-    {
       "name": "Direct Payment",
       "tags": [
+        "Direct Payment Queries",
         "VA Bank Transfer",
         "Unique Amount Bank Transfer"
       ]
@@ -40,6 +35,7 @@
     {
       "name": "Payment Collector",
       "tags": [
+        "Payment Collector Queries",
         "Fixed Virtual Account"
       ]
     }

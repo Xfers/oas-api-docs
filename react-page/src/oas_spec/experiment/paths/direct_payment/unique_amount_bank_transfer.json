@@ -1,10 +1,10 @@
 {
-  "/v3/direct_payments/virtual_account_bank_transfer": {
+  "/v3/direct_payment/unique_amount_bank_transfer": {
     "post": {
       "tags": [
-        "VA Bank Transfer"
+        "Unique Amount Bank Transfer"
       ],
-      "summary": "VA Bank Transfer",
+      "summary": "Unique Amount Bank Transfer",
       "description": "@irfan",
       "security": [
         {
@@ -53,13 +53,13 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/base_class/direct_payment/schemas/TransactionSchema"
+                    "$ref": "#/base_class/payment"
                   },
                   {
                     "properties": {
                       "type": {
                         "type": "string",
-                        "example": "virtual_account_bank_transfer"
+                        "example": "unique_amount_bank_transfer"
                       },
                       "transfer_info": {
                         "type": "object",
@@ -78,7 +78,7 @@
                           },
                           "amount": {
                             "type": "float",
-                            "example": 10000.0
+                            "example": 10391.0
                           }
                         }
                       }
@@ -105,13 +105,13 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/direct_payment/schemas/TransactionSchema"
+                          "$ref": "#/base_class/payment"
                         },
                         {
                           "properties": {
                             "type": {
                               "type": "string",
-                              "example": "virtual_account_bank_transfer"
+                              "example": "unique_amount_bank_transfer"
                             },
                             "status": {
                               "example": "completed"
@@ -133,7 +133,7 @@
                                 },
                                 "amount": {
                                   "type": "float",
-                                  "example": 10000.0
+                                  "example": 10391.0
                                 }
                               }
                             }
