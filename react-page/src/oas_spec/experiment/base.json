@@ -27,7 +27,8 @@
     {
       "name": "Direct Payment",
       "tags": [
-        "Bank Transfer"
+        "VA Bank Transfer",
+        "Unique Amount Bank Transfer"
       ]
     },
     {

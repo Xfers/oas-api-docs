@@ -1,0 +1,147 @@
+{
+  "/v3/direct_payment/unique_amount_bank_transfer": {
+    "post": {
+      "tags": [
+        "Unique Amount Bank Transfer"
+      ],
+      "summary": "Unique Amount Bank Transfer",
+      "description": "@irfan",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/base_class/direct_payment/schemas/RequestBody"
+                },
+                {
+                  "properties": {
+                    "settings": {
+                      "description": "Data for specific payment method",
+                      "type": "object",
+                      "properties": {
+                        "bank_code": {
+                          "description": "Bank code",
+                          "type": "string",
+                          "enum": [
+                            "BSS",
+                            "BRI",
+                            "BNI"
+                          ],
+                          "example": "BSS"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/direct_payment/schemas/TransactionSchema"
+                  },
+                  {
+                    "properties": {
+                      "transfer_info": {
+                        "type": "object",
+                        "properties": {
+                          "bank_code": {
+                            "type": "string",
+                            "example": "BSS"
+                          },
+                          "account_holder_name": {
+                            "type": "string",
+                            "example": "Xfers Pte Ltd."
+                          },
+                          "account_no": {
+                            "type": "string",
+                            "example": "202000120472913"
+                          },
+                          "amount": {
+                            "type": "float",
+                            "example": 10391.0
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      },
+      "callbacks": {
+        "payment_received": {
+          "$settings.direct_payment.payment_recieved_callback_url": {
+            "post": {
+              "summary": "Callback when received payment",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "allOf": [
+                        {
+                          "$ref": "#/base_class/direct_payment/schemas/TransactionSchema"
+                        },
+                        {
+                          "properties": {
+                            "transfer_info": {
+                              "type": "object",
+                              "properties": {
+                                "bank_code": {
+                                  "type": "string",
+                                  "example": "BSS"
+                                },
+                                "account_holder_name": {
+                                  "type": "string",
+                                  "example": "Xfers Pte Ltd."
+                                },
+                                "account_no": {
+                                  "type": "string",
+                                  "example": "202000120472913"
+                                },
+                                "amount": {
+                                  "type": "float",
+                                  "example": 10391.0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
