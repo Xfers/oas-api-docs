@@ -25,6 +25,12 @@
   },
   "x-tagGroups": [
     {
+      "name": "Payment History",
+      "tags": [
+        "Direct Payment History"
+      ]
+    },
+    {
       "name": "Direct Payment",
       "tags": [
         "VA Bank Transfer",

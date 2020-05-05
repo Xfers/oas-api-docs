@@ -1,10 +1,10 @@
 {
-  "/v3/direct_payment/virtual_account_bank_transfer": {
+  "/v3/direct_payments/unique_amount_bank_transfer": {
     "post": {
       "tags": [
-        "VA Bank Transfer"
+        "Unique Amount Bank Transfer"
       ],
-      "summary": "VA Bank Transfer",
+      "summary": "Unique Amount Bank Transfer",
       "description": "@irfan",
       "security": [
         {
@@ -57,6 +57,10 @@
                   },
                   {
                     "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "unique_amount_bank_transfer"
+                      },
                       "transfer_info": {
                         "type": "object",
                         "properties": {
@@ -74,7 +78,7 @@
                           },
                           "amount": {
                             "type": "float",
-                            "example": 10000.0
+                            "example": 10391.0
                           }
                         }
                       }
@@ -105,6 +109,13 @@
                         },
                         {
                           "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "unique_amount_bank_transfer"
+                            },
+                            "status": {
+                              "example": "completed"
+                            },
                             "transfer_info": {
                               "type": "object",
                               "properties": {
@@ -122,7 +133,7 @@
                                 },
                                 "amount": {
                                   "type": "float",
-                                  "example": 10000.0
+                                  "example": 10391.0
                                 }
                               }
                             }

@@ -1,4 +1,5 @@
 {
+  "TODO: ": "Pagination",
   "schemas": {
     "RequestBody": {
       "properties": {
@@ -58,10 +59,7 @@
           "type": "string",
           "example": "contract_7abf6bb130d44c02862982ff6022875d"
         },
-        "type": {
-          "type": "string",
-          "example": "bank_transfer"
-        },
+        "type": {},
         "status": {
           "type": "string",
           "example": "processing"
@@ -98,21 +96,6 @@
           "type": "object"
         }
       }
-    }
-  },
-  "examples": {
-    "base": {
-      "value": {
-        "id": "contract_7abf6bb130d44c02862982ff6022875d",
-        "status": "completed",
-        "amount": {
-          "value": 10000.00,
-          "currency": "idr"
-        },
-        "description": "This is the first order",
-        "merchant_metadata": {}
-      },
-      "expiration_time": "2020-04-30T19:02:57+08:00"
     }
   }
 }
