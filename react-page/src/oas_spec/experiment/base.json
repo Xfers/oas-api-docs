@@ -28,15 +28,14 @@
       "name": "Direct Payment",
       "tags": [
         "Direct Payment Queries",
-        "VA Bank Transfer",
-        "Unique Amount Bank Transfer"
+        "Direct Payment Methods"
       ]
     },
     {
       "name": "Payment Collector",
       "tags": [
         "Payment Collector Queries",
-        "Fixed Virtual Account"
+        "Payment Collector Methods"
       ]
     }
   ]

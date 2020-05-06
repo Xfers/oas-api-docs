@@ -2,7 +2,7 @@
   "/v3/direct_payment/unique_amount_bank_transfer": {
     "post": {
       "tags": [
-        "Unique Amount Bank Transfer"
+        "Direct Payment Methods"
       ],
       "summary": "Unique Amount Bank Transfer",
       "description": "@irfan",

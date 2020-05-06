@@ -2,7 +2,7 @@
   "/v3/direct_payment/virtual_account_bank_transfer": {
     "post": {
       "tags": [
-        "VA Bank Transfer"
+        "Direct Payment Methods"
       ],
       "summary": "VA Bank Transfer",
       "description": "@irfan",
