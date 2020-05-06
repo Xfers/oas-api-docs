@@ -49,40 +49,9 @@ const routing = (
 			/>
 			<Route exact path="/V3/Indonesia" render={(props) => <XfersRedoc
 				{...props}
-				oasSpec={require('./oas_spec/Indonesia_legacy.json')}
-				isUrl={false}
-				docName={"API V3 documentation for Indonesia"}
-				dropDownOptions = {
-					[
-						{
-							key: "Singapore",
-							text: (
-								<span>
-									<Flag name="sg" />
-									SG
-								</span>
-							),
-							value: "/Singapore"
-						},
-						{
-							key: "Indonesia",
-							text: (
-								<span>
-									<Flag name="id" />
-									ID
-								</span>
-							),
-							value: "/V3/Indonesia"
-						}
-					]
-				}
-				/>}
-			/>
-			<Route exact path="/Indonesia/revamp" render={(props) => <XfersRedoc
-				{...props}
 				oasSpec={require('./oas_spec/indo/index.js')}
 				isUrl={false}
-				docName={"API V3 documentation for Indonesia"}
+				docName={"API documentation for Indonesia"}
 				dropDownOptions = {
 					[
 						{
@@ -115,37 +84,6 @@ const routing = (
 				isUrl={false}
 				docName={"Experiment"}
 				dropDownOptions = {[]}
-				/>}
-			/>
-			<Route exact path="/V3/Master" render={(props) => <XfersRedoc
-				{...props}
-				oasSpec={require('./oas_spec/master-openapi.json')}
-				isUrl={false}
-				docName={"API V3 documentation for Master"}
-				dropDownOptions = {
-					[
-						{
-							key: "Singapore",
-							text: (
-								<span>
-									<Flag name="sg" />
-									SG
-								</span>
-							),
-							value: "/Singapore"
-						},
-						{
-							key: "Indonesia",
-							text: (
-								<span>
-									<Flag name="id" />
-									ID
-								</span>
-							),
-							value: "/V3/Indonesia"
-						}
-					]
-				}
 				/>}
 			/>
 			<Route exact path="/sg/api/cutting-edge" render={(props) => <XfersRedoc
