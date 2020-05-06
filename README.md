@@ -15,24 +15,13 @@ This README contains information regarding the big picture of Xfers' approach to
 
 To tackle the above problems, this repo aims to create a way of documentation at a higher level of abstraction. Any changes made to the documentation should only be made to 1 source to ensure efficiency and standardization.
 
-**Flow**
-
-![image](https://user-images.githubusercontent.com/49265907/62617122-6037f600-b93b-11e9-8af2-7e2d3d712157.png)
-
-1. Any changes Xfers wants to make will be made to `/react-page/src/oas_spec/master-openapi.json`
-  - `master-openapi.json` will contain all of Xfers endpoints (Singapore-specific and Indonesia-specific) and all of Xfers parameters
-2. Run `cd ruby-parser` in the root directory and execute `rake generate` in the command line. This will:
-  - read and parse the local `/react-page/src/oas_spec/master-openapi.json`
-  - create 2 `.json` files: `Singapore.json` and `Indonesia.json`(or merchant specific Documents). These files will be written to `/react-page/src/oas_spec`
-  - The json file will be generated in accordance to `/ruby-parser/config/oas.yml`, where you can state the endpoints you want in each documentation by stating it under the `paths` field (e.g. `"/user/activities"` and `"/authorize*"`
-3. The github pages that host our docuementation is built according to json files in the `/react-page/src/oas_spec/` folder. Once the json files have been written into the directory, the page will be updated.
+The github pages that host our docuementation is built according to json files in the /react-page/src/oas_spec/ folder. Once the json files have been written into the directory, the page will be updated.
 
 ## Features
-1. Ability to generate any number of customized documentation quickly by changing `ruby-parser/config/oas.yml`
-2. Ability to define specific parameters for different sets of documentation by adding this fied
+1. Ability to define specific parameters for different sets of documentation by adding this fied
 `"x-custom-params"`. More info [here](https://github.com/Xfers/oas-api-docs/tree/master/react-page/src/oas_spec)
-3. Ability to state custom parameter requires wrt to the country add this field ` "x-custom-params-requirements"`
-4. API docs analytics powered by Google Analytics(WIP)
+2. Ability to state custom parameter requires wrt to the country add this field ` "x-custom-params-requirements"`
+3. API docs analytics powered by Google Analytics(WIP)
 
 ## How to contribute
 
@@ -55,41 +44,29 @@ To tackle the above problems, this repo aims to create a way of documentation at
 **Env Setup**
 1. clone entire repo
 2. `cd react-page`
-3. `npm install`
-4. `cd ..`
-5. `cd ruby-parser`
-6. `bundle install`
+3. `yarn install`
 
 **Generate new documentation for all merchants**
 
 MAKE SURE YOU ARE IN `react-page` folder
 
-1. `npm start`
-2. open `http://localhost:3000/V3/Master`
-3. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3000/V3/Master` will hot reload and you can review the changes you made
-4. Once satisfied cd to `ruby-parser` and run `rake generate`
-5. View changes made to client facing interface on `http://localhost:3000`
-6. Create PR and let PM/Engineer review
-7. Once approved run `npm run deploy` in `react-page`
-8. Changes will be seen on `docs.xfers.io`
+1. `PORT=3002 yarn start`
+2. open `http://localhost:3002/`
+3. make desired changes to `master-openapi.json`. When you save changes `http://localhost:3002` will hot reload and you can review the changes you made
+4. View changes made to client facing interface on `http://localhost:302`
+5. Create PR and let PM/Engineer review
+6. Once approved run `npm run deploy` in `react-page`
+7. Changes will be seen on `docs.xfers.io`
 
-**Generate new documentation for a specific merchant**
+**Generate a new documentation page**
 
-1. open `/ruby-parser/config/oas.yml`
-2. add a new object at the bottom of the yaml file following this format stated
-3. run `rake generate` in `ruby-parser`
-4. open `/react-pages/src/pages/TemplateOas.js`
-5. Make changes according to comment and save as new file(name of file: {doc-name}.js)
-6. open `/react-pages/src/App.js` and make changes according to the comment(make sure you do not delete the comments)
-7. run `npm run` in `react-page` and check doc in `http://localhost:3000/V3/{doc-name}`
-8. Once satisfied create PR and let PM/Engineer review
-9. Once approved run `npm run deploy` in `react-page`
-10. Changes will be seen on `docs.xfers.io`
-
-## API V4
-Refer to PR https://github.com/Xfers/oas-api-docs/pull/2 for front end changes
-Refer to Issue https://github.com/Xfers/Xfers/issues/11078 for the complete picture
-
+1. go to `/react-pages/src/oas_spec`
+2. create a new folder `/react-pages/src/oas_spec/{doc-name}`
+3. open `/react-pages/src/index.js` and make changes according to the comment(make sure you do not delete the comments)
+4. run `PORT=3002 yarn start` in `react-page` and check doc in `http://localhost:3002/V3/{doc-name}`
+5. Once satisfied create PR and let PM/Engineer review
+6. Once approved run `npm run deploy` in `react-page`
+7. Changes will be seen on `docs.xfers.io`
 
 ## Xfers / Redoc specific functions(MUST READ BEFORE EDITING OAS DEFINITION!)
 
