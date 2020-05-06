@@ -42,9 +42,9 @@ JSON file in `/oas_spec` and `semantic-ui-react` for the interactive components 
 - [ ] find a way to optimise speed of loading the react page
 - [ ] Implement loading screen
 
-## App.js details
+## src/index.js details
 
-Here contains all the details for the file `/src/App.js`
+Here contains all the details for the file `/src/index.js`
 
 ### Rendering Documents
 
@@ -123,7 +123,7 @@ and change the oasSpec property
 - [ ] Find a way to get the `rem` to `pixel` ratio from the browser. There could be a chance that the browser ratio is not 1:16
 - [ ] Decide on what the header and to top button should happen when the side bar collaspes
 
-## App.css
+## src/index.css
 
 **TODO**
 - [ ] Find a more elegant way to define the `CSS`. A lot of the styling is hard code -> Might fail
