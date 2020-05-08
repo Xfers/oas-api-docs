@@ -77,8 +77,8 @@
                             "example": "202000120472913"
                           },
                           "amount": {
-                            "type": "float",
-                            "example": 10000.0
+                            "type": "integer",
+                            "example": 10000
                           }
                         }
                       }
@@ -132,8 +132,8 @@
                                   "example": "202000120472913"
                                 },
                                 "amount": {
-                                  "type": "float",
-                                  "example": 10000.0
+                                  "type": "integer",
+                                  "example": 10000
                                 }
                               }
                             }

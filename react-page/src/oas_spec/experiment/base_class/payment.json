@@ -19,8 +19,8 @@
       "properties": {
         "value": {
           "description": "Amount value",
-          "type": "float",
-          "example": 10000.00
+          "type": "integer",
+          "example": 10000
         },
         "currency": {
           "description": "Amount currency",
