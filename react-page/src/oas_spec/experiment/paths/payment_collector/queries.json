@@ -13,6 +13,7 @@
           "X-XFERS-APP-API-KEY": []
         }
       ],
+      "comment": "consider to rename reference_id",
       "parameters": [
         {
           "name": "payment_method",
