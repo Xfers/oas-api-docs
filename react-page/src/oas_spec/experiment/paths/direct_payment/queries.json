@@ -1,7 +1,7 @@
 {
   "TODO:": "Pangination",
   "comment": "Weird path config",
-  "/v3/direct_payments/{id}": {
+  "/v3/direct_payment/payments/{id}": {
     "get": {
       "tags": [
         "Direct Payment Queries"
