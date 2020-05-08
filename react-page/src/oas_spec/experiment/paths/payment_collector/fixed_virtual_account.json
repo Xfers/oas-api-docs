@@ -183,7 +183,7 @@
     "put": {
       "summary": "Update Fixed Virtual Account",
       "tags": [
-        "Fixed Virtual Account"
+        "Payment Collector Methods"
       ],
       "parameters": [
         {
