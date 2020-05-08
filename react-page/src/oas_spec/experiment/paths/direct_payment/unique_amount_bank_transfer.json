@@ -57,7 +57,7 @@
                   },
                   {
                     "properties": {
-                      "type": {
+                      "payment_method": {
                         "type": "string",
                         "example": "unique_amount_bank_transfer"
                       },
@@ -109,7 +109,7 @@
                         },
                         {
                           "properties": {
-                            "type": {
+                            "payment_method": {
                               "type": "string",
                               "example": "unique_amount_bank_transfer"
                             },
@@ -168,7 +168,7 @@
                         },
                         {
                           "properties": {
-                            "type": {
+                            "payment_method": {
                               "type": "string",
                               "example": "unique_amount_bank_transfer"
                             },

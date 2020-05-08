@@ -5,22 +5,23 @@
       "tags": [
         "Direct Payment Queries"
       ],
-      "summary": "List Direct Payment History",
+      "summary": "Retrieve Direct Payment",
       "description": "@irfan",
       "security": [
         {
           "X-XFERS-APP-API-KEY": []
         }
       ],
+      "comment": " Either reference_id + payment_method / our id",
       "parameters": [
         {
-          "name": "destination_account_id",
+          "name": "reference_id",
           "in": "query",
-          "description": "The destination account id",
+          "description": "Your order's reference id",
           "required": true,
           "schema": {
             "type": "string",
-            "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+            "example": "ORDER_0001"
           }
         },
         {
@@ -39,46 +40,25 @@
           "description": "Success",
           "content": {
             "application/json": {
-              "example": [
-                {
-                  "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                  "type": "virtual_account_bank_transfer",
-                  "reference_id": "ORDER_001",
-                  "status": "completed",
-                  "amount": {
-                    "value": 40000,
-                    "currency": "IDR"
-                  },
-                  "expiration_time": "2020-04-30T19:02:57+08:00",
-                  "description": "This is the first order",
-                  "merchant_metadata": {},
-                  "transfer_info": {
-                    "bank_code": "BSS",
-                    "account_holder_name": "Xfers Pte Ltd.",
-                    "account_no": "202000120472913",
-                    "amount": 40000
-                  }
+              "example": {
+                "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                "payment_method": "virtual_account_bank_transfer",
+                "reference_id": "ORDER_001",
+                "status": "completed",
+                "amount": {
+                  "value": 10000,
+                  "currency": "IDR"
                 },
-                {
-                  "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                  "type": "virtual_account_bank_transfer",
-                  "reference_id": "ORDER_002",
-                  "status": "processing",
-                  "amount": {
-                    "value": 10000,
-                    "currency": "IDR"
-                  },
-                  "expiration_time": "2020-04-30T19:02:57+08:00",
-                  "description": "This is the second order",
-                  "merchant_metadata": {},
-                  "transfer_info": {
-                    "bank_code": "BSS",
-                    "account_holder_name": "Xfers Pte Ltd.",
-                    "account_no": "202000120472913",
-                    "amount": 10000
-                  }
+                "expiration_time": "2020-04-30T19:02:57+08:00",
+                "description": "This is the first order",
+                "merchant_metadata": {},
+                "transfer_info": {
+                  "bank_code": "BSS",
+                  "account_holder_name": "Xfers Pte Ltd.",
+                  "account_no": "202000120472913",
+                  "amount": 10000
                 }
-              ]
+              }
             }
           }
         }
