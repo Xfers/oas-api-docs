@@ -118,19 +118,17 @@
                   "application/json": {
                     "example": {
                       "transfer_info": {
-                        "transfer_info": {
-                          "bank_code": "BSS",
-                          "type": "virtual_account",
-                          "account_holder_name": "My Shop 1",
-                          "account_no": "202000120472913"
-                        },
-                        "id": "va_7abf6bb130d44c02862982ff6022875d",
-                        "object": "VirtualAccountAssigment",
-                        "status": "active",
-                        "settings": {
-                          "bank_code": "BSS",
-                          "display_name": "My Shop 1"
-                        }
+                        "bank_code": "BSS",
+                        "type": "virtual_account",
+                        "account_holder_name": "My Shop 1",
+                        "account_no": "202000120472913"
+                      },
+                      "id": "va_7abf6bb130d44c02862982ff6022875d",
+                      "object": "VirtualAccountAssigment",
+                      "status": "active",
+                      "settings": {
+                        "bank_code": "BSS",
+                        "display_name": "My Shop 1"
                       }
                     }
                   }
@@ -187,17 +185,19 @@
       "tags": [
         "Fixed Virtual Account"
       ],
-      "parameters": [{
-        "name": "id",
-        "in": "path",
-        "description": "The ID of the virtual account. You can retrieve this from the response of Fixed Virtual Account Registration",
-        "required": true,
-        "explode": true,
-        "schema": {
-          "type": "string",
-          "example": "va_7abf6bb130d44c02862982ff6022875d"
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "The ID of the virtual account. You can retrieve this from the response of Fixed Virtual Account Registration",
+          "required": true,
+          "explode": true,
+          "schema": {
+            "type": "string",
+            "example": "va_7abf6bb130d44c02862982ff6022875d"
+          }
         }
-      }],
+      ],
       "requestBody": {
         "required": true,
         "content": {
