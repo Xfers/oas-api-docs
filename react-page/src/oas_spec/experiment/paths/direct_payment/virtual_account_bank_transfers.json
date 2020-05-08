@@ -1,5 +1,5 @@
 {
-  "/v3/direct_payment/virtual_account_bank_transfer": {
+  "/v3/direct_payment/virtual_account_bank_transfers": {
     "post": {
       "tags": [
         "Direct Payment Methods"

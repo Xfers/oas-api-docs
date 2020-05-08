@@ -1,5 +1,5 @@
 {
-  "/v3/direct_payment/unique_amount_bank_transfer": {
+  "/v3/direct_payment/unique_amount_bank_transfers": {
     "post": {
       "tags": [
         "Direct Payment Methods"

@@ -1,5 +1,5 @@
 {
-  "/v3/payment_collector/fixed_virtual_account": {
+  "/v3/payment_collector/fixed_virtual_accounts": {
     "post": {
       "tags": [
         "Payment Collector Methods"
@@ -179,7 +179,7 @@
       }
     }
   },
-  "/v3/payment_collector/fixed_virtual_account/{id}": {
+  "/v3/payment_collector/fixed_virtual_accounts/{id}": {
     "put": {
       "summary": "Update Fixed Virtual Account",
       "tags": [
