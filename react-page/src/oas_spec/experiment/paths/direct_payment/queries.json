@@ -1,6 +1,7 @@
 {
   "TODO:": "Pangination",
-  "/v3/direct_payment/payment_history": {
+  "comment": "Weird path config",
+  "/v3/direct_payments/{id}": {
     "get": {
       "tags": [
         "Direct Payment Queries"
@@ -12,26 +13,15 @@
           "X-XFERS-APP-API-KEY": []
         }
       ],
-      "comment": " Either reference_id + payment_method / our id",
       "parameters": [
         {
-          "name": "reference_id",
-          "in": "query",
-          "description": "Your order's reference id",
+          "name": "id",
+          "in": "path",
+          "description": "Transaction id in Xfers",
           "required": true,
           "schema": {
             "type": "string",
-            "example": "ORDER_0001"
-          }
-        },
-        {
-          "name": "payment_method",
-          "in": "query",
-          "description": "Payment method",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example": "virtual_account_bank_transfer"
+            "example": "contract_7abf6bb130d44c02862982ff6022875d"
           }
         }
       ],
