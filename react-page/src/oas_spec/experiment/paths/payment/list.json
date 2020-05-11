@@ -1,9 +1,9 @@
 {
   "TODO:": "ReferenceId",
-  "/v3/payment_collector/payment_history": {
+  "/v3/payments": {
     "get": {
       "tags": [
-        "Payment Collector Queries"
+        "Payment Queries"
       ],
       "summary": "List Payment Collector Payment History",
       "description": "@irfan",
@@ -15,7 +15,7 @@
       "comment": "consider to rename reference_id",
       "parameters": [
         {
-          "name": "payment_method",
+          "name": "payment_collector",
           "in": "query",
           "description": "Payment method",
           "required": true,

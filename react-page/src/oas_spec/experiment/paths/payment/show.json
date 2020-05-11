@@ -1,6 +1,6 @@
 {
   "comment": "Weird path config",
-  "/v3/payment/payments/{id}": {
+  "/v3/payments/{id}": {
     "get": {
       "tags": [
         "Payment Queries"
