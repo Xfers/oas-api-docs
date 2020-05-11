@@ -1,5 +1,4 @@
 {
-  "TODO:": "Pangination",
   "TODO:": "ReferenceId",
   "/v3/payment_collector/payment_history": {
     "get": {

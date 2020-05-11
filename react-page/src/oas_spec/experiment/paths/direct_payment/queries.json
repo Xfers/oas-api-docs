@@ -1,5 +1,4 @@
 {
-  "TODO:": "Pangination",
   "comment": "Weird path config",
   "/v3/direct_payment/payments/{id}": {
     "get": {
