@@ -1,11 +1,11 @@
 {
   "comment": "Weird path config",
-  "/v3/direct_payment/payments/{id}": {
+  "/v3/payment/payments/{id}": {
     "get": {
       "tags": [
-        "Direct Payment Queries"
+        "Payment Queries"
       ],
-      "summary": "Retrieve Direct Payment",
+      "summary": "Retrieve Payment",
       "description": "@irfan",
       "security": [
         {

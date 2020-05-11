@@ -1,10 +1,10 @@
 {
-  "/v3/direct_payment/unique_amount_bank_transfers": {
+  "/v3/payment/virtual_account_bank_transfers": {
     "post": {
       "tags": [
-        "Direct Payment Methods"
+        "Payment Methods"
       ],
-      "summary": "Unique Amount Bank Transfer",
+      "summary": "VA Bank Transfer",
       "description": "@irfan",
       "security": [
         {
@@ -18,7 +18,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/base_class/direct_payment/schemas/RequestBody"
+                  "$ref": "#/base_class/payment/schemas/RequestBody"
                 },
                 {
                   "properties": {
@@ -53,13 +53,13 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/base_class/payment"
+                    "$ref": "#/base_class/payment/schemas/BaseClass"
                   },
                   {
                     "properties": {
                       "payment_method": {
                         "type": "string",
-                        "example": "unique_amount_bank_transfer"
+                        "example": "virtual_account_bank_transfer"
                       },
                       "transfer_info": {
                         "type": "object",
@@ -78,7 +78,7 @@
                           },
                           "amount": {
                             "type": "integer",
-                            "example": 10391
+                            "example": 10000
                           }
                         }
                       }
@@ -95,7 +95,7 @@
       },
       "callbacks": {
         "payment_received": {
-          "$settings.direct_payment.payment_recieved_callback_url": {
+          "$settings.payment.payment_recieved_callback_url": {
             "post": {
               "summary": "Callback when received payment",
               "requestBody": {
@@ -105,13 +105,13 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment"
+                          "$ref": "#/base_class/payment/schemas/BaseClass"
                         },
                         {
                           "properties": {
                             "payment_method": {
                               "type": "string",
-                              "example": "unique_amount_bank_transfer"
+                              "example": "virtual_account_bank_transfer"
                             },
                             "status": {
                               "type": "string",
@@ -134,7 +134,7 @@
                                 },
                                 "amount": {
                                   "type": "integer",
-                                  "example": 10391
+                                  "example": 10000
                                 }
                               }
                             }
@@ -154,7 +154,7 @@
           }
         },
         "payment_expired": {
-          "$settings.direct_payment.payment_recieved_callback_url": {
+          "$settings.payment.payment_recieved_callback_url": {
             "post": {
               "summary": "Callback when payment is expired",
               "requestBody": {
@@ -164,13 +164,13 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment"
+                          "$ref": "#/base_class/payment/schemas/BaseClass"
                         },
                         {
                           "properties": {
                             "payment_method": {
                               "type": "string",
-                              "example": "unique_amount_bank_transfer"
+                              "example": "virtual_account_bank_transfer"
                             },
                             "status": {
                               "type": "string",
@@ -193,7 +193,7 @@
                                 },
                                 "amount": {
                                   "type": "integer",
-                                  "example": 10391
+                                  "example": 10000
                                 }
                               }
                             }
