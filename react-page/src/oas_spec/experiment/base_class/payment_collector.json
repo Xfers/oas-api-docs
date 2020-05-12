@@ -26,6 +26,9 @@
           "type": "string",
           "example": "va_7abf6bb130d44c02862982ff6022875d"
         },
+        "type": {
+          "type": "string"
+        },
         "status": {
           "type": "string",
           "example": "active",
@@ -47,6 +50,9 @@
         },
         {
           "properties": {
+            "type": {
+              "example": "fixed_virtual_account"
+            },
             "payment_details": {
               "type": "object",
               "properties": {
