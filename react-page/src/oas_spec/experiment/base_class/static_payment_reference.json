@@ -47,7 +47,7 @@
     "FixedVirtualAccount": {
       "allOf": [
         {
-          "$ref": "#/base_class/payment_collector/schemas/BaseObject"
+          "$ref": "#/base_class/static_payment_reference/schemas/BaseObject"
         },
         {
           "properties": {

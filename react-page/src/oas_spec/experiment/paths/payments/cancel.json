@@ -31,8 +31,8 @@
               "example": {
                 "id": "contract_7abf6bb130d44c02862982ff6022875d",
                 "payment_method": "virtual_account_bank_transfer",
-                "reference_id": "ORDER_001",
                 "status": "cancelled",
+                "reference_id": "ORDER_001",
                 "amount": {
                   "value": 10000,
                   "currency": "IDR"
@@ -40,7 +40,7 @@
                 "expiration_time": "2020-04-30T19:02:57+08:00",
                 "description": "This is the first order",
                 "merchant_metadata": {},
-                "transfer_info": {
+                "payment_reference": {
                   "bank_code": "BSS",
                   "account_holder_name": "Xfers Pte Ltd.",
                   "account_no": "202000120472913",

@@ -172,7 +172,7 @@
         }
       ]
     },
-    "PaymentCollectorPayment": {
+    "StaticPaymentReferencePayment": {
       "allOf": [
         {
           "$ref": "#/base_class/payment/schemas/BaseObject"
