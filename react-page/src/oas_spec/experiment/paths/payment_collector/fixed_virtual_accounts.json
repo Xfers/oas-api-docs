@@ -63,15 +63,8 @@
           "description": "OK",
           "content": {
             "application/json": {
-              "example": {
-                "id": "va_7abf6bb130d44c02862982ff6022875d",
-                "object": "VirtualAccountAssigment",
-                "status": "active",
-                "details": {
-                  "bank_code": "BSS",
-                  "display_name": "My Shop 1",
-                  "account_no": "202000120472913"
-                }
+              "schema": {
+                "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
               }
             }
           }
@@ -80,15 +73,8 @@
           "description": "Created successfully",
           "content": {
             "application/json": {
-              "example": {
-                "id": "va_7abf6bb130d44c02862982ff6022875d",
-                "object": "VirtualAccountAssigment",
-                "status": "active",
-                "details": {
-                  "bank_code": "BSS",
-                  "display_name": "My Shop 1",
-                  "account_no": "202000120472913"
-                }
+              "schema": {
+                "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
               }
             }
           }
@@ -106,25 +92,19 @@
                 "required": true,
                 "content": {
                   "application/json": {
-                    "example": {
-                      "payment_collector": {
-                        "id": "va_7abf6bb130d44c02862982ff6022875d",
-                        "object": "VirtualAccountAssigment",
-                        "status": "active",
-                        "details": {
-                          "bank_code": "BSS",
-                          "display_name": "My Shop 1",
-                          "account_no": "202000120472913"
+                    "schema": {
+                      "allOf": [
+                        {
+                          "$ref": "#/base_class/payment/schemas/BaseObject"
+                        },
+                        {
+                          "properties": {
+                            "payment_collector": {
+                              "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
+                            }
+                          }
                         }
-                      },
-                      "id": null,
-                      "object": "BankTransferContract",
-                      "status": null,
-                      "amount": {
-                        "value": 10000,
-                        "currency": "idr"
-                      },
-                      "merchant_metadata": {}
+                      ]
                     }
                   }
                 }
@@ -145,25 +125,19 @@
                 "required": true,
                 "content": {
                   "application/json": {
-                    "example": {
-                      "payment_collector": {
-                        "id": "va_7abf6bb130d44c02862982ff6022875d",
-                        "object": "VirtualAccountAssigment",
-                        "status": "active",
-                        "details": {
-                          "bank_code": "BSS",
-                          "display_name": "My Shop 1",
-                          "account_no": "202000120472913"
+                    "schema": {
+                      "allOf": [
+                        {
+                          "$ref": "#/base_class/payment/schemas/BaseObject"
+                        },
+                        {
+                          "properties": {
+                            "payment_collector": {
+                              "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
+                            }
+                          }
                         }
-                      },
-                      "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                      "object": "BankTransferContract",
-                      "status": "completed",
-                      "amount": {
-                        "value": 10000,
-                        "currency": "idr"
-                      },
-                      "merchant_metadata": {}
+                      ]
                     }
                   }
                 }

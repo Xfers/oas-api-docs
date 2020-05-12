@@ -19,6 +19,54 @@
         "reference_id",
         "settings"
       ]
+    },
+    "BaseObject": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "va_7abf6bb130d44c02862982ff6022875d"
+        },
+        "status": {
+          "type": "string",
+          "example": "active",
+          "enum": ["active", "expired", "disabled"]
+        },
+        "reference_id": {
+          "type": "string",
+          "example": "CUSTOMER_001"
+        },
+        "payment_details": {
+          "type": "object"
+        }
+      }
+    },
+    "FixedVirtualAccount": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment_collector/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "payment_details": {
+              "type": "object",
+              "properties": {
+                "bank_code": {
+                  "type": "string",
+                  "example": "BSS"
+                },
+                "display_name": {
+                  "type": "string",
+                  "example": "My Shop 1"
+                },
+                "account_no": {
+                  "type": "string",
+                  "example": "202000120472913"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

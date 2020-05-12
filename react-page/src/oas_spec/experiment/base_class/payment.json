@@ -52,7 +52,7 @@
         "settings"
       ]
     },
-    "Object": {
+    "BaseObject": {
       "properties": {
         "id": {
           "type": "string",

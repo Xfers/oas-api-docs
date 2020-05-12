@@ -9,7 +9,8 @@ const combined = Object.assign(
             require("./paths/payment_collector/fixed_virtual_accounts.json"),
         ),
         base_class: {
-            payment: require("./base_class/payment.json")
+            payment: require("./base_class/payment.json"),
+            payment_collector: require("./base_class/payment_collector.json"),
         },
         components: {
             definitions: require("../indo/components/definitions.json"), // api v4 schemas use this for now

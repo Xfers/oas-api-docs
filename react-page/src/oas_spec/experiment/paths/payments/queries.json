@@ -68,9 +68,9 @@
       "comment": "consider to rename reference_id",
       "parameters": [
         {
-          "name": "payment_collector",
+          "name": "payment_collector_type",
           "in": "query",
-          "description": "Payment method",
+          "description": "Payment collector type",
           "required": true,
           "schema": {
             "type": "string",
@@ -78,13 +78,13 @@
           }
         },
         {
-          "name": "reference_id",
+          "name": "payment_collector_id",
           "in": "query",
           "required": true,
-          "description": "Your reference id of Fixed Virtual Acccount",
+          "description": "Payment collector id",
           "schema": {
             "type": "string",
-            "example": "CUSTOMER_0001"
+            "example": "va_7abf6bb130d44c02862982ff6022875d"
           }
         }
       ],

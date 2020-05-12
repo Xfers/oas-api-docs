@@ -53,7 +53,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/base_class/payment/schemas/Object"
+                    "$ref": "#/base_class/payment/schemas/BaseObject"
                   },
                   {
                     "properties": {
@@ -105,7 +105,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/Object"
+                          "$ref": "#/base_class/payment/schemas/BaseObject"
                         },
                         {
                           "properties": {
@@ -164,7 +164,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/Object"
+                          "$ref": "#/base_class/payment/schemas/BaseObject"
                         },
                         {
                           "properties": {
