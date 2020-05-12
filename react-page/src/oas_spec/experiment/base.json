@@ -25,11 +25,16 @@
   },
   "x-tagGroups": [
     {
-      "name": "Payments",
+      "name": "",
       "tags": [
-        "Direct Payment Methods",
         "Payment Queries",
         "Modify Payments"
+      ]
+    },
+    {
+      "name": "Direct Payments",
+      "tags": [
+        "Direct Payment Methods"
       ]
     },
     {
