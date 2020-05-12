@@ -51,40 +51,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/base_class/payment/schemas/BaseObject"
-                  },
-                  {
-                    "properties": {
-                      "payment_method": {
-                        "type": "string",
-                        "example": "unique_amount_bank_transfer"
-                      },
-                      "transfer_info": {
-                        "type": "object",
-                        "properties": {
-                          "bank_code": {
-                            "type": "string",
-                            "example": "BSS"
-                          },
-                          "account_holder_name": {
-                            "type": "string",
-                            "example": "Xfers Pte Ltd."
-                          },
-                          "account_no": {
-                            "type": "string",
-                            "example": "202000120472913"
-                          },
-                          "amount": {
-                            "type": "integer",
-                            "example": 10391
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
+                "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
               }
             }
           }
@@ -105,38 +72,13 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/BaseObject"
+                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
                         },
                         {
                           "properties": {
-                            "payment_method": {
-                              "type": "string",
-                              "example": "unique_amount_bank_transfer"
-                            },
                             "status": {
                               "type": "string",
                               "example": "completed"
-                            },
-                            "transfer_info": {
-                              "type": "object",
-                              "properties": {
-                                "bank_code": {
-                                  "type": "string",
-                                  "example": "BSS"
-                                },
-                                "account_holder_name": {
-                                  "type": "string",
-                                  "example": "Xfers Pte Ltd."
-                                },
-                                "account_no": {
-                                  "type": "string",
-                                  "example": "202000120472913"
-                                },
-                                "amount": {
-                                  "type": "integer",
-                                  "example": 10391
-                                }
-                              }
                             }
                           }
                         }
@@ -164,38 +106,13 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/BaseObject"
+                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
                         },
                         {
                           "properties": {
-                            "payment_method": {
-                              "type": "string",
-                              "example": "unique_amount_bank_transfer"
-                            },
                             "status": {
                               "type": "string",
                               "example": "expired"
-                            },
-                            "transfer_info": {
-                              "type": "object",
-                              "properties": {
-                                "bank_code": {
-                                  "type": "string",
-                                  "example": "BSS"
-                                },
-                                "account_holder_name": {
-                                  "type": "string",
-                                  "example": "Xfers Pte Ltd."
-                                },
-                                "account_no": {
-                                  "type": "string",
-                                  "example": "202000120472913"
-                                },
-                                "amount": {
-                                  "type": "integer",
-                                  "example": 10391
-                                }
-                              }
                             }
                           }
                         }
