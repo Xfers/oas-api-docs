@@ -2,7 +2,7 @@
   "/v3/payment_collector/fixed_virtual_accounts": {
     "post": {
       "tags": [
-        "Payment Collector Methods"
+        "Fixed Virtual Account"
       ],
       "summary": "Fixed Virtual Account registration or retrieval",
       "description": "@Irfan",

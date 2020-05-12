@@ -25,7 +25,7 @@
   },
   "x-tagGroups": [
     {
-      "name": "Payment",
+      "name": "Payments",
       "tags": [
         "Direct Payment Methods",
         "Payment Queries",
@@ -33,9 +33,9 @@
       ]
     },
     {
-      "name": "Payment Collector",
+      "name": "Payment Collectors",
       "tags": [
-        "Payment Collector Methods"
+        "Fixed Virtual Account"
       ]
     }
   ]
