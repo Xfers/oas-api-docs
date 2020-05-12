@@ -120,16 +120,15 @@
                       "transfer_info": {
                         "bank_code": "BSS",
                         "type": "virtual_account",
-                        "account_holder_name": "My Shop 1",
+                        "account_holder_name": "Xfers Pte Ltd.",
                         "account_no": "202000120472913"
                       },
-                      "id": "va_7abf6bb130d44c02862982ff6022875d",
-                      "object": "VirtualAccountAssigment",
-                      "status": "active",
-                      "settings": {
-                        "bank_code": "BSS",
-                        "display_name": "My Shop 1"
-                      }
+                      "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                      "object": "BankTransferContract",
+                      "status": null,
+                      "amount": 10000,
+                      "currency": "idr",
+                      "merchant_metadata": {}
                     }
                   }
                 }
@@ -155,13 +154,12 @@
                         "bank_code": "BSS",
                         "type": "virtual_account",
                         "account_holder_name": "Xfers Pte Ltd.",
-                        "account_no": "202000120472913",
-                        "amount": 10000.00
+                        "account_no": "202000120472913"
                       },
                       "id": "contract_7abf6bb130d44c02862982ff6022875d",
                       "object": "BankTransferContract",
                       "status": "completed",
-                      "amount": 10000.00,
+                      "amount": 10000,
                       "currency": "idr",
                       "merchant_metadata": {}
                     }
