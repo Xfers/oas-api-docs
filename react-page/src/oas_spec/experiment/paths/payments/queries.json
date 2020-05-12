@@ -110,7 +110,8 @@
                     "id": "va_7abf6bb130d44c02862982ff6022875d",
                     "type": "fixed_virtual_account",
                     "status": "active",
-                    "reference_id": "CUSTOMER_001",
+                    "customer_id": "CUSTOMER_001",
+                    "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
                     "bank_code": "BSS",
                     "display_name": "My Shop 1",
                     "account_no": "202000120472913"
@@ -132,7 +133,8 @@
                     "id": "va_7abf6bb130d44c02862982ff6022875d",
                     "type": "fixed_virtual_account",
                     "status": "active",
-                    "reference_id": "CUSTOMER_001",
+                    "customer_id": "CUSTOMER_001",
+                    "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
                     "bank_code": "BSS",
                     "display_name": "My Shop 1",
                     "account_no": "202000120472913"

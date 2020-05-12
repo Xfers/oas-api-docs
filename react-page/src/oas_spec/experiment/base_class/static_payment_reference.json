@@ -2,16 +2,15 @@
   "schemas": {
     "RequestBody": {
       "properties": {
-        "settings": {},
         "destination_account_id": {
           "description": "You can get from XXXX",
           "type": "string",
           "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
         },
-        "reference_id": {
-          "description": "Your order's reference id",
+        "customer_id": {
+          "description": "Customer id",
           "type": "string",
-          "example": "ORDER_0001"
+          "example": "CUSTOMER_0001"
         }
       },
       "required": [
@@ -38,9 +37,14 @@
             "disabled"
           ]
         },
-        "reference_id": {
+        "customer_id": {
           "type": "string",
           "example": "CUSTOMER_001"
+        },
+        "destination_account_id": {
+          "description": "You can get from XXXX",
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
         }
       }
     },

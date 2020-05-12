@@ -16,43 +16,33 @@
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "destination_account_id": {
-                  "description": "You can get from XXXX",
-                  "type": "string",
-                  "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
-                },
-                "reference_id": {
-                  "description": "Customer id",
-                  "type": "string",
-                  "example": "CUSTOMER_0001"
-                },
-                "settings": {
-                  "description": "Data for specific payment method",
-                  "type": "object",
+              "allOf": [
+                { "$ref": "#/base_class/static_payment_reference/schemas/RequestBody" },
+                {
                   "properties": {
-                    "bank_code": {
-                      "description": "Bank code",
-                      "type": "string",
-                      "enum": [
-                        "BSS",
-                        "BRI",
-                        "BNI"
-                      ],
-                      "example": "BSS"
-                    },
-                    "display_name": {
-                      "description": "Display name on ATM",
-                      "type": "string",
-                      "example": "My Shop 1"
+                    "settings": {
+                      "description": "Data for specific payment method",
+                      "type": "object",
+                      "properties": {
+                        "bank_code": {
+                          "description": "Bank code",
+                          "type": "string",
+                          "enum": [
+                            "BSS",
+                            "BRI",
+                            "BNI"
+                          ],
+                          "example": "BSS"
+                        },
+                        "display_name": {
+                          "description": "Display name on ATM",
+                          "type": "string",
+                          "example": "My Shop 1"
+                        }
+                      }
                     }
                   }
                 }
-              },
-              "required": [
-                "destination_account_id",
-                "reference_id",
-                "settings"
               ]
             }
           }
