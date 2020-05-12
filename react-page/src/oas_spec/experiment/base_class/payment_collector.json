@@ -75,22 +75,17 @@
             "type": {
               "example": "fixed_virtual_account"
             },
-            "payment_details": {
-              "type": "object",
-              "properties": {
-                "bank_code": {
-                  "type": "string",
-                  "example": "BSS"
-                },
-                "display_name": {
-                  "type": "string",
-                  "example": "My Shop 1"
-                },
-                "account_no": {
-                  "type": "string",
-                  "example": "202000120472913"
-                }
-              }
+            "bank_code": {
+              "type": "string",
+              "example": "BSS"
+            },
+            "display_name": {
+              "type": "string",
+              "example": "My Shop 1"
+            },
+            "account_no": {
+              "type": "string",
+              "example": "202000120472913"
             }
           }
         }
