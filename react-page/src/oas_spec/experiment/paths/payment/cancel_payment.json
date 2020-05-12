@@ -1,11 +1,10 @@
 {
-  "comment": "Weird path config",
-  "/v3/payments/{id}": {
-    "get": {
+  "/v3/payments/{id}/cancel": {
+    "post": {
       "tags": [
-        "Payment Queries"
+        "Modify Payments"
       ],
-      "summary": "Retrieve Payment",
+      "summary": "Cancel Payment",
       "description": "@irfan",
       "security": [
         {
@@ -33,7 +32,7 @@
                 "id": "contract_7abf6bb130d44c02862982ff6022875d",
                 "payment_method": "virtual_account_bank_transfer",
                 "reference_id": "ORDER_001",
-                "status": "completed",
+                "status": "cancelled",
                 "amount": {
                   "value": 10000,
                   "currency": "IDR"

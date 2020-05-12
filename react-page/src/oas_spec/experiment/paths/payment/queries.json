@@ -1,5 +1,58 @@
 {
-  "TODO:": "ReferenceId",
+  "/v3/payments/{id}": {
+    "get": {
+      "tags": [
+        "Payment Queries"
+      ],
+      "summary": "Retrieve Payment",
+      "description": "@irfan",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transaction id in Xfers",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "contract_7abf6bb130d44c02862982ff6022875d"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                "payment_method": "virtual_account_bank_transfer",
+                "reference_id": "ORDER_001",
+                "status": "completed",
+                "amount": {
+                  "value": 10000,
+                  "currency": "IDR"
+                },
+                "expiration_time": "2020-04-30T19:02:57+08:00",
+                "description": "This is the first order",
+                "merchant_metadata": {},
+                "transfer_info": {
+                  "bank_code": "BSS",
+                  "account_holder_name": "Xfers Pte Ltd.",
+                  "account_no": "202000120472913",
+                  "amount": 10000
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "/v3/payments": {
     "get": {
       "tags": [

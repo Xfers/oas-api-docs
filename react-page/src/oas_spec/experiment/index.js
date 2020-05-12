@@ -2,8 +2,8 @@ const combined = Object.assign(
     require("./base.json"),
     {
         paths: Object.assign(
-            require("./paths/payment/show.json"),
-            require("./paths/payment/list.json"),
+            require("./paths/payment/queries.json"),
+            require("./paths/payment/cancel_payment.json"),
             require("./paths/payment/virtual_account_bank_transfers.json"),
             require("./paths/payment/unique_amount_bank_transfers.json"),
             require("./paths/payment_collector/fixed_virtual_accounts.json"),

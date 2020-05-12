@@ -27,8 +27,9 @@
     {
       "name": "Payment",
       "tags": [
+        "Direct Payment Methods",
         "Payment Queries",
-        "Payment Methods"
+        "Modify Payments"
       ]
     },
     {
