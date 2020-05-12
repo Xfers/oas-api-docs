@@ -111,7 +111,7 @@
               "type": "string",
               "example": "unique_amount_bank_transfer"
             },
-            "transfer_info": {
+            "payment_reference": {
               "type": "object",
               "properties": {
                 "bank_code": {
@@ -147,7 +147,7 @@
               "type": "string",
               "example": "virtual_account_bank_transfer"
             },
-            "transfer_info": {
+            "payment_reference": {
               "type": "object",
               "properties": {
                 "bank_code": {
@@ -167,6 +167,24 @@
                   "example": 10000
                 }
               }
+            }
+          }
+        }
+      ]
+    },
+    "PaymentCollectorPayment": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "example": "static_payment_reference"
+            },
+            "payment_reference": {
+              "type": "object"
             }
           }
         }

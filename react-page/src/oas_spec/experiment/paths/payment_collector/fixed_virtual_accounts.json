@@ -95,11 +95,11 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment_collector/schemas/PaymentCollectorPayment"
+                          "$ref": "#/base_class/payment/schemas/PaymentCollectorPayment"
                         },
                         {
                           "properties": {
-                            "payment_collector": {
+                            "payment_reference": {
                               "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
                             }
                           }
@@ -128,11 +128,11 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment_collector/schemas/PaymentCollectorPayment"
+                          "$ref": "#/base_class/payment/schemas/PaymentCollectorPayment"
                         },
                         {
                           "properties": {
-                            "payment_collector": {
+                            "payment_reference": {
                               "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
                             }
                           }

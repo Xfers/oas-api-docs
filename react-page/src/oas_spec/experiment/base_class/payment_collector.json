@@ -41,29 +41,8 @@
         "reference_id": {
           "type": "string",
           "example": "CUSTOMER_001"
-        },
-        "payment_details": {
-          "type": "object"
         }
       }
-    },
-    "PaymentCollectorPayment": {
-      "allOf": [
-        {
-          "$ref": "#/base_class/payment/schemas/BaseObject"
-        },
-        {
-          "properties": {
-            "payment_method": {
-              "type": "string",
-              "example": "payment_collector"
-            },
-            "payment_collector": {
-              "type": "object"
-            }
-          }
-        }
-      ]
     },
     "FixedVirtualAccount": {
       "allOf": [
