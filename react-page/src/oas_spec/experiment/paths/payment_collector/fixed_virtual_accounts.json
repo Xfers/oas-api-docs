@@ -95,7 +95,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/BaseObject"
+                          "$ref": "#/base_class/payment_collector/schemas/PaymentCollectorPayment"
                         },
                         {
                           "properties": {
@@ -128,7 +128,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/BaseObject"
+                          "$ref": "#/base_class/payment_collector/schemas/PaymentCollectorPayment"
                         },
                         {
                           "properties": {

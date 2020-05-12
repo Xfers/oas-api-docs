@@ -32,7 +32,11 @@
         "status": {
           "type": "string",
           "example": "active",
-          "enum": ["active", "expired", "disabled"]
+          "enum": [
+            "active",
+            "expired",
+            "disabled"
+          ]
         },
         "reference_id": {
           "type": "string",
@@ -42,6 +46,24 @@
           "type": "object"
         }
       }
+    },
+    "PaymentCollectorPayment": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "example": "payment_collector"
+            },
+            "payment_collector": {
+              "type": "object"
+            }
+          }
+        }
+      ]
     },
     "FixedVirtualAccount": {
       "allOf": [
