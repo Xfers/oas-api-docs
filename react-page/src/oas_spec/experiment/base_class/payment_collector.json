@@ -15,8 +15,7 @@
       },
       "required": [
         "destination_account_id",
-        "reference_id",
-        "settings"
+        "customer_id"
       ]
     },
     "BaseObject": {

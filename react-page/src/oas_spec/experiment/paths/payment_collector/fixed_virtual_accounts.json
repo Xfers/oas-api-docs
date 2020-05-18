@@ -17,31 +17,30 @@
           "application/json": {
             "schema": {
               "allOf": [
-                { "$ref": "#/base_class/payment_collector/schemas/RequestBody" },
+                {
+                  "$ref": "#/base_class/payment_collector/schemas/RequestBody"
+                },
                 {
                   "properties": {
-                    "settings": {
-                      "description": "Payment collector configuration",
-                      "type": "object",
-                      "properties": {
-                        "bank_code": {
-                          "description": "Bank code",
-                          "type": "string",
-                          "enum": [
-                            "BSS",
-                            "BRI",
-                            "BNI"
-                          ],
-                          "example": "BSS"
-                        },
-                        "display_name": {
-                          "description": "Display name on ATM",
-                          "type": "string",
-                          "example": "My Shop 1"
-                        }
-                      }
+                    "bank_code": {
+                      "description": "Bank code",
+                      "type": "string",
+                      "enum": [
+                        "BSS",
+                        "BRI",
+                        "BNI"
+                      ],
+                      "example": "BSS"
+                    },
+                    "display_name": {
+                      "description": "Display name on ATM",
+                      "type": "string",
+                      "example": "My Shop 1"
                     }
-                  }
+                  },
+                  "required": [
+                    "bank_code"
+                  ]
                 }
               ]
             }
