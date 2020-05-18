@@ -40,7 +40,7 @@
                 "expiration_time": "2020-04-30T19:02:57+08:00",
                 "description": "This is the first order",
                 "merchant_metadata": {},
-                "payment_reference": {
+                "payment_collector": {
                   "bank_code": "BSS",
                   "account_holder_name": "Xfers Pte Ltd.",
                   "account_no": "202000120472913",
@@ -96,7 +96,7 @@
               "example": [
                 {
                   "id": "contract_e3775d3ff7fb38cab906adf079cbc763",
-                  "payment_method": "static_payment_reference",
+                  "payment_method": "payment_collector",
                   "status": "processing",
                   "reference_id": "ORDER_001",
                   "amount": {
@@ -106,7 +106,7 @@
                   "expiration_time": "2020-04-30T19:02:57+08:00",
                   "description": "This is the first order",
                   "merchant_metadata": {},
-                  "payment_reference": {
+                  "payment_collector": {
                     "id": "va_7abf6bb130d44c02862982ff6022875d",
                     "type": "fixed_virtual_account",
                     "status": "active",
@@ -119,7 +119,7 @@
                 },
                 {
                   "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                  "payment_method": "static_payment_reference",
+                  "payment_method": "payment_collector",
                   "status": "processing",
                   "reference_id": "ORDER_002",
                   "amount": {
@@ -129,7 +129,7 @@
                   "expiration_time": "2020-04-30T19:02:57+08:00",
                   "description": "This is the first order",
                   "merchant_metadata": {},
-                  "payment_reference": {
+                  "payment_collector": {
                     "id": "va_7abf6bb130d44c02862982ff6022875d",
                     "type": "fixed_virtual_account",
                     "status": "active",

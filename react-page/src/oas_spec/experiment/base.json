@@ -25,13 +25,13 @@
   },
   "x-tagGroups": [
     {
-      "name": "Direct Payments",
+      "name": "Xfers Direct",
       "tags": [
         "Direct Payment Methods"
       ]
     },
     {
-      "name": "Static Payment Reference",
+      "name": "Payment Collectors",
       "tags": [
         "Fixed Virtual Account"
       ]

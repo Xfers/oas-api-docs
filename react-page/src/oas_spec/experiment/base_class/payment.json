@@ -111,7 +111,7 @@
               "type": "string",
               "example": "unique_amount_bank_transfer"
             },
-            "payment_reference": {
+            "payment_collector": {
               "type": "object",
               "properties": {
                 "bank_code": {
@@ -147,7 +147,7 @@
               "type": "string",
               "example": "virtual_account_bank_transfer"
             },
-            "payment_reference": {
+            "payment_collector": {
               "type": "object",
               "properties": {
                 "bank_code": {
@@ -181,9 +181,9 @@
           "properties": {
             "payment_method": {
               "type": "string",
-              "example": "static_payment_reference"
+              "example": "payment_collector"
             },
-            "payment_reference": {
+            "payment_collector": {
               "type": "object"
             }
           }
