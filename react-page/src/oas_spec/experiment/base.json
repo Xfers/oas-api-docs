@@ -25,6 +25,13 @@
   },
   "x-tagGroups": [
     {
+      "name": "Explanation",
+      "tags": [
+        "What is Payment Object?",
+        "What is Payment Collector Object?"
+      ]
+    },
+    {
       "name": "Xfers Direct",
       "tags": [
         "Direct Payment Methods"
@@ -42,6 +49,16 @@
         "Payment Queries",
         "Modify Payments"
       ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "What is Payment Object?",
+      "description": "@irfan"
+    },
+    {
+      "name": "What is Payment Collector Object?",
+      "description": "@irfan"
     }
   ]
 }
