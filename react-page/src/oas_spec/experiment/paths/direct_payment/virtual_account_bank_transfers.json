@@ -34,7 +34,10 @@
                           ],
                           "example": "BSS"
                         }
-                      }
+                      },
+                      "required": [
+                        "bank_code"
+                      ]
                     }
                   }
                 }

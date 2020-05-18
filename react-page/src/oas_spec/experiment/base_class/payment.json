@@ -11,7 +11,10 @@
               "type": "string",
               "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
             }
-          }
+          },
+          "required": [
+            "destination_account_id"
+          ]
         },
         "amount": {
           "description": "Amount properties",
