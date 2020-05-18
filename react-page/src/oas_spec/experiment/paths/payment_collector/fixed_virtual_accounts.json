@@ -85,7 +85,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/StaticPaymentReferencePayment"
+                          "$ref": "#/base_class/payment/schemas/CustomPaymentCollectorPayment"
                         },
                         {
                           "properties": {
@@ -124,7 +124,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/StaticPaymentReferencePayment"
+                          "$ref": "#/base_class/payment/schemas/CustomPaymentCollectorPayment"
                         },
                         {
                           "properties": {
