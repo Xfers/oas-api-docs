@@ -22,9 +22,7 @@
                 },
                 {
                   "properties": {
-                    "settings": {
-                      "description": "Data for specific payment method",
-                      "type": "object",
+                    "payment_collector": {
                       "properties": {
                         "bank_code": {
                           "description": "Bank code",

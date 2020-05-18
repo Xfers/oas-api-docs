@@ -2,7 +2,17 @@
   "schemas": {
     "RequestBody": {
       "properties": {
-        "settings": {},
+        "payment_collector": {
+          "type": "object",
+          "description": "Payment collector configuration",
+          "properties": {
+            "destination_account_id": {
+              "description": "You can get from XXXX",
+              "type": "string",
+              "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+            }
+          }
+        },
         "amount": {
           "description": "Amount properties",
           "type": "object",
@@ -18,11 +28,6 @@
               "example": "IDR"
             }
           }
-        },
-        "destination_account_id": {
-          "description": "You can get from XXXX",
-          "type": "string",
-          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
         },
         "reference_id": {
           "description": "Your order's reference id",
@@ -49,7 +54,7 @@
         "amount",
         "destination_account_id",
         "reference_id",
-        "settings"
+        "payment_collector"
       ]
     },
     "BaseObject": {
@@ -58,7 +63,6 @@
           "type": "string",
           "example": "contract_7abf6bb130d44c02862982ff6022875d"
         },
-        "payment_method": {},
         "status": {
           "type": "string",
           "example": "processing"
@@ -107,10 +111,6 @@
         },
         {
           "properties": {
-            "payment_method": {
-              "type": "string",
-              "example": "unique_amount_bank_transfer"
-            },
             "payment_collector": {
               "type": "object",
               "properties": {
@@ -143,10 +143,6 @@
         },
         {
           "properties": {
-            "payment_method": {
-              "type": "string",
-              "example": "virtual_account_bank_transfer"
-            },
             "payment_collector": {
               "type": "object",
               "properties": {
