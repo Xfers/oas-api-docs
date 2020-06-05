@@ -2,9 +2,9 @@
   "/v3/direct_payment/unique_amount_bank_transfers": {
     "post": {
       "tags": [
-        "Direct Payment Methods"
+        "Direct Payment Methods UQ"
       ],
-      "summary": "Unique Amount Bank Transfer",
+      "summary": "Direct Payment Methods UQ",
       "description": "@irfan",
       "security": [
         {

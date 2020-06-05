@@ -1,10 +1,10 @@
 {
-  "/v3/direct_payment/virtual_account_bank_transfers": {
+  "/v3/direct_payment/unique_amount_bank_transfers": {
     "post": {
       "tags": [
-        "Direct Payment Methods VA"
+        "Dynamic VA Bank Transfer"
       ],
-      "summary": "Direct Payment Methods VA",
+      "summary": "Dynamic VA Transfer",
       "description": "@irfan",
       "security": [
         {
@@ -52,7 +52,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/base_class/payment/schemas/VirtualAccountBankTransfer"
+                "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
               }
             }
           }
@@ -73,7 +73,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/VirtualAccountBankTransfer"
+                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
                         },
                         {
                           "properties": {
@@ -107,7 +107,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/VirtualAccountBankTransfer"
+                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
                         },
                         {
                           "properties": {

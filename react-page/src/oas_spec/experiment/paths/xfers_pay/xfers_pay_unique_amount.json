@@ -1,10 +1,15 @@
 {
-  "/v3/direct_payment/virtual_account_bank_transfers": {
+  "/v3/direct_payment/unique_account_bank_transfers": {
+    "get": {
+      "tags": [
+        "Unique Amount Bank Transfer"
+      ]
+    },
     "post": {
       "tags": [
-        "Direct Payment Methods VA"
+        "Unique Amount Bank Transfer"
       ],
-      "summary": "Direct Payment Methods VA",
+      "summary": "Unique Amount Bank Transfer",
       "description": "@irfan",
       "security": [
         {
