@@ -2,9 +2,9 @@
   "/v3/direct_payment/virtual_account_bank_transfers": {
     "post": {
       "tags": [
-        "Direct Payment Methods VA"
+        "Fixed VA Bank Transfer"
       ],
-      "summary": "Direct Payment Methods VA",
+      "summary": "Fixed Virtual Account Bank Transfer",
       "description": "@irfan",
       "security": [
         {

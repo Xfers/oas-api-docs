@@ -1,6 +1,7 @@
 const combined = Object.assign(
     require("./base.json"),
     {
+        tags: require("./tags.json"),
         paths: Object.assign(
             require("./paths/payments/queries.json"),
             require("./paths/payments/cancel.json"),

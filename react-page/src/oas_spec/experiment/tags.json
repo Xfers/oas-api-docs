@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Dynamic VA Bank Transfer",
+    "description": "Register and verify new users."
+  },
+  {
+    "name": "Fixed VA Bank Transfer",
+    "description": "Register and verify old users."
+  },
+  {
+    "name": "Unique Amount Bank Transfer",
+    "description": "Register and verify baby users."
+  },
+  {
+    "name": "Direct Payment Methods UQ",
+    "description": "anjing babi"
+  },
+  {
+    "name": "Direct Payment Methods VA",
+    "description": "kampret kodok"
+  }
+]
