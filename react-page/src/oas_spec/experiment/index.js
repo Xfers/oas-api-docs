@@ -7,6 +7,9 @@ const combined = Object.assign(
             require("./paths/direct_payment/virtual_account_bank_transfers.json"),
             require("./paths/direct_payment/unique_amount_bank_transfers.json"),
             require("./paths/payment_collector/fixed_virtual_accounts.json"),
+            require("./paths/xfers_pay/xfers_pay_dynamic_va.json"),
+            require("./paths/xfers_pay/xfers_pay_unique_amount.json"),
+            require("./paths/xfers_pay/xfers_pay_fixed_va.json")
         ),
         base_class: {
             payment: require("./base_class/payment.json"),
