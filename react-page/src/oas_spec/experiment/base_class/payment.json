@@ -128,9 +128,6 @@
             "payment_method": {
               "type": "string",
               "example": "payment_method"
-            },
-            "payment_method": {
-              "type": "object"
             }
           }
         }
