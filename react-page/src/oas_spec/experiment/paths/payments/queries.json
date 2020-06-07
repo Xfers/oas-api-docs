@@ -40,10 +40,92 @@
                 "description": "This is the first order",
                 "merchant_metadata": {},
                 "payment_method": {
-                  "bank_code": "BSS",
+                  "bank_type": "BSS",
                   "account_holder_name": "Xfers Pte Ltd.",
                   "account_no": "202000120472913",
                   "amount": 10391
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "Modify Payments"
+      ],
+      "summary": "Cancel Payment",
+      "description": "@irfan",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transaction id in Xfers",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "contract_7abf6bb130d44c02862982ff6022875d"
+          }
+        },
+        {
+          "name": "event_name",
+          "in": "path",
+          "description": "Transaction id in Xfers",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "contract_7abf6bb130d44c02862982ff6022875d"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "event": {
+                  "description": "Event name",
+                  "type": "string",
+                  "example": "account_3091fa1f6bfddff48148fd32813a3a5b",
+                  "enum": [
+                    "cancel",
+                    "receive_payment"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                "payment_method": "virtual_account_bank_transfer",
+                "status": "cancelled",
+                "reference_id": "ORDER_001",
+                "amount": {
+                  "value": 10000,
+                  "currency": "IDR"
+                },
+                "expiration_time": "2020-04-30T19:02:57+08:00",
+                "description": "This is the first order",
+                "merchant_metadata": {},
+                "payment_method": {
+                  "bank_type": "BSS",
+                  "account_holder_name": "Xfers Pte Ltd.",
+                  "account_no": "202000120472913",
+                  "amount": 10000
                 }
               }
             }
@@ -55,7 +137,7 @@
   "/v3/payment_gateway/payments": {
     "get": {
       "tags": [
-        "Payment Queries"
+        "Payment Queries (Hide first)"
       ],
       "summary": "List Payment Method Payment History",
       "description": "@irfan",
@@ -111,7 +193,7 @@
                     "status": "active",
                     "customer_id": "CUSTOMER_001",
                     "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                    "bank_code": "BSS",
+                    "bank_type": "BSS",
                     "display_name": "My Shop 1",
                     "account_no": "202000120472913"
                   }
@@ -134,7 +216,7 @@
                     "status": "active",
                     "customer_id": "CUSTOMER_001",
                     "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                    "bank_code": "BSS",
+                    "bank_type": "BSS",
                     "display_name": "My Shop 1",
                     "account_no": "202000120472913"
                   }

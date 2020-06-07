@@ -24,8 +24,8 @@
                   "properties": {
                     "payment_method": {
                       "properties": {
-                        "bank_code": {
-                          "description": "Bank code",
+                        "bank_type": {
+                          "description": "Bank type (@irfan)",
                           "type": "string",
                           "enum": [
                             "BSS",
@@ -36,7 +36,7 @@
                         }
                       },
                       "required": [
-                        "bank_code"
+                        "bank_type"
                       ]
                     }
                   }

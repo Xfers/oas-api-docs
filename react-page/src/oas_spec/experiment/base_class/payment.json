@@ -1,109 +1,74 @@
 {
   "schemas": {
     "RequestBody": {
+      "description": "Params to request for payment (@irfan)",
+      "type": "object",
       "properties": {
-        "payment_method": {
-          "type": "object",
-          "description": "Payment collector configuration",
-          "properties": {
-            "destination_account_id": {
-              "description": "You can get from XXXX",
-              "type": "string",
-              "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
-            }
-          },
-          "required": [
-            "destination_account_id"
-          ]
-        },
         "amount": {
-          "description": "Amount properties",
-          "type": "object",
-          "properties": {
-            "value": {
-              "description": "Amount value",
-              "type": "integer",
-              "example": 10000
-            },
-            "currency": {
-              "description": "Amount currency",
-              "type": "string",
-              "example": "IDR"
-            }
-          }
+          "description": "Amount value",
+          "type": "integer",
+          "example": 10000
+        },
+        "currency": {
+          "description": "Amount currency",
+          "type": "string",
+          "example": "idr"
         },
         "reference_id": {
           "description": "Your order's reference id",
           "type": "string",
           "example": "ORDER_0001"
         },
-        "expiration_time": {
-          "description": "Expiration time (ISO8601 format). maximum: 3 days after the request creation",
-          "type": "string",
-          "default": "{1 day after the request creation}",
-          "example": "2020-04-30T19:02:57+08:00"
-        },
         "description": {
           "description": "Order description",
           "type": "string",
           "example": "This is the first order"
-        },
-        "merchant_metadata": {
-          "description": "You can easily associate the payment to your system by this field. Total characters should be < 100",
-          "type": "object"
         }
       },
       "required": [
         "amount",
-        "destination_account_id",
-        "reference_id",
-        "payment_method"
+        "currency",
+        "reference_id"
       ]
     },
     "BaseObject": {
+      "description": "Payment Object",
       "properties": {
         "id": {
+          "description": "id from Xfers side @irfan",
           "type": "string",
           "example": "contract_7abf6bb130d44c02862982ff6022875d"
         },
         "status": {
+          "description": "Payment status",
           "type": "string",
           "example": "processing"
         },
         "reference_id": {
+          "description": "Your order's reference id",
           "type": "string",
           "example": "ORDER_001"
         },
         "amount": {
-          "description": "Amount properties",
-          "type": "object",
-          "properties": {
-            "value": {
-              "description": "Amount value",
-              "type": "integer",
-              "example": 10000
-            },
-            "currency": {
-              "description": "Amount currency",
-              "type": "string",
-              "example": "IDR"
-            }
-          }
+          "description": "Amount value",
+          "type": "integer",
+          "example": 10000
+        },
+        "currency": {
+          "description": "Amount currency",
+          "type": "string",
+          "example": "idr"
         },
         "expiration_time": {
           "description": "Expiration time (ISO8601 format). maximum: 3 days after the request creation",
           "type": "string",
-          "default": "{1 day after the request creation}",
+          "default": "1 day after the request creation",
           "example": "2020-04-30T19:02:57+08:00"
         },
         "description": {
           "description": "Order description",
           "type": "string",
           "example": "This is the first order"
-        },
-        "merchant_metadata": {
-          "description": "You can easily associate the payment to your system by this field. Total characters should be < 100",
-          "type": "object"
         }
       }
     },
@@ -115,25 +80,7 @@
         {
           "properties": {
             "payment_method": {
-              "type": "object",
-              "properties": {
-                "bank_code": {
-                  "type": "string",
-                  "example": "BSS"
-                },
-                "account_holder_name": {
-                  "type": "string",
-                  "example": "Xfers Pte Ltd."
-                },
-                "account_no": {
-                  "type": "string",
-                  "example": "202000120472913"
-                },
-                "amount": {
-                  "type": "integer",
-                  "example": 10391
-                }
-              }
+              "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
             }
           }
         }
@@ -149,7 +96,7 @@
             "payment_method": {
               "type": "object",
               "properties": {
-                "bank_code": {
+                "bank_type": {
                   "type": "string",
                   "example": "BSS"
                 },

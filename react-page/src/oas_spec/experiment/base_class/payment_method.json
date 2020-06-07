@@ -47,6 +47,40 @@
         }
       }
     },
+    "UniqueAmountBankTransfer": {
+      "properties": {
+        "type": {
+          "description": "Payment method type",
+          "type": "string",
+          "example": "unique_amount_bank_transfer"
+        },
+        "bank_type": {
+          "description": "Bank type @irfan",
+          "type": "string",
+          "example": "active",
+          "enum": [
+            "BBB",
+            "AAA",
+            "CCC"
+          ]
+        },
+        "account_holder_name": {
+          "description": "Payee name @irfan",
+          "type": "string",
+          "example": "@irfan"
+        },
+        "account_no": {
+          "description": "account number @irfan",
+          "type": "string",
+          "example": "174926751990"
+        },
+        "unique_amount": {
+          "description": "Amount for transferring @irfan",
+          "type": "string",
+          "example": "10391"
+        }
+      }
+    },
     "FixedVirtualAccount": {
       "allOf": [
         {
@@ -57,7 +91,7 @@
             "type": {
               "example": "fixed_virtual_account"
             },
-            "bank_code": {
+            "bank_type": {
               "type": "string",
               "example": "BSS"
             },
