@@ -1,8 +1,8 @@
 {
-  "/v3/direct_payment/virtual_account_bank_transfers": {
+  "/v3/payment_gateway/direct_payment/virtual_account_bank_transfers": {
     "post": {
       "tags": [
-        "Direct Payment Methods"
+        "Virtual Account Bank Transfers"
       ],
       "summary": "Virtual Account Bank Transfer",
       "description": "@irfan",
@@ -22,7 +22,7 @@
                 },
                 {
                   "properties": {
-                    "payment_collector": {
+                    "payment_method": {
                       "properties": {
                         "bank_code": {
                           "description": "Bank code",

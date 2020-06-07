@@ -28,19 +28,13 @@
       "name": "Explanation",
       "tags": [
         "What is Payment Object?",
-        "What is Payment Collector Object?"
+        "What is Payment Method Object?"
       ]
     },
     {
-      "name": "Xfers Direct",
+      "name": "Payment Methods",
       "tags": [
-        "Direct Payment Methods"
-      ]
-    },
-    {
-      "name": "Custom Payment Collectors",
-      "tags": [
-        "Fixed Virtual Account"
+        "Unique Amount Bank Transfers"
       ]
     },
     {
@@ -57,8 +51,8 @@
       "description": "Payment Object is an object that represents one Payment Request. It includes the payment instruction to complete the payment as well as represent a payment transaction within Xfers system."
     },
     {
-      "name": "What is Payment Collector Object?",
-      "description": "Payment Collector Object is an object that represents one fix Payment Instruction that can be use multiple times and will create multiple payment transactions. All of those payment transactions will refer and use the same Payment Collector Object."
+      "name": "What is Payment Method Object?",
+      "description": "Payment Method Object is an object that represents one fix Payment Instruction that can be use multiple times and will create multiple payment transactions. All of those payment transactions will refer and use the same Payment Method Object."
     }
   ]
 }

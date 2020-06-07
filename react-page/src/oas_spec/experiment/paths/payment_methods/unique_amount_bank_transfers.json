@@ -1,8 +1,8 @@
 {
-  "/v3/direct_payment/unique_amount_bank_transfers": {
+  "/v3/payment_gateway/direct_payment/unique_amount_bank_transfers": {
     "post": {
       "tags": [
-        "Direct Payment Methods"
+        "Unique Amount Bank Transfers"
       ],
       "summary": "Unique Amount Bank Transfer",
       "description": "@irfan",
@@ -22,7 +22,7 @@
                 },
                 {
                   "properties": {
-                    "payment_collector": {
+                    "payment_method": {
                       "properties": {
                         "bank_code": {
                           "description": "Bank code",

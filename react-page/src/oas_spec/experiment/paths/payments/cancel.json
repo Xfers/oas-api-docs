@@ -1,5 +1,5 @@
 {
-  "/v3/payments/{id}/cancel": {
+  "/v3/payment_gateway/payments/{id}/cancel": {
     "post": {
       "tags": [
         "Modify Payments"
@@ -40,7 +40,7 @@
                 "expiration_time": "2020-04-30T19:02:57+08:00",
                 "description": "This is the first order",
                 "merchant_metadata": {},
-                "payment_collector": {
+                "payment_method": {
                   "bank_code": "BSS",
                   "account_holder_name": "Xfers Pte Ltd.",
                   "account_no": "202000120472913",

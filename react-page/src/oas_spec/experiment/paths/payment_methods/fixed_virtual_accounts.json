@@ -1,5 +1,5 @@
 {
-  "/v3/payment_collector/fixed_virtual_accounts": {
+  "/v3/payment_gateway/payment_method/fixed_virtual_accounts": {
     "post": {
       "tags": [
         "Fixed Virtual Account"
@@ -18,7 +18,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/base_class/payment_collector/schemas/RequestBody"
+                  "$ref": "#/base_class/payment_method/schemas/RequestBody"
                 },
                 {
                   "properties": {
@@ -53,7 +53,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
+                "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccount"
               }
             }
           }
@@ -63,7 +63,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
+                "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccount"
               }
             }
           }
@@ -74,7 +74,7 @@
       },
       "callbacks": {
         "payment_validation": {
-          "$settings.payment_collector.fixed_virtual_account.payment_validation_callback_url": {
+          "$settings.payment_method.fixed_virtual_account.payment_validation_callback_url": {
             "post": {
               "summary": "Callback when we need validation check",
               "requestBody": {
@@ -84,7 +84,7 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/CustomPaymentCollectorPayment"
+                          "$ref": "#/base_class/payment/schemas/CustomPaymentMethodPayment"
                         },
                         {
                           "properties": {
@@ -94,8 +94,8 @@
                             "status": {
                               "example": null
                             },
-                            "payment_collector": {
-                              "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
+                            "payment_method": {
+                              "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccount"
                             }
                           }
                         }
@@ -113,7 +113,7 @@
           }
         },
         "payment_received": {
-          "$settings.payment_collector.payment_recieved_callback_url": {
+          "$settings.payment_method.payment_recieved_callback_url": {
             "post": {
               "summary": "Callback when received payment",
               "requestBody": {
@@ -123,15 +123,15 @@
                     "schema": {
                       "allOf": [
                         {
-                          "$ref": "#/base_class/payment/schemas/CustomPaymentCollectorPayment"
+                          "$ref": "#/base_class/payment/schemas/CustomPaymentMethodPayment"
                         },
                         {
                           "properties": {
                             "status": {
                               "example": "completed"
                             },
-                            "payment_collector": {
-                              "$ref": "#/base_class/payment_collector/schemas/FixedVirtualAccount"
+                            "payment_method": {
+                              "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccount"
                             }
                           }
                         }

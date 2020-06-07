@@ -1,5 +1,5 @@
 {
-  "/v3/payments/{id}": {
+  "/v3/payment_gateway/payments/{id}": {
     "get": {
       "tags": [
         "Payment Queries"
@@ -30,7 +30,6 @@
             "application/json": {
               "example": {
                 "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                "payment_method": "unique_amount_bank_transfer",
                 "status": "processing",
                 "reference_id": "ORDER_001",
                 "amount": {
@@ -40,7 +39,7 @@
                 "expiration_time": "2020-04-30T19:02:57+08:00",
                 "description": "This is the first order",
                 "merchant_metadata": {},
-                "payment_collector": {
+                "payment_method": {
                   "bank_code": "BSS",
                   "account_holder_name": "Xfers Pte Ltd.",
                   "account_no": "202000120472913",
@@ -53,12 +52,12 @@
       }
     }
   },
-  "/v3/payments": {
+  "/v3/payment_gateway/payments": {
     "get": {
       "tags": [
         "Payment Queries"
       ],
-      "summary": "List Payment Collector Payment History",
+      "summary": "List Payment Method Payment History",
       "description": "@irfan",
       "security": [
         {
@@ -68,7 +67,7 @@
       "comment": "consider to rename reference_id",
       "parameters": [
         {
-          "name": "payment_collector_type",
+          "name": "payment_method_type",
           "in": "query",
           "description": "Payment collector type",
           "required": true,
@@ -78,7 +77,7 @@
           }
         },
         {
-          "name": "payment_collector_id",
+          "name": "payment_method_id",
           "in": "query",
           "required": true,
           "description": "Payment collector id",
@@ -96,7 +95,7 @@
               "example": [
                 {
                   "id": "contract_e3775d3ff7fb38cab906adf079cbc763",
-                  "payment_method": "payment_collector",
+                  "payment_method": "payment_method",
                   "status": "processing",
                   "reference_id": "ORDER_001",
                   "amount": {
@@ -106,7 +105,7 @@
                   "expiration_time": "2020-04-30T19:02:57+08:00",
                   "description": "This is the first order",
                   "merchant_metadata": {},
-                  "payment_collector": {
+                  "payment_method": {
                     "id": "va_7abf6bb130d44c02862982ff6022875d",
                     "type": "fixed_virtual_account",
                     "status": "active",
@@ -119,7 +118,7 @@
                 },
                 {
                   "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                  "payment_method": "payment_collector",
+                  "payment_method": "payment_method",
                   "status": "processing",
                   "reference_id": "ORDER_002",
                   "amount": {
@@ -129,7 +128,7 @@
                   "expiration_time": "2020-04-30T19:02:57+08:00",
                   "description": "This is the first order",
                   "merchant_metadata": {},
-                  "payment_collector": {
+                  "payment_method": {
                     "id": "va_7abf6bb130d44c02862982ff6022875d",
                     "type": "fixed_virtual_account",
                     "status": "active",

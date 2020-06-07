@@ -4,13 +4,13 @@ const combined = Object.assign(
         paths: Object.assign(
             require("./paths/payments/queries.json"),
             require("./paths/payments/cancel.json"),
-            require("./paths/direct_payment/virtual_account_bank_transfers.json"),
-            require("./paths/direct_payment/unique_amount_bank_transfers.json"),
-            require("./paths/payment_collector/fixed_virtual_accounts.json"),
+            require("./paths/payment_methods/virtual_account_bank_transfers.json"),
+            require("./paths/payment_methods/unique_amount_bank_transfers.json"),
+            require("./paths/payment_methods/fixed_virtual_accounts.json"),
         ),
         base_class: {
             payment: require("./base_class/payment.json"),
-            payment_collector: require("./base_class/payment_collector.json"),
+            payment_method: require("./base_class/payment_method.json"),
         },
         components: {
             definitions: require("../indo/components/definitions.json"), // api v4 schemas use this for now
