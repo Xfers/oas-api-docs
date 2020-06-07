@@ -62,10 +62,10 @@
         }
       },
       "callbacks": {
-        "payment_received": {
-          "$settings.payment.payment_recieved_callback_url": {
+        "payment_completed": {
+          "$callback_settings.payment_gateway_v3_payment_completed": {
             "post": {
-              "summary": "Callback when received payment",
+              "summary": "Callback when payment completed",
               "requestBody": {
                 "required": true,
                 "content": {
@@ -97,7 +97,7 @@
           }
         },
         "payment_expired": {
-          "$settings.payment.payment_recieved_callback_url": {
+          "$callback_settings.payment_gateway_v3_payment_completed": {
             "post": {
               "summary": "Callback when payment is expired",
               "requestBody": {

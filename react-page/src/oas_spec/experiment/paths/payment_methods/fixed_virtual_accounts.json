@@ -112,10 +112,10 @@
             }
           }
         },
-        "payment_received": {
-          "$settings.payment_method.payment_recieved_callback_url": {
+        "payment_completed": {
+          "$callback_settings.payment_gateway_v3_payment_completed": {
             "post": {
-              "summary": "Callback when received payment",
+              "summary": "Callback when payment completed",
               "requestBody": {
                 "required": true,
                 "content": {

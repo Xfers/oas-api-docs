@@ -72,10 +72,10 @@
         }
       },
       "callbacks": {
-        "payment_received": {
-          "$settings.payment.payment_gateway_v3_payment_received": {
+        "payment_completed": {
+          "$settings.payment.payment_gateway_v3_payment_completed": {
             "post": {
-              "summary": "Callback when received payment",
+              "summary": "Callback when the payment completed",
               "description": "Set up on Dashboard @irfan",
               "requestBody": {
                 "required": true,
@@ -86,7 +86,7 @@
                         "event": {
                           "description": "Event name",
                           "type": "string",
-                          "example": "payment_gateway_v3_payment_received"
+                          "example": "payment_gateway_v3_payment_completed"
                         },
                         "data": {
                           "type": "object",
