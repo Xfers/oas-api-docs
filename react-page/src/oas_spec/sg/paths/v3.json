@@ -774,40 +774,20 @@
           "content": {
             "application/json": {
               "example": {
-                "bank_name_full": "Bank Permata",
-                "bank_abbrev": "PERMATA",
-                "bank_name_abbreviation": "PERMATA",
-                "bank_account_no": "8773162088567819",
-                "bank_payee_name": "PT Xfers Indonesia Teknologi",
-                "bank_code": "013",
+                "unique_id": "98888888",
+                "wallet_name": "Digital Goods",
+                "bank_name_full": "CIMB Bank Berhad",
+                "bank_abbrev": "CIMB",
+                "bank_name_abbreviation": "CIMB",
+                "bank_account_no": "2000492623",
+                "bank_payee_name": "Xfers Pte Ltd",
+                "bank_code": "7986",
                 "branch_code": "",
                 "branch_area": "",
-                "unique_id": "87785725657",
-                "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png",
-                "transfer_info_array": [{
-                    "bank_name_full": "Bank Permata",
-                    "bank_abbrev": "PERMATA",
-                    "bank_name_abbreviation": "PERMATA",
-                    "bank_account_no": "8773162088567819",
-                    "bank_code": "013",
-                    "branch_code": "",
-                    "branch_area": "",
-                    "unique_id": "87785725657",
-                    "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png"
-                  },
-                  {
-                    "bank_name_full": "Bank Mandiri",
-                    "bank_abbrev": "MANDIRI",
-                    "bank_name_abbreviation": "MANDIRI",
-                    "bank_account_no": "8830812088567819",
-                    "bank_code": "008",
-                    "branch_code": "",
-                    "branch_area": "",
-                    "unique_id": "87785725657",
-                    "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-mandiri-3c9030412a3deb3c41589344a9a7bf74a52ef8dd278834d400b917f35e1b3bf9.png"
-                  }
-                ],
-                "wallet_name": "Xfers"
+                "img_src": null,
+                "daily_limit": "5000.0",
+                "daily_limit_remaining": "5000.0",
+                "daily_limit_reset_timing": "2020-04-17T11:59:32.000Z"
               },
               "schema": {
                 "properties": {
