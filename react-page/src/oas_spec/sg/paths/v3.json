@@ -1651,7 +1651,7 @@
                 "bank_abbrev": "DBS",
                 "disabled": "false",
                 "hidden": "false",
-                "verification_status": "verified",
+                "verification_status": "pending",
                 "bank_account_proof_file_name": "bankstatement.pdf",
                 "bank_account_proof": "/assets/user_bank_accounts/bank_account_proofs/bankstatement.pdf",
                 "bank_account_proof_tiny": "/assets/user_bank_accounts/bank_account_proofs/thumb/bankstatement.pdf",
@@ -1691,11 +1691,15 @@
                 "id": 175,
                 "account_no": "1680366060",
                 "account_holder_name": "PROD ONLY",
-                "detected_name": "PROD ONLY",
-                "verification_status": "pending",
-                "verified": true,
-                "bank_abbrev": "BCA",
-                "usage": "all"
+                "bank_abbrev": "DBS",
+                "disabled": "false",
+                "hidden": "false",
+                "verification_status": "verified",
+                "bank_account_proof_file_name": "bankstatement.pdf",
+                "bank_account_proof": "/assets/user_bank_accounts/bank_account_proofs/bankstatement.pdf",
+                "bank_account_proof_tiny": "/assets/user_bank_accounts/bank_account_proofs/thumb/bankstatement.pdf",
+                "usage": "all",
+                "reject_reason": null
               }]
             }
           }
