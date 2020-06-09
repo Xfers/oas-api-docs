@@ -2017,1008 +2017,162 @@
           "description": "Success",
           "content": {
             "application/json": {
-              "example": [{
-                  "name": "Bank Central Asia",
-                  "abbreviation": "BCA",
-                  "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-bca-181848fa16527e50b887013cf0cb7b90ae7b89181cf2a49b563d2a9c99cf42ee.png",
-                  "bank_code": "014",
-                  "swift_code": "CENAIDJA"
+              "example": [
+                {
+                  "name": "Development Bank of Singapore",
+                  "abbreviation": "DBS",
+                  "img_src": "/assets/bank-logo-dbs-d50c1eeac92967980cf421b7dd9b39fafb2620d9318e29cde5567dcdc1e77ff9.png",
+                  "bank_code": "7171",
+                  "swift_code": "DBSSSGSGXXX"
                 },
                 {
-                  "name": "Bank Mandiri",
-                  "abbreviation": "MANDIRI",
-                  "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-mandiri-3c9030412a3deb3c41589344a9a7bf74a52ef8dd278834d400b917f35e1b3bf9.png",
-                  "bank_code": "008",
-                  "swift_code": "BMRIIDJA"
+                  "name": "United Overseas Bank",
+                  "abbreviation": "UOB",
+                  "img_src": "/assets/bank-logo-uob-f6cea3dfa157a1b7025807f435f46e05760aad46aab10442a2fc3fce698081e9.png",
+                  "bank_code": "7375",
+                  "swift_code": "UOVBSGSGXXX"
                 },
                 {
-                  "name": "Bank Negara Indonesia",
-                  "abbreviation": "BNI",
-                  "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-bni-dbb77bff33ad2bcd69f45600e4e53593a8bde8ce947175e055163b9f908898fb.png",
-                  "bank_code": "009",
-                  "swift_code": "BNINIDJA"
+                  "name": "Maybank Singapore Limited",
+                  "abbreviation": "MBB",
+                  "img_src": "/assets/bank-logo-mbb-8f7d6804d6065d0b23107b972e115e7c3dc3d7e987f8ddc4e8c72f300b423dc8.png",
+                  "bank_code": "7302",
+                  "swift_code": "MBBESGS2XXX"
                 },
                 {
-                  "name": "Bank Permata",
-                  "abbreviation": "PERMATA",
-                  "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-permata-32f25d774c784800bf92310ab010491d5f18af9fecef716ce1c61bb2ce12070d.png",
-                  "bank_code": "013",
-                  "swift_code": "BBBAIDJA"
+                  "name": "Oversea-Chinese Banking Corporation Limited",
+                  "abbreviation": "OCBC",
+                  "img_src": "/assets/bank-logo-ocbc-3184769e64db703387070eba3312fd6e70c072d0ebba67a2f9068fcf1b803aae.png",
+                  "bank_code": "7339",
+                  "swift_code": "OCBCSGSGXXX"
                 },
                 {
-                  "name": "Bank Rakyat Indonesia",
-                  "abbreviation": "BRI",
-                  "img_src": "https://d2ukkkjyjaezp4.cloudfront.net/assets/bank-logo-bri-84ffad390f2ab1033df3254d47ef61b6ed47f73495503eb8d0a8eb82c36966a4.png",
-                  "bank_code": "002",
-                  "swift_code": "BRINIDJA359"
+                  "name": "Citibank Singapore",
+                  "abbreviation": "CITI",
+                  "img_src": "/assets/bank-logo-citi-1d6a98b78e9f2d55293425c833582f44470183a23c521500a92dc3a7cbdf2541.png",
+                  "bank_code": "7214",
+                  "swift_code": "CITISGSLXXX"
                 },
                 {
-                  "name": "CIMB Niaga Bank",
-                  "abbreviation": "CIMB_NIAGA",
-                  "img_src": null,
-                  "bank_code": "022",
-                  "swift_code": "BNIAIDJA"
+                  "name": "Standard Chartered Bank",
+                  "abbreviation": "SCB",
+                  "img_src": "/assets/bank-logo-scb-919ef3a0983dba299d165158272385b6248a34bacaf3459f820b80aba94aed9c.png",
+                  "bank_code": "7144",
+                  "swift_code": "SCBLSG22XXX"
                 },
                 {
-                  "name": "Bank Danamon",
-                  "abbreviation": "DANAMON",
-                  "img_src": null,
-                  "bank_code": "011",
-                  "swift_code": "BDINIDJA"
-                },
-                {
-                  "name": "Bank Panin",
-                  "abbreviation": "PANIN",
-                  "img_src": null,
-                  "bank_code": "019",
-                  "swift_code": "PINBIDJA"
-                },
-                {
-                  "name": "Bank Maybank",
-                  "abbreviation": "BII",
-                  "img_src": null,
-                  "bank_code": "016",
-                  "swift_code": "MBBEIDJA"
-                },
-                {
-                  "name": "Anglomas International Bank",
-                  "abbreviation": "ANGLOMAS",
-                  "img_src": null,
-                  "bank_code": "531",
-                  "swift_code": "LOMAIDJ1"
-                },
-                {
-                  "name": "Bangkok Bank",
-                  "abbreviation": "BANGKOK",
-                  "img_src": null,
-                  "bank_code": "040",
-                  "swift_code": "BKKBIDJA"
-                },
-                {
-                  "name": "Bank Agris",
-                  "abbreviation": "AGRIS",
-                  "img_src": null,
-                  "bank_code": "945",
-                  "swift_code": "FINBIDJA"
-                },
-                {
-                  "name": "Sinarmas",
-                  "abbreviation": "SINARMAS",
-                  "img_src": null,
-                  "bank_code": "153",
-                  "swift_code": "SBJKIDJA"
-                },
-                {
-                  "name": "Bank Agroniaga",
-                  "abbreviation": "AGRONIAGA",
-                  "img_src": null,
-                  "bank_code": "494",
-                  "swift_code": "AGTBIDJA"
-                },
-                {
-                  "name": "Bank Andara",
-                  "abbreviation": "ANDARA",
-                  "img_src": null,
-                  "bank_code": "466",
-                  "swift_code": "RIPAIDJ1"
-                },
-                {
-                  "name": "Bank Antar Daerah",
-                  "abbreviation": "ANTAR_DAERAH",
-                  "img_src": null,
-                  "bank_code": "088",
-                  "swift_code": "ANTDIDJD"
-                },
-                {
-                  "name": "Bank ANZ Indonesia",
+                  "name": "Australia and New Zealand Bank Group",
                   "abbreviation": "ANZ",
-                  "img_src": null,
-                  "bank_code": "061",
-                  "swift_code": "ANZBIDJX"
+                  "img_src": "/assets/bank-logo-anz-45f0648f29b2ad3c45b85cbb7ae207d5865eab38b6de9f9b682bf5c7e2175b86.png",
+                  "bank_code": "7931",
+                  "swift_code": "ANZBSGSXXXX"
                 },
                 {
-                  "name": "Bank Artha Graha International",
-                  "abbreviation": "ARTHA",
-                  "img_src": null,
-                  "bank_code": "037",
-                  "swift_code": "ARTGIDJA"
+                  "name": "CIMB Bank Berhad",
+                  "abbreviation": "CIMB",
+                  "img_src": "/assets/bank-logo-cimb-faa48b64aa73a81c6bfaa258c961c5f6b4be538098aa56227e0fed151503c458.png",
+                  "bank_code": "7986",
+                  "swift_code": "CIBBSGSGXXX"
                 },
                 {
-                  "name": "Bank Artos Indonesia",
-                  "abbreviation": "ARTOS",
+                  "name": "Deutsche bank AG",
+                  "abbreviation": "DBAG",
                   "img_src": null,
-                  "bank_code": "542",
-                  "swift_code": "ATOSIDJ1"
+                  "bank_code": "7463",
+                  "swift_code": "DEUTSGSGXXX"
                 },
                 {
-                  "name": "Bank Bisnis Internasional",
-                  "abbreviation": "BISNIS",
+                  "name": "Far Eastern Bank Ltd",
+                  "abbreviation": "FEB",
                   "img_src": null,
-                  "bank_code": "459",
-                  "swift_code": "BUSTIDJ1"
+                  "bank_code": "7199",
+                  "swift_code": "FAEASGSGXXX"
                 },
                 {
-                  "name": "Bank BJB",
-                  "abbreviation": "BJB",
-                  "img_src": null,
-                  "bank_code": "110",
-                  "swift_code": "PDJBIDJA"
+                  "name": "HSBC (Corporate)",
+                  "abbreviation": "HSBC",
+                  "img_src": "/assets/bank-logo-hsbc-ce1446c71b6ff366f20ade4ff146e8c8717c0a1d49631d0ce87727cdfef77536.png",
+                  "bank_code": "7232",
+                  "swift_code": "HSBCSGSGXXX"
                 },
                 {
-                  "name": "Bank BNP Paribas",
+                  "name": "HSBC (Personal)",
+                  "abbreviation": "HSBC2",
+                  "img_src": "/assets/bank-logo-hsbc-ce1446c71b6ff366f20ade4ff146e8c8717c0a1d49631d0ce87727cdfef77536.png",
+                  "bank_code": "7232",
+                  "swift_code": "HSBCSGS2XXX"
+                },
+                {
+                  "name": "RHB Bank Berhad",
+                  "abbreviation": "RHB",
+                  "img_src": null,
+                  "bank_code": "7366",
+                  "swift_code": "RHBBSGSGXXX"
+                },
+                {
+                  "name": "Sumitomo Mitsui Banking Corporation",
+                  "abbreviation": "SMBC",
+                  "img_src": null,
+                  "bank_code": "7472",
+                  "swift_code": "SMBCSGSGXXX"
+                },
+                {
+                  "name": "The Royal Bank of Scotland N.V",
+                  "abbreviation": "RBS",
+                  "img_src": null,
+                  "bank_code": "7010",
+                  "swift_code": "ABNASGSGXXX"
+                },
+                {
+                  "name": "POSB",
+                  "abbreviation": "POSB",
+                  "img_src": "/assets/bank-logo-posb-f9657e301f424e554b55171fc8ca63843678a7997eee70d52fe3da6b3ece84c4.png",
+                  "bank_code": "7171",
+                  "swift_code": "DBSSSGSGXXX"
+                },
+                {
+                  "name": "Bank of China",
+                  "abbreviation": "BOC",
+                  "img_src": "/assets/bank-logo-boc-f3dd0f37d867baff9fac012546fcc76c3c015ffc524ef83a234709cfc91d77c6.png",
+                  "bank_code": "7083",
+                  "swift_code": "BKCHSGSGXXX"
+                },
+                {
+                  "name": "Bank of Tokyo-Mitsubshi UFJ",
+                  "abbreviation": "MUFG",
+                  "img_src": null,
+                  "bank_code": "7126",
+                  "swift_code": "BOTKSGSXXXX"
+                },
+                {
+                  "name": "BNP PARIBAS",
                   "abbreviation": "BNP",
                   "img_src": null,
-                  "bank_code": "057",
-                  "swift_code": "BNPAIDJA"
+                  "bank_code": "7418",
+                  "swift_code": "BNPASGSGXXX"
                 },
                 {
-                  "name": "Bank Bukopin",
-                  "abbreviation": "BUKOPIN",
+                  "name": "HL BANK",
+                  "abbreviation": "HLB",
                   "img_src": null,
-                  "bank_code": "441",
-                  "swift_code": "BBUKIDJA"
+                  "bank_code": "7287",
+                  "swift_code": "HLBBSGSGXXX"
                 },
                 {
-                  "name": "Bank Bumi Arta",
-                  "abbreviation": "BUMI_ARTA",
+                  "name": "Mizuho Bank",
+                  "abbreviation": "MIZ",
                   "img_src": null,
-                  "bank_code": "076",
-                  "swift_code": "BBAIIDJA"
+                  "bank_code": "7621",
+                  "swift_code": "MHCBSGSGXXX"
                 },
                 {
-                  "name": "Bank Capital Indonesia",
-                  "abbreviation": "CAPITAL",
+                  "name": "BANK OF EAST ASIA LTD",
+                  "abbreviation": "BEA",
                   "img_src": null,
-                  "bank_code": "054",
-                  "swift_code": "CRLYIDJA"
-                },
-                {
-                  "name": "Bank Central Asia (BCA) Syariah",
-                  "abbreviation": "BCA_SYR",
-                  "img_src": null,
-                  "bank_code": "536",
-                  "swift_code": "UIBAIDJ1"
-                },
-                {
-                  "name": "Bank Chinatrust Indonesia",
-                  "abbreviation": "CHINATRUST",
-                  "img_src": null,
-                  "bank_code": "949",
-                  "swift_code": "CTCBIDJA"
-                },
-                {
-                  "name": "Bank CIMB Niaga UUS",
-                  "abbreviation": "CIMB_UUS",
-                  "img_src": null,
-                  "bank_code": "022",
-                  "swift_code": "SYNAIDJ1"
-                },
-                {
-                  "name": "Bank Commonwealth",
-                  "abbreviation": "COMMONWEALTH",
-                  "img_src": null,
-                  "bank_code": "950",
-                  "swift_code": "BICNIDJA"
-                },
-                {
-                  "name": "Bank Danamon UUS",
-                  "abbreviation": "DANAMON_UUS",
-                  "img_src": null,
-                  "bank_code": "771",
-                  "swift_code": "SYBDIDJ1"
-                },
-                {
-                  "name": "Bank DBS Indonesia",
-                  "abbreviation": "DBS",
-                  "img_src": null,
-                  "bank_code": "046",
-                  "swift_code": "DBSBIDJA"
-                },
-                {
-                  "name": "Bank Dinar Indonesia",
-                  "abbreviation": "DINAR_INDONESIA",
-                  "img_src": null,
-                  "bank_code": "526",
-                  "swift_code": "LMANIDJ1"
-                },
-                {
-                  "name": "Bank DKI",
-                  "abbreviation": "DKI",
-                  "img_src": null,
-                  "bank_code": "111",
-                  "swift_code": "BDKIIDJ1"
-                },
-                {
-                  "name": "Bank DKI UUS",
-                  "abbreviation": "DKI_UUS",
-                  "img_src": null,
-                  "bank_code": "778",
-                  "swift_code": "SYDKIDJ1"
-                },
-                {
-                  "name": "Bank Ekonomi Raharja",
-                  "abbreviation": "EKONOMI_RAHARJA",
-                  "img_src": null,
-                  "bank_code": "087",
-                  "swift_code": "EKONIDJA"
-                },
-                {
-                  "name": "Bank Fama International",
-                  "abbreviation": "FAMA",
-                  "img_src": null,
-                  "bank_code": "562",
-                  "swift_code": "FAMAIDJ1"
-                },
-                {
-                  "name": "Bank Ganesha",
-                  "abbreviation": "GANESHA",
-                  "img_src": null,
-                  "bank_code": "161",
-                  "swift_code": "GNESIDJA"
-                },
-                {
-                  "name": "Bank Hana",
-                  "abbreviation": "HANA",
-                  "img_src": null,
-                  "bank_code": "484",
-                  "swift_code": "HNBNIDJA"
-                },
-                {
-                  "name": "Bank Harda Internasional",
-                  "abbreviation": "HARDA_INTERNASIONAL",
-                  "img_src": null,
-                  "bank_code": "567",
-                  "swift_code": "HRDAIDJ1"
-                },
-                {
-                  "name": "Bank Himpunan Saudara 1906",
-                  "abbreviation": "HIMPUNAN_SAUDARA",
-                  "img_src": null,
-                  "bank_code": "212",
-                  "swift_code": "BSDRIDJA"
-                },
-                {
-                  "name": "Bank ICBC Indonesia",
-                  "abbreviation": "ICBC",
-                  "img_src": null,
-                  "bank_code": "164",
-                  "swift_code": "ICBKIDJA"
-                },
-                {
-                  "name": "Bank Ina Perdana",
-                  "abbreviation": "INA_PERDANA",
-                  "img_src": null,
-                  "bank_code": "513",
-                  "swift_code": "INPBIDJ1"
-                },
-                {
-                  "name": "Bank Index Selindo",
-                  "abbreviation": "INDEX_SELINDO",
-                  "img_src": null,
-                  "bank_code": "555",
-                  "swift_code": "BIDXIDJA"
-                },
-                {
-                  "name": "Bank Jasa Jakarta",
-                  "abbreviation": "JASA_JAKARTA",
-                  "img_src": null,
-                  "bank_code": "472",
-                  "swift_code": "JSABIDJ1"
-                },
-                {
-                  "name": "Bank Kesejahteraan Ekonomi",
-                  "abbreviation": "KESEJAHTERAAN_EKONOMI",
-                  "img_src": null,
-                  "bank_code": "535",
-                  "swift_code": "KSEBIDJ1"
-                },
-                {
-                  "name": "Bank Maspion Indonesia",
-                  "abbreviation": "MASPION",
-                  "img_src": null,
-                  "bank_code": "157",
-                  "swift_code": "MASDIDJ1"
-                },
-                {
-                  "name": "Bank Mayapada International",
-                  "abbreviation": "MAYAPADA",
-                  "img_src": null,
-                  "bank_code": "097",
-                  "swift_code": "MAYAIDJA"
-                },
-                {
-                  "name": "Bank Maybank Syariah Indonesia",
-                  "abbreviation": "MAYBANK_SYR",
-                  "img_src": null,
-                  "bank_code": "947",
-                  "swift_code": "MBBEIDJA"
-                },
-                {
-                  "name": "Bank Mayora",
-                  "abbreviation": "MAYORA",
-                  "img_src": null,
-                  "bank_code": "553",
-                  "swift_code": "YORAIDJ1"
-                },
-                {
-                  "name": "Bank Mega",
-                  "abbreviation": "MEGA",
-                  "img_src": null,
-                  "bank_code": "426",
-                  "swift_code": "MEGAIDJA"
-                },
-                {
-                  "name": "Bank Mestika Dharma",
-                  "abbreviation": "MESTIKA_DHARMA",
-                  "img_src": null,
-                  "bank_code": "151",
-                  "swift_code": "MEDHIDS1"
-                },
-                {
-                  "name": "Bank Metro Express",
-                  "abbreviation": "METRO_EXPRESS",
-                  "img_src": null,
-                  "bank_code": "152",
-                  "swift_code": "MEEKIDJ1"
-                },
-                {
-                  "name": "Bank Mizuho Indonesia",
-                  "abbreviation": "MIZUHO",
-                  "img_src": null,
-                  "bank_code": "048",
-                  "swift_code": "MHCCIDJA"
-                },
-                {
-                  "name": "Bank MNC Internasional",
-                  "abbreviation": "MNC_INTERNASIONAL",
-                  "img_src": null,
-                  "bank_code": "485",
-                  "swift_code": "BUMIIDJA"
-                },
-                {
-                  "name": "Bank Muamalat Indonesia",
-                  "abbreviation": "MUAMALAT",
-                  "img_src": null,
-                  "bank_code": "147",
-                  "swift_code": "MUABIDJA"
-                },
-                {
-                  "name": "Bank Multi Arta Sentosa",
-                  "abbreviation": "MULTI_ARTA_SENTOSA",
-                  "img_src": null,
-                  "bank_code": "548",
-                  "swift_code": "MASBIDJ1"
-                },
-                {
-                  "name": "Bank Mutiara",
-                  "abbreviation": "MUTIARA",
-                  "img_src": null,
-                  "bank_code": "095",
-                  "swift_code": "CICTIDJA"
-                },
-                {
-                  "name": "Bank Nationalnobu",
-                  "abbreviation": "NATIONALNOBU",
-                  "img_src": null,
-                  "bank_code": "503",
-                  "swift_code": "LFIBIDJ1"
-                },
-                {
-                  "name": "Bank Nusantara Parahyangan",
-                  "abbreviation": "NUSANTARA_PARAHYANGAN",
-                  "img_src": null,
-                  "bank_code": "145",
-                  "swift_code": "NUPAIDJ6"
-                },
-                {
-                  "name": "Bank OCBC NISP",
-                  "abbreviation": "OCBC",
-                  "img_src": null,
-                  "bank_code": "028",
-                  "swift_code": "NISPIDJA"
-                },
-                {
-                  "name": "Bank OCBC NISP UUS",
-                  "abbreviation": "OCBC_UUS",
-                  "img_src": null,
-                  "bank_code": "028",
-                  "swift_code": "SYONIDJ1"
-                },
-                {
-                  "name": "Bank of America Merill-Lynch",
-                  "abbreviation": "BAML",
-                  "img_src": null,
-                  "bank_code": "033",
-                  "swift_code": "BOFAID2X"
-                },
-                {
-                  "name": "Bank of China (BOC)",
-                  "abbreviation": "BOC",
-                  "img_src": null,
-                  "bank_code": "069",
-                  "swift_code": "BKCHIDJA"
-                },
-                {
-                  "name": "Bank of India Indonesia",
-                  "abbreviation": "INDIA",
-                  "img_src": null,
-                  "bank_code": "146",
-                  "swift_code": "BKIDIDJA"
-                },
-                {
-                  "name": "Bank of Tokyo Mitsubishi UFJ",
-                  "abbreviation": "TOKYO",
-                  "img_src": null,
-                  "bank_code": "042",
-                  "swift_code": "BOTKJPJT"
-                },
-                {
-                  "name": "Bank Panin Syariah",
-                  "abbreviation": "PANIN_SYR",
-                  "img_src": null,
-                  "bank_code": "517",
-                  "swift_code": "ARFAIDJ1"
-                },
-                {
-                  "name": "Bank Permata UUS",
-                  "abbreviation": "PERMATA_UUS",
-                  "img_src": null,
-                  "bank_code": "784",
-                  "swift_code": "SYBBIDJ1"
-                },
-                {
-                  "name": "Bank Pundi Indonesia",
-                  "abbreviation": "PUNDI_INDONESIA",
-                  "img_src": null,
-                  "bank_code": "558",
-                  "swift_code": "EKSTIDJ1"
-                },
-                {
-                  "name": "Bank QNB Kesawan",
-                  "abbreviation": "QNB_KESAWAN",
-                  "img_src": null,
-                  "bank_code": "167",
-                  "swift_code": "AWANIDJA"
-                },
-                {
-                  "name": "Bank Rabobank International Indonesia",
-                  "abbreviation": "RABOBANK",
-                  "img_src": null,
-                  "bank_code": "089",
-                  "swift_code": "RABOIDJA"
-                },
-                {
-                  "name": "Bank Resona Perdania",
-                  "abbreviation": "RESONA",
-                  "img_src": null,
-                  "bank_code": "047",
-                  "swift_code": "BPIAIDJA"
-                },
-                {
-                  "name": "Bank Royal Indonesia",
-                  "abbreviation": "ROYAL",
-                  "img_src": null,
-                  "bank_code": "501",
-                  "swift_code": "ROYBIDJ1"
-                },
-                {
-                  "name": "Bank Sahabat Purba Danarta",
-                  "abbreviation": "SAHABAT_PURBA_DANARTA",
-                  "img_src": null,
-                  "bank_code": "547",
-                  "swift_code": "PUBAIDJ1"
-                },
-                {
-                  "name": "Bank Sahabat Sampoerna",
-                  "abbreviation": "SAHABAT_SAMPOERNA",
-                  "img_src": null,
-                  "bank_code": "523",
-                  "swift_code": "BDIPIDJ1"
-                },
-                {
-                  "name": "Bank SBI Indonesia",
-                  "abbreviation": "SBI_INDONESIA",
-                  "img_src": null,
-                  "bank_code": "498",
-                  "swift_code": "IDMOIDJ1"
-                },
-                {
-                  "name": "Bank Sinar Harapan Bali",
-                  "abbreviation": "SINAR_HARAPAN_BALI",
-                  "img_src": null,
-                  "bank_code": "564",
-                  "swift_code": "SIHBIDJ1"
-                },
-                {
-                  "name": "Bank Sumitomo Mitsui Indonesia",
-                  "abbreviation": "MITSUI",
-                  "img_src": null,
-                  "bank_code": "045",
-                  "swift_code": "SUNIIDJA"
-                },
-                {
-                  "name": "Bank Syariah BRI",
-                  "abbreviation": "BRI_SYR",
-                  "img_src": null,
-                  "bank_code": "422",
-                  "swift_code": "DJARIDJ1"
-                },
-                {
-                  "name": "Bank Syariah Bukopin",
-                  "abbreviation": "BUKOPIN_SYR",
-                  "img_src": null,
-                  "bank_code": "774",
-                  "swift_code": "SDOBIDJ1"
-                },
-                {
-                  "name": "Bank Syariah Mandiri",
-                  "abbreviation": "MANDIRI_SYR",
-                  "img_src": null,
-                  "bank_code": "451",
-                  "swift_code": "BSMDIDJA"
-                },
-                {
-                  "name": "Bank Syariah Mega",
-                  "abbreviation": "MEGA_SYR",
-                  "img_src": null,
-                  "bank_code": "506",
-                  "swift_code": "BUTGIDJ1"
-                },
-                {
-                  "name": "Bank Tabungan Negara (BTN)",
-                  "abbreviation": "BTN",
-                  "img_src": null,
-                  "bank_code": "200",
-                  "swift_code": "BTANIDJA"
-                },
-                {
-                  "name": "Bank Tabungan Negara (BTN) UUS",
-                  "abbreviation": "BTN_UUS",
-                  "img_src": null,
-                  "bank_code": "200",
-                  "swift_code": "SYBTIDJ1"
-                },
-                {
-                  "name": "Bank Tabungan Pensiunan Nasional",
-                  "abbreviation": "TABUNGAN_PENSIUNAN_NASIONAL",
-                  "img_src": null,
-                  "bank_code": "213",
-                  "swift_code": "TAPEIDJ1"
-                },
-                {
-                  "name": "Bank Tabungan Pensiunan Nasional UUS",
-                  "abbreviation": "TABUNGAN_PENSIUNAN_NASIONAL_UUS",
-                  "img_src": null,
-                  "bank_code": "213",
-                  "swift_code": "SYTPIDJ1"
-                },
-                {
-                  "name": "Bank UOB Indonesia",
-                  "abbreviation": "UOB",
-                  "img_src": null,
-                  "bank_code": "023",
-                  "swift_code": "BBIJIDJA"
-                },
-                {
-                  "name": "Bank Victoria Internasional",
-                  "abbreviation": "VICTORIA_INTERNASIONAL",
-                  "img_src": null,
-                  "bank_code": "566",
-                  "swift_code": "VICTIDJ1"
-                },
-                {
-                  "name": "Bank Victoria Syariah",
-                  "abbreviation": "VICTORIA_SYR",
-                  "img_src": null,
-                  "bank_code": "405",
-                  "swift_code": "SWAGIDJ1"
-                },
-                {
-                  "name": "Bank Windu Kentjana Int",
-                  "abbreviation": "WINDU",
-                  "img_src": null,
-                  "bank_code": "036",
-                  "swift_code": "MCORIDJA"
-                },
-                {
-                  "name": "Bank Woori Indonesia",
-                  "abbreviation": "WOORI",
-                  "img_src": null,
-                  "bank_code": "068",
-                  "swift_code": "HVBKIDJA"
-                },
-                {
-                  "name": "Bank Yudha Bhakti",
-                  "abbreviation": "YUDHA_BHAKTI",
-                  "img_src": null,
-                  "bank_code": "490",
-                  "swift_code": "YUDBIDJ1"
-                },
-                {
-                  "name": "BPD Aceh",
-                  "abbreviation": "ACEH",
-                  "img_src": null,
-                  "bank_code": "116",
-                  "swift_code": "PDACIDJ1"
-                },
-                {
-                  "name": "BPD Aceh UUS",
-                  "abbreviation": "ACEH_UUS",
-                  "img_src": null,
-                  "bank_code": "116",
-                  "swift_code": "SYACIDJ1"
-                },
-                {
-                  "name": "BPD Bali",
-                  "abbreviation": "BALI",
-                  "img_src": null,
-                  "bank_code": "129",
-                  "swift_code": "ABALIDBS"
-                },
-                {
-                  "name": "BPD Bengkulu",
-                  "abbreviation": "BENGKULU",
-                  "img_src": null,
-                  "bank_code": "133",
-                  "swift_code": "PDBKIDJ1"
-                },
-                {
-                  "name": "Bank Pembangunan Daerah (BPD DIY)",
-                  "abbreviation": "BPD_DIY",
-                  "img_src": null,
-                  "bank_code": "112",
-                  "swift_code": "PDYKIDJ1"
-                },
-                {
-                  "name": "Bank Pembangunan Daerah (BPD DIY) Syariah",
-                  "abbreviation": "BPD_DIY_SYR",
-                  "img_src": null,
-                  "bank_code": "112",
-                  "swift_code": "SYYKIDJ1"
-                },
-                {
-                  "name": "BPD Jambi",
-                  "abbreviation": "JAMBI",
-                  "img_src": null,
-                  "bank_code": "115",
-                  "swift_code": "PDJMIDJ1"
-                },
-                {
-                  "name": "BPD Jambi UUS",
-                  "abbreviation": "JAMBI_UUS",
-                  "img_src": null,
-                  "bank_code": "115",
-                  "swift_code": "SYJMIDJ1"
-                },
-                {
-                  "name": "BPD Jawa Tengah",
-                  "abbreviation": "JAWA_TENGAH",
-                  "img_src": null,
-                  "bank_code": "113",
-                  "swift_code": "PDJGIDJ1"
-                },
-                {
-                  "name": "BPD Jawa Tengah UUS",
-                  "abbreviation": "JAWA_TENGAH_UUS",
-                  "img_src": null,
-                  "bank_code": "113",
-                  "swift_code": "SYJGIDJ1"
-                },
-                {
-                  "name": "BPD Jawa Timur",
-                  "abbreviation": "JAWA_TIMUR",
-                  "img_src": null,
-                  "bank_code": "114",
-                  "swift_code": "PDJTIDJ1"
-                },
-                {
-                  "name": "BPD Jawa Timur UUS",
-                  "abbreviation": "JAWA_TIMUR_UUS",
-                  "img_src": null,
-                  "bank_code": "114",
-                  "swift_code": "SYJTIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Barat",
-                  "abbreviation": "KALIMANTAN_BARAT",
-                  "img_src": null,
-                  "bank_code": "123",
-                  "swift_code": "PDKBIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Barat UUS",
-                  "abbreviation": "KALIMANTAN_BARAT_UUS",
-                  "img_src": null,
-                  "bank_code": "123",
-                  "swift_code": "SYKBIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Selatan",
-                  "abbreviation": "KALIMANTAN_SELATAN",
-                  "img_src": null,
-                  "bank_code": "122",
-                  "swift_code": "PDKSIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Selatan UUS",
-                  "abbreviation": "KALIMANTAN_SELATAN_UUS",
-                  "img_src": null,
-                  "bank_code": "122",
-                  "swift_code": "SYKSIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Tengah",
-                  "abbreviation": "KALIMANTAN_TENGAH",
-                  "img_src": null,
-                  "bank_code": "125",
-                  "swift_code": "PDKGIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Timur",
-                  "abbreviation": "KALIMANTAN_TIMUR",
-                  "img_src": null,
-                  "bank_code": "124",
-                  "swift_code": "PDKTIDJ1"
-                },
-                {
-                  "name": "BPD Kalimantan Timur UUS",
-                  "abbreviation": "KALIMANTAN_TIMUR_UUS",
-                  "img_src": null,
-                  "bank_code": "124",
-                  "swift_code": "SYKTIDJ1"
-                },
-                {
-                  "name": "BPD Lampung",
-                  "abbreviation": "LAMPUNG",
-                  "img_src": null,
-                  "bank_code": "121",
-                  "swift_code": "PDLPIDJ1"
-                },
-                {
-                  "name": "BPD Maluku",
-                  "abbreviation": "MALUKU",
-                  "img_src": null,
-                  "bank_code": "131",
-                  "swift_code": "PDMLIDJ1"
-                },
-                {
-                  "name": "BPD Nusa Tenggara Barat",
-                  "abbreviation": "NUSA_TENGGARA_BARAT",
-                  "img_src": null,
-                  "bank_code": "128",
-                  "swift_code": "PDNBIDJ1"
-                },
-                {
-                  "name": "BPD Nusa Tenggara Barat UUS",
-                  "abbreviation": "NUSA_TENGGARA_BARAT_UUS",
-                  "img_src": null,
-                  "bank_code": "128",
-                  "swift_code": "SYNBIDJ1"
-                },
-                {
-                  "name": "BPD Nusa Tenggara Timur",
-                  "abbreviation": "NUSA_TENGGARA_TIMUR",
-                  "img_src": null,
-                  "bank_code": "130",
-                  "swift_code": "PDNTIDJ1"
-                },
-                {
-                  "name": "BPD Papua",
-                  "abbreviation": "PAPUA",
-                  "img_src": null,
-                  "bank_code": "132",
-                  "swift_code": "PDIJIDJ1"
-                },
-                {
-                  "name": "BPD Riau Dan Kepri",
-                  "abbreviation": "RIAU_DAN_KEPRI",
-                  "img_src": null,
-                  "bank_code": "119",
-                  "swift_code": "PDRIIDJA"
-                },
-                {
-                  "name": "BPD Riau Dan Kepri UUS",
-                  "abbreviation": "RIAU_DAN_KEPRI_UUS",
-                  "img_src": null,
-                  "bank_code": "119",
-                  "swift_code": "SYRIIDJ1"
-                },
-                {
-                  "name": "BPD Sulawesi Tengah",
-                  "abbreviation": "SULAWESI",
-                  "img_src": null,
-                  "bank_code": "134",
-                  "swift_code": "PDWGIDJ1"
-                },
-                {
-                  "name": "BPD Sulawesi Tenggara",
-                  "abbreviation": "SULAWESI_TENGGARA",
-                  "img_src": null,
-                  "bank_code": "135",
-                  "swift_code": "PDWRIDJ1"
-                },
-                {
-                  "name": "BPD Sulselbar",
-                  "abbreviation": "SULSELBAR",
-                  "img_src": null,
-                  "bank_code": "126",
-                  "swift_code": "PDWSIDJ1"
-                },
-                {
-                  "name": "BPD Sulselbar UUS",
-                  "abbreviation": "SULSELBAR_UUS",
-                  "img_src": null,
-                  "bank_code": "126",
-                  "swift_code": "SYWSIDJ1"
-                },
-                {
-                  "name": "BPD Sulut",
-                  "abbreviation": "SULUT",
-                  "img_src": null,
-                  "bank_code": "127",
-                  "swift_code": "PDWUIDJ1"
-                },
-                {
-                  "name": "BPD Sumatera Barat",
-                  "abbreviation": "SUMATERA_BARAT",
-                  "img_src": null,
-                  "bank_code": "118",
-                  "swift_code": "PDSBIDJ1"
-                },
-                {
-                  "name": "BPD Sumatera Barat UUS",
-                  "abbreviation": "SUMATERA_BARAT_UUS",
-                  "img_src": null,
-                  "bank_code": "118",
-                  "swift_code": "SYSBIDJ1"
-                },
-                {
-                  "name": "BPD Sumsel Dan Babel",
-                  "abbreviation": "SUMSEL_DAN_BABEL",
-                  "img_src": null,
-                  "bank_code": "120",
-                  "swift_code": "BSSPIDSP"
-                },
-                {
-                  "name": "BPD Sumsel Dan Babel UUS",
-                  "abbreviation": "SUMSEL_DAN_BABEL_UUS",
-                  "img_src": null,
-                  "bank_code": "120",
-                  "swift_code": "SYSSIDJ1"
-                },
-                {
-                  "name": "BPD Sumut",
-                  "abbreviation": "SUMUT",
-                  "img_src": null,
-                  "bank_code": "117",
-                  "swift_code": "PDSUIDJ1"
-                },
-                {
-                  "name": "BPD Sumut UUS",
-                  "abbreviation": "SUMUT_UUS",
-                  "img_src": null,
-                  "bank_code": "117",
-                  "swift_code": "SYSUIDJ1"
-                },
-                {
-                  "name": "Centratama Nasional Bank",
-                  "abbreviation": "CENTRATAMA",
-                  "img_src": null,
-                  "bank_code": "559",
-                  "swift_code": "CNBAIDJ1"
-                },
-                {
-                  "name": "Citibank",
-                  "abbreviation": "CITIBANK",
-                  "img_src": null,
-                  "bank_code": "031",
-                  "swift_code": "CITIIDJX"
-                },
-                {
-                  "name": "Deutsche Bank",
-                  "abbreviation": "DEUTSCHE",
-                  "img_src": null,
-                  "bank_code": "067",
-                  "swift_code": "DEUTIDJA"
-                },
-                {
-                  "name": "Hongkong and Shanghai Bank Corporation (HSBC)",
-                  "abbreviation": "HSBC",
-                  "img_src": null,
-                  "bank_code": "041",
-                  "swift_code": "HSBCIDJA"
-                },
-                {
-                  "name": "Hongkong and Shanghai Bank Corporation (HSBC) UUS",
-                  "abbreviation": "HSBC_UUS",
-                  "img_src": null,
-                  "bank_code": "041",
-                  "swift_code": "SYHSIDJ1"
-                },
-                {
-                  "name": "JP Morgan Chase Bank",
-                  "abbreviation": "JPMORGAN",
-                  "img_src": null,
-                  "bank_code": "032",
-                  "swift_code": "CHASIDJX"
-                },
-                {
-                  "name": "Prima Master Bank",
-                  "abbreviation": "PRIMA_MASTER",
-                  "img_src": null,
-                  "bank_code": "520",
-                  "swift_code": "PMASIDJ1"
-                },
-                {
-                  "name": "Royal Bank of Scotland (RBS)",
-                  "abbreviation": "PRIMA_MASTER",
-                  "img_src": null,
-                  "bank_code": "052",
-                  "swift_code": "ABNAIDJA"
-                },
-                {
-                  "name": "Standard Charted Bank",
-                  "abbreviation": "STANDARD_CHARTERED",
-                  "img_src": null,
-                  "bank_code": "050",
-                  "swift_code": "SCBLIDJX"
-                },
-                {
-                  "name": "Bank Mitra Niaga",
-                  "abbreviation": "MITRA_NIAGA",
-                  "img_src": null,
-                  "bank_code": "491",
-                  "swift_code": "MGABIDJ1"
-                },
-                {
-                  "name": "Bank Ekspor Indonesia",
-                  "abbreviation": "EKSPOR_INDONESIA",
-                  "img_src": null,
-                  "bank_code": "003",
-                  "swift_code": "BEXIIDJA"
-                },
-                {
-                  "name": "Bank Arta Niaga Kencana",
-                  "abbreviation": "ARTA_NIAGA_KENCANA",
-                  "img_src": null,
-                  "bank_code": "020",
-                  "swift_code": "ARNKIDJ1"
-                },
-                {
-                  "name": "Bank BJB Syariah",
-                  "abbreviation": "BJB_SYR",
-                  "img_src": null,
-                  "bank_code": "425",
-                  "swift_code": "PDJBIDJA"
-                },
-                {
-                  "name": "Bank BNI Syariah",
-                  "abbreviation": "BNI_SYR",
-                  "img_src": null,
-                  "bank_code": "009",
-                  "swift_code": "SYNIIDJ1"
+                  "bank_code": "7092",
+                  "swift_code": "BEASSGSGXXX"
                 }
-              ]
+              ]            
             }
           }
         },
