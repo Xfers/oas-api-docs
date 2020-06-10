@@ -1626,15 +1626,7 @@
                 },
                 "bank_account_proof": {
                   "type": "object",
-                  "fileData": {
-                    "type": "string",
-                    "format": "base64",
-                    "description": "Bank statement. We only accept PDF, PNG, JPG, or JPEG for the file format"
-                  },
-                  "fileName": {
-                    "type": "string",
-                    "description": "Name of the document uploaded"
-                  }
+                  "description": "This params takes in an object with properties {fileData, fileName}. File data should be in format base64, and we only accept PDF, PNG, JPG, JPEG."
                 }
               }
             },
@@ -1757,7 +1749,7 @@
       "requestBody": {
         "required": true,
         "content": {
-          "application/x-www-form-urlencoded": {
+          "application/json": {
             "schema": {
               "x-custom-requirements": {
                 "Indonesia": [
@@ -1783,15 +1775,7 @@
                 },
                 "bank_account_proof": {
                   "type": "object",
-                  "fileData": {
-                    "type": "string",
-                    "format": "base64",
-                    "description": "Bank statement. We only accept PDF, PNG, JPG, or JPEG for the file format"
-                  },
-                  "fileName": {
-                    "type": "string",
-                    "description": "Name of the document uploaded"
-                  }
+                  "description": "This params takes in an object with properties {fileData, fileName}. File data should be in format base64, and we only accept PDF, PNG, JPG, JPEG."
                 }
               }
             },
