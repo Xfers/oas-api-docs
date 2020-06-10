@@ -48,11 +48,11 @@
   "tags": [
     {
       "name": "What is Payment Object?",
-      "description": "Payment Object is an object that represents one Payment Request. It includes the payment instruction to complete the payment as well as represent a payment transaction within Xfers system."
+      "description": "Payment Object is an object that represents a payment transaction within Xfers system."
     },
     {
       "name": "What is Payment Method Object?",
-      "description": "Payment Method Object is an object that represents one fix Payment Instruction that can be use multiple times and will create multiple payment transactions. All of those payment transactions will refer and use the same Payment Method Object."
+      "description": "Payment Method Object is an object that represents the method and the instruction to complete a payment transaction."
     }
   ]
 }

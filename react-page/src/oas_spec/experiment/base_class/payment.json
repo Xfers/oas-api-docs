@@ -1,26 +1,29 @@
 {
   "schemas": {
     "RequestBody": {
-      "description": "Params to request for payment (@irfan)",
+      "description": "This is the payment request with the amount and reference id.",
       "type": "object",
       "properties": {
         "amount": {
-          "description": "Amount value",
+          "description": "Amount value.",
           "type": "integer",
           "example": 10000
         },
         "currency": {
-          "description": "Amount currency",
+          "description": "Amount currency.",
           "type": "string",
-          "example": "idr"
+          "enum": [
+            "IDR"
+          ],
+          "example": "IDR"
         },
         "reference_id": {
-          "description": "Your order's reference id",
+          "description": "Your order's reference id.",
           "type": "string",
           "example": "ORDER_0001"
         },
         "description": {
-          "description": "Order description",
+          "description": "Order description.",
           "type": "string",
           "example": "This is the first order"
         }
@@ -32,10 +35,10 @@
       ]
     },
     "BaseObject": {
-      "description": "Payment Object",
+      "description": "This is the payment object that Xfers already received.",
       "properties": {
         "id": {
-          "description": "id from Xfers side @irfan",
+          "description": "Payment id from Xfers.",
           "type": "string",
           "example": "contract_7abf6bb130d44c02862982ff6022875d"
         },

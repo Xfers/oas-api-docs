@@ -55,32 +55,31 @@
           "example": "unique_amount_bank_transfer"
         },
         "destination_account_id": {
-          "description": "Destination account id @irfan",
+          "description": "This is the account ID that will be associated with the payment.",
           "type": "string",
           "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
         },
         "bank_type": {
-          "description": "Bank type @irfan",
+          "description": "The bank that you want your customer to transfer to. Currently we only support BNI and BRI for this specific payment method.",
           "type": "string",
-          "example": "active",
+          "example": "BNI",
           "enum": [
-            "BBB",
-            "AAA",
-            "CCC"
+            "BNI",
+            "BRI"
           ]
         },
         "account_holder_name": {
-          "description": "Payee name @irfan",
+          "description": "The account holder name for the bank account that your customer will transfer to.",
           "type": "string",
-          "example": "@irfan"
+          "example": "PT Inklusi Keuangan Nusantara"
         },
         "account_no": {
-          "description": "account number @irfan",
+          "description": "The account number for the bank account that your customer will transfer to.",
           "type": "string",
           "example": "174926751990"
         },
         "unique_amount": {
-          "description": "Amount for transferring @irfan",
+          "description": "The unique amount for your customer to transfer in order to complete the payment.",
           "type": "string",
           "example": "10391"
         }

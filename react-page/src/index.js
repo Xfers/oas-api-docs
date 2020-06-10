@@ -82,7 +82,7 @@ const routing = (
 				{...props}
 				oasSpec={require('./oas_spec/experiment/index.js')}
 				isUrl={false}
-				docName={"Experiment"}
+				docName={"Payment Gateway (Beta version) for Neu"}
 				dropDownOptions = {[]}
 				/>}
 			/>

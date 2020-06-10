@@ -5,7 +5,7 @@
         "Payment Queries"
       ],
       "summary": "Retrieve Payment",
-      "description": "@irfan",
+      "description": "Get the status of your payment transaction by key in the payment ID from Xfers.",
       "security": [
         {
           "X-XFERS-APP-API-KEY": []
@@ -56,7 +56,7 @@
         "Modify Payments"
       ],
       "summary": "Cancel Payment",
-      "description": "@irfan",
+      "description": "Cancel your payment transaction by key in the payment ID from Xfers.\n\n Note: You can only cancel a payment when the status is not in final state!",
       "security": [
         {
           "X-XFERS-APP-API-KEY": []

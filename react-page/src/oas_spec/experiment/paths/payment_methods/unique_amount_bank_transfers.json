@@ -5,7 +5,7 @@
         "Unique Amount Bank Transfers"
       ],
       "summary": "Unique Amount Bank Transfer",
-      "description": "@irfan",
+      "description": "With Unique Amount Bank Transfer payment method, you need pass us the amount that you want your customer to pay and we will give you the unique amount. \n\n After your customer successfuly transfer with the unique amount, our system will associate it to your account and we will notify you with the successful callback.",
       "security": [
         {
           "X-XFERS-APP-API-KEY": []
@@ -18,19 +18,18 @@
             "schema": {
               "properties": {
                 "destination_account_id": {
-                  "description": "You can get from (@irfan)",
+                  "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our Get User Info API : /v3/user",
                   "type": "string",
                   "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
                 },
                 "bank_type": {
-                  "description": "Bank type (@irfan)",
+                  "description": "Please specify the bank that you want your customer to transfer to. Currently we only support BNI and BRI for this specific payment method.",
                   "type": "string",
                   "enum": [
-                    "AAA",
-                    "BBB",
-                    "CCC"
+                    "BNI",
+                    "BRI"
                   ],
-                  "example": "CCC"
+                  "example": "BNI"
                 },
                 "payment": {
                   "$ref": "#/base_class/payment/schemas/RequestBody"
@@ -76,7 +75,7 @@
           "$settings.payment.payment_gateway_v3_payment_completed": {
             "post": {
               "summary": "Callback when the payment completed",
-              "description": "Set up on Dashboard @irfan",
+              "description": "Login to your Dashboard and setup this callback to get notification of successful payment.",
               "requestBody": {
                 "required": true,
                 "content": {
@@ -109,7 +108,7 @@
           "$settings.payment.payment_gateway_v3_payment_expired": {
             "post": {
               "summary": "Callback when the payment expired",
-              "description": "Set up on Dashboard @irfan",
+              "description": "Login to your Dashboard and setup this callback to get notification when payment is expired.",
               "requestBody": {
                 "required": true,
                 "content": {
