@@ -1623,6 +1623,18 @@
                 "account_holder_name": {
                   "type": "string",
                   "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                },
+                "bank_account_proof": {
+                  "type": "object",
+                  "fileData": {
+                    "type": "string",
+                    "format": "base64",
+                    "description": "Bank statement. We only accept PDF, PNG, JPG, or JPEG for the file format"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the document uploaded"
+                  }
                 }
               }
             },
@@ -1632,7 +1644,11 @@
                 "value": {
                   "account_no": "0393123432",
                   "bank": "DBS",
-                  "account_holder_name": "Tian Wei"
+                  "account_holder_name": "Tian Wei",
+                  "bank_account_proof": {
+                    "fileData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB2YAAAWuCAYAAAC....",
+                    "fileName": "bankstatement.pdf"
+                  }
                 }
               }
             }
@@ -1764,6 +1780,18 @@
                 "account_holder_name": {
                   "type": "string",
                   "description": "Name of bank account holder name. Put 'PROD_ONLY' in Indo Sandbox"
+                },
+                "bank_account_proof": {
+                  "type": "object",
+                  "fileData": {
+                    "type": "string",
+                    "format": "base64",
+                    "description": "Bank statement. We only accept PDF, PNG, JPG, or JPEG for the file format"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "Name of the document uploaded"
+                  }
                 }
               }
             },
@@ -1773,7 +1801,11 @@
                 "value": {
                   "account_no": "0393123432",
                   "bank": "DBS",
-                  "account_holder_name": "Tian Wei"
+                  "account_holder_name": "Tian Wei",
+                  "bank_account_proof": {
+                    "fileData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB2YAAAWuCAYAAAC....",
+                    "fileName": "bankstatement.pdf"
+                  }
                 }
               }
             }
