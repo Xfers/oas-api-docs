@@ -1,5 +1,5 @@
 {
-  "/v3/payment_gateway/direct_payment/virtual_account_bank_transfers": {
+  "/v3/payment_gateway/payment_methods/virtual_account_bank_transfers": {
     "post": {
       "tags": [
         "Virtual Account Bank Transfers"
