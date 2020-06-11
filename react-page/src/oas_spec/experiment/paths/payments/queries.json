@@ -29,21 +29,20 @@
           "content": {
             "application/json": {
               "example": {
-                "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                "status": "processing",
-                "reference_id": "ORDER_001",
-                "amount": {
-                  "value": 10000,
-                  "currency": "IDR"
-                },
-                "expiration_time": "2020-04-30T19:02:57+08:00",
-                "description": "This is the first order",
-                "merchant_metadata": {},
+                "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                "status": "completed",
+                "reference_id": "2020-06-11_13:00",
+                "amount": "60189.0",
+                "currency": "idr",
+                "expiration_time": "2020-06-12T13:00:54+07:00",
+                "description": "This is test order",
                 "payment_method": {
-                  "bank_type": "BSS",
-                  "account_holder_name": "Xfers Pte Ltd.",
-                  "account_no": "202000120472913",
-                  "amount": 10391
+                  "type": "unique_amount_bank_transfer",
+                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                  "bank_type": "BRI",
+                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                  "account_no": "000501003330303",
+                  "unique_amount": 60189
                 }
               }
             }
@@ -110,22 +109,20 @@
           "content": {
             "application/json": {
               "example": {
-                "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                "payment_method": "virtual_account_bank_transfer",
-                "status": "cancelled",
-                "reference_id": "ORDER_001",
-                "amount": {
-                  "value": 10000,
-                  "currency": "IDR"
-                },
-                "expiration_time": "2020-04-30T19:02:57+08:00",
-                "description": "This is the first order",
-                "merchant_metadata": {},
+                "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                "status": "processing",
+                "reference_id": "2020-06-11_13:00",
+                "amount": "60189.0",
+                "currency": "idr",
+                "expiration_time": "2020-06-12T13:00:54+07:00",
+                "description": "This is test order",
                 "payment_method": {
-                  "bank_type": "BSS",
-                  "account_holder_name": "Xfers Pte Ltd.",
-                  "account_no": "202000120472913",
-                  "amount": 10000
+                  "type": "unique_amount_bank_transfer",
+                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                  "bank_type": "BRI",
+                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                  "account_no": "000501003330303",
+                  "unique_amount": 60189
                 }
               }
             }
@@ -175,52 +172,7 @@
           "content": {
             "application/json": {
               "example": [
-                {
-                  "id": "contract_e3775d3ff7fb38cab906adf079cbc763",
-                  "payment_method": "payment_method",
-                  "status": "processing",
-                  "reference_id": "ORDER_001",
-                  "amount": {
-                    "value": 10000,
-                    "currency": "IDR"
-                  },
-                  "expiration_time": "2020-04-30T19:02:57+08:00",
-                  "description": "This is the first order",
-                  "merchant_metadata": {},
-                  "payment_method": {
-                    "id": "va_7abf6bb130d44c02862982ff6022875d",
-                    "type": "fixed_virtual_account",
-                    "status": "active",
-                    "customer_id": "CUSTOMER_001",
-                    "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                    "bank_type": "BSS",
-                    "display_name": "My Shop 1",
-                    "account_no": "202000120472913"
-                  }
-                },
-                {
-                  "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                  "payment_method": "payment_method",
-                  "status": "processing",
-                  "reference_id": "ORDER_002",
-                  "amount": {
-                    "value": 10000,
-                    "currency": "IDR"
-                  },
-                  "expiration_time": "2020-04-30T19:02:57+08:00",
-                  "description": "This is the first order",
-                  "merchant_metadata": {},
-                  "payment_method": {
-                    "id": "va_7abf6bb130d44c02862982ff6022875d",
-                    "type": "fixed_virtual_account",
-                    "status": "active",
-                    "customer_id": "CUSTOMER_001",
-                    "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                    "bank_type": "BSS",
-                    "display_name": "My Shop 1",
-                    "account_no": "202000120472913"
-                  }
-                }
+
               ]
             }
           }
