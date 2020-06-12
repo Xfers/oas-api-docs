@@ -1,0 +1,143 @@
+{
+  "/v3/payment_gateway/payment_methods/unique_amount_bank_transfers": {
+    "post": {
+      "tags": [
+        "Unique Amount Bank Transfers"
+      ],
+      "summary": "Unique Amount Bank Transfer",
+      "description": "With Unique Amount Bank Transfer payment method, you need pass us the amount that you want your customer to pay and we will give you the unique amount. \n\n After your customer successfuly transfer with the unique amount, our system will associate it to your account and we will notify you with the successful callback.",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "destination_account_id": {
+                  "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our Get User Info API : /v3/user",
+                  "type": "string",
+                  "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+                },
+                "bank_type": {
+                  "description": "Please specify the bank that you want your customer to transfer to. Currently we only support BNI and BRI for this specific payment method.",
+                  "type": "string",
+                  "enum": [
+                    "BNI",
+                    "BRI"
+                  ],
+                  "example": "BNI"
+                },
+                "payment": {
+                  "$ref": "#/base_class/payment/schemas/RequestBody"
+                }
+              },
+              "required": [
+                "destination_account_id",
+                "bank_type",
+                "payment"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+                  },
+                  {
+                    "properties": {
+                      "payment": {
+                        "$ref": "#/base_class/payment/schemas/BaseObject"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/v3Error:4XX"
+          }
+        }
+      },
+      "callbacks": {
+        "payment_completed": {
+          "$settings.payment.payment_gateway_v3_payment_completed": {
+            "post": {
+              "summary": "Callback when the payment completed",
+              "description": "Login to your Dashboard and setup this callback to get notification of successful payment.",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "properties": {
+                        "event": {
+                          "description": "Event name",
+                          "type": "string",
+                          "example": "payment_gateway_v3_payment_completed"
+                        },
+                        "data": {
+                          "type": "object",
+                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
+        },
+        "payment_expired": {
+          "$settings.payment.payment_gateway_v3_payment_expired": {
+            "post": {
+              "summary": "Callback when the payment expired",
+              "description": "Login to your Dashboard and setup this callback to get notification when payment is expired.",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "properties": {
+                        "event": {
+                          "description": "Event name",
+                          "type": "string",
+                          "example": "payment_gateway_v3_payment_expired"
+                        },
+                        "data": {
+                          "type": "object",
+                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

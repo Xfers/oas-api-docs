@@ -1,0 +1,136 @@
+{
+  "schemas": {
+    "RequestBody": {
+      "description": "This is the payment request with the amount and reference id.",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "description": "Amount value.",
+          "type": "integer",
+          "example": 10000
+        },
+        "currency": {
+          "description": "Amount currency.",
+          "type": "string",
+          "enum": [
+            "IDR"
+          ],
+          "example": "IDR"
+        },
+        "reference_id": {
+          "description": "Your order's reference id.",
+          "type": "string",
+          "example": "ORDER_0001"
+        },
+        "description": {
+          "description": "Order description.",
+          "type": "string",
+          "example": "This is the first order"
+        }
+      },
+      "required": [
+        "amount",
+        "currency",
+        "reference_id"
+      ]
+    },
+    "BaseObject": {
+      "description": "This is the payment object that Xfers already received.",
+      "properties": {
+        "id": {
+          "description": "Payment id from Xfers.",
+          "type": "string",
+          "example": "contract_7abf6bb130d44c02862982ff6022875d"
+        },
+        "status": {
+          "description": "Payment status",
+          "type": "string",
+          "example": "processing"
+        },
+        "reference_id": {
+          "description": "Your order's reference id",
+          "type": "string",
+          "example": "ORDER_001"
+        },
+        "amount": {
+          "description": "Amount value",
+          "type": "integer",
+          "example": 10000
+        },
+        "currency": {
+          "description": "Amount currency",
+          "type": "string",
+          "example": "idr"
+        },
+        "expiration_time": {
+          "description": "Expiration time (ISO8601 format). maximum: 3 days after the request creation",
+          "type": "string",
+          "default": "1 day after the request creation",
+          "example": "2020-04-30T19:02:57+08:00"
+        },
+        "description": {
+          "description": "Order description",
+          "type": "string",
+          "example": "This is the first order"
+        }
+      }
+    },
+    "UniqueAmountBankTransfer": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "payment_method": {
+              "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+            }
+          }
+        }
+      ]
+    },
+    "FixedVirtualAccountBankTransfer": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "payment_method": {
+              "type": "object",
+              "properties": {
+                "bank_type": {
+                  "type": "string",
+                  "example": "BNI"
+                },
+                "display_name": {
+                  "type": "string",
+                  "example": "Michael Budi"
+                },
+                "account_no": {
+                  "type": "string",
+                  "example": "202000120472913"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CustomPaymentMethodPayment": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "payment_method": {
+              "type": "string",
+              "example": "payment_method"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

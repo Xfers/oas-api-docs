@@ -1,0 +1,73 @@
+{
+  "schemas": {
+    "RequestBody": {
+      "description": "This is the payment request with the amount and reference id.",
+      "type": "object",
+      "properties": {
+        "destination_account_id": {
+          "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our Get User Info API : /v3/user",
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+        },
+        "bank_type": {
+          "description": "Please specify the bank that you want your customer to transfer to. Currently we only support BNI and BRI for this specific payment method.",
+          "type": "string",
+          "enum": [
+            "BNI",
+            "BRI"
+          ],
+          "example": "BNI"
+        },
+        "customer_id": {
+          "description": "Your own customer id.",
+          "type": "string",
+          "example": "COMPANY_001"
+        },
+        "display_name": {
+          "description": "Name to be displayed in the corresponding bank system such as ATM confirmation screen.",
+          "type": "string",
+          "example": "MICHAEL BUDI"
+        }
+      },
+      "required": [
+        "destination_account_id",
+        "bank_type",
+        "customer_id"
+      ]
+    },
+    "FixedVirtualAccountObject": {
+      "type": "object",
+      "properties": {
+        "virtual_account": {
+          "type": "string",
+          "example": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+        }
+      }
+    },
+    "FixedVirtualAccountPaymentObject": {
+      "description": "This is the payment object that we will be returning.",
+      "properties": {
+        "id": {
+          "description": "Payment id from Xfers.",
+          "type": "string",
+          "example": "contract_7abf6bb130d44c02862982ff6022875d"
+        },
+        "status": {
+          "description": "Payment status",
+          "type": "string",
+          "example": "completed"
+        },
+        "amount": {
+          "description": "Amount value",
+          "type": "integer",
+          "example": 10000
+        },
+        "currency": {
+          "description": "Amount currency",
+          "type": "string",
+          "example": "idr"
+        }
+      }
+    }
+  }
+}

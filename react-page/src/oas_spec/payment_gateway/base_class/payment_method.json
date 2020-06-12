@@ -1,0 +1,115 @@
+{
+  "schemas": {
+    "RequestBody": {
+      "properties": {
+        "destination_account_id": {
+          "description": "You can get from XXXX",
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+        },
+        "customer_id": {
+          "description": "Customer id",
+          "type": "string",
+          "example": "CUSTOMER_0001"
+        }
+      },
+      "required": [
+        "destination_account_id",
+        "customer_id"
+      ]
+    },
+    "BaseObject": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "va_7abf6bb130d44c02862982ff6022875d"
+        },
+        "type": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "example": "active",
+          "enum": [
+            "active",
+            "expired",
+            "disabled"
+          ]
+        },
+        "customer_id": {
+          "type": "string",
+          "example": "CUSTOMER_001"
+        },
+        "destination_account_id": {
+          "description": "You can get from XXXX",
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+        }
+      }
+    },
+    "UniqueAmountBankTransfer": {
+      "properties": {
+        "type": {
+          "description": "Payment method type",
+          "type": "string",
+          "example": "unique_amount_bank_transfer"
+        },
+        "destination_account_id": {
+          "description": "This is the account ID that will be associated with the payment.",
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+        },
+        "bank_type": {
+          "description": "The bank that you want your customer to transfer to. Currently we only support BNI and BRI for this specific payment method.",
+          "type": "string",
+          "example": "BNI",
+          "enum": [
+            "BNI",
+            "BRI"
+          ]
+        },
+        "account_holder_name": {
+          "description": "The account holder name for the bank account that your customer will transfer to.",
+          "type": "string",
+          "example": "PT Inklusi Keuangan Nusantara"
+        },
+        "account_no": {
+          "description": "The account number for the bank account that your customer will transfer to.",
+          "type": "string",
+          "example": "174926751990"
+        },
+        "unique_amount": {
+          "description": "The unique amount for your customer to transfer in order to complete the payment.",
+          "type": "string",
+          "example": "10391"
+        }
+      }
+    },
+    "FixedVirtualAccount": {
+      "allOf": [
+        {
+          "$ref": "#/base_class/payment_method/schemas/BaseObject"
+        },
+        {
+          "properties": {
+            "type": {
+              "example": "fixed_virtual_account"
+            },
+            "bank_type": {
+              "type": "string",
+              "example": "BSS"
+            },
+            "display_name": {
+              "type": "string",
+              "example": "My Shop 1"
+            },
+            "account_no": {
+              "type": "string",
+              "example": "202000120472913"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

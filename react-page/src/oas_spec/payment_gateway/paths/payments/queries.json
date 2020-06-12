@@ -1,0 +1,173 @@
+{
+  "/v3/payment_gateway/payments/{id}": {
+    "get": {
+      "tags": [
+        "Payment Queries"
+      ],
+      "summary": "Retrieve Payment",
+      "description": "Get the status of your payment transaction by key in the payment ID from Xfers.",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transaction id in Xfers",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "contract_7abf6bb130d44c02862982ff6022875d"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                "status": "completed",
+                "reference_id": "2020-06-11_13:00",
+                "amount": "60189.0",
+                "currency": "idr",
+                "expiration_time": "2020-06-12T13:00:54+07:00",
+                "description": "This is test order",
+                "payment_method": {
+                  "type": "unique_amount_bank_transfer",
+                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                  "bank_type": "BRI",
+                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                  "account_no": "000501003330303",
+                  "unique_amount": 60189
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "Modify Payments"
+      ],
+      "summary": "Cancel Payment",
+      "description": "Cancel your payment transaction by key in the payment ID from Xfers.\n\n Note: You can only cancel a payment when the status is not in final state!",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Transaction id in Xfers",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "contract_7abf6bb130d44c02862982ff6022875d"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "event": {
+                  "description": "Event name",
+                  "type": "string",
+                  "example": "cancel",
+                  "enum": [
+                    "cancel",
+                    "receive_payment"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": {
+                "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                "status": "processing",
+                "reference_id": "2020-06-11_13:00",
+                "amount": "60189.0",
+                "currency": "idr",
+                "expiration_time": "2020-06-12T13:00:54+07:00",
+                "description": "This is test order",
+                "payment_method": {
+                  "type": "unique_amount_bank_transfer",
+                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                  "bank_type": "BRI",
+                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                  "account_no": "000501003330303",
+                  "unique_amount": 60189
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v3/payment_gateway/payments": {
+    "get": {
+      "tags": [
+        "Payment Queries (Hide first)"
+      ],
+      "summary": "List Payment Method Payment History",
+      "description": "@irfan",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "comment": "consider to rename reference_id",
+      "parameters": [
+        {
+          "name": "payment_method_type",
+          "in": "query",
+          "description": "Payment collector type",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "fixed_virtual_account"
+          }
+        },
+        {
+          "name": "payment_method_id",
+          "in": "query",
+          "required": true,
+          "description": "Payment collector id",
+          "schema": {
+            "type": "string",
+            "example": "va_7abf6bb130d44c02862982ff6022875d"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "example": [
+
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
