@@ -428,6 +428,10 @@
                     "Indonesia"
                   ],
                   "description": "Only Indonesia. Account holder’s occupation according to his/her KTP."
+                },
+                "signature_url": {
+                  "type": "string",
+                  "description": "Only Indonesia. URL storing the photo of user's signature"
                 }
               },
               "required": [
