@@ -18,21 +18,23 @@
           ],
           "example": "BNI"
         },
-        "customer_id": {
-          "description": "Your own customer id.",
+        "customer_ref": {
+          "description": "Your own customer reference.",
           "type": "string",
           "example": "COMPANY_001"
         },
         "display_name": {
-          "description": "Name to be displayed in the corresponding bank system such as ATM confirmation screen.",
+          "description": "Name to be displayed in the corresponding bank system such as ATM confirmation screen. If empty, it will be given a default value.",
           "type": "string",
+          "minLength": 0,
+          "maxLength": 24,
           "example": "MICHAEL BUDI"
         }
       },
       "required": [
         "destination_account_id",
         "bank_type",
-        "customer_id"
+        "customer_ref"
       ]
     },
     "FixedVirtualAccountObject": {
