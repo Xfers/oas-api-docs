@@ -40,9 +40,9 @@
     "FixedVirtualAccountObject": {
       "type": "object",
       "properties": {
-        "virtual_account": {
+        "virtual_account_number": {
           "type": "string",
-          "example": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+          "example": "8624095700121411"
         }
       }
     },

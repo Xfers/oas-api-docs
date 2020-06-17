@@ -39,7 +39,7 @@
                   "bank_type": "BNI",
                   "customer_ref": "COMPANY_001",
                   "display_name": "MICHAEL BUDI",
-                  "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                  "virtual_account_number": "8624095700121411"
                 }
               }
             }
@@ -109,7 +109,7 @@
                       "bank_type": "BNI",
                       "customer_ref": "COMPANY_001",
                       "display_name": "MICHAEL BUDI",
-                      "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                      "virtual_account_number": "8624095700121411"
                     }
                   }
                 },
@@ -125,7 +125,7 @@
                       "bank_type": "BNI",
                       "customer_ref": "COMPANY_001",
                       "display_name": "MICHAEL BUDI",
-                      "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                      "virtual_account_number": "8624095700121411"
                     }
                   }
                 },
@@ -141,7 +141,7 @@
                       "bank_type": "BNI",
                       "customer_ref": "COMPANY_001",
                       "display_name": "MICHAEL BUDI",
-                      "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                      "virtual_account_number": "8624095700121411"
                     }
                   }
                 }
