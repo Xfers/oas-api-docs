@@ -34,15 +34,12 @@
                 "reference_id": "2020-06-11_13:00",
                 "amount": "60189.0",
                 "currency": "idr",
-                "expiration_time": "2020-06-12T13:00:54+07:00",
-                "description": "This is test order",
                 "payment_method": {
-                  "type": "unique_amount_bank_transfer",
-                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                  "bank_type": "BRI",
-                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                  "account_no": "000501003330303",
-                  "unique_amount": 60189
+                  "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+                  "bank_type": "BNI",
+                  "customer_ref": "COMPANY_001",
+                  "display_name": "MICHAEL BUDI",
+                  "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
                 }
               }
             }
@@ -54,8 +51,8 @@
       "tags": [
         "Modify Payments"
       ],
-      "summary": "Cancel Payment",
-      "description": "Cancel your payment transaction by key in the payment ID from Xfers.\n\n Note: You can only cancel a payment when the status is not in final state!",
+      "summary": "Action list",
+      "description": "List of actions to modify a given payment ID:\r\n1.  **cancel** : Cancel a payment when it is still in processing state.\r\n2.  **receive_payment** : Simulate Xfers receiving payment from the customer. (Sandbox only)\r\n3.  **settle** : (Sandbox only) Simulate Xfers disbursing payment to the destination account. (Sandbox only)",
       "security": [
         {
           "X-XFERS-APP-API-KEY": []
@@ -85,7 +82,8 @@
                   "example": "cancel",
                   "enum": [
                     "cancel",
-                    "receive_payment"
+                    "receive_payment",
+                    "settle"
                   ]
                 }
               }
@@ -98,25 +96,58 @@
           "description": "Success",
           "content": {
             "application/json": {
-              "example": {
-                "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                "status": "processing",
-                "reference_id": "2020-06-11_13:00",
-                "amount": "60189.0",
-                "currency": "idr",
-                "expiration_time": "2020-06-12T13:00:54+07:00",
-                "description": "This is test order",
-                "payment_method": {
-                  "type": "unique_amount_bank_transfer",
-                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                  "bank_type": "BRI",
-                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                  "account_no": "000501003330303",
-                  "unique_amount": 60189
+              "examples": {
+                "cancel": {
+                  "value": {
+                    "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                    "status": "cancelled",
+                    "reference_id": "2020-06-11_13:00",
+                    "amount": "60189.0",
+                    "currency": "idr",
+                    "payment_method": {
+                      "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+                      "bank_type": "BNI",
+                      "customer_ref": "COMPANY_001",
+                      "display_name": "MICHAEL BUDI",
+                      "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                    }
+                  }
+                },
+                "receive_payment": {
+                  "value": {
+                    "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                    "status": "processing",
+                    "reference_id": "2020-06-11_13:00",
+                    "amount": "60189.0",
+                    "currency": "idr",
+                    "payment_method": {
+                      "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+                      "bank_type": "BNI",
+                      "customer_ref": "COMPANY_001",
+                      "display_name": "MICHAEL BUDI",
+                      "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                    }
+                  }
+                },
+                "settle": {
+                  "value": {
+                    "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+                    "status": "processing",
+                    "reference_id": "2020-06-11_13:00",
+                    "amount": "60189.0",
+                    "currency": "idr",
+                    "payment_method": {
+                      "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+                      "bank_type": "BNI",
+                      "customer_ref": "COMPANY_001",
+                      "display_name": "MICHAEL BUDI",
+                      "virtual_account": "virtual_account_5c2d14c4b02bd06340cc8f2a9d84f72b"
+                    }
+                  }
                 }
               }
             }
-          }
+          }          
         }
       }
     }

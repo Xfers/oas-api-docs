@@ -86,11 +86,11 @@ const routing = (
 				dropDownOptions = {[]}
 				/>}
 			/>
-			<Route exact path="/payment_gateway" render={(props) => <XfersRedoc
+			<Route exact path="/indonesia/payment-gateway" render={(props) => <XfersRedoc
 				{...props}
 				oasSpec={require('./oas_spec/payment_gateway/index.js')}
 				isUrl={false}
-				docName={"Payment Gateway (Beta version)"}
+				docName={"Payment Gateway"}
 				dropDownOptions = {[]}
 				/>}
 			/>

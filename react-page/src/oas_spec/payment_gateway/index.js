@@ -3,7 +3,7 @@ const combined = Object.assign(
     {
         paths: Object.assign(
             require("./paths/payments/queries.json"),
-            require("./paths/payment_methods/unique_amount_bank_transfers.json"),
+            // require("./paths/payment_methods/unique_amount_bank_transfers.json"),
             require("./paths/payment_methods/fixed_virtual_account_bank_transfers.json"),
         ),
         base_class: {
