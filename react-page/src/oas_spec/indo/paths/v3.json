@@ -428,10 +428,6 @@
                     "Indonesia"
                   ],
                   "description": "Only Indonesia. Account holder’s occupation according to his/her KTP."
-                },
-                "signature_url": {
-                  "type": "string",
-                  "description": "Only Indonesia. URL storing the photo of user's signature"
                 }
               },
               "required": [
@@ -5751,7 +5747,7 @@
       "x-code-samples": [
         {
           "lang": "Shell",
-          "source": "curl --location --request POST \"{base_url}/sandbox/reject_user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"\""
+          "source": "curl --location --request POST \"{base_url}/sandbox/reject_user\" \\\r\n  --header \"X-XFERS-USER-API-KEY: ARsxJCk3htNfy8ym1gKvuqQeFYgrFzXF8YpsSCL_Gnz\" \\\r\n  --data \"{\\\"reason\\\": \\\"{\"selfieQualityUnclear\":true,\"selfieQualityDark\":true}\\\"}\""
         }
       ],
       "summary": "Mock KYC Rejection",
@@ -5763,13 +5759,33 @@
           ]
         }
       ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "description": "Rejection reason",
+                  "example": "{\"selfieQualityUnclear\":true,\"selfieQualityDark\":true}"
+                }
+              }
+            }
+          }
+        }
+      },
       "responses": {
         "200": {
           "description": "Success",
           "content": {
             "application/json": {
               "example": {
-                "verification_status": "rejected"
+                "verification_status": "rejected",
+                "reject_reason": "{\"selfieQualityUnclear\":true,\"selfieQualityDark\":true}"
               }
             }
           }
