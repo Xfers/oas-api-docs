@@ -75,6 +75,39 @@
         }
       }
     },
+    "BasePaymentMethodObject": {
+      "properties": {
+        "id": {
+          "description": "Payment id from Xfers.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Payment status:\n1.  **processing** : We have received the transaction and waiting for payment through the specified payment method to be carried out.\n2.  **paid** : We have received the money via payment method channel.\n3.  **completed** : We have disbursed the money to the destination account",
+          "type": "string",
+          "enum": [
+            "processing",
+            "paid",
+            "completed"
+          ]
+        },
+        "reference_id": {
+          "description": "Your order's reference id",
+          "type": "string"
+        },
+        "amount": {
+          "description": "Amount value",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "Amount currency",
+          "type": "string"
+        },
+        "payment_method": {
+          "description": "Payment instruction to top up to the account",
+          "type": "array"
+        }
+      }
+    },
     "UniqueAmountBankTransfer": {
       "allOf": [
         {

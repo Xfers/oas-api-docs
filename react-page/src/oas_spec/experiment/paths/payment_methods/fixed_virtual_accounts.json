@@ -28,7 +28,8 @@
                       "enum": [
                         "BSS",
                         "BRI",
-                        "BNI"
+                        "BNI",
+                        "MANDIRI"
                       ],
                       "example": "BSS"
                     },

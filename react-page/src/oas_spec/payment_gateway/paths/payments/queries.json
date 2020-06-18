@@ -28,6 +28,13 @@
           "description": "Success",
           "content": {
             "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/payment/schemas/BasePaymentMethodObject"
+                  }
+                ]
+              },
               "example": {
                 "id": "contract_73bf83beb9d145ada2c2694a06693b75",
                 "status": "completed",
@@ -96,6 +103,13 @@
           "description": "Success",
           "content": {
             "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/payment/schemas/BasePaymentMethodObject"
+                  }
+                ]
+              },
               "examples": {
                 "cancel": {
                   "value": {
@@ -116,7 +130,7 @@
                 "receive_payment": {
                   "value": {
                     "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                    "status": "processing",
+                    "status": "paid",
                     "reference_id": "2020-06-11_13:00",
                     "amount": "60189.0",
                     "currency": "idr",
@@ -132,7 +146,7 @@
                 "settle": {
                   "value": {
                     "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                    "status": "processing",
+                    "status": "completed",
                     "reference_id": "2020-06-11_13:00",
                     "amount": "60189.0",
                     "currency": "idr",
