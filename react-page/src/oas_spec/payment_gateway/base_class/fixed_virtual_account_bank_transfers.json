@@ -14,7 +14,8 @@
           "type": "string",
           "enum": [
             "BNI",
-            "BRI"
+            "BRI",
+            "MANDIRI"
           ],
           "example": "BNI"
         },

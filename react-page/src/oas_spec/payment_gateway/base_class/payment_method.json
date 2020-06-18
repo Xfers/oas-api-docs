@@ -65,7 +65,8 @@
           "example": "BNI",
           "enum": [
             "BNI",
-            "BRI"
+            "BRI",
+            "MANDIRI"
           ]
         },
         "account_holder_name": {
