@@ -18,7 +18,7 @@
             "schema": {
               "properties": {
                 "destination_account_id": {
-                  "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our Get User Info API : /v3/user",
+                  "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our [Get User Info API : /v3/user](../V3/Indonesia#operation/getUserInfo)",
                   "type": "string",
                   "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
                 },

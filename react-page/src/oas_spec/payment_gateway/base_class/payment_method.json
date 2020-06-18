@@ -86,31 +86,19 @@
         }
       }
     },
-    "FixedVirtualAccount": {
+    "FixedVirtualAccountBankTransfer": {
       "allOf": [
         {
           "$ref": "#/base_class/payment_method/schemas/BaseObject"
-        },
-        {
-          "properties": {
-            "type": {
-              "example": "fixed_virtual_account"
-            },
-            "bank_type": {
-              "type": "string",
-              "example": "BSS"
-            },
-            "display_name": {
-              "type": "string",
-              "example": "My Shop 1"
-            },
-            "account_no": {
-              "type": "string",
-              "example": "202000120472913"
-            }
-          }
         }
-      ]
+      ],
+      "example": {
+        "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+        "bank_type": "BNI",
+        "customer_ref": "COMPANY_001",
+        "display_name": "MICHAEL BUDI",
+        "virtual_account_number": "8624095700121411"
+      }
     }
   }
 }

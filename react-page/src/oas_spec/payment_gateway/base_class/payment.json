@@ -43,9 +43,14 @@
           "example": "contract_7abf6bb130d44c02862982ff6022875d"
         },
         "status": {
-          "description": "Payment status",
+          "description": "Payment status:\n1.  **processing** : We have received the transaction and waiting for payment through the specified payment method to be carried out.\n2.  **paid** : We have received the money via payment method channel.\n3.  **completed** : We have disbursed the money to the destination account",
           "type": "string",
-          "example": "processing"
+          "example": "processing",
+          "enum": [
+            "processing",
+            "paid",
+            "completed"
+          ]
         },
         "reference_id": {
           "description": "Your order's reference id",
@@ -75,39 +80,6 @@
         }
       }
     },
-    "BasePaymentMethodObject": {
-      "properties": {
-        "id": {
-          "description": "Payment id from Xfers.",
-          "type": "string"
-        },
-        "status": {
-          "description": "Payment status:\n1.  **processing** : We have received the transaction and waiting for payment through the specified payment method to be carried out.\n2.  **paid** : We have received the money via payment method channel.\n3.  **completed** : We have disbursed the money to the destination account",
-          "type": "string",
-          "enum": [
-            "processing",
-            "paid",
-            "completed"
-          ]
-        },
-        "reference_id": {
-          "description": "Your order's reference id",
-          "type": "string"
-        },
-        "amount": {
-          "description": "Amount value",
-          "type": "integer"
-        },
-        "currency": {
-          "description": "Amount currency",
-          "type": "string"
-        },
-        "payment_method": {
-          "description": "Payment instruction to top up to the account",
-          "type": "array"
-        }
-      }
-    },
     "UniqueAmountBankTransfer": {
       "allOf": [
         {
@@ -117,34 +89,6 @@
           "properties": {
             "payment_method": {
               "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
-            }
-          }
-        }
-      ]
-    },
-    "FixedVirtualAccountBankTransfer": {
-      "allOf": [
-        {
-          "$ref": "#/base_class/payment/schemas/BaseObject"
-        },
-        {
-          "properties": {
-            "payment_method": {
-              "type": "object",
-              "properties": {
-                "bank_type": {
-                  "type": "string",
-                  "example": "BNI"
-                },
-                "display_name": {
-                  "type": "string",
-                  "example": "Michael Budi"
-                },
-                "account_no": {
-                  "type": "string",
-                  "example": "202000120472913"
-                }
-              }
             }
           }
         }

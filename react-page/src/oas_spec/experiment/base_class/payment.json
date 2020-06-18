@@ -43,9 +43,14 @@
           "example": "contract_7abf6bb130d44c02862982ff6022875d"
         },
         "status": {
-          "description": "Payment status",
+          "description": "Payment status:\n1.  **processing** : We have received the transaction and waiting for payment through the specified payment method to be carried out.\n2.  **paid** : We have received the money via payment method channel.\n3.  **completed** : We have disbursed the money to the destination account",
           "type": "string",
-          "example": "processing"
+          "example": "processing",
+          "enum": [
+            "processing",
+            "paid",
+            "completed"
+          ]
         },
         "reference_id": {
           "description": "Your order's reference id",

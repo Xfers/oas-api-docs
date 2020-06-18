@@ -18,7 +18,7 @@
             "schema": {
               "properties": {
                 "destination_account_id": {
-                  "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our Get User Info API : /v3/user",
+                  "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our [Get User Info API : /v3/user](../V3/Indonesia#operation/getUserInfo)",
                   "type": "string",
                   "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
                 },
@@ -72,10 +72,10 @@
         }
       },
       "callbacks": {
-        "payment_completed": {
-          "$settings.payment.payment_gateway_v3_payment_completed": {
+        "payment_processing": {
+          "$callback_settings.v3_payment_gateway_payment_processing": {
             "post": {
-              "summary": "Callback when the payment completed",
+              "summary": "Callback when payment processing",
               "description": "Login to your Dashboard and setup this callback to get notification of successful payment.",
               "requestBody": {
                 "required": true,
@@ -86,11 +86,39 @@
                         "event": {
                           "description": "Event name",
                           "type": "string",
-                          "example": "payment_gateway_v3_payment_completed"
+                          "example": "v3_payment_gateway_payment_processing"
                         },
                         "data": {
-                          "type": "object",
-                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
+                          "description": "The fixed virtual account bank transfer reference",
+                          "allOf": [
+                            {
+                              "$ref": "#/base_class/payment/schemas/BaseObject"
+                            },
+                            {
+                              "properties": {
+                                "payment_method": {
+                                  "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+                                }
+                              }
+                            }
+                          ],
+                          "example": {
+                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                            "status": "processing",
+                            "reference_id": "ORDER_001",
+                            "amount": 10000,
+                            "currency": "idr",
+                            "expiration_time": "2020-06-12T13:00:54+07:00",
+                            "description": "This is test order",
+                            "payment_method": {
+                              "type": "unique_amount_bank_transfer",
+                              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                              "bank_type": "BRI",
+                              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                              "account_no": "000501003330303",
+                              "unique_amount": 60189
+                            }
+                          }
                         }
                       }
                     }
@@ -105,11 +133,10 @@
             }
           }
         },
-        "payment_expired": {
-          "$settings.payment.payment_gateway_v3_payment_expired": {
+        "payment_paid": {
+          "$callback_settings.v3_payment_gateway_payment_paid": {
             "post": {
-              "summary": "Callback when the payment expired",
-              "description": "Login to your Dashboard and setup this callback to get notification when payment is expired.",
+              "summary": "Callback when payment paid",
               "requestBody": {
                 "required": true,
                 "content": {
@@ -119,11 +146,99 @@
                         "event": {
                           "description": "Event name",
                           "type": "string",
-                          "example": "payment_gateway_v3_payment_expired"
+                          "example": "v3_payment_gateway_payment_paid"
                         },
                         "data": {
-                          "type": "object",
-                          "$ref": "#/base_class/payment/schemas/UniqueAmountBankTransfer"
+                          "description": "The fixed virtual account bank transfer reference",
+                          "allOf": [
+                            {
+                              "$ref": "#/base_class/payment/schemas/BaseObject"
+                            },
+                            {
+                              "properties": {
+                                "payment_method": {
+                                  "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+                                }
+                              }
+                            }
+                          ],
+                          "example": {
+                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                            "status": "paid",
+                            "reference_id": "ORDER_001",
+                            "amount": 10000,
+                            "currency": "idr",
+                            "expiration_time": "2020-06-12T13:00:54+07:00",
+                            "description": "This is test order",
+                            "payment_method": {
+                              "type": "unique_amount_bank_transfer",
+                              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                              "bank_type": "BRI",
+                              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                              "account_no": "000501003330303",
+                              "unique_amount": 60189
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
+        },
+        "payment_completed": {
+          "$callback_settings.v3_payment_gateway_payment_completed": {
+            "post": {
+              "summary": "Callback when payment completed",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "properties": {
+                        "event": {
+                          "description": "Event name",
+                          "type": "string",
+                          "example": "v3_payment_gateway_payment_completed"
+                        },
+                        "data": {
+                          "description": "The fixed virtual account bank transfer reference",
+                          "allOf": [
+                            {
+                              "$ref": "#/base_class/payment/schemas/BaseObject"
+                            },
+                            {
+                              "properties": {
+                                "payment_method": {
+                                  "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+                                }
+                              }
+                            }
+                          ],
+                          "example": {
+                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
+                            "status": "completed",
+                            "reference_id": "ORDER_001",
+                            "amount": 10000,
+                            "currency": "idr",
+                            "expiration_time": "2020-06-12T13:00:54+07:00",
+                            "description": "This is test order",
+                            "payment_method": {
+                              "type": "unique_amount_bank_transfer",
+                              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+                              "bank_type": "BRI",
+                              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+                              "account_no": "000501003330303",
+                              "unique_amount": 60189
+                            }
+                          }
                         }
                       }
                     }
