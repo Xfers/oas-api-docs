@@ -48,66 +48,6 @@
         }
       },
       "callbacks": {
-        "payment_processing": {
-          "$callback_settings.v3_payment_gateway_payment_processing": {
-            "post": {
-              "summary": "Callback when payment processing",
-              "description": "Login to your Dashboard and setup this callback to get notification of successful payment.",
-              "requestBody": {
-                "required": true,
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "properties": {
-                        "event": {
-                          "description": "Event name",
-                          "type": "string",
-                          "example": "v3_payment_gateway_payment_processing"
-                        },
-                        "data": {
-                          "description": "The fixed virtual account bank transfer reference",
-                          "allOf": [
-                            {
-                              "$ref": "#/base_class/payment/schemas/BaseObject"
-                            },
-                            {
-                              "properties": {
-                                "payment_method": {
-                                  "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccountBankTransfer"
-                                }
-                              }
-                            }
-                          ],
-                          "example": {
-                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                            "status": "processing",
-                            "reference_id": "ORDER_001",
-                            "amount": 10000,
-                            "currency": "idr",
-                            "expiration_time": null,
-                            "description": null,
-                            "payment_method": {
-                              "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                              "bank_type": "BNI",
-                              "customer_ref": "COMPANY_001",
-                              "display_name": "MICHAEL BUDI",
-                              "virtual_account_number": "8624095700121411"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "description": "Your server returns this code if it accepts the callback"
-                }
-              }
-            }
-          }
-        },
         "payment_paid": {
           "$callback_settings.v3_payment_gateway_payment_paid": {
             "post": {

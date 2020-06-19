@@ -72,67 +72,6 @@
         }
       },
       "callbacks": {
-        "payment_processing": {
-          "$callback_settings.v3_payment_gateway_payment_processing": {
-            "post": {
-              "summary": "Callback when payment processing",
-              "description": "Login to your Dashboard and setup this callback to get notification of successful payment.",
-              "requestBody": {
-                "required": true,
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "properties": {
-                        "event": {
-                          "description": "Event name",
-                          "type": "string",
-                          "example": "v3_payment_gateway_payment_processing"
-                        },
-                        "data": {
-                          "description": "The fixed virtual account bank transfer reference",
-                          "allOf": [
-                            {
-                              "$ref": "#/base_class/payment/schemas/BaseObject"
-                            },
-                            {
-                              "properties": {
-                                "payment_method": {
-                                  "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
-                                }
-                              }
-                            }
-                          ],
-                          "example": {
-                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                            "status": "processing",
-                            "reference_id": "ORDER_001",
-                            "amount": 10000,
-                            "currency": "idr",
-                            "expiration_time": "2020-06-12T13:00:54+07:00",
-                            "description": "This is test order",
-                            "payment_method": {
-                              "type": "unique_amount_bank_transfer",
-                              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                              "bank_type": "BRI",
-                              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                              "account_no": "000501003330303",
-                              "unique_amount": 60189
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "description": "Your server returns this code if it accepts the callback"
-                }
-              }
-            }
-          }
-        },
         "payment_expired": {
           "$callback_settings.v3_payment_gateway_payment_expired": {
             "post": {
@@ -149,7 +88,7 @@
                           "example": "v3_payment_gateway_payment_paid"
                         },
                         "data": {
-                          "description": "The fixed virtual account bank transfer reference",
+                          "description": "The unique amount bank transfer reference",
                           "allOf": [
                             {
                               "$ref": "#/base_class/payment/schemas/BaseObject"
@@ -209,7 +148,7 @@
                           "example": "v3_payment_gateway_payment_paid"
                         },
                         "data": {
-                          "description": "The fixed virtual account bank transfer reference",
+                          "description": "The unique amount bank transfer reference",
                           "allOf": [
                             {
                               "$ref": "#/base_class/payment/schemas/BaseObject"
@@ -269,7 +208,7 @@
                           "example": "v3_payment_gateway_payment_completed"
                         },
                         "data": {
-                          "description": "The fixed virtual account bank transfer reference",
+                          "description": "The unique amount bank transfer reference",
                           "allOf": [
                             {
                               "$ref": "#/base_class/payment/schemas/BaseObject"
