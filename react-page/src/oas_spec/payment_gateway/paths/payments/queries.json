@@ -88,12 +88,42 @@
                 "event": {
                   "description": "Event name",
                   "type": "string",
-                  "example": "cancel",
+                  "required": true,
                   "enum": [
                     "cancel",
                     "receive_payment",
                     "settle"
                   ]
+                },
+                "virtual_account_number": {
+                  "description": "For Virtual Account sandbox simulation only. Required only when event is 'receive_payment'. Put the virtual_account_number that you have gotten.",
+                  "type": "string"
+                },
+                "amount": {
+                  "description": "For Virtual Account sandbox simulation only. Required only when event is 'receive_payment'. Simulate user transferring given amount to the virtual_account_number.",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "event"
+              ]
+            },
+            "examples": {
+              "cancel": {
+                "value": {
+                  "event": "cancel"
+                }
+              },
+              "receive_payment": {
+                "value": {
+                  "event": "receive_payment",
+                  "virtual_account_number": "8804995700112411",
+                  "amount": 10000
+                }
+              },
+              "settle": {
+                "value": {
+                  "event": "settle"
                 }
               }
             }
