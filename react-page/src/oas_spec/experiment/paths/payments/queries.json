@@ -62,7 +62,7 @@
         "Modify Payments"
       ],
       "summary": "Action list",
-      "description": "List of actions to modify a given payment ID:\r\n1.  **cancel** : Cancel a payment when it is still in processing state.\r\n2.  **receive_payment** : Simulate Xfers receiving payment from the customer. (Sandbox only)\r\n3.  **settle** : Simulate Xfers disbursing payment to the destination account. (Sandbox only)",
+      "description": "List of actions to modify a given payment ID:\r\n1.  **cancel** : Cancel a payment when it is still in pending state.\r\n2.  **receive_payment** : Simulate Xfers receiving payment from the customer. (Sandbox only)\r\n3.  **settle** : Simulate Xfers disbursing payment to the destination account. (Sandbox only)",
       "security": [
         {
           "X-XFERS-APP-API-KEY": []
