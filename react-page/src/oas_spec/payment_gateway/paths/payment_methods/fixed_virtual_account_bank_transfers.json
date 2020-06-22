@@ -4,7 +4,7 @@
       "tags": [
         "Fixed Virtual Account Bank Transfers"
       ],
-      "summary": "Fixed Virtual Account Bank Transfer",
+      "summary": "Create Fixed Virtual Account",
       "description": "With Fixed Virtual Account (VA) Bank Transfer payment method, we will create a fixed/permanent VA for the given customer id and bank combination.\n\nAny amount that we receive in the given VA will be associated to the given destination account and we will notify you with the successful callback.",
       "security": [
         {
@@ -16,11 +16,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/base_class/fixed_virtual_account_bank_transfers/schemas/RequestBody"
-                }
-              ]
+              "$ref": "#/base_class/fixed_virtual_account_bank_transfers/schemas/RequestBody"
             }
           }
         }
@@ -57,43 +53,11 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "properties": {
-                        "event": {
-                          "description": "Event name",
-                          "type": "string",
-                          "example": "v3_payment_gateway_payment_paid"
-                        },
-                        "data": {
-                          "description": "The fixed virtual account bank transfer reference",
-                          "allOf": [
-                            {
-                              "$ref": "#/base_class/payment/schemas/BaseObject"
-                            },
-                            {
-                              "properties": {
-                                "payment_method": {
-                                  "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccountBankTransfer"
-                                }
-                              }
-                            }
-                          ],
-                          "example": {
-                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                            "status": "paid",
-                            "reference_id": "ORDER_001",
-                            "amount": 10000,
-                            "currency": "idr",
-                            "expiration_time": null,
-                            "description": null,
-                            "payment_method": {
-                              "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                              "bank_type": "BNI",
-                              "customer_ref": "COMPANY_001",
-                              "display_name": "MICHAEL BUDI",
-                              "virtual_account_number": "8624095700121411"
-                            }
-                          }
-                        }
+                      "$ref": "#/base_class/payment/schemas/Callback"
+                    },
+                    "examples": {
+                      "paid": {
+                        "$ref": "#/base_class/payment/examples/callback/paid"
                       }
                     }
                   }
@@ -116,43 +80,103 @@
                 "content": {
                   "application/json": {
                     "schema": {
-                      "properties": {
-                        "event": {
-                          "description": "Event name",
-                          "type": "string",
-                          "example": "v3_payment_gateway_payment_completed"
-                        },
-                        "data": {
-                          "description": "The fixed virtual account bank transfer reference",
-                          "allOf": [
-                            {
-                              "$ref": "#/base_class/payment/schemas/BaseObject"
-                            },
-                            {
-                              "properties": {
-                                "payment_method": {
-                                  "$ref": "#/base_class/payment_method/schemas/FixedVirtualAccountBankTransfer"
-                                }
-                              }
-                            }
-                          ],
-                          "example": {
-                            "id": "contract_7abf6bb130d44c02862982ff6022875d",
-                            "status": "completed",
-                            "reference_id": "ORDER_001",
-                            "amount": 10000,
-                            "currency": "idr",
-                            "expiration_time": null,
-                            "description": null,
-                            "payment_method": {
-                              "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
-                              "bank_type": "BNI",
-                              "customer_ref": "COMPANY_001",
-                              "display_name": "MICHAEL BUDI",
-                              "virtual_account_number": "8624095700121411"
-                            }
-                          }
-                        }
+                      "$ref": "#/base_class/payment/schemas/Callback"
+                    },
+                    "examples": {
+                      "paid": {
+                        "$ref": "#/base_class/payment/examples/callback/completed"
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Your server returns this code if it accepts the callback"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v3/payment_gateway/payment_methods/fixed_virtual_account_bank_transfers/{id}/payments": {
+    "post": {
+      "tags": [
+        "Fixed Virtual Account Bank Transfers"
+      ],
+      "summary": "Simulate Payment (Sandbox Only)",
+      "description": "In sandbox, this will allow you to simulate customer making payment to the given virtual account number. It will return the details of the contract created as well as triggering a callback as configured.",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description":"[Virtual Account Number](./payment-gateway#tag/Fixed-Virtual-Account-Bank-Transfers) from Xfers.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "8624095700121411"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "amount": {
+                  "description": "Payment amount to simulate",
+                  "type": "integer",
+                  "example": 10000
+                }
+              },
+              "required": "amount"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/base_class/payment/schemas/BaseObject"
+              },
+              "examples": {
+                "paid": {
+                  "$ref": "#/base_class/payment/examples/payment_response/paid"
+                }
+              }
+            }
+          }        
+        },
+        "4XX": {
+          "$ref": "#/components/responses/v3Error:4XX"
+        }
+      },
+      "callbacks": {
+        "payment_paid": {
+          "$callback_settings.v3_payment_gateway_payment_paid": {
+            "post": {
+              "summary": "Callback with payment paid",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/base_class/payment/schemas/Callback"
+                    },
+                    "examples": {
+                      "paid": {
+                        "$ref": "#/base_class/payment/examples/callback/paid"
                       }
                     }
                   }
