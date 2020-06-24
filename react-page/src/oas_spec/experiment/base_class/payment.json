@@ -7,6 +7,8 @@
         "amount": {
           "description": "Amount value.",
           "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true,
           "example": 10000
         },
         "currency": {
@@ -35,50 +37,47 @@
       ]
     },
     "BaseObject": {
-      "description": "This is the payment object that Xfers already received.",
-      "properties": {
-        "id": {
-          "description": "Payment id from Xfers.",
-          "type": "string",
-          "example": "contract_7abf6bb130d44c02862982ff6022875d"
+      "description": "This is the [payment object](./experiment#tag/What-is-Payment-Object) that Xfers already received.",
+      "allOf": [
+        {
+          "properties": {
+            "id": {
+              "description": "Payment id from Xfers.",
+              "type": "string",
+              "example": "contract_7abf6bb130d44c02862982ff6022875d"
+            },
+            "status": {
+              "description": "Payment status:\n1.  **processing** : We have received the transaction and waiting for payment through the specified payment method to be carried out.\n2.  **paid** : We have received the money via payment method channel.\n3.  **completed** : We have disbursed the money to the destination account",
+              "type": "string",
+              "example": "processing",
+              "enum": [
+                "processing",
+                "paid",
+                "completed"
+              ]
+            },
+            "reference_id": {
+              "description": "Your order's reference id",
+              "type": "string",
+              "example": "ORDER_001"
+            }
+          }
         },
-        "status": {
-          "description": "Payment status:\n1.  **processing** : We have received the transaction and waiting for payment through the specified payment method to be carried out.\n2.  **paid** : We have received the money via payment method channel.\n3.  **completed** : We have disbursed the money to the destination account",
-          "type": "string",
-          "example": "processing",
-          "enum": [
-            "processing",
-            "paid",
-            "completed"
-          ]
+        {
+          "$ref": "#/base_class/payment/schemas/RequestBody"
         },
-        "reference_id": {
-          "description": "Your order's reference id",
-          "type": "string",
-          "example": "ORDER_001"
-        },
-        "amount": {
-          "description": "Amount value",
-          "type": "integer",
-          "example": 10000
-        },
-        "currency": {
-          "description": "Amount currency",
-          "type": "string",
-          "example": "idr"
-        },
-        "expiration_time": {
-          "description": "Expiration time (ISO8601 format). maximum: 3 days after the request creation",
-          "type": "string",
-          "default": "1 day after the request creation",
-          "example": "2020-04-30T19:02:57+08:00"
-        },
-        "description": {
-          "description": "Order description",
-          "type": "string",
-          "example": "This is the first order"
+        {
+          "properties": {
+            "amount": {
+              "description": "Amount value.",
+              "type": "string",
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "example": "10000.0"
+            }
+          }
         }
-      }
+      ]
     },
     "UniqueAmountBankTransfer": {
       "allOf": [
@@ -87,59 +86,253 @@
         },
         {
           "properties": {
-            "payment_method": {
-              "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+            "expiration_time": {
+              "description": "Expiration time (ISO8601 format). maximum: 3 days after the request creation",
+              "type": "string",
+              "default": "1 day after the request creation",
+              "example": "2020-04-30T19:02:57+08:00"
             }
           }
         }
       ]
     },
-    "VirtualAccountBankTransfer": {
-      "allOf": [
-        {
-          "$ref": "#/base_class/payment/schemas/BaseObject"
+    "Callback": {
+      "description": "This is the callback object that Xfers will return.",
+      "properties": {
+        "event": {
+          "description": "Event triggering the callback",
+          "type": "string",
+          "example": "v3_payment_gateway_payment_paid",
+          "enum": [
+            "v3_payment_gateway_payment_paid",
+            "v3_payment_gateway_payment_completed",
+            "v3_payment_gateway_payment_expired"
+          ]
         },
-        {
-          "properties": {
-            "payment_method": {
-              "type": "object",
+        "data": {
+          "description": "Payment Object reference from Xfers.",
+          "allOf": [
+            {
+              "$ref": "#/base_class/payment/schemas/BaseObject"
+            },
+            {
               "properties": {
-                "bank_type": {
-                  "type": "string",
-                  "example": "BSS"
-                },
-                "account_holder_name": {
-                  "type": "string",
-                  "example": "Xfers Pte Ltd."
-                },
-                "account_no": {
-                  "type": "string",
-                  "example": "202000120472913"
-                },
-                "amount": {
-                  "type": "integer",
-                  "example": 10000
+                "payment_method": {
+                  "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
                 }
               }
             }
-          }
+          ]
         }
-      ]
-    },
-    "CustomPaymentMethodPayment": {
-      "allOf": [
-        {
-          "$ref": "#/base_class/payment/schemas/BaseObject"
-        },
-        {
-          "properties": {
-            "payment_method": {
-              "type": "string",
-              "example": "payment_method"
+      }
+    }
+  },
+  
+  "responses": {
+    "payments:2XX": {
+      "description": "Success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "allOf": [
+              {
+                "$ref": "#/base_class/payment/schemas/BaseObject"
+              },
+              {
+                "properties": {
+                  "payment_method": {
+                    "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+                  }
+                }
+              }
+            ]
+          },
+          "examples": {
+            "processing": {
+              "$ref": "#/base_class/payment/examples/payment_response/processing"
+            },
+            "paid": {
+              "$ref": "#/base_class/payment/examples/payment_response/paid"
+            },
+            "completed": {
+              "$ref": "#/base_class/payment/examples/payment_response/completed"
+            },
+            "cancelled": {
+              "$ref": "#/base_class/payment/examples/payment_response/expired"
+            },
+            "expired": {
+              "$ref": "#/base_class/payment/examples/payment_response/expired"
             }
           }
         }
-      ]
+      }          
+    }
+  },
+  "examples": {
+    "payment_response": {
+      "processing": {
+        "value": {
+          "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+          "status": "processing",
+          "reference_id": "2020-06-11_13:00",
+          "amount": "10391.0",
+          "currency": "idr",
+          "expiration_time": "2020-06-12T13:00:54+07:00",
+          "description": "This is test order",
+          "payment_method": {
+            "type": "unique_amount_bank_transfer",
+            "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+            "bank_type": "BRI",
+            "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+            "account_no": "000501003330303",
+            "unique_amount": 10391
+          }
+        }
+      },
+      "paid": {
+        "value": {
+          "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+          "status": "paid",
+          "reference_id": "2020-06-11_13:00",
+          "amount": "10391.0",
+          "currency": "idr",
+          "expiration_time": "2020-06-12T13:00:54+07:00",
+          "description": "This is test order",
+          "payment_method": {
+            "type": "unique_amount_bank_transfer",
+            "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+            "bank_type": "BRI",
+            "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+            "account_no": "000501003330303",
+            "unique_amount": 10391
+          }
+        }
+      },
+      "completed": {
+        "value": {
+          "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+          "status": "completed",
+          "reference_id": "2020-06-11_13:00",
+          "amount": "10391.0",
+          "currency": "idr",
+          "expiration_time": "2020-06-12T13:00:54+07:00",
+          "description": "This is test order",
+          "payment_method": {
+            "type": "unique_amount_bank_transfer",
+            "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+            "bank_type": "BRI",
+            "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+            "account_no": "000501003330303",
+            "unique_amount": 10391
+          }
+        }
+      },
+      "expired": {
+        "value": {
+          "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+          "status": "expired",
+          "reference_id": "2020-06-11_13:00",
+          "amount": "10391.0",
+          "currency": "idr",
+          "expiration_time": "2020-06-12T13:00:54+07:00",
+          "description": "This is test order",
+          "payment_method": {
+            "type": "unique_amount_bank_transfer",
+            "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+            "bank_type": "BRI",
+            "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+            "account_no": "000501003330303",
+            "unique_amount": 10391
+          }
+        }
+      },
+      "cancelled": {
+        "value": {
+          "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+          "status": "cancelled",
+          "reference_id": "2020-06-11_13:00",
+          "amount": "10391.0",
+          "currency": "idr",
+          "expiration_time": "2020-06-12T13:00:54+07:00",
+          "description": "This is test order",
+          "payment_method": {
+            "type": "unique_amount_bank_transfer",
+            "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+            "bank_type": "BRI",
+            "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+            "account_no": "000501003330303",
+            "unique_amount": 10391
+          }
+        }
+      }
+    },
+    "callback": {
+      "paid": {
+        "value": {
+          "event": "v3_payment_gateway_payment_paid",
+          "data": {
+            "id": "contract_7abf6bb130d44c02862982ff6022875d",
+            "status": "paid",
+            "reference_id": "ORDER_001",
+            "amount": "10000.0",
+            "currency": "idr",
+            "expiration_time": "2020-06-12T13:00:54+07:00",
+            "description": "This is test order",
+            "payment_method": {
+              "type": "unique_amount_bank_transfer",
+              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+              "bank_type": "BRI",
+              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+              "account_no": "000501003330303",
+              "unique_amount": 10391
+            }
+          }
+        }
+      },
+      "completed": {
+        "value": {
+          "event": "v3_payment_gateway_payment_completed",
+          "data": {
+            "id": "contract_7abf6bb130d44c02862982ff6022875d",
+            "status": "completed",
+            "reference_id": "ORDER_001",
+            "amount": "10000.0",
+            "currency": "idr",
+            "expiration_time": "2020-06-12T13:00:54+07:00",
+            "description": "This is test order",
+            "payment_method": {
+              "type": "unique_amount_bank_transfer",
+              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+              "bank_type": "BRI",
+              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+              "account_no": "000501003330303",
+              "unique_amount": 10391
+            }
+          }
+        }
+      },
+      "expired": {
+        "value": {
+          "event": "v3_payment_gateway_payment_expired",
+          "data": {
+            "id": "contract_7abf6bb130d44c02862982ff6022875d",
+            "status": "expired",
+            "reference_id": "ORDER_001",
+            "amount": "10000.0",
+            "currency": "idr",
+            "expiration_time": "2020-06-12T13:00:54+07:00",
+            "description": "This is test order",
+            "payment_method": {
+              "type": "unique_amount_bank_transfer",
+              "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
+              "bank_type": "BRI",
+              "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
+              "account_no": "000501003330303",
+              "unique_amount": 10391
+            }
+          }
+        }
+      }
     }
   }
 }

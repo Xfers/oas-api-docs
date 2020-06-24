@@ -240,7 +240,7 @@
     "callback": {
       "paid": {
         "value": {
-          "event": "v3_payment_gateway_payment_paid2",
+          "event": "v3_payment_gateway_payment_paid",
           "data": {
             "id": "contract_73bf83beb9d145ada2c2694a06693b75",
             "status": "paid",
@@ -261,7 +261,7 @@
       },
       "completed": {
         "value": {
-          "event": "v3_payment_gateway_payment_completed2",
+          "event": "v3_payment_gateway_payment_completed",
           "data": {
             "id": "contract_73bf83beb9d145ada2c2694a06693b75",
             "status": "completed",

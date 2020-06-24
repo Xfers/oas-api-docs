@@ -25,35 +25,7 @@
       ],
       "responses": {
         "200": {
-          "description": "Success",
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/base_class/payment/schemas/BaseObject"
-                  }
-                ]
-              },
-              "example": {
-                "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                "status": "completed",
-                "reference_id": "2020-06-11_13:00",
-                "amount": "60189.0",
-                "currency": "idr",
-                "expiration_time": "2020-06-12T13:00:54+07:00",
-                "description": "This is test order",
-                "payment_method": {
-                  "type": "unique_amount_bank_transfer",
-                  "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                  "bank_type": "BRI",
-                  "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                  "account_no": "000501003330303",
-                  "unique_amount": 60189
-                }
-              }
-            }
-          }
+          "$ref": "#/base_class/payment/responses/payments:2XX"
         }
       }
     },
@@ -110,70 +82,29 @@
                 "allOf": [
                   {
                     "$ref": "#/base_class/payment/schemas/BaseObject"
+                  },
+                  {
+                    "properties": {
+                      "payment_method": {
+                        "$ref": "#/base_class/payment_method/schemas/UniqueAmountBankTransfer"
+                      }
+                    }
                   }
                 ]
               },
               "examples": {
                 "cancel": {
-                  "value": {
-                    "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                    "status": "cancelled",
-                    "reference_id": "2020-06-11_13:00",
-                    "amount": "60189.0",
-                    "currency": "idr",
-                    "expiration_time": "2020-06-12T13:00:54+07:00",
-                    "description": "This is test order",
-                    "payment_method": {
-                      "type": "unique_amount_bank_transfer",
-                      "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                      "bank_type": "BRI",
-                      "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                      "account_no": "000501003330303",
-                      "unique_amount": 60189
-                    }
-                  }
+                  "$ref": "#/base_class/payment/examples/payment_response/cancelled"
                 },
                 "receive_payment": {
-                  "value": {
-                    "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                    "status": "paid",
-                    "reference_id": "2020-06-11_13:00",
-                    "amount": "60189.0",
-                    "currency": "idr",
-                    "expiration_time": "2020-06-12T13:00:54+07:00",
-                    "description": "This is test order",
-                    "payment_method": {
-                      "type": "unique_amount_bank_transfer",
-                      "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                      "bank_type": "BRI",
-                      "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                      "account_no": "000501003330303",
-                      "unique_amount": 60189
-                    }
-                  }
+                  "$ref": "#/base_class/payment/examples/payment_response/paid"
                 },
                 "settle": {
-                  "value": {
-                    "id": "contract_73bf83beb9d145ada2c2694a06693b75",
-                    "status": "completed",
-                    "reference_id": "2020-06-11_13:00",
-                    "amount": "60189.0",
-                    "currency": "idr",
-                    "expiration_time": "2020-06-12T13:00:54+07:00",
-                    "description": "This is test order",
-                    "payment_method": {
-                      "type": "unique_amount_bank_transfer",
-                      "destination_account_id": "account_7c2b4df6270c4ba487f3786fec398a20",
-                      "bank_type": "BRI",
-                      "account_holder_name": "INKLUSI KEUANGAN NUSANTARA",
-                      "account_no": "000501003330303",
-                      "unique_amount": 60189
-                    }
-                  }
+                  "$ref": "#/base_class/payment/examples/payment_response/completed"
                 }
               }
             }
-          }
+          }        
         }
       }
     }
