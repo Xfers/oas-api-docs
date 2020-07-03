@@ -2565,6 +2565,10 @@
                   "type": "string",
                   "description": "Unique ref no provided by you to prevent double charging, this cannot be repeated."
                 },
+                "description": {
+                  "type": "string",
+                  "description": "Payment Description."
+                },
                 "callback_url": {
                   "type": "string",
                   "description": "If specified, Xfers will do an API call to your callback url once payment is completed. Please refer to the callback payload example."
@@ -2577,6 +2581,7 @@
                 "value": {
                   "amount": 500.0,
                   "external_id": "abc_xy1",
+                  "description": "any description for payment",
                   "callback_url": "https://wwww.example.com/callbacks"
                 }
               },
@@ -2611,7 +2616,7 @@
                 "notify_url": "https://wwww.example.com/callbacks",
                 "wallet_name": "Digital Goods",
                 "order_id": "abc_xy1",
-                "description": null,
+                "description": "any description for payment",
                 "receipt_email": "antonio@coinbase.com",
                 "expiration_date": null,
                 "metadata": {
