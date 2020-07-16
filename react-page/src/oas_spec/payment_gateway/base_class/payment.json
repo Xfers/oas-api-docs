@@ -178,6 +178,7 @@
             "bank_type": "BNI",
             "customer_ref": "COMPANY_001",
             "display_name": "MICHAEL BUDI",
+            "type": "fixed_virtual_account_bank_transfer",
             "virtual_account_number": "8624095700121411"
           }
         }
@@ -196,6 +197,7 @@
             "bank_type": "BNI",
             "customer_ref": "COMPANY_001",
             "display_name": "MICHAEL BUDI",
+            "type": "fixed_virtual_account_bank_transfer",
             "virtual_account_number": "8624095700121411"
           }
         }
@@ -214,6 +216,7 @@
             "bank_type": "BNI",
             "customer_ref": "COMPANY_001",
             "display_name": "MICHAEL BUDI",
+            "type": "fixed_virtual_account_bank_transfer",
             "virtual_account_number": "8624095700121411"
           }
         }
@@ -232,6 +235,7 @@
             "bank_type": "BNI",
             "customer_ref": "COMPANY_001",
             "display_name": "MICHAEL BUDI",
+            "type": "fixed_virtual_account_bank_transfer",
             "virtual_account_number": "8624095700121411"
           }
         }
@@ -254,6 +258,7 @@
               "bank_type": "BNI",
               "customer_ref": "COMPANY_001",
               "display_name": "MICHAEL BUDI",
+              "type": "fixed_virtual_account_bank_transfer",
               "virtual_account_number": "8624095700121411"
             }
           }
@@ -275,6 +280,7 @@
               "bank_type": "BNI",
               "customer_ref": "COMPANY_001",
               "display_name": "MICHAEL BUDI",
+              "type": "fixed_virtual_account_bank_transfer",
               "virtual_account_number": "8624095700121411"
             }
           }
