@@ -23,7 +23,7 @@
                   "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
                 },
                 "bank_type": {
-                  "description": "Please specify the bank that you want your customer to transfer to. Currently we only support BNI and BRI for this specific payment method.",
+                  "description": "Please specify the bank that you want your customer to transfer to. Listed under enum is our supported banks.",
                   "type": "string",
                   "enum": [
                     "BNI",
