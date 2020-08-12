@@ -102,6 +102,65 @@
     }
   },
   "/v3/payment_gateway/payment_methods/fixed_virtual_account_bank_transfers/{id}/payments": {
+    "get": {
+      "tags": [
+        "Fixed Virtual Account Bank Transfers"
+      ],
+      "summary": "Payment History",
+      "description": "From a given Payment Method, list the payment history sorted from newest to oldest.",
+      "security": [
+        {
+          "X-XFERS-APP-API-KEY": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description":"[Virtual Account Number](./payment-gateway#tag/Fixed-Virtual-Account-Bank-Transfers) from Xfers.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "8624095700121411"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/payment/schemas/BaseObject"
+                  },
+                  {
+                    "properties": {
+                      "payment_method": {
+                        "allOf": [
+                          {
+                            "$ref": "#/base_class/fixed_virtual_account_bank_transfers/schemas/RequestBody"
+                          },
+                          {
+                            "$ref": "#/base_class/fixed_virtual_account_bank_transfers/schemas/FixedVirtualAccountObject"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "payment_history": {
+                  "$ref": "#/base_class/payment/examples/payment_history"
+                }
+              }
+            }
+          }        
+        }
+      }
+    },
     "post": {
       "tags": [
         "Fixed Virtual Account Bank Transfers"
@@ -148,7 +207,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/base_class/payment/schemas/BaseObject"
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/payment/schemas/BaseObject"
+                  },
+                  {
+                    "properties": {
+                      "payment_method": {
+                        "allOf": [
+                          {
+                            "$ref": "#/base_class/fixed_virtual_account_bank_transfers/schemas/RequestBody"
+                          },
+                          {
+                            "$ref": "#/base_class/fixed_virtual_account_bank_transfers/schemas/FixedVirtualAccountObject"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
               },
               "examples": {
                 "paid": {

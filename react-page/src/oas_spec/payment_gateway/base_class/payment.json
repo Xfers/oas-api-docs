@@ -168,7 +168,7 @@
         "value": {
           "id": "contract_73bf83beb9d145ada2c2694a06693b75",
           "status": "processing",
-          "reference_id": "2020-06-11_13:00",
+          "reference_id": "ORDER_0001",
           "amount": "60189.0",
           "currency": "idr",
           "expiration_time": null,
@@ -187,7 +187,7 @@
         "value": {
           "id": "contract_73bf83beb9d145ada2c2694a06693b75",
           "status": "paid",
-          "reference_id": "2020-06-11_13:00",
+          "reference_id": "ORDER_0001",
           "amount": "60189.0",
           "currency": "idr",
           "expiration_time": null,
@@ -206,7 +206,7 @@
         "value": {
           "id": "contract_73bf83beb9d145ada2c2694a06693b75",
           "status": "completed",
-          "reference_id": "2020-06-11_13:00",
+          "reference_id": "ORDER_0001",
           "amount": "60189.0",
           "currency": "idr",
           "expiration_time": null,
@@ -225,7 +225,7 @@
         "value": {
           "id": "contract_73bf83beb9d145ada2c2694a06693b75",
           "status": "cancelled",
-          "reference_id": "2020-06-11_13:00",
+          "reference_id": "ORDER_0001",
           "amount": "60189.0",
           "currency": "idr",
           "expiration_time": null,
@@ -248,7 +248,7 @@
           "data": {
             "id": "contract_73bf83beb9d145ada2c2694a06693b75",
             "status": "paid",
-            "reference_id": "2020-06-11_13:00",
+            "reference_id": "ORDER_0001",
             "amount": "60189.0",
             "currency": "idr",
             "expiration_time": null,
@@ -270,7 +270,7 @@
           "data": {
             "id": "contract_73bf83beb9d145ada2c2694a06693b75",
             "status": "completed",
-            "reference_id": "2020-06-11_13:00",
+            "reference_id": "ORDER_0001",
             "amount": "60189.0",
             "currency": "idr",
             "expiration_time": null,
@@ -286,6 +286,44 @@
           }
         }
       }
+    },
+    "payment_history": {
+      "value": [
+        {
+          "id": "contract_00bcdc2a817e8296c99cdb0dd81b71c6",
+          "status": "processing",
+          "reference_id": "ORDER_0001",
+          "amount": "70189.0",
+          "currency": "idr",
+          "expiration_time": null,
+          "description": null,
+          "payment_method": {
+            "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+            "bank_type": "BNI",
+            "customer_ref": "COMPANY_001",
+            "display_name": "MICHAEL BUDI",
+            "type": "fixed_virtual_account_bank_transfer",
+            "virtual_account_number": "8624095700121411"
+          }
+        },
+        {
+          "id": "contract_73bf83beb9d145ada2c2694a06693b75",
+          "status": "processing",
+          "reference_id": "ORDER_0001",
+          "amount": "60189.0",
+          "currency": "idr",
+          "expiration_time": null,
+          "description": null,
+          "payment_method": {
+            "destination_account_id": "account_3091fa1f6bfddff48148fd32813a3a5b",
+            "bank_type": "BNI",
+            "customer_ref": "COMPANY_001",
+            "display_name": "MICHAEL BUDI",
+            "type": "fixed_virtual_account_bank_transfer",
+            "virtual_account_number": "8624095700121411"
+          }
+        }
+      ]
     }
   }
 }

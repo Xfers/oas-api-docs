@@ -101,54 +101,5 @@
         }
       }
     }
-  },
-  "/v3/payment_gateway/payments": {
-    "get": {
-      "tags": [
-        "Payment Queries (Hide first)"
-      ],
-      "summary": "List Payment Method Payment History",
-      "description": "@irfan",
-      "security": [
-        {
-          "X-XFERS-APP-API-KEY": []
-        }
-      ],
-      "comment": "consider to rename reference_id",
-      "parameters": [
-        {
-          "name": "payment_method_type",
-          "in": "query",
-          "description": "Payment collector type",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example": "fixed_virtual_account"
-          }
-        },
-        {
-          "name": "payment_method_id",
-          "in": "query",
-          "required": true,
-          "description": "Payment collector id",
-          "schema": {
-            "type": "string",
-            "example": "va_7abf6bb130d44c02862982ff6022875d"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Success",
-          "content": {
-            "application/json": {
-              "example": [
-
-              ]
-            }
-          }
-        }
-      }
-    }
   }
 }
