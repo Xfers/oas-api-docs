@@ -28,7 +28,7 @@
               "minimum": 10000,
               "maximum": 3500000,
               "exclusiveMinimum": true,
-              "example": 50000
+              "example": 100000
             },
             "currency": {
               "description": "Amount currency.",
@@ -67,7 +67,7 @@
         },
         "store_selected": {
           "type": "string",
-          "example": "Indomaret store"
+          "example": "Indomaret"
         },
         "pay_number": {
           "type": "string",
@@ -90,7 +90,7 @@
             },
             "reference_id": {
               "type": "string",
-              "example": "custom3r_1d"
+              "example": "ORDER_0001"
             },
             "amount": {
               "type": "string",

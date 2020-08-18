@@ -19,22 +19,6 @@
                 "allOf": [
                   {
                     "$ref": "#/base_class/cvs_transfers/schemas/RequestBody"
-                  },
-                  {
-                    "properties": {
-                      "bank_type": {
-                        "description": "Bank type (@irfan)",
-                        "type": "string",
-                        "enum": [
-                          "INDOMARET",
-                          "ALFAMART"
-                        ],
-                        "example": "ALFAMART"
-                      }
-                    },
-                    "required": [
-                      "bank_type"
-                    ]
                   }
                 ]
               }
