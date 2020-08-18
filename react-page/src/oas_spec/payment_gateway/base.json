@@ -34,7 +34,8 @@
     {
       "name": "Payment Methods",
       "tags": [
-        "Fixed Virtual Account Bank Transfers"
+        "Fixed Virtual Account Bank Transfers",
+        "Convenience Store Transfers"
       ]
     },
     {

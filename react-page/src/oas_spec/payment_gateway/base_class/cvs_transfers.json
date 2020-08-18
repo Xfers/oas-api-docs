@@ -1,0 +1,116 @@
+{
+  "schemas": {
+    "RequestBody": {
+      "description": "This is the payment request for convenience store",
+      "type": "object",
+      "properties": {
+        "bank_type": {
+          "description": "convenience store selected",
+          "type": "string",
+          "enum": [
+              "INDOMARET",
+              "ALFAMART"
+          ],
+          "example" : "INDOMARET"
+        },
+        "destination_account_id": {
+          "description": "This is the account ID that will be associated with the payment. You can get your account ID information via our [Get User Info API : /v3/user](../V3/Indonesia#operation/getUserInfo)",
+          "type": "string",
+          "example" : "account_3091fa1f6bfddff48148fd32813a3a5b"
+        },
+        "payment": {
+          "type": "object",
+          "description" : "This is the top up request detail",
+          "properties": {
+            "amount": {
+              "description": "Amount value.",
+              "type": "integer",
+              "minimum": 10000,
+              "maximum": 3500000,
+              "exclusiveMinimum": true,
+              "example": 50000
+            },
+            "currency": {
+              "description": "Amount currency.",
+              "type": "string",
+              "enum": [
+                  "IDR"
+              ],
+              "example": "IDR"
+            },
+            "reference_id": {
+              "description": "Your order's reference id.",
+              "type": "string",
+              "example": "ORDER_0001"
+            }
+          }
+        }
+      },
+      "required": [
+          "bank_type",
+          "amount",
+          "currency",
+          "reference_id"
+      ]
+    },
+    "SuccessResponse": {
+      "description": "This is the payment request for convenience store",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "convenience store"
+        },
+        "destination_account_id": {
+          "type": "string",
+          "example": "account_3091fa1f6bfddff48148fd32813a3a5b"
+        },
+        "store_selected": {
+          "type": "string",
+          "example": "Indomaret store"
+        },
+        "pay_number": {
+          "type": "string",
+          "example": "0172060"
+        },
+        "amount": {
+          "type": "string",
+          "example": "100000.0"
+        },
+        "payment": {
+          "type" : "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "contract_1fea813ebd6749cc97d3298cf284635f"
+            },
+            "status": {
+              "type": "string",
+              "example": "pending"
+            },
+            "reference_id": {
+              "type": "string",
+              "example": "custom3r_1d"
+            },
+            "amount": {
+              "type": "string",
+              "example": "100000.0"
+            },
+            "currency": {
+              "type": "string",
+              "example": "idr"
+            },
+            "expiration_time": {
+              "type": "string",
+              "example": "2020-08-19T15:46:24+07:00"
+            },
+            "fees": {
+              "type": "string",
+              "example": "4000.0"
+            }
+          }
+        }
+      }
+    }
+  }
+}
