@@ -5,7 +5,7 @@
       "type": "object",
       "properties": {
         "bank_type": {
-          "description": "convenience store selected",
+          "description": "Convenience store selected",
           "type": "string",
           "enum": [
               "INDOMARET",
