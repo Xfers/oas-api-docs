@@ -1,0 +1,49 @@
+{
+    "/v3/payment_gateway/payment_method/convenience_store_transfers": {
+      "post": {
+        "tags": [
+          "Convenience Store Transfers"
+        ],
+        "summary": "Top up using convenience store",
+        "description": "@Irfan",
+        "security": [
+          {
+            "X-XFERS-APP-API-KEY": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/base_class/cvs_transfers/schemas/RequestBody"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "allOf": [
+                      {
+                        "$ref": "#/base_class/cvs_transfers/schemas/SuccessResponse"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "4XX": {
+              "$ref": "#/components/responses/v3Error:4XX"
+            }
+          }
+      }
+    }
+  }
