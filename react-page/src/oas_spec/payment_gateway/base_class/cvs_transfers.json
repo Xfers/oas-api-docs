@@ -4,7 +4,7 @@
       "description": "This is the payment request for convenience store",
       "type": "object",
       "properties": {
-        "bank_type": {
+        "store_selected": {
           "description": "Convenience store selected",
           "type": "string",
           "enum": [
