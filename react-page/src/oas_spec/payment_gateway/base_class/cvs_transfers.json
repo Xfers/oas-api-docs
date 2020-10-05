@@ -25,7 +25,7 @@
             "amount": {
               "description": "Amount value.",
               "type": "integer",
-              "minimum": 10000,
+              "minimum": 15000,
               "maximum": 3500000,
               "exclusiveMinimum": true,
               "example": 100000
