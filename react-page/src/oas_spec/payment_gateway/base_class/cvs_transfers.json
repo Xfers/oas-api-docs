@@ -27,7 +27,6 @@
               "type": "integer",
               "minimum": 15000,
               "maximum": 5000000,
-              "exclusiveMinimum": true,
               "example": 100000
             },
             "currency": {
