@@ -5,7 +5,7 @@
           "Convenience Store Transfers"
         ],
         "summary": "Top up using convenience store",
-        "description": "@Irfan",
+        "description": "",
         "security": [
           {
             "X-XFERS-APP-API-KEY": []
