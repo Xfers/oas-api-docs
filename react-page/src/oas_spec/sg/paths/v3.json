@@ -784,10 +784,7 @@
                 "bank_code": "7986",
                 "branch_code": "",
                 "branch_area": "",
-                "img_src": null,
-                "daily_limit": "5000.0",
-                "daily_limit_remaining": "5000.0",
-                "daily_limit_reset_timing": "2020-04-17T11:59:32.000Z"
+                "img_src": null
               },
               "schema": {
                 "properties": {
