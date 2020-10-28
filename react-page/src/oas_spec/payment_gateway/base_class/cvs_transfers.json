@@ -23,7 +23,7 @@
           "description" : "This is the top up request detail",
           "properties": {
             "amount": {
-              "description": "Amount value. \n\nAlfamart minimum 15,000 & maximum 3,500,000  \nIndomaret minimum 15,000 & maximum 5,000,000",
+              "description": "Amount value. \n\nAlfamart minimum 15,000 & maximum 2,500,000  \nIndomaret minimum 15,000 & maximum 5,000,000",
               "type": "integer",
               "minimum": 15000,
               "maximum": 5000000,
